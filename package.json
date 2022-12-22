@@ -60,5 +60,14 @@
   "lint-staged": {
     "*.js": "eslint --cache --fix",
     "*.{ts,tsx}": "eslint --cache --fix"
-  }
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jeongbaebang/ComeOn-App/issues"
+  },
+  "homepage": "https://github.com/jeongbaebang/ComeOn-App",
+  "keywords": [
+    "expo",
+    "reactnative"
+  ]
 }
