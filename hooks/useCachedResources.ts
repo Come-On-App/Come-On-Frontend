@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 import { FontAwesome } from '@expo/vector-icons';
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
@@ -16,6 +17,8 @@ export default function useCachedResources() {
         await Font.loadAsync({
           ...FontAwesome.font,
           'space-mono': require('../assets/fonts/SpaceMono-Regular.ttf'),
+          pretendard: require('../assets/fonts/Pretendard-Medium.ttf'),
+          blackHanSans: require('../assets/fonts/BlackHanSans-Regular.ttf'),
         });
       } catch (e) {
         // We might want to provide this error information to an error reporting service
