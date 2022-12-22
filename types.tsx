@@ -2,7 +2,7 @@
  * Learn more about using TypeScript with React Navigation:
  * https://reactnavigation.org/docs/typescript/
  */
-import React from 'react';
+
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import {
   CompositeScreenProps,
