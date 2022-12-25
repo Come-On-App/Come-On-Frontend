@@ -1,10 +1,22 @@
 import React, { useState } from 'react';
-import { StyleSheet, Button, Image, Pressable } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { View } from '../components/Themed';
-import InputText from '../components/inputComponents/InputText';
-import InputImage from '../components/inputComponents/InputImage';
 
-function Meeting(this: typeof Meeting) {
+import { RootStackScreenProps, InputTextProps } from '../types';
+import CancelButton from '../components/buttons/CancelButton';
+import ConfirmButton from '../components/buttons/ConfirmButton';
+import InputForm from '../components/inputComponents/InputForm';
+
+function Meeting(
+  this: typeof Meeting,
+  { navigation }: RootStackScreenProps<'Meeting'>,
+) {
+  const cancelHandler = () => {
+    navigation.goBack();
+  };
+  const confirmHandelr = () => {
+    console.log('확인');
+  };
   const [inputValues, setInputValues] = useState({
     meetingName: '',
     meetingMemo: '',
@@ -17,7 +29,7 @@ function Meeting(this: typeof Meeting) {
       return { ...currInputValues, [inputIdentifier]: enteredValue };
     });
   };
-  const inputProps = {
+  const inputProps1: InputTextProps = {
     label: '모임이름',
     placeholder: '모임이름을 입력해주세요!',
     length: 30,
@@ -25,7 +37,7 @@ function Meeting(this: typeof Meeting) {
     onChangeText: InputChangeHandler.bind(this, 'meetingName'),
     isMultiline: false,
   };
-  const inputProps2 = {
+  const inputProps2: InputTextProps = {
     label: '모임메모',
     placeholder: '모임장소에 대한 메모를 남겨보세요',
     length: 150,
@@ -36,14 +48,16 @@ function Meeting(this: typeof Meeting) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.container}>
-        <InputImage />
-        <InputText inputProps={inputProps} />
-        <InputText inputProps={inputProps2} />
-        <View>
-          <Button title="취소" />
-          <Button title="완료" />
-        </View>
+      <InputForm inputProps1={inputProps1} inputProps2={inputProps2} />
+      <View style={styles.buttons}>
+        <CancelButton
+          title="취소"
+          onPressHandler={cancelHandler}
+          style={{
+            marginRight: 12,
+          }}
+        />
+        <ConfirmButton title="확인" onPressHandler={confirmHandelr} />
       </View>
     </View>
   );
@@ -54,6 +68,7 @@ export default Meeting;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingHorizontal: 20,
   },
   imageContainer: {
     overflow: 'hidden',
@@ -62,5 +77,11 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: 200,
+  },
+  inputContainer: {},
+  buttons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
   },
 });

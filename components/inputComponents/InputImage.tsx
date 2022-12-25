@@ -32,7 +32,6 @@ export default InputImage;
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 20,
     marginTop: 28,
   },
   imageContainer: {

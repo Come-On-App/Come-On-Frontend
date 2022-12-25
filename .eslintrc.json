@@ -32,7 +32,6 @@
         "trailingComma": "all",
         "arrowParens": "avoid",
         "endOfLine": "auto",
-        "parser": "flow"
       }
     ],
     "max-depth": ["error", 2],

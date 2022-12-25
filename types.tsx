@@ -10,6 +10,7 @@ import {
 } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import '@rneui/themed';
+import { StyleProp,  TextStyle } from 'react-native';
 
 declare global {
   namespace ReactNavigation {
@@ -21,6 +22,7 @@ export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   Modal: undefined;
   NotFound: undefined;
+  Meeting:NavigatorScreenParams<RootTabParamList> | undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
@@ -84,3 +86,26 @@ declare module '@rneui/themed' {
     Text: Partial<TextProps>;
   }
 }
+/*
+*inputType
+*/
+
+
+export interface InputProps {
+  inputProps: InputTextProps
+  style?: StyleProp<TextStyle>;
+}
+
+export interface InputFormProps {
+  inputProps1: InputTextProps;
+  inputProps2: InputTextProps;
+}
+export interface InputTextProps {
+  label: string;
+  placeholder: string;
+  length: number;
+  value: string;
+  onChangeText: (enteredValue: string) => void;
+  isMultiline?: boolean;
+}
+

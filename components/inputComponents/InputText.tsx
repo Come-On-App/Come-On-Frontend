@@ -1,35 +1,31 @@
 import React from 'react';
-import { StyleSheet, TextInput } from 'react-native';
+import { StyleSheet, TextInput, TextStyle, StyleProp } from 'react-native';
 import { theme } from '../../constants/Colors';
 import { View } from '../Themed';
 import { PretendardText } from '../StyledText';
+import { InputProps } from '../../types';
 
-interface InputProps {
-  inputProps: {
-    label: string,
-    placeholder: string,
-    length: number,
-    value: string,
-    onChangeText: (enteredValue: string) => void,
-    isMultiline: boolean,
-  };
-}
-
-function InputText({ inputProps }: InputProps) {
+function InputText({ inputProps, style }: InputProps) {
   const { label, placeholder, length, onChangeText, value, isMultiline } =
     inputProps;
+  const inputStyles: StyleProp<TextStyle> = [styles.container];
+  const inputStyle = style;
+
+  if (isMultiline) {
+    inputStyles.push(styles.inputMultiline);
+  }
 
   return (
-    <View style={styles.container}>
+    <View style={inputStyles}>
       <View style={styles.labelContainer}>
         <PretendardText style={styles.label}>{label}</PretendardText>
         <PretendardText style={styles.length}>
           {value.length}/{length}
         </PretendardText>
       </View>
-      <View>
+      <View style={isMultiline && styles.inputMultiline}>
         <TextInput
-          style={[styles.textInput, isMultiline && styles.inputMultiline]}
+          style={[styles.textInput, isMultiline && { minHeight: 100 }]}
           placeholder={placeholder}
           value={value}
           placeholderTextColor={theme.grayscale?.[500]}
@@ -46,7 +42,6 @@ export default InputText;
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 20,
     marginTop: 28,
   },
   labelContainer: {
@@ -69,9 +64,13 @@ const styles = StyleSheet.create({
     height: 44,
     marginTop: 13,
     padding: 12,
-  },
-  inputMultiline: {
-    minHeight: 100,
     textAlignVertical: 'top',
   },
+  inputMultiline: {
+    minHeight: 112,
+  },
 });
+
+InputText.defaultProps = {
+  style: styles.textInput,
+};

@@ -33,7 +33,7 @@ import LinkingConfiguration from './LinkingConfiguration';
 export default function Navigation({
   colorScheme,
 }: {
-  colorScheme: ColorSchemeName;
+  colorScheme: ColorSchemeName,
 }) {
   return (
     <NavigationContainer
@@ -64,6 +64,12 @@ function RootNavigator() {
         component={NotFoundScreen}
         options={{ title: 'Oops!' }}
       />
+      <Stack.Screen
+        name="Meeting"
+        component={Meeting}
+        options={{ title: '모임생성' }}
+      />
+
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group>
@@ -76,7 +82,7 @@ function RootNavigator() {
  * https://reactnavigation.org/docs/bottom-tab-navigator
  */
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
-const tabBarIcoN = (color) => {
+const tabBarIcon = (color: string) => {
   <TabBarIcon name="code" color={color} />;
 };
 
@@ -92,10 +98,10 @@ function BottomTabNavigator() {
     >
       <BottomTab.Screen
         name="TabOne"
-        component={Meeting}
+        component={TabOneScreen}
         options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
           title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          navigation,
         })}
       />
       <BottomTab.Screen
@@ -114,8 +120,8 @@ function BottomTabNavigator() {
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
 function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
+  name: React.ComponentProps<typeof FontAwesome>['name'],
+  color: string,
 }) {
   return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
 }
