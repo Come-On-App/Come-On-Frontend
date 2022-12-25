@@ -14,9 +14,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import React from 'react';
 
-import { ColorSchemeName, Pressable } from 'react-native';
-
-import Colors from '../constants/Colors';
+import { ColorSchemeName, StyleSheet } from 'react-native';
+import CancelIconButton from '../components/buttons/CancelIconButton';
+import Colors, { theme } from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
@@ -25,6 +25,7 @@ import TabTwoScreen from '../screens/TabTwoScreen';
 import Meeting from '../screens/Meeting';
 import {
   RootStackParamList,
+  RootStackScreenProps,
   RootTabParamList,
   RootTabScreenProps,
 } from '../types';
@@ -33,7 +34,7 @@ import LinkingConfiguration from './LinkingConfiguration';
 export default function Navigation({
   colorScheme,
 }: {
-  colorScheme: ColorSchemeName,
+  colorScheme: ColorSchemeName;
 }) {
   return (
     <NavigationContainer
@@ -67,10 +68,16 @@ function RootNavigator() {
       <Stack.Screen
         name="Meeting"
         component={Meeting}
-        options={{ title: '모임생성' }}
+        options={({ navigation, route }: RootStackScreenProps<'Meeting'>) => ({
+          title: '모임생성',
+          headerTitleAlign: 'center',
+          headerTitleStyle: styles.headerStyle,
+          headerRight: () => CancelIconButton({ navigation, route }),
+          headerBackVisible: false,
+        })}
       />
 
-      <Stack.Group screenOptions={{ presentation: 'modal' }}>
+      <Stack.Group screenOptions={{ presentation: 'transparentModal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group>
     </Stack.Navigator>
@@ -120,8 +127,17 @@ function BottomTabNavigator() {
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
 function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'],
-  color: string,
+  name: React.ComponentProps<typeof FontAwesome>['name'];
+  color: string;
 }) {
   return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
 }
+
+const styles = StyleSheet.create({
+  headerStyle: {
+    fontFamily: 'pretendard',
+    fontWeight: 'bold',
+    fontSize: theme.textStyles?.title3?.fontSize,
+    lineHeight: theme.textStyles?.title3?.lineHeight,
+  },
+});
