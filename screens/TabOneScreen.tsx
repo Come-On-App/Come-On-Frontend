@@ -1,33 +1,86 @@
-import { StyleSheet } from 'react-native';
-import React from 'react';
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from '../components/Themed';
-import { RootTabScreenProps } from '../types';
+import { View } from 'react-native';
+import React, { useState } from 'react';
+import { makeStyles } from '@rneui/themed';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    fontFamily: 'pretendard',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});
+import SerchBar from '../components/SerchBar';
+import CardList from '../components/card/CardList';
 
-export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
+const testItems = [
+  {
+    path: 'https://plus.unsplash.com/premium_photo-1661277693458-6c65cb09aa41?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1888&q=80',
+    people: {
+      member: 1,
+      isDecided: false,
+    },
+    title: '물개들의 모임',
+    subTitle: {
+      user: '정배',
+      date: '2022.08.28 ~ 2022.08.30',
+    },
+  },
+  {
+    path: 'https://images.unsplash.com/photo-1611372876693-4dc4153dee61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1930&q=80',
+    people: {
+      member: 3,
+      isDecided: true,
+    },
+    title: '부산 정모',
+    subTitle: {
+      user: '예정',
+      date: '2022.09.28 ~ 2022.09.30',
+    },
+  },
+  {
+    path: 'https://images.unsplash.com/photo-1617869884925-f8f0a51b2374?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80',
+    people: {
+      member: 15,
+      isDecided: true,
+    },
+    title: '도쿄 야시장 여행',
+    subTitle: {
+      user: '하영',
+      date: '2022.10.28 ~ 2022.10.30',
+    },
+  },
+];
+
+function DateRangeSerchBar() {
+  const [search, setSearch] = useState('2022.08.28 ~ 2022.08.30');
+  const updateSearch = (text: string) => {
+    setSearch(text);
+  };
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor='#eee' darkColor='rgba(255,255,255,0.1)' />
-      <EditScreenInfo path='/screens/TabOneScreen.tsx' />
-    </View>
+    <SerchBar IconType="date-range" value={search} onChange={updateSearch} />
   );
 }
+
+export default function TabOneScreen() {
+  const styles = useStyles();
+
+  return (
+    <SafeAreaView style={styles.screenContainer}>
+      <View style={styles.serchContainer}>
+        <DateRangeSerchBar />
+      </View>
+      <View style={styles.cardContianer}>
+        <CardList cardItems={testItems} />
+      </View>
+    </SafeAreaView>
+  );
+}
+
+const useStyles = makeStyles(() => ({
+  screenContainer: {
+    flex: 1,
+    paddingBottom: -30, // 네비게이션 탭 패딩 공간 제거
+  },
+  serchContainer: {
+    paddingHorizontal: 10,
+  },
+  cardContianer: {
+    flex: 1,
+    paddingHorizontal: 10,
+  },
+}));
