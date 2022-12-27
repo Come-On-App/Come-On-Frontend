@@ -43,7 +43,7 @@ function Meeting(
     length: 150,
     value: inputValues.meetingMemo,
     onChangeText: InputChangeHandler.bind(this, 'meetingMemo'),
-    isMultiline: true,
+    isMultiline: false,
   };
 
   return (

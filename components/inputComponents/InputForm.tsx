@@ -15,6 +15,4 @@ function InputForm({ inputProps1, inputProps2 }: InputFormProps) {
   );
 }
 
-
-
 export default InputForm;

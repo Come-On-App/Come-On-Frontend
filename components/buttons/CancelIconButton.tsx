@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { RootStackScreenProps } from '../../types';
 
 function CancelIconButton({
@@ -8,9 +8,9 @@ function CancelIconButton({
   route,
 }: RootStackScreenProps<'Meeting'>) {
   return (
-    <Ionicons
+    <MaterialIcons
       style={styles.cancelIcon}
-      name="close-outline"
+      name="clear"
       onPress={() => navigation.goBack()}
     />
   );

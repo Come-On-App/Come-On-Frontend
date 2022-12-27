@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleProp, StyleSheet, TextStyle, View } from 'react-native';
 import { Button } from '@rneui/themed';
 
+import { useNavigation } from '@react-navigation/native';
 import { theme } from '../../constants/Colors';
 
 interface ButtonProps {
@@ -9,6 +10,8 @@ interface ButtonProps {
   onPressHandler: () => void;
   style?: StyleProp<TextStyle>;
 }
+
+// useNavigation();
 
 function CancelButton({ title, onPressHandler, style }: ButtonProps) {
   return (

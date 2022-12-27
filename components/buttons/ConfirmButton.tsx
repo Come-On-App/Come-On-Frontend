@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleProp, StyleSheet, TextStyle, View } from 'react-native';
 import { Button } from '@rneui/themed';
-import { RootStackScreenProps } from '../../types';
+
 import { theme } from '../../constants/Colors';
 
 interface ButtonProps {
