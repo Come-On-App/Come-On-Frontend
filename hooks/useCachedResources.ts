@@ -16,7 +16,7 @@ export default function useCachedResources() {
         // Load fonts
         await Font.loadAsync({
           ...FontAwesome.font,
-          pretendard: require('../assets/fonts/Pretendard-Medium.ttf'),
+          pretendard: require('../assets/fonts/PretendardVariable.ttf'),
           blackHanSans: require('../assets/fonts/BlackHanSans-Regular.ttf'),
           'space-mono': require('../assets/fonts/SpaceMono-Regular.ttf'),
         });
