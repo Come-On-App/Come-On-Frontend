@@ -1,8 +1,9 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { StyleSheet } from 'react-native';
 import React from 'react';
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from '../components/Themed';
-import { RootTabScreenProps } from '../types';
+import { Button } from '@rneui/base';
+import { View } from '../components/Themed';
+import { RootStackScreenProps } from '../types';
 
 const styles = StyleSheet.create({
   container: {
@@ -22,12 +23,17 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
+export default function TabOneScreen({
+  navigation,
+  route,
+}: RootStackScreenProps<'Meeting'>) {
+  const pressHandler = () => {
+    navigation.navigate('Meeting');
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor='#eee' darkColor='rgba(255,255,255,0.1)' />
-      <EditScreenInfo path='/screens/TabOneScreen.tsx' />
+      <Button title="모임생성" onPress={pressHandler} />
     </View>
   );
 }

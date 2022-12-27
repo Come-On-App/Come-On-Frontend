@@ -40,7 +40,11 @@
       "error",
       { "blankLine": "always", "prev": "*", "next": "return" },
       { "blankLine": "always", "prev": ["const", "let", "var"], "next": "*" },
-      { "blankLine": "never", "prev": ["const", "let", "var"], "next": ["const", "let", "var"] },
+      {
+        "blankLine": "never",
+        "prev": ["const", "let", "var"],
+        "next": ["const", "let", "var"]
+      },
       { "blankLine": "always", "prev": "*", "next": "if" },
       { "blankLine": "always", "prev": "if", "next": "*" },
       { "blankLine": "always", "prev": "*", "next": "function" },
