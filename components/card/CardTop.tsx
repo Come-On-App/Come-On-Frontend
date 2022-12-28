@@ -1,10 +1,10 @@
-import React from 'react';
-import { Button, makeStyles } from '@rneui/themed';
-import { TouchableNativeFeedback, View } from 'react-native';
+import React, { useState } from 'react';
+import { makeStyles } from '@rneui/themed';
+import { View } from 'react-native';
 
-import Icon from '../Icon';
 import { ConfirmDisplay, GroupDisplay } from './CardDisplay';
 import { InfoProps, LeftAreaProps, RightAreaProps } from '../../types';
+import CardMenu from './CardMenu';
 
 function LeftArea({ style, infoProps }: LeftAreaProps) {
   return (
@@ -16,21 +16,9 @@ function LeftArea({ style, infoProps }: LeftAreaProps) {
 }
 
 function RightArea({ style }: RightAreaProps) {
-  const iconProps = {
-    color: '#FFFFFF',
-    size: 24,
-  };
+  const menuState = useState(false);
 
-  return (
-    <Button
-      buttonStyle={style}
-      type="clear"
-      icon={
-        <Icon name="more-vert" size={iconProps.size} color={iconProps.color} />
-      }
-      background={TouchableNativeFeedback.Ripple(iconProps.color, false, 12)}
-    />
-  );
+  return <CardMenu style={style} menuState={menuState} />;
 }
 
 function CardTopInfo(infoProps: InfoProps) {
@@ -57,7 +45,8 @@ const useStyles = makeStyles(() => ({
     flexDirection: 'row',
   },
   rightArea: {
-    padding: 0,
+    height: '100%',
+    justifyContent: 'center',
   },
 }));
 
