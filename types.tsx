@@ -155,6 +155,16 @@ export interface LeftAreaProps {
   infoProps: InfoProps;
 }
 
+export interface CardMenuProps {
+  style: ViewStyle;
+  menuState: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
+}
+
+export interface CardMenuDisplayProps {
+  showMenu: () => void;
+  style: ViewStyle;
+}
+
 export interface RightAreaProps {
   style: ViewStyle;
 }
