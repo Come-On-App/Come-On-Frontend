@@ -190,3 +190,9 @@ export interface TextProps {
   };
   children: React.ReactNode;
 }
+
+// Code
+export interface CodeInputProps {
+  codeText: string;
+  setCodeText: React.Dispatch<React.SetStateAction<string>>;
+}
