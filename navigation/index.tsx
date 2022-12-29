@@ -4,6 +4,7 @@
  *
  */
 import React from 'react';
+import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -11,6 +12,15 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Avatar from '../components/Avatar';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
+import Meeting from '../screens/Meeting';
+import CancelIconButton from '../components/buttons/CancelIconButton';
+import {
+  RootStackParamList,
+  RootStackScreenProps,
+  RootTabParamList,
+  RootTabScreenProps,
+} from '../types';
+import LinkingConfiguration from './LinkingConfiguration';
 import TabThreeScreen from '../screens/TabThreeScreen';
 import { createTabBarIcon } from '../components/Icon';
 import { RootStackParamList, RootTabParamList } from '../types';
@@ -44,6 +54,21 @@ function RootNavigator() {
         component={BottomTabNavigator}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name="Meeting"
+        component={Meeting}
+        options={({ navigation, route }: RootStackScreenProps<'Meeting'>) => ({
+          title: '모임생성',
+          headerTitleAlign: 'center',
+          headerTitleStyle: styles.headerStyle,
+          headerRight: () => CancelIconButton({ navigation, route }),
+          headerBackVisible: false,
+        })}
+      />
+
+      <Stack.Group screenOptions={{ presentation: 'transparentModal' }}>
+        <Stack.Screen name="Modal" component={ModalScreen} />
+      </Stack.Group>
     </Stack.Navigator>
   );
 }
@@ -53,7 +78,6 @@ function RootNavigator() {
  * https://reactnavigation.org/docs/bottom-tab-navigator
  */
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
-
 function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
@@ -90,3 +114,12 @@ function BottomTabNavigator() {
     </BottomTab.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  headerStyle: {
+    fontFamily: 'pretendard',
+    fontWeight: 'bold',
+    fontSize: theme.textStyles?.title3?.fontSize,
+    lineHeight: theme.textStyles?.title3?.lineHeight,
+  },
+});
