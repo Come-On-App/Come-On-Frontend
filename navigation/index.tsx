@@ -75,6 +75,7 @@ function BottomTabNavigator() {
         name="TabTwo"
         component={TabTwoScreen}
         options={{
+          headerShown: false,
           tabBarLabel: '모임입장',
           tabBarIcon: createTabBarIcon('meeting-room'),
         }}
