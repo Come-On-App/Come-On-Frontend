@@ -48,13 +48,15 @@
       { "blankLine": "always", "prev": "*", "next": "if" },
       { "blankLine": "always", "prev": "if", "next": "*" },
       { "blankLine": "always", "prev": "*", "next": "function" },
-      { "blankLine": "always", "prev": "function", "next": "*" }
+      { "blankLine": "always", "prev": "function", "next": "*" },
+      { "blankLine": "always", "prev": "export", "next": "export" }
     ],
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": ["off"],
     "import/extensions": ["error", "never"],
     "react/prop-types": 0,
     "no-shadow": "off",
-    "@typescript-eslint/no-shadow": ["error"]
+    "@typescript-eslint/no-shadow": ["error"],
+    "react/require-default-props": "off"
   }
 }

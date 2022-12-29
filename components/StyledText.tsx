@@ -1,8 +1,11 @@
-import { Text, TextProps } from './Themed';
+import React from 'react';
+import { Text } from '@rneui/themed';
 
-export function MonoText(props: TextProps) {
+import { TextProps } from '../types';
+
+function Font({ style, children }: TextProps) {
   return (
-    <Text {...props} style={[props.style, { fontFamily: 'space-mono' }]} />
+    <Text style={[style, { fontFamily: 'pretendard' }]}>{children}</Text>
   );
 }
 
@@ -11,3 +14,5 @@ export function PretendardText(props: TextProps) {
     <Text {...props} style={[props.style, { fontFamily: 'pretendard' }]} />
   );
 }
+
+export default Font;

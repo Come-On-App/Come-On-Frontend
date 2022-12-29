@@ -1,6 +1,6 @@
 import { createTheme } from '@rneui/themed';
 
-export const theme = createTheme({
+const theme = createTheme({
   lightColors: {
     primary: '#337FFE',
     secondary: '#FFC724',
@@ -21,6 +21,7 @@ export const theme = createTheme({
     '200': '#EEEEEE',
     '100': '#F5F5F5',
     '50': '#FAFAFA',
+    '0': '#FFFFFF',
   },
   textStyles: {
     title1: {
@@ -64,22 +65,5 @@ export const theme = createTheme({
     }),
   },
 });
-const tintColorLight = '#2f95dc';
-const tintColorDark = '#fff';
 
-export default {
-  light: {
-    text: '#000',
-    background: '#fff',
-    tint: tintColorLight,
-    tabIconDefault: '#ccc',
-    tabIconSelected: tintColorLight,
-  },
-  dark: {
-    text: '#fff',
-    background: '#000',
-    tint: tintColorDark,
-    tabIconDefault: '#ccc',
-    tabIconSelected: tintColorDark,
-  },
-};
+export default theme;
