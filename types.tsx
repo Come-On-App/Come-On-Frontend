@@ -10,7 +10,7 @@ import {
   CompositeScreenProps,
   NavigatorScreenParams,
 } from '@react-navigation/native';
-import { TextStyle, ViewStyle } from 'react-native';
+import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 export type RootStackParamList = {
@@ -157,7 +157,6 @@ export interface LeftAreaProps {
 
 export interface CardMenuProps {
   style: ViewStyle;
-  menuState: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
 }
 
 export interface CardMenuDisplayProps {
@@ -195,4 +194,16 @@ export interface TextProps {
 export interface CodeInputProps {
   codeText: string;
   setCodeText: React.Dispatch<React.SetStateAction<string>>;
+  style?: StyleProp<TextStyle>;
+  showKeyboard: boolean;
+}
+
+// CardModal
+export interface CardModalProps {
+  isVisible: boolean;
+  onClose: () => void;
+}
+
+export interface CardModalButtonProps {
+  onClose: () => void;
 }
