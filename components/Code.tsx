@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Platform, View } from 'react-native';
+import { Keyboard, Platform, View } from 'react-native';
 import { Button, makeStyles, Text } from '@rneui/themed';
 import {
   Cursor,
@@ -10,6 +10,18 @@ import {
 
 import Font from './StyledText';
 import { CodeInputProps } from '../types';
+
+function Code() {
+  const [codeText, setCodeText] = useState('');
+
+  return (
+    <View>
+      <CodeTitle />
+      <CodeInput codeText={codeText} setCodeText={setCodeText} showKeyboard />
+      <CodeButton />
+    </View>
+  );
+}
 
 function CodeTitle() {
   const styles = useStyles();
@@ -22,7 +34,12 @@ function CodeTitle() {
   );
 }
 
-function CodeInput({ codeText, setCodeText }: CodeInputProps) {
+export function CodeInput({
+  style,
+  codeText,
+  setCodeText,
+  showKeyboard,
+}: CodeInputProps) {
   const CELL_COUNT = 6;
   const styles = useStyles();
   const ref = useBlurOnFulfill({ value: codeText, cellCount: CELL_COUNT });
@@ -33,6 +50,11 @@ function CodeInput({ codeText, setCodeText }: CodeInputProps) {
   const onChangeHandler = (text: string) => {
     const isEnglish = /^[a-zA-Z0-9]+$/.test(text);
 
+    // 마지막 텍스트 제거
+    if (text.length === 0) {
+      setCodeText('');
+    }
+
     setCodeText(prevCode => (isEnglish ? text.toUpperCase() : prevCode));
   };
 
@@ -40,8 +62,9 @@ function CodeInput({ codeText, setCodeText }: CodeInputProps) {
     <View>
       <CodeField
         ref={ref}
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        {...props}
+        onPressOut={props.onPressOut}
+        showSoftInputOnFocus={showKeyboard}
+        onSubmitEditing={Keyboard.dismiss}
         value={codeText}
         onChangeText={onChangeHandler}
         cellCount={CELL_COUNT}
@@ -55,6 +78,7 @@ function CodeInput({ codeText, setCodeText }: CodeInputProps) {
                 styles.codeCell,
                 styles.codeText,
                 isFocused && styles.codeFocusCell,
+                style,
               ]}
             >
               {symbol || (isFocused ? <Cursor cursorSymbol="🥕" /> : null)}
@@ -79,18 +103,6 @@ function CodeButton() {
         buttonStyle={styles.button}
         titleStyle={styles.buttonText}
       />
-    </View>
-  );
-}
-
-function Code() {
-  const [codeText, setCodeText] = useState('');
-
-  return (
-    <View>
-      <CodeTitle />
-      <CodeInput codeText={codeText} setCodeText={setCodeText} />
-      <CodeButton />
     </View>
   );
 }
