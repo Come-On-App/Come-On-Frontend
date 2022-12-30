@@ -13,31 +13,27 @@ export function CardTitle({ titleText }: CardTtileProps) {
 }
 
 export function CardSubTitle({ userText, dateText }: CardSubTitleProps) {
-  const iconProps = {
-    color: '#757575',
-    size: 16,
-  };
-  const dividerProps = {
-    color: '#E0E0E0',
-    width: 1,
-  };
   const styles = useStyles();
 
   return (
     <View style={styles.subTitleContianer}>
       <Icon
         name="account-circle"
-        size={iconProps.size}
-        color={iconProps.color}
+        size={styles.icon.size}
+        color={styles.icon.color}
       />
       <Font style={styles.subTitleUserFont}>{userText}</Font>
       <Divider
         orientation="vertical"
-        color={dividerProps.color}
-        width={dividerProps.width}
+        color={styles.dividerBorder.color}
+        width={styles.dividerBorder.width}
         style={styles.divider}
       />
-      <Icon name="date-range" size={iconProps.size} color={iconProps.color} />
+      <Icon
+        name="date-range"
+        size={styles.icon.size}
+        color={styles.icon.color}
+      />
       <Font style={styles.subTitleDateFont}>{dateText}</Font>
     </View>
   );
@@ -70,5 +66,15 @@ const useStyles = makeStyles(theme => ({
   divider: {
     marginHorizontal: 5,
     height: 12,
+    color: '#E0E0E0',
+    width: 1,
+  },
+  dividerBorder: {
+    color: '#E0E0E0',
+    width: 1,
+  },
+  icon: {
+    color: theme.grayscale['600'],
+    size: 16,
   },
 }));
