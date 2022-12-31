@@ -66,11 +66,11 @@ const useStyles = makeStyles(theme => ({
   divider: {
     marginHorizontal: 5,
     height: 12,
-    color: '#E0E0E0',
+    color: theme.grayscale['300'],
     width: 1,
   },
   dividerBorder: {
-    color: '#E0E0E0',
+    color: theme.grayscale['300'],
     width: 1,
   },
   icon: {

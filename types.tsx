@@ -17,6 +17,7 @@ export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   Modal: undefined;
   NotFound: undefined;
+  Meeting: NavigatorScreenParams<RootTabParamList> | undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
@@ -84,6 +85,46 @@ declare module '@rneui/themed' {
   export interface ComponentTheme {
     Text: Partial<TextProps>;
   }
+}
+
+// Code
+export interface CodeInputProps {
+  codeText: string;
+  setCodeText: React.Dispatch<React.SetStateAction<string>>;
+  style?: StyleProp<TextStyle>;
+  showKeyboard: boolean;
+}
+
+// CardModal
+export interface CardModalProps {
+  isVisible: boolean;
+  onClose: () => void;
+}
+
+export interface CardModalButtonProps {
+  onClose: () => void;
+}
+/*
+ *inputType
+ */
+
+export interface InputProps {
+  inputProps: InputTextProps;
+  style?: StyleProp<TextStyle>;
+}
+
+export interface InputFormProps {
+  inputProps1: InputTextProps;
+  inputProps2: InputTextProps;
+}
+
+export interface InputTextProps {
+  label: string;
+  placeholder: string;
+  length: number;
+  value: string;
+  onChangeText: (enteredValue: string) => void;
+  isMultiline?: boolean;
 }
 
 // Icon
@@ -188,22 +229,4 @@ export interface TextProps {
     fontWeight?: TextStyle['fontWeight'];
   };
   children: React.ReactNode;
-}
-
-// Code
-export interface CodeInputProps {
-  codeText: string;
-  setCodeText: React.Dispatch<React.SetStateAction<string>>;
-  style?: StyleProp<TextStyle>;
-  showKeyboard: boolean;
-}
-
-// CardModal
-export interface CardModalProps {
-  isVisible: boolean;
-  onClose: () => void;
-}
-
-export interface CardModalButtonProps {
-  onClose: () => void;
 }

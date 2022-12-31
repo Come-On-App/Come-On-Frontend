@@ -5,10 +5,6 @@ import Icon from '../components/Icon';
 import { SerchBarProps } from '../types';
 
 function SerchBar({ IconType, value, onChange }: SerchBarProps) {
-  const serchBarIcon = {
-    color: '#616161',
-    size: 20,
-  };
   const styles = useStyles();
 
   return (
@@ -18,8 +14,8 @@ function SerchBar({ IconType, value, onChange }: SerchBarProps) {
       searchIcon={
         <Icon
           name={IconType}
-          color={serchBarIcon.color}
-          size={serchBarIcon.size}
+          color={styles.icon.color}
+          size={styles.icon.size}
         />
       }
       containerStyle={styles.container}
@@ -45,6 +41,10 @@ const useStyles = makeStyles(theme => ({
     color: theme.grayscale['700'],
     fontSize: theme.textStyles.body1.fontSize,
     fontFamily: 'pretendard',
+  },
+  icon: {
+    color: theme.grayscale['700'],
+    size: 20,
   },
 }));
 
