@@ -31,7 +31,7 @@
         "singleQuote": true,
         "trailingComma": "all",
         "arrowParens": "avoid",
-        "endOfLine": "auto"
+        "endOfLine": "lf"
       }
     ],
     "max-depth": ["error", 2],
