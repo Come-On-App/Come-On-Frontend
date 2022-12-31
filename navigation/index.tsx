@@ -18,13 +18,10 @@ import {
   RootStackParamList,
   RootStackScreenProps,
   RootTabParamList,
-  RootTabScreenProps,
-  RootStackParamList,
-  RootTabParamList,
 } from '../types';
-import LinkingConfiguration from './LinkingConfiguration';
 import TabThreeScreen from '../screens/TabThreeScreen';
 import { createTabBarIcon } from '../components/Icon';
+import theme from '../constants/themed';
 
 function TabBarIcon() {
   const testImage = 'https://randomuser.me/api/portraits/men/36.jpg';
@@ -66,10 +63,6 @@ function RootNavigator() {
           headerBackVisible: false,
         })}
       />
-
-      <Stack.Group screenOptions={{ presentation: 'transparentModal' }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
-      </Stack.Group>
     </Stack.Navigator>
   );
 }
