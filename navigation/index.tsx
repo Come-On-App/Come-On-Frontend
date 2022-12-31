@@ -19,11 +19,12 @@ import {
   RootStackScreenProps,
   RootTabParamList,
   RootTabScreenProps,
+  RootStackParamList,
+  RootTabParamList,
 } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 import TabThreeScreen from '../screens/TabThreeScreen';
 import { createTabBarIcon } from '../components/Icon';
-import { RootStackParamList, RootTabParamList } from '../types';
 
 function TabBarIcon() {
   const testImage = 'https://randomuser.me/api/portraits/men/36.jpg';
@@ -78,6 +79,7 @@ function RootNavigator() {
  * https://reactnavigation.org/docs/bottom-tab-navigator
  */
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
+
 function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
