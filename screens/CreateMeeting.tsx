@@ -18,7 +18,6 @@ function CreateMeeting(
   };
   const [inputValues, setInputValues] = useState({
     meetingName: '',
-    meetingMemo: '',
   });
 
   function InputChangeHandler(

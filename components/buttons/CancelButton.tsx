@@ -1,8 +1,6 @@
 import React from 'react';
 import { StyleProp, StyleSheet, TextStyle, View } from 'react-native';
 import { Button } from '@rneui/themed';
-
-import { useNavigation } from '@react-navigation/native';
 import theme from '../../constants/themed';
 
 interface ButtonProps {
