@@ -1,12 +1,12 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import { RootStackScreenProps } from '../../types';
 
-function CancelIconButton({
-  navigation,
-  route,
-}: RootStackScreenProps<'Meeting'>) {
+function CancelIconButton() {
+  const navigation = useNavigation();
+
   return (
     <MaterialIcons
       style={styles.cancelIcon}
