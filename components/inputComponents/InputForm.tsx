@@ -1,16 +1,15 @@
 import React from 'react';
-import { View } from '../Themed';
+import { View } from 'react-native';
 import InputText from './InputText';
 import InputImage from './InputImage';
 
 import { InputFormProps } from '../../types';
 
-function InputForm({ inputProps1, inputProps2 }: InputFormProps) {
+function InputForm({ inputProps1 }: InputFormProps) {
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <InputImage />
       <InputText inputProps={inputProps1} />
-      <InputText inputProps={inputProps2} />
     </View>
   );
 }

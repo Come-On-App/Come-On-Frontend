@@ -10,10 +10,8 @@ import {
   CompositeScreenProps,
   NavigatorScreenParams,
 } from '@react-navigation/native';
-import { TextStyle, ViewStyle } from 'react-native';
+import { TextStyle, ViewStyle, StyleProp, TextStyle } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import '@rneui/themed';
-import { StyleProp,  TextStyle } from 'react-native';
 
 declare global {
   namespace ReactNavigation {
@@ -25,7 +23,7 @@ export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   Modal: undefined;
   NotFound: undefined;
-  Meeting:NavigatorScreenParams<RootTabParamList> | undefined;
+  Meeting: NavigatorScreenParams<RootTabParamList> | undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
@@ -95,19 +93,18 @@ declare module '@rneui/themed' {
   }
 }
 /*
-*inputType
-*/
-
+ *inputType
+ */
 
 export interface InputProps {
-  inputProps: InputTextProps
+  inputProps: InputTextProps;
   style?: StyleProp<TextStyle>;
 }
 
 export interface InputFormProps {
   inputProps1: InputTextProps;
-  inputProps2: InputTextProps;
 }
+
 export interface InputTextProps {
   label: string;
   placeholder: string;
@@ -117,7 +114,6 @@ export interface InputTextProps {
   isMultiline?: boolean;
 }
 
-
 // Icon
 export type IconName = React.ComponentProps<typeof MaterialIcons>['name'];
 
@@ -125,6 +121,7 @@ export interface IconProps {
   name: IconName;
   color?: string;
   size: number;
+  onPress?: () => void;
 }
 
 // SerchBar

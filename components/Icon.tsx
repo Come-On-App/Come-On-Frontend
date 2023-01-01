@@ -19,3 +19,9 @@ export function createTabBarIcon(name: IconName) {
     return <Icon name={name} color={color} size={size} />;
   };
 }
+
+export function PressableIcon({ name, size, color, onPress }: IconProps) {
+  return (
+    <IconComponent size={size} name={name} color={color} onPress={onPress} />
+  );
+}

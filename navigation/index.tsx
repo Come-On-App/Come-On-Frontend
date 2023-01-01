@@ -20,7 +20,7 @@ import {
   RootTabParamList,
 } from '../types';
 import TabThreeScreen from '../screens/TabThreeScreen';
-import { createTabBarIcon } from '../components/Icon';
+import Icon, { createTabBarIcon, PressableIcon } from '../components/Icon';
 import theme from '../constants/themed';
 
 function TabBarIcon() {
@@ -93,10 +93,17 @@ function BottomTabNavigator() {
       <BottomTab.Screen
         name="TabTwo"
         component={TabTwoScreen}
-        options={{
+        options={({ navigation }) => ({
+          headerRight: () =>
+            PressableIcon({
+              name: 'add',
+              size: 32,
+              color: 'black',
+              onPress: () => navigation.navigate('Meeting'),
+            }),
           tabBarLabel: '모임입장',
           tabBarIcon: createTabBarIcon('meeting-room'),
-        }}
+        })}
       />
       <BottomTab.Screen
         name="TabThree"
