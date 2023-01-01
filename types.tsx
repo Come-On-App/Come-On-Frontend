@@ -13,18 +13,13 @@ import {
 import { TextStyle, ViewStyle, StyleProp } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-declare global {
-  namespace ReactNavigation {
-    type RootParamList = RootStackParamList;
-  }
-}
-
 export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   Modal: undefined;
   NotFound: undefined;
   MeetingRoom: NavigatorScreenParams<RootTabParamList> | undefined;
   CreateMeeting: NavigatorScreenParams<RootTabParamList> | undefined;
+  TestModal: NavigatorScreenParams<RootTabParamList> | undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
@@ -113,6 +108,24 @@ export interface InputTextProps {
   value: string;
   onChangeText: (enteredValue: string) => void;
   isMultiline?: boolean;
+}
+
+/*
+ *PlaceCardProps
+ */
+
+export interface PlaceProps {
+  data: {
+    id: number;
+    name: string;
+    description: string;
+    lat: number;
+    lng: number;
+    address: string;
+    order: number;
+    apiId: number;
+    category: string;
+  };
 }
 
 // Icon

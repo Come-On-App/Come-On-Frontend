@@ -23,6 +23,7 @@ import TabThreeScreen from '../screens/TabThreeScreen';
 import Icon, { createTabBarIcon, PressableIcon } from '../components/Icon';
 import theme from '../constants/themed';
 import MeetingRoom from '../screens/MeetingRoom';
+import TestModal from '../screens/TestModal';
 
 function TabBarIcon() {
   const testImage = 'https://randomuser.me/api/portraits/men/36.jpg';
@@ -69,6 +70,17 @@ function RootNavigator() {
         component={MeetingRoom}
         options={({ navigation, route }) => ({
           title: '임시타이틀Room1',
+          headerTitleAlign: 'center',
+          headerTitleStyle: styles.headerStyle,
+          headerRight: CancelIconButton,
+          headerBackVisible: false,
+        })}
+      />
+      <Stack.Screen
+        name="TestModal"
+        component={TestModal}
+        options={({ navigation, route }) => ({
+          title: '테스트용 모달',
           headerTitleAlign: 'center',
           headerTitleStyle: styles.headerStyle,
           headerRight: CancelIconButton,

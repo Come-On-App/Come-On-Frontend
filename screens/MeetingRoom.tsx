@@ -2,13 +2,28 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { makeStyles, Avatar } from '@rneui/themed';
 import theme from '../constants/themed';
-import AddCourseButton from '../components/buttons/addCourseButton';
+import AddPlaceButton from '../components/buttons/AddPlaceButton';
 import Label from '../components/inputComponents/Label';
+import PlaceCard from '../components/places/PlaceCard';
+import { PlaceProps, RootStackScreenProps } from '../types';
 
-function MeetingRoom() {
+function MeetingRoom({ navigation }: RootStackScreenProps<'MeetingRoom'>) {
   const styles = useStyles();
   const userNumber = 8;
   const imageUrl = 'https://randomuser.me/api/portraits/men/36.jpg';
+  const dummyData: PlaceProps = {
+    data: {
+      id: 123456,
+      name: '쏭타이',
+      description: '부산토박이만 아는 맛집',
+      lat: 0,
+      lng: 0,
+      address: '서울시 마포구 어쩌구',
+      order: 1,
+      apiId: 21232,
+      category: '음식점',
+    },
+  };
 
   return (
     <View style={styles.container}>
@@ -27,7 +42,12 @@ function MeetingRoom() {
       </View>
       <View>
         <Label>모임장소</Label>
-        <AddCourseButton iconName="map" text="새로운 코스를 추가해보세요!" />
+        <PlaceCard data={dummyData.data} />
+        <AddPlaceButton
+          navigation={navigation}
+          iconName="map"
+          text="새로운 코스를 추가해보세요!"
+        />
       </View>
     </View>
   );
