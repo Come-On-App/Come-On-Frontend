@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Pressable } from 'react-native';
-import { IconProps, makeStyles } from '@rneui/themed';
+import { makeStyles } from '@rneui/themed';
 import Icon from '../Icon';
 import Font from '../StyledText';
 import { IconName } from '../../types';
@@ -16,7 +16,7 @@ function AddCourseButton({ iconName, text }: AddCourseButtonProps) {
   return (
     <Pressable style={({ pressed }) => [pressed && styles.pressed]}>
       <View style={styles.courseContainer}>
-        <Icon name={iconName} style={styles.textColor} size={24} />
+        <Icon name={iconName} color={styles.textColor.color} size={24} />
         <Font style={styles.text}>{text}</Font>
       </View>
     </Pressable>

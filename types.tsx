@@ -212,11 +212,14 @@ export interface TabBarIconProps {
 
 // StyledText
 export interface TextProps {
-  style?: {
-    color?: string;
-    fontSize?: number;
-    lineHeight?: number;
-    fontWeight?: TextStyle['fontWeight'];
-  };
+  style?:
+    | {
+        color?: string;
+        fontSize?: number;
+        lineHeight?: number;
+        fontWeight?: TextStyle['fontWeight'];
+      }
+    | StyleProp<TextStyle>;
+
   children: React.ReactNode;
 }
