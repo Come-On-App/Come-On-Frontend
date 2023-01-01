@@ -10,7 +10,7 @@ import {
   CompositeScreenProps,
   NavigatorScreenParams,
 } from '@react-navigation/native';
-import { TextStyle, ViewStyle, StyleProp, TextStyle } from 'react-native';
+import { TextStyle, ViewStyle, StyleProp } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 declare global {
@@ -23,7 +23,8 @@ export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   Modal: undefined;
   NotFound: undefined;
-  Meeting: NavigatorScreenParams<RootTabParamList> | undefined;
+  MeetingRoom: NavigatorScreenParams<RootTabParamList> | undefined;
+  CreateMeeting: NavigatorScreenParams<RootTabParamList> | undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
@@ -211,10 +212,10 @@ export interface TabBarIconProps {
 
 // StyledText
 export interface TextProps {
-  style: {
-    color: string;
-    fontSize: number;
-    lineHeight: number;
+  style?: {
+    color?: string;
+    fontSize?: number;
+    lineHeight?: number;
     fontWeight?: TextStyle['fontWeight'];
   };
   children: React.ReactNode;

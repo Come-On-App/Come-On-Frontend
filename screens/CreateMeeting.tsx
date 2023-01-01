@@ -5,20 +5,17 @@ import { RootStackScreenProps, InputTextProps } from '../types';
 import CancelButton from '../components/buttons/CancelButton';
 import ConfirmButton from '../components/buttons/ConfirmButton';
 import InputForm from '../components/inputComponents/InputForm';
-import theme from '../constants/themed';
 
-function Meeting(
-  this: typeof Meeting,
-  { navigation }: RootStackScreenProps<'Meeting'>,
+function CreateMeeting(
+  this: typeof CreateMeeting,
+  { navigation }: RootStackScreenProps<'CreateMeeting'>,
 ) {
-  function cancelHandler() {
+  const cancelHandler = () => {
     navigation.goBack();
-  }
-
-  function confirmHandelr() {
+  };
+  const confirmHandelr = () => {
     console.log('확인');
-  }
-
+  };
   const [inputValues, setInputValues] = useState({
     meetingName: '',
     meetingMemo: '',
@@ -48,18 +45,18 @@ function Meeting(
       <View style={styles.buttons}>
         <CancelButton
           title="취소"
-          onPressHandler={() => cancelHandler}
+          onPressHandler={cancelHandler}
           style={{
             marginRight: 12,
           }}
         />
-        <ConfirmButton title="확인" onPressHandler={() => confirmHandelr} />
+        <ConfirmButton title="확인" onPressHandler={confirmHandelr} />
       </View>
     </View>
   );
 }
 
-export default Meeting;
+export default CreateMeeting;
 
 const styles = StyleSheet.create({
   container: {
