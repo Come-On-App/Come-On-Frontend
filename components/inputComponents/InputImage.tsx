@@ -71,8 +71,8 @@ function InputImage() {
   // 추후 이미지 권한 얻어오기
   return (
     <View style={styles.container}>
-      <PretendardText style={styles.label}>사진등록</PretendardText>
-      <Pressable onPress={pickImage}>
+      <Font style={styles.label}>사진등록</Font>
+      <Pressable onPress={() => pickImage}>
         <View style={styles.imageContainer}>
           <View>{picture}</View>
         </View>
