@@ -10,14 +10,16 @@ import {
   CompositeScreenProps,
   NavigatorScreenParams,
 } from '@react-navigation/native';
-import { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { TextStyle, ViewStyle, StyleProp } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   Modal: undefined;
   NotFound: undefined;
-  Meeting: NavigatorScreenParams<RootTabParamList> | undefined;
+  MeetingRoom: NavigatorScreenParams<RootTabParamList> | undefined;
+  CreateMeeting: NavigatorScreenParams<RootTabParamList> | undefined;
+  TestModal: NavigatorScreenParams<RootTabParamList> | undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
@@ -114,8 +116,7 @@ export interface InputProps {
 }
 
 export interface InputFormProps {
-  inputProps1: InputTextProps;
-  inputProps2: InputTextProps;
+  inputProps: InputTextProps;
 }
 
 export interface InputTextProps {
@@ -127,6 +128,30 @@ export interface InputTextProps {
   isMultiline?: boolean;
 }
 
+/*
+ *PlaceCardProps
+ */
+
+export interface PlaceProps {
+  data: {
+    id: number;
+    name: string;
+    description: string;
+    lat: number;
+    lng: number;
+    address: string;
+    order: number;
+    apiId: number;
+    category: string;
+  };
+}
+
+export type AddPlaceButtonProps = {
+  navigation: RootStackScreenProps<'MeetingRoom'>;
+  iconName: IconName;
+  text: string;
+};
+
 // Icon
 export type IconName = React.ComponentProps<typeof MaterialIcons>['name'];
 
@@ -134,6 +159,7 @@ export interface IconProps {
   name: IconName;
   color?: string;
   size: number;
+  onPress?: () => void;
 }
 
 // SerchBar
@@ -222,11 +248,14 @@ export interface TabBarIconProps {
 
 // StyledText
 export interface TextProps {
-  style: {
-    color: string;
-    fontSize: number;
-    lineHeight: number;
-    fontWeight?: TextStyle['fontWeight'];
-  };
+  style?:
+    | {
+        color?: string;
+        fontSize?: number;
+        lineHeight?: number;
+        fontWeight?: TextStyle['fontWeight'];
+      }
+    | StyleProp<TextStyle>;
+
   children: React.ReactNode;
 }

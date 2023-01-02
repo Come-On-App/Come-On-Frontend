@@ -1,18 +1,26 @@
 import React from 'react';
-import { View } from '../Themed';
+import { View } from 'react-native';
+import { makeStyles } from '@rneui/themed';
 import InputText from './InputText';
 import InputImage from './InputImage';
 
 import { InputFormProps } from '../../types';
 
-function InputForm({ inputProps1, inputProps2 }: InputFormProps) {
+function InputForm({ inputProps }: InputFormProps) {
+  const styles = useStyles();
+
   return (
-    <View>
+    <View style={styles.contianer}>
       <InputImage />
-      <InputText inputProps={inputProps1} />
-      <InputText inputProps={inputProps2} />
+      <InputText inputProps={inputProps} />
     </View>
   );
 }
 
 export default InputForm;
+
+const useStyles = makeStyles(() => ({
+  contianer: {
+    flex: 1,
+  },
+}));
