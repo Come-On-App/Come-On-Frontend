@@ -3,13 +3,7 @@ import { View, Pressable } from 'react-native';
 import { makeStyles } from '@rneui/themed';
 import Icon from '../Icon';
 import Font from '../StyledText';
-import { IconName, RootStackScreenProps } from '../../types';
-
-type AddPlaceButtonProps = {
-  navigation: RootStackScreenProps<'MeetingRoom'>;
-  iconName: IconName;
-  text: string;
-};
+import { AddPlaceButtonProps } from '../../types';
 
 function AddPlaceButton({ navigation, iconName, text }: AddPlaceButtonProps) {
   const styles = useStyles();

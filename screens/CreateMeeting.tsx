@@ -29,7 +29,7 @@ function CreateMeeting(
     });
   }
 
-  const inputProps1: InputTextProps = {
+  const inputProps: InputTextProps = {
     label: '모임이름',
     placeholder: '모임이름을 입력해주세요!',
     length: 30,
@@ -40,7 +40,7 @@ function CreateMeeting(
 
   return (
     <View style={styles.container}>
-      <InputForm inputProps1={inputProps1} />
+      <InputForm inputProps={inputProps} />
       <View style={styles.buttons}>
         <CancelButton
           title="취소"

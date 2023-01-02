@@ -98,7 +98,7 @@ export interface InputProps {
 }
 
 export interface InputFormProps {
-  inputProps1: InputTextProps;
+  inputProps: InputTextProps;
 }
 
 export interface InputTextProps {
@@ -127,6 +127,12 @@ export interface PlaceProps {
     category: string;
   };
 }
+
+export type AddPlaceButtonProps = {
+  navigation: RootStackScreenProps<'MeetingRoom'>;
+  iconName: IconName;
+  text: string;
+};
 
 // Icon
 export type IconName = React.ComponentProps<typeof MaterialIcons>['name'];

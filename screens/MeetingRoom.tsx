@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { makeStyles, Avatar } from '@rneui/themed';
-import theme from '../constants/themed';
+
 import AddPlaceButton from '../components/buttons/AddPlaceButton';
 import Label from '../components/inputComponents/Label';
 import PlaceCard from '../components/places/PlaceCard';
@@ -55,7 +55,7 @@ function MeetingRoom({ navigation }: RootStackScreenProps<'MeetingRoom'>) {
 
 export default MeetingRoom;
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
   container: {
     flex: 1,
     padding: 20,
@@ -69,6 +69,6 @@ const useStyles = makeStyles(() => ({
     marginBottom: 28,
   },
   colorText: {
-    color: theme.lightColors?.primary,
+    color: theme.colors.primary,
   },
 }));

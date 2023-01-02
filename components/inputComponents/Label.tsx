@@ -13,9 +13,6 @@ export default Label;
 
 const useStyles = makeStyles(theme => ({
   label: {
-    color: theme.grayscale?.[900],
-    fontSize: theme.textStyles?.title4?.fontSize,
-    lineHeight: theme.textStyles?.title4?.lineHeight,
     fontWeight: 'bold',
   },
 }));

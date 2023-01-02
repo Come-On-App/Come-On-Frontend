@@ -1,4 +1,3 @@
-/* eslint-disable global-require */
 import React, { useState } from 'react';
 import { StyleSheet, Image, Pressable, View, Alert } from 'react-native';
 import {
@@ -15,8 +14,10 @@ import Icon from '../Icon';
 function InputImage() {
   const [libraryPermisson, requestPermission] = useMediaLibraryPermissions();
   const [image, setImage] = useState('');
-  // ios permission 뜨는지 확인하기
+  const title = '허가요청';
+  const description = '이 앱을 사용하려면 사진첩 접근권한이 필요합니다.';
 
+  // TODO ios permission 뜨는지 확인하기
   async function verifyPermissions() {
     if (libraryPermisson?.status === PermissionStatus.UNDETERMINED) {
       const permissionResponse = await requestPermission();
@@ -25,10 +26,7 @@ function InputImage() {
     }
 
     if (libraryPermisson?.status === PermissionStatus.DENIED) {
-      Alert.alert(
-        '허가 요청',
-        '이 앱을 사용하려면 사진첩 접근권한이 필요합니다.',
-      );
+      Alert.alert(title, description);
 
       return false;
     }
@@ -49,8 +47,6 @@ function InputImage() {
       aspect: [4, 3],
       quality: 0.5,
     });
-
-    console.log(result);
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
