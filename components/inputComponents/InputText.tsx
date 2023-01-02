@@ -1,21 +1,20 @@
 import React from 'react';
-import { StyleSheet, TextInput } from 'react-native';
-import { theme } from '../../constants/Colors';
-import { View } from '../Themed';
-import { PretendardText } from '../StyledText';
+import { StyleSheet, TextInput, View } from 'react-native';
+import theme from '../../constants/themed';
+import Font from '../StyledText';
 import { InputProps } from '../../types';
 
-function InputText({ inputProps, style }: InputProps) {
+function InputText({ inputProps }: InputProps) {
   const { label, placeholder, length, onChangeText, value, isMultiline } =
     inputProps;
 
   return (
-    <View style={[styles.container, style]}>
+    <View style={[styles.container]}>
       <View style={styles.labelContainer}>
-        <PretendardText style={styles.label}>{label}</PretendardText>
-        <PretendardText style={styles.length}>
+        <Font style={styles.label}>{label}</Font>
+        <Font style={styles.length}>
           {value.length}/{length}
-        </PretendardText>
+        </Font>
       </View>
       <View style={isMultiline && styles.inputMultiline}>
         <TextInput
@@ -43,6 +42,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   label: {
+    color: theme.grayscale?.[900],
     fontSize: theme.textStyles?.title4?.fontSize,
     lineHeight: theme.textStyles?.title4?.lineHeight,
     fontWeight: 'bold',
@@ -64,7 +64,3 @@ const styles = StyleSheet.create({
     minHeight: 113,
   },
 });
-
-InputText.defaultProps = {
-  style: styles.textInput,
-};
