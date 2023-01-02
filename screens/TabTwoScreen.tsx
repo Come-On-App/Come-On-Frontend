@@ -4,7 +4,7 @@ import { makeStyles } from '@rneui/themed';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import Logo from '../components/Logo';
-import Code from '../components/Code';
+import InviteCode from '../components/InviteCode';
 
 export default function TabTwoScreen() {
   const styles = useStyles();
@@ -15,7 +15,7 @@ export default function TabTwoScreen() {
         <Logo />
       </View>
       <View style={styles.codeContainer}>
-        <Code />
+        <InviteCode />
       </View>
     </SafeAreaView>
   );

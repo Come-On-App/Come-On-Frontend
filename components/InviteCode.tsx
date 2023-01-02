@@ -11,7 +11,7 @@ import {
 import Font from './StyledText';
 import { CodeInputProps } from '../types';
 
-function Code() {
+function InviteCode() {
   const [codeText, setCodeText] = useState('');
 
   return (
@@ -81,7 +81,7 @@ export function CodeInput({
                 style,
               ]}
             >
-              {symbol || (isFocused ? <Cursor cursorSymbol="🥕" /> : null)}
+              {symbol || (isFocused ? <Cursor cursorSymbol="🍕" /> : null)}
             </Text>
           );
         }}
@@ -153,4 +153,4 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default Code;
+export default InviteCode;

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Button, Overlay, makeStyles } from '@rneui/themed';
 
 import Font from '../StyledText';
-import { CodeInput } from '../Code';
+import { CodeInput } from '../InviteCode';
 import { CardModalButtonProps, CardModalProps } from '../../types';
 
 function CardModal({ isVisible, onClose }: CardModalProps) {
