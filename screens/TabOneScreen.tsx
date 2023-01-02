@@ -64,7 +64,7 @@ export default function TabOneScreen() {
       <View style={styles.serchContainer}>
         <DateRangeSerchBar />
       </View>
-      <View style={styles.cardContianer}>
+      <View style={styles.cardContainer}>
         <CardList cardItems={testItems} />
       </View>
     </SafeAreaView>
@@ -79,7 +79,7 @@ const useStyles = makeStyles(() => ({
   serchContainer: {
     paddingHorizontal: 10,
   },
-  cardContianer: {
+  cardContainer: {
     flex: 1,
     paddingHorizontal: 10,
   },

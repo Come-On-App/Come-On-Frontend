@@ -10,16 +10,12 @@ import {
 import Icon from '../Icon';
 import Font from '../StyledText';
 
-function DisplayIcon({ icon }: DisplayIconProps) {
-  const iconProps = {
-    color: '#FFFFFF',
-    size: 16,
-  };
-  const styles = useStyles();
+function DisplayIcon({ icon: iconName }: DisplayIconProps) {
+  const { icon, iconContainer } = useStyles();
 
   return (
-    <View style={styles.iconContainer}>
-      <Icon name={icon} size={iconProps.size} color={iconProps.color} />
+    <View style={iconContainer}>
+      <Icon name={iconName} size={icon.size} color={icon.color} />
     </View>
   );
 }
@@ -68,5 +64,9 @@ const useStyles = makeStyles((theme, isDecided: boolean) => ({
     color: isDecided ? theme.grayscale['0'] : theme.grayscale['500'],
     fontSize: 12,
     lineHeight: 18,
+  },
+  icon: {
+    color: theme.grayscale['0'],
+    size: 16,
   },
 }));

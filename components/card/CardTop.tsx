@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@rneui/themed';
 import { View } from 'react-native';
 
@@ -16,9 +16,7 @@ function LeftArea({ style, infoProps }: LeftAreaProps) {
 }
 
 function RightArea({ style }: RightAreaProps) {
-  const menuState = useState(false);
-
-  return <CardMenu style={style} menuState={menuState} />;
+  return <CardMenu style={style} />;
 }
 
 function CardTopInfo(infoProps: InfoProps) {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@rneui/themed';
 import { Alert, Pressable, View } from 'react-native';
 import { Menu, MenuDivider, MenuItem } from 'react-native-material-menu';
@@ -6,27 +6,26 @@ import { Menu, MenuDivider, MenuItem } from 'react-native-material-menu';
 import Icon from '../Icon';
 import Font from '../StyledText';
 import { CardMenuDisplayProps, CardMenuProps } from '../../types';
+import CardModal from './CardModal';
 
 function CardMenuDisplay({ showMenu, style }: CardMenuDisplayProps) {
-  const iconProps = {
-    color: '#FFFFFF',
-    size: 24,
-  };
+  const { icon } = useStyles();
 
   return (
     <Pressable onPress={showMenu} style={style}>
-      <Icon name="more-vert" size={iconProps.size} color={iconProps.color} />
+      <Icon name="more-vert" size={icon.size} color={icon.color} />
     </Pressable>
   );
 }
 
 function CardMenuItems() {
-  const onPressHandler = () => {
-    Alert.alert('Click!');
-  };
   const styles = useStyles();
+  const [codeModal, setCodeModal] = useState(false);
+  const openCodeModal = () => setCodeModal(true);
+  const closeCodeModal = () => setCodeModal(false);
+  const onPressHandler = () => Alert.alert('Click!');
   const menus = [
-    { onPress: onPressHandler, text: '초대코드 관리' },
+    { onPress: openCodeModal, text: '초대코드 관리' },
     { onPress: onPressHandler, text: '모임 수정' },
     { onPress: onPressHandler, text: '모임 삭제' },
   ];
@@ -39,22 +38,28 @@ function CardMenuItems() {
     </View>
   ));
 
-  return <View>{items}</View>;
+  return (
+    <View>
+      <View>
+        <CardModal isVisible={codeModal} onClose={closeCodeModal} />
+      </View>
+      {items}
+    </View>
+  );
 }
 
-function CardMenu({ style, menuState }: CardMenuProps) {
-  const [visible, setVisible] = menuState;
-  const hideMenu = () => setVisible(false);
-  const showMenu = () => setVisible(true);
+function CardMenu({ style }: CardMenuProps) {
+  const styles = useStyles();
+  const [menuVisible, setMenuVisible] = useState(false);
+  const hideMenu = () => setMenuVisible(false);
+  const showMenu = () => setMenuVisible(true);
 
   return (
     <Menu
-      visible={visible}
+      visible={menuVisible}
       anchor={<CardMenuDisplay showMenu={showMenu} style={style} />}
       onRequestClose={hideMenu}
-      style={{
-        overflow: 'hidden',
-      }}
+      style={styles.menu}
     >
       <CardMenuItems />
     </Menu>
@@ -62,11 +67,18 @@ function CardMenu({ style, menuState }: CardMenuProps) {
 }
 
 const useStyles = makeStyles(theme => ({
+  menu: {
+    overflow: 'hidden',
+  },
   itemFont: {
     color: theme.grayscale['900'],
     fontSize: theme.textStyles.body2.fontSize,
     lineHeight: theme.textStyles.body2.lineHeight,
     fontWeight: '400',
+  },
+  icon: {
+    color: theme.grayscale['0'],
+    size: 24,
   },
 }));
 

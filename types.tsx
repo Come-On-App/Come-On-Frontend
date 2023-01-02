@@ -88,6 +88,24 @@ declare module '@rneui/themed' {
     Text: Partial<TextProps>;
   }
 }
+
+// Code
+export interface CodeInputProps {
+  codeText: string;
+  setCodeText: React.Dispatch<React.SetStateAction<string>>;
+  style?: StyleProp<TextStyle>;
+  showKeyboard: boolean;
+}
+
+// CardModal
+export interface CardModalProps {
+  isVisible: boolean;
+  onClose: () => void;
+}
+
+export interface CardModalButtonProps {
+  onClose: () => void;
+}
 /*
  *inputType
  */
@@ -206,7 +224,6 @@ export interface LeftAreaProps {
 
 export interface CardMenuProps {
   style: ViewStyle;
-  menuState: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
 }
 
 export interface CardMenuDisplayProps {
