@@ -4,7 +4,7 @@ import { Alert, Pressable, View } from 'react-native';
 import { Menu, MenuDivider, MenuItem } from 'react-native-material-menu';
 
 import Icon from '../Icon';
-import Font from '../StyledText';
+import Font from '../Font';
 import { CardMenuDisplayProps, CardMenuProps } from '../../types';
 import CardModal from './CardModal';
 

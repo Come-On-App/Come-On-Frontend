@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@rneui/themed';
 import { TextProps } from '../../types';
-import Font from '../StyledText';
+import Font from '../Font';
 
 function Label({ children, style }: TextProps) {
   const styles = useStyles();

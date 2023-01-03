@@ -2,7 +2,7 @@ import { makeStyles } from '@rneui/themed';
 import React from 'react';
 import { View } from 'react-native';
 import { PlaceProps } from '../../types';
-import Font from '../StyledText';
+import Font from '../Font';
 import Caption from './Caption';
 
 function PlaceCardBody({ data }: PlaceProps) {

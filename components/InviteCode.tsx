@@ -8,7 +8,7 @@ import {
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
 
-import Font from './StyledText';
+import Font from './Font';
 import { CodeInputProps } from '../types';
 
 function InviteCode() {
@@ -129,7 +129,7 @@ const useStyles = makeStyles(theme => ({
     marginHorizontal: 2,
   },
   codeText: {
-    fontFamily: 'pretendard',
+    fontFamily: 'pretendard-Regular',
     fontSize: theme.textStyles.title1.fontSize,
     fontWeight: '400',
     color: theme.grayscale['900'],
@@ -147,7 +147,7 @@ const useStyles = makeStyles(theme => ({
     height: 56,
   },
   buttonText: {
-    fontFamily: 'pretendard',
+    fontFamily: 'pretendard-Regular',
     fontSize: theme.textStyles.title4.fontSize,
     color: theme.grayscale['0'],
   },

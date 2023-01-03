@@ -2,7 +2,7 @@ import { View } from 'react-native';
 import React, { useState } from 'react';
 import { Button, Overlay, makeStyles } from '@rneui/themed';
 
-import Font from '../StyledText';
+import Font from '../Font';
 import { CodeInput } from '../InviteCode';
 import { CardModalButtonProps, CardModalProps } from '../../types';
 
@@ -136,7 +136,7 @@ const useStyles = makeStyles(theme => ({
   },
   buttonText: {
     color: theme.grayscale['50'],
-    fontFamily: 'pretendard',
+    fontFamily: 'pretendard-Regular',
     fontSize: 14,
     fontWeight: '400',
   },

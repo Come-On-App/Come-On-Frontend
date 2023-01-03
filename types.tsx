@@ -79,14 +79,6 @@ declare module '@rneui/themed' {
       };
     };
   }
-
-  export interface TextProps {
-    bold?: boolean;
-  }
-
-  export interface ComponentTheme {
-    Text: Partial<TextProps>;
-  }
 }
 
 // Code
@@ -248,14 +240,6 @@ export interface TabBarIconProps {
 
 // StyledText
 export interface TextProps {
-  style?:
-    | {
-        color?: string;
-        fontSize?: number;
-        lineHeight?: number;
-        fontWeight?: TextStyle['fontWeight'];
-      }
-    | StyleProp<TextStyle>;
-
+  style?: StyleProp<TextStyle>;
   children: React.ReactNode;
 }
