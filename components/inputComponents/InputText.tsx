@@ -1,10 +1,15 @@
 import React from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import {
+  StyleSheet,
+  TextInput,
+  View,
+  KeyboardAvoidingView,
+} from 'react-native';
 import theme from '../../constants/themed';
 import Font from '../StyledText';
 import { InputProps } from '../../types';
 
-function InputText({ inputProps }: InputProps) {
+function InputText({ inputProps, style }: InputProps) {
   const { label, placeholder, length, onChangeText, value, isMultiline } =
     inputProps;
 
@@ -16,7 +21,9 @@ function InputText({ inputProps }: InputProps) {
           {value.length}/{length}
         </Font>
       </View>
-      <View style={isMultiline && styles.inputMultiline}>
+      <View
+        style={(styles.textContainer, isMultiline && styles.inputMultiline)}
+      >
         <TextInput
           style={[styles.textInput, isMultiline && { minHeight: 100 }]}
           placeholder={placeholder}
@@ -36,6 +43,7 @@ export default InputText;
 const styles = StyleSheet.create({
   container: {
     marginTop: 28,
+    flex: 1,
   },
   labelContainer: {
     flexDirection: 'row',
@@ -55,12 +63,15 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderWidth: 1,
     borderRadius: 4,
+    minHeight: 44,
     height: 44,
     marginTop: 13,
     padding: 12,
+
     textAlignVertical: 'top',
   },
   inputMultiline: {
     minHeight: 113,
   },
+  textContainer: {},
 });

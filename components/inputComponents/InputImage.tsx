@@ -68,10 +68,8 @@ function InputImage() {
   return (
     <View style={styles.container}>
       <Font style={styles.label}>사진등록</Font>
-      <Pressable onPress={() => pickImage}>
-        <View style={styles.imageContainer}>
-          <View>{picture}</View>
-        </View>
+      <Pressable onPress={() => pickImage()} style={[styles.imageContainer]}>
+        <View>{picture}</View>
       </Pressable>
     </View>
   );
