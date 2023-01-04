@@ -4,7 +4,13 @@ import theme from '../constants/themed';
 import { TextProps } from '../types';
 
 function Font({ style, children }: TextProps) {
-  return <Text style={[style, { fontFamily: 'pretendard' }]}>{children}</Text>;
+  return (
+    <Text
+      style={[Font.defaultProps.style, style, { fontFamily: 'pretendard' }]}
+    >
+      {children}
+    </Text>
+  );
 }
 
 export function PretendardText({ style, children }: TextProps) {
