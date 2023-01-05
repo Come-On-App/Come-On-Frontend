@@ -97,13 +97,9 @@ export type AddPlaceButtonProps = {
 };
 
 export interface IconButtonProps {
-  style: StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle>;
   onPress: () => void;
-  icon: {
-    iconName: IconName;
-    size: number;
-    color: string;
-  };
+  icon: Icon;
 }
 
 // Icon
@@ -114,6 +110,12 @@ export interface IconProps {
   color?: string;
   size: number;
   onPress?: () => void;
+}
+
+export interface Icon {
+  iconName: IconName;
+  size: number;
+  color: string;
 }
 
 // SerchBar
@@ -202,6 +204,13 @@ export interface RightAreaProps {
 export interface AvatarProps {
   path: string;
   size: number;
+}
+
+export interface BadgedAvatarProps extends AvatarProps {
+  badge: {
+    icon: Icon;
+    backgroundColor: string;
+  };
 }
 
 // TabBar
