@@ -7,7 +7,10 @@ import {
 } from 'react-native-calendars';
 import { View } from 'react-native';
 
-import { Theme as CalendarTheme } from 'react-native-calendars/src/types';
+import {
+  Theme as CalendarTheme,
+  MarkedDates,
+} from 'react-native-calendars/src/types';
 import LocaleConfig from '../Calendar/LocaleConfig';
 import Font from '../StyledText';
 
@@ -26,10 +29,38 @@ function CalendarHeader(date: XDate): ReactNode {
   );
 }
 
+const returnDayDiff = (startDate: Date, endDate: Date) => {
+  const msecDiff = endDate.getTime() - startDate.getTime();
+  const dayDiff = msecDiff / (24 * 60 * 60 * 1000);
+
+  return dayDiff;
+};
+const returnPeriodArray = (startDate: string, endDate: string) => {
+  const startDay = new Date(startDate);
+  const endDay = new Date(endDate);
+  const dayDiff = returnDayDiff(startDay, endDay);
+  const arr = [];
+
+  console.log(returnDayDiff(startDay, endDay));
+
+  for (let i = 0; i <= dayDiff; i += 1) {
+    if (i === 0) {
+      arr.push(returnYYYYmmdd(startDay));
+    } else {
+      arr.push(
+        returnYYYYmmdd(new Date(startDay.setDate(startDay.getDate() + 1))),
+      );
+    }
+  }
+
+  console.log(arr);
+
+  return arr;
+};
 const returnYYYYmmdd = (date: Date): string => {
   const year = date.getFullYear();
-  const month = date.getMonth();
-  const day = date.getDay();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
 
   return `${year}-${month >= 10 ? month : `0${month}`}-${
     day >= 10 ? day : `0${day}`
@@ -108,20 +139,19 @@ function Calendar(): JSX.Element {
     }
 
     setMarkedDate(selectedDate);
-    console.log(days);
-    console.log('------');
-    returnDiffDays();
-  };
-  const returnDiffDays = () => {
-    const start = '2023-01-26';
-    const end = '2023-05-01';
-    const startDate = new Date(start);
-    const endDate = new Date(end);
-    const resultDate = endDate.getDate() + 60;
-    const testDate = new Date(endDate.setDate(endDate.getDate() + 1));
 
-    console.log(testDate);
-    console.log(returnYYYYmmdd(testDate));
+    console.log('------');
+    const periodArray = returnPeriodArray('2023-01-18', '2023-01-23');
+    const markedDates: MarkedDates = {};
+
+    periodArray.forEach((key, index) => {
+      markedDates[key] = { selected: true, color: 'blue' };
+    });
+
+    console.log(periodArray);
+    console.log(markedDates);
+
+    setMarkedDate(markedDates);
   };
 
   return (
