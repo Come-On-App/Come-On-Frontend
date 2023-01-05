@@ -17,7 +17,7 @@ function Font({ style, children }: TextProps) {
   const defaultStyle = useDefaultStyle();
 
   return (
-    <Text style={[defaultStyle, style, { fontFamily: 'pretendard-Regular' }]}>
+    <Text style={[defaultStyle, style, { fontFamily: 'pretendard-regular' }]}>
       {children}
     </Text>
   );
@@ -27,7 +27,7 @@ export function BoldFont({ style, children }: TextProps) {
   const defaultStyle = useDefaultStyle();
 
   return (
-    <Text style={[defaultStyle, style, { fontFamily: 'pretendard-Bold' }]}>
+    <Text style={[defaultStyle, style, { fontFamily: 'pretendard-bold' }]}>
       {children}
     </Text>
   );

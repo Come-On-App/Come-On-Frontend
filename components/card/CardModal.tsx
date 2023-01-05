@@ -136,7 +136,7 @@ const useStyles = makeStyles(theme => ({
   },
   buttonText: {
     color: theme.grayscale['50'],
-    fontFamily: 'pretendard-Regular',
+    fontFamily: 'pretendard-regular',
     fontSize: 14,
     fontWeight: '400',
   },

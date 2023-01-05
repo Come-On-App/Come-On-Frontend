@@ -4,26 +4,44 @@
  *
  */
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+import { Button } from '@rneui/themed';
 
 import Avatar from '../components/Avatar';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import CreateMeeting from '../screens/CreateMeeting';
 import CancelIconButton from '../components/buttons/CancelIconButton';
-import {
-  RootStackParamList,
-  RootStackScreenProps,
-  RootTabParamList,
-} from '../types';
+
 import TabThreeScreen from '../screens/TabThreeScreen';
 import Icon, { createTabBarIcon, PressableIcon } from '../components/Icon';
 import theme from '../constants/themed';
 import MeetingRoom from '../screens/MeetingRoom';
 import TestModal from '../screens/TestModal';
+import { RootStackParamList, RootTabParamList } from '../navigation';
+
+function TabThreeHeaderRight() {
+  return (
+    <View>
+      <Button
+        title="로그아웃"
+        type="clear"
+        titleStyle={{
+          fontFamily: 'pretendard-regular',
+          fontSize: 12,
+          color: '#9E9E9E',
+        }}
+        containerStyle={{
+          marginRight: 8,
+        }}
+      />
+    </View>
+  );
+}
 
 function TabBarIcon() {
   const testImage = 'https://randomuser.me/api/portraits/men/36.jpg';

@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
   font: {
     color: theme.grayscale['700'],
     fontSize: theme.textStyles.body1.fontSize,
-    fontFamily: 'pretendard-Regular',
+    fontFamily: 'pretendard-regular',
   },
   icon: {
     color: theme.grayscale['700'],

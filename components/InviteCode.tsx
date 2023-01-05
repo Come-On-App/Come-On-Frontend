@@ -129,7 +129,7 @@ const useStyles = makeStyles(theme => ({
     marginHorizontal: 2,
   },
   codeText: {
-    fontFamily: 'pretendard-Regular',
+    fontFamily: 'pretendard-regular',
     fontSize: theme.textStyles.title1.fontSize,
     fontWeight: '400',
     color: theme.grayscale['900'],
@@ -147,7 +147,7 @@ const useStyles = makeStyles(theme => ({
     height: 56,
   },
   buttonText: {
-    fontFamily: 'pretendard-Regular',
+    fontFamily: 'pretendard-regular',
     fontSize: theme.textStyles.title4.fontSize,
     color: theme.grayscale['0'],
   },
