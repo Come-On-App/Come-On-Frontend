@@ -1,10 +1,12 @@
 import { View } from 'react-native';
 import React, { useState } from 'react';
 import { makeStyles } from '@rneui/themed';
+import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import SerchBar from '../components/SerchBar';
 import CardList from '../components/card/CardList';
+import IconButton from '../components/buttons/IconButton';
 
 const testItems = [
   {
@@ -50,9 +52,54 @@ function DateRangeSerchBar() {
   const updateSearch = (text: string) => {
     setSearch(text);
   };
+  const styles = useStyles();
 
   return (
-    <SerchBar IconType="date-range" value={search} onChange={updateSearch} />
+    <View style={styles.serchContainer}>
+      <SerchBar IconType="date-range" value={search} onChange={updateSearch} />
+    </View>
+  );
+}
+
+function CreateMeetingRoomButton() {
+  const styles = useStyles();
+  const navigation = useNavigation();
+  const goToCreateMeetingScreen = () => navigation.navigate('CreateMeeting');
+
+  return (
+    <View style={styles.buttonContainer}>
+      <IconButton
+        icon={{
+          iconName: 'add',
+          size: styles.buttonIcon.size,
+          color: styles.buttonIcon.color,
+        }}
+        onPress={goToCreateMeetingScreen}
+        style={styles.button}
+      />
+    </View>
+  );
+}
+
+function OneScreenTop() {
+  const [isLoggedin] = useState(true); // SERVER-API: 추후 사용자 로그인 처리
+  const styles = useStyles(isLoggedin);
+
+  return (
+    <View style={styles.screenTopContainer}>
+      <DateRangeSerchBar />
+      {isLoggedin && <CreateMeetingRoomButton />}
+    </View>
+  );
+}
+
+function OneScreenMain() {
+  const styles = useStyles();
+
+  return (
+    <View style={styles.cardContainer}>
+      <CardList cardItems={testItems} />
+    </View>
   );
 }
 
@@ -61,23 +108,38 @@ export default function TabOneScreen() {
 
   return (
     <SafeAreaView style={styles.screenContainer}>
-      <View style={styles.serchContainer}>
-        <DateRangeSerchBar />
-      </View>
-      <View style={styles.cardContainer}>
-        <CardList cardItems={testItems} />
-      </View>
+      <OneScreenTop />
+      <OneScreenMain />
     </SafeAreaView>
   );
 }
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme, isLoggedin: boolean) => ({
   screenContainer: {
     flex: 1,
     paddingBottom: -30, // 네비게이션 탭 패딩 공간 제거
   },
-  serchContainer: {
+  screenTopContainer: {
     paddingHorizontal: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  serchContainer: {
+    flex: isLoggedin ? 0.85 : 1,
+  },
+  buttonContainer: {
+    flex: 0.15,
+    alignItems: 'center',
+  },
+  buttonIcon: {
+    size: 24,
+    color: '#231F20',
+  },
+  button: {
+    width: 44,
+    height: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   cardContainer: {
     flex: 1,
