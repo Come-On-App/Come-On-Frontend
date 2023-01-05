@@ -1,20 +1,26 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@rneui/themed';
-import { Alert, Pressable, View } from 'react-native';
+import { Alert, View } from 'react-native';
 import { Menu, MenuDivider, MenuItem } from 'react-native-material-menu';
 
-import Icon from '../Icon';
 import Font from '../Font';
 import { CardMenuDisplayProps, CardMenuProps } from '../../types';
 import CardModal from './CardModal';
+import IconButton from '../buttons/IconButton';
 
 function CardMenuDisplay({ showMenu, style }: CardMenuDisplayProps) {
   const { icon } = useStyles();
 
   return (
-    <Pressable onPress={showMenu} style={style}>
-      <Icon name="more-vert" size={icon.size} color={icon.color} />
-    </Pressable>
+    <IconButton
+      style={style}
+      onPress={showMenu}
+      icon={{
+        iconName: 'more-vert',
+        color: icon.color,
+        size: icon.size,
+      }}
+    />
   );
 }
 
