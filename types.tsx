@@ -1,41 +1,8 @@
-/**
- * Learn more about using TypeScript with React Navigation:
- * https://reactnavigation.org/docs/typescript/
- */
-
 import '@rneui/themed';
-import { MaterialIcons } from '@expo/vector-icons';
-import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import {
-  CompositeScreenProps,
-  NavigatorScreenParams,
-} from '@react-navigation/native';
-import { TextStyle, ViewStyle, StyleProp } from 'react-native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import type { MaterialIcons } from '@expo/vector-icons';
+import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
-export type RootStackParamList = {
-  Root: NavigatorScreenParams<RootTabParamList> | undefined;
-  Modal: undefined;
-  NotFound: undefined;
-  MeetingRoom: NavigatorScreenParams<RootTabParamList> | undefined;
-  CreateMeeting: NavigatorScreenParams<RootTabParamList> | undefined;
-  TestModal: NavigatorScreenParams<RootTabParamList> | undefined;
-};
-
-export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
-  NativeStackScreenProps<RootStackParamList, Screen>;
-
-export type RootTabParamList = {
-  TabOne: undefined;
-  TabTwo: undefined;
-  TabThree: undefined;
-};
-
-export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
-  CompositeScreenProps<
-    BottomTabScreenProps<RootTabParamList, Screen>,
-    NativeStackScreenProps<RootStackParamList>
-  >;
+import type { RootStackScreenProps } from './navigation';
 
 /**
  * Global Theme
@@ -89,19 +56,7 @@ export interface CodeInputProps {
   showKeyboard: boolean;
 }
 
-// CardModal
-export interface CardModalProps {
-  isVisible: boolean;
-  onClose: () => void;
-}
-
-export interface CardModalButtonProps {
-  onClose: () => void;
-}
-/*
- *inputType
- */
-
+// Input
 export interface InputProps {
   inputProps: InputTextProps;
   style?: StyleProp<TextStyle>;
@@ -120,10 +75,7 @@ export interface InputTextProps {
   isMultiline?: boolean;
 }
 
-/*
- *PlaceCardProps
- */
-
+// PlaceCard
 export interface PlaceProps {
   data: {
     id: number;
@@ -143,6 +95,16 @@ export type AddPlaceButtonProps = {
   iconName: IconName;
   text: string;
 };
+
+export interface IconButtonProps {
+  style: StyleProp<ViewStyle>;
+  onPress: () => void;
+  icon: {
+    iconName: IconName;
+    size: number;
+    color: string;
+  };
+}
 
 // Icon
 export type IconName = React.ComponentProps<typeof MaterialIcons>['name'];
@@ -174,6 +136,15 @@ export type CardItem = {
     date: string;
   };
 };
+
+export interface CardModalProps {
+  isVisible: boolean;
+  onClose: () => void;
+}
+
+export interface CardModalButtonProps {
+  onClose: () => void;
+}
 
 export interface CardListProps {
   cardItems: CardItem[];
