@@ -11,7 +11,7 @@ function Card({ cardItem }: CardProps) {
   return (
     <RneCard
       wrapperStyle={styles.cardWrapper}
-      containerStyle={styles.cardContianer}
+      containerStyle={styles.cardContainer}
     >
       <RneCard.Image style={styles.cardImage} source={{ uri: cardItem.path }}>
         <CardTopInfo
@@ -30,7 +30,7 @@ function Card({ cardItem }: CardProps) {
 
 const useStyles = makeStyles(() => ({
   cardWrapper: {},
-  cardContianer: {
+  cardContainer: {
     width: '100%',
     height: 255,
     marginBottom: 2.5,
