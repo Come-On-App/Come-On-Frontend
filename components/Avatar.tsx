@@ -1,10 +1,27 @@
 import React from 'react';
 import { Avatar as RneAvatar } from '@rneui/themed';
 
-import { AvatarProps } from '../types';
+import type { AvatarProps, BadgedAvatarProps } from '../types';
 
-function Avatar({ size, path }: AvatarProps) {
+export function Avatar({ size, path }: AvatarProps) {
   return <RneAvatar size={size} rounded source={{ uri: path }} />;
 }
 
-export default Avatar;
+export function BadgedAvatar({
+  size,
+  path,
+  badge: { icon, backgroundColor },
+}: BadgedAvatarProps) {
+  return (
+    <RneAvatar size={size} rounded source={{ uri: path }}>
+      <RneAvatar.Accessory
+        style={{
+          backgroundColor,
+        }}
+        size={icon.size}
+        color={icon.color}
+        name={icon.iconName}
+      />
+    </RneAvatar>
+  );
+}
