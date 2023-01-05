@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import theme from '../../constants/themed';
-import Font from '../Font';
+import { Font } from '../Font';
 import { InputProps } from '../../types';
 
 function InputText({ inputProps }: InputProps) {

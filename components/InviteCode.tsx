@@ -8,7 +8,7 @@ import {
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
 
-import Font from './Font';
+import { Font } from './Font';
 import { CodeInputProps } from '../types';
 
 function InviteCode() {

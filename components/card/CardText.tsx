@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Divider, makeStyles } from '@rneui/themed';
 
 import Icon from '../Icon';
-import Font, { BoldFont } from '../Font';
+import { Font, BoldFont } from '../Font';
 import { CardSubTitleProps, CardTtileProps } from '../../types';
 
 export function CardTitle({ titleText }: CardTtileProps) {

@@ -13,7 +13,7 @@ function useDefaultStyle() {
   return defaultStyle;
 }
 
-function Font({ style, children }: TextProps) {
+export function Font({ style, children }: TextProps) {
   const defaultStyle = useDefaultStyle();
 
   return (
@@ -32,5 +32,3 @@ export function BoldFont({ style, children }: TextProps) {
     </Text>
   );
 }
-
-export default Font;

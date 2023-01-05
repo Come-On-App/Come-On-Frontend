@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import Icon from '../components/Icon';
 import InputText from '../components/inputComponents/InputText';
 import Label from '../components/inputComponents/Label';
-import Font from '../components/Font';
+import { Font } from '../components/Font';
 import theme from '../constants/themed';
 
 function TestModal() {

@@ -3,7 +3,7 @@ import { makeStyles } from '@rneui/themed';
 import { Alert, View } from 'react-native';
 import { Menu, MenuDivider, MenuItem } from 'react-native-material-menu';
 
-import Font from '../Font';
+import { Font } from '../Font';
 import { CardMenuDisplayProps, CardMenuProps } from '../../types';
 import CardModal from './CardModal';
 import IconButton from '../buttons/IconButton';

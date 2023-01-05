@@ -8,7 +8,7 @@ import {
   GroupDisplayProps,
 } from '../../types';
 import Icon from '../Icon';
-import Font from '../Font';
+import { Font } from '../Font';
 
 function DisplayIcon({ icon: iconName }: DisplayIconProps) {
   const { icon, iconContainer } = useStyles();

@@ -2,7 +2,7 @@ import { View } from 'react-native';
 import React, { useState } from 'react';
 import { Button, Overlay, makeStyles } from '@rneui/themed';
 
-import Font from '../Font';
+import { Font } from '../Font';
 import { CodeInput } from '../InviteCode';
 import { CardModalButtonProps, CardModalProps } from '../../types';
 
