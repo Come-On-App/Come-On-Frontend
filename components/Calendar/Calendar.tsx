@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { makeStyles, useTheme } from '@rneui/themed';
 import {
   CalendarProvider,
@@ -7,12 +7,11 @@ import {
 } from 'react-native-calendars';
 import { View } from 'react-native';
 
-import {
-  Theme as CalendarTheme,
-  MarkedDates,
-} from 'react-native-calendars/src/types';
+import { MarkedDates } from 'react-native-calendars/src/types';
+import { DayProps } from 'react-native-calendars/src/calendar/day';
 import LocaleConfig from '../Calendar/LocaleConfig';
 import Font from '../StyledText';
+import CustomCalendarTheme, { DayTheme } from './CustomCalendarTheme';
 
 function CalendarHeader(date: XDate): ReactNode {
   const styles = useStyles();
@@ -41,8 +40,6 @@ const returnPeriodArray = (startDate: string, endDate: string) => {
   const dayDiff = returnDayDiff(startDay, endDay);
   const arr = [];
 
-  console.log(returnDayDiff(startDay, endDay));
-
   for (let i = 0; i <= dayDiff; i += 1) {
     if (i === 0) {
       arr.push(returnYYYYmmdd(startDay));
@@ -52,8 +49,6 @@ const returnPeriodArray = (startDate: string, endDate: string) => {
       );
     }
   }
-
-  console.log(arr);
 
   return arr;
 };
@@ -69,124 +64,127 @@ const returnYYYYmmdd = (date: Date): string => {
 
 function Calendar(): JSX.Element {
   const styles = useStyles();
-  const { theme } = useTheme();
-  const [days, setDays] = useState<string[]>([]);
+  const theme2 = useTheme();
   const [markedDate, setMarkedDate] = useState({});
-  const calendarTheme: CalendarTheme = {
-    'stylesheet.calendar.header': {
-      dayTextAtIndex0: {
-        color: theme.colors.warning,
-      },
-    },
-    textDayStyle: {
-      color: theme.grayscale[900],
-    },
-    todayTextColor: theme.colors.primary,
-  };
+  const [startDay, setStartDay] = useState('');
+  const [endDay, setEndDay] = useState('');
 
   LocaleConfig.defaultLocale = 'kr';
 
-  const dateSelected = () => {
-    if (days.length === 0) return false;
-
-    return true;
-  };
   const onPressDayHandler = (date: DateData) => {
-    if (!dateSelected()) {
-      days.push(date.dateString);
-    } else if (dateSelected() && days.length >= 2) {
-      if (date.dateString > days[days.length - 1]) {
-        days.push(date.dateString);
-      } else {
-        const temp = [date.dateString];
-
-        setDays([]);
-      }
-    } else if (dateSelected() && days.length < 2) {
-      if (date.dateString < days[0]) {
-        setDays([]);
-        days.push(date.dateString); // 재설정
-      } else if (date.dateString > days[days.length - 1]) {
-        days.push(date.dateString);
-      }
-    }
-
-    let selectedDate = {};
-
-    days.sort();
-
-    if (days.length >= 2) {
-      selectedDate = {
-        [days[0]]: {
-          startingDay: true,
-          color: theme.colors.primary,
-          textColor: 'white',
-        },
-        [days[days.length - 1]]: {
-          endingDay: true,
-          color: theme.colors.primary,
-          textColor: 'white',
-        },
-      };
-    } else {
-      selectedDate = {
-        [days[0]]: {
-          startingDay: true,
-          color: theme.colors.primary,
-          textColor: 'white',
-        },
-      };
-    }
-
-    setMarkedDate(selectedDate);
-
-    console.log('------');
-    const periodArray = returnPeriodArray('2023-01-18', '2023-01-23');
+    let start = startDay;
+    let end = endDay;
     const markedDates: MarkedDates = {};
+    let periodArray = [];
 
-    periodArray.forEach((key, index) => {
-      markedDates[key] = { selected: true, color: 'blue' };
-    });
+    if (start === '') {
+      setStartDay(date.dateString);
+      markedDates[date.dateString] = {
+        selected: true,
+        startingDay: true,
+        color: DayTheme.DayTheme?.colors?.dayEndColor,
+        customTextStyle: DayTheme.DayTheme?.startDayStyle?.textColor,
+        customContainerStyle: DayTheme.DayTheme?.startDayStyle?.container,
+      };
+      start = date.dateString;
+    } else if (startDay !== '' && startDay >= date.dateString) {
+      setStartDay('');
+      setEndDay('');
+      setMarkedDate([]);
+      start = '';
+    } else if (startDay !== '' && startDay < date.dateString) {
+      setEndDay(date.dateString);
+      end = date.dateString;
+    } else if (startDay !== '' && endDay !== '') {
+      if (date.dateString >= endDay) {
+        setEndDay(date.dateString);
+        end = date.dateString;
+      } else {
+        setStartDay('');
+        setEndDay('');
+        setMarkedDate([]);
+        start = '';
+        end = '';
+      }
+    }
 
-    console.log(periodArray);
-    console.log(markedDates);
+    if (start && end) {
+      periodArray = returnPeriodArray(start, end);
+      periodArray.forEach((key, index) => {
+        if (index === 0) {
+          markedDates[key] = {
+            selected: true,
+            startingDay: true,
+            color: DayTheme.DayTheme?.colors?.dayStartColor,
+            customTextStyle: DayTheme.DayTheme?.startDayStyle?.textColor,
+            customContainerStyle: DayTheme.DayTheme?.startDayStyle?.container,
+          };
+        } else if (index === periodArray.length - 1) {
+          markedDates[key] = {
+            selected: true,
+            endingDay: true,
+            color: DayTheme.DayTheme?.colors?.dayStartColor,
+            customContainerStyle: DayTheme.DayTheme?.endDayStyle?.container,
+            customTextStyle: DayTheme.DayTheme?.endDayStyle?.textColor,
+          };
+        } else {
+          markedDates[key] = {
+            selected: true,
+            customContainerStyle: DayTheme.DayTheme?.dayStyle?.container,
+            color: DayTheme.DayTheme?.colors?.dayFilteredColor,
+          };
+        }
+      });
+    } else if (start !== '') {
+      markedDates[start] = {
+        selected: true,
+        textColor: 'white',
+        customContainerStyle: DayTheme.DayTheme?.dayStyle?.oneDaySelectedStyle,
+      };
+    }
 
     setMarkedDate(markedDates);
   };
 
   return (
-    <CalendarProvider
-      date="2023-1-1"
-      style={styles.calendarContainer}
-      theme={calendarTheme}
-    >
-      <View style={styles.shadowBox}>
-        <CalendarList // Callback which gets executed when visible months change in scroll view. Default = undefined
-          calendarStyle={styles.calendarStyle}
-          onVisibleMonthsChange={months => {
-            console.log('now these months are visible', months);
-          }}
-          onDayPress={onPressDayHandler}
-          markingType="period"
-          markedDates={markedDate}
-          pastScrollRange={0}
-          futureScrollRange={12}
-          scrollEnabled
-          showScrollIndicator={false}
-          theme={calendarTheme}
-          renderHeader={date => CalendarHeader(date!)}
-        />
-      </View>
-    </CalendarProvider>
+    <View style={styles.viewview}>
+      <CalendarProvider
+        date="2023-1-1"
+        style={styles.calendarContainer}
+        theme={CustomCalendarTheme}
+      >
+        <View style={styles.shadowBox}>
+          <CalendarList
+            calendarStyle={styles.calendarStyle}
+            // onVisibleMonthsChange={months => {
+            //   console.log('now these months are visible', months);
+            // }}
+            onDayPress={onPressDayHandler}
+            markingType="period"
+            markedDates={markedDate}
+            nestedScrollEnabled
+            pastScrollRange={0}
+            displayLoadingIndicator={false}
+            futureScrollRange={12}
+            showScrollIndicator={false}
+            theme={CustomCalendarTheme}
+            renderHeader={date => CalendarHeader(date!)}
+          />
+        </View>
+      </CalendarProvider>
+    </View>
   );
 }
 
 export default Calendar;
 
 const useStyles = makeStyles(theme => ({
+  viewview: {
+    width: '100%',
+    justifyContent: 'center',
+    height: '98%',
+  },
   calendarContainer: {
-    flex: 0.7,
-    backgroundColor: 'black',
     shadowOffset: { width: 0, height: 8 },
     elevation: 4,
     shadowRadius: 12,
@@ -194,7 +192,6 @@ const useStyles = makeStyles(theme => ({
     shadowColor: '#000',
     overflow: 'hidden',
     borderRadius: 12,
-    padding: 0,
   },
   calendarStyle: {
     width: '100%',
@@ -205,6 +202,7 @@ const useStyles = makeStyles(theme => ({
     elevation: 4,
     shadowRadius: 12,
     shadowOpacity: 0.25,
+    overflow: 'hidden',
     shadowColor: '#000',
     borderRadius: 12,
   },
@@ -213,7 +211,7 @@ const useStyles = makeStyles(theme => ({
   },
   calendarTitle: {
     justifyContent: 'flex-start',
-    marginTop: 20,
+    marginTop: 10,
     marginBottom: 10,
     width: '100%',
   },
