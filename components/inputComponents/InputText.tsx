@@ -43,7 +43,6 @@ export default InputText;
 const styles = StyleSheet.create({
   container: {
     marginTop: 28,
-    flex: 1,
   },
   labelContainer: {
     flexDirection: 'row',

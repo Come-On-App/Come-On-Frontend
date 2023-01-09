@@ -39,7 +39,6 @@ LocaleConfig.locales.kr = {
     '토요일',
   ],
   dayNamesShort: ['SUN', 'MON', 'TUE.', 'WED', 'THU', 'FRI', 'SAT'],
-  today: "Aujourd'hui",
 };
 
 export default LocaleConfig;

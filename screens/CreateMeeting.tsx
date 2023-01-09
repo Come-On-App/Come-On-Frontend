@@ -62,13 +62,13 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
     backgroundColor: 'white',
+    justifyContent: 'center',
   },
 
-  inputContainer: {},
   buttons: {
-    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 20,
+    marginBottom: 20,
   },
 });

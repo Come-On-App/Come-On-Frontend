@@ -69,7 +69,7 @@ function InputImage() {
     <View style={styles.container}>
       <Font style={styles.label}>사진등록</Font>
       <Pressable onPress={() => pickImage()} style={[styles.imageContainer]}>
-        <View>{picture}</View>
+        {picture}
       </Pressable>
     </View>
   );
@@ -80,7 +80,6 @@ export default InputImage;
 const styles = StyleSheet.create({
   container: {
     marginTop: 28,
-    flex: 1,
   },
   imageContainer: {
     overflow: 'hidden',
