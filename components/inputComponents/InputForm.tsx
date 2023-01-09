@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, KeyboardAvoidingView } from 'react-native';
-import { makeStyles } from '@rneui/themed';
+import { View, KeyboardAvoidingView, Pressable, Text } from 'react-native';
+import { makeStyles, Overlay } from '@rneui/themed';
 import InputText from './InputText';
 import InputImage from './InputImage';
 import LocaleConfig from '../Calendar/LocaleConfig';
@@ -10,23 +10,41 @@ import Calendar from '../Calendar/Calendar';
 
 function InputForm({ inputProps }: InputFormProps) {
   const styles = useStyles();
-  const [touched, setTouched] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const onPressLabel = () => {
+    setVisible(!visible);
+  };
 
   LocaleConfig.defaultLocale = 'kr';
 
   return (
-    <KeyboardAvoidingView behavior="padding" style={styles.container}>
-      <InputImage />
-      <InputText inputProps={inputProps} />
-
-      <View style={styles.labelContainer}>
-        <Label>모임기간</Label>
-        <Label style={styles.subLabelStyle}>기간선택</Label>
-      </View>
-      <View style={styles.calendarContainer}>
-        <Calendar />
-      </View>
-    </KeyboardAvoidingView>
+    <>
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
+        <InputImage />
+        <InputText inputProps={inputProps} />
+        <Pressable style={styles.labelContainer} onPress={onPressLabel}>
+          <Label>모임기간</Label>
+          <Label style={styles.subLabelStyle}>기간선택</Label>
+        </Pressable>
+        <View style={styles.calendarContainer}>
+          <Calendar type="period" />
+        </View>
+      </KeyboardAvoidingView>
+      <Overlay
+        overlayStyle={{
+          width: '90%',
+          margin: 0,
+          padding: 0,
+          backgroundColor: 'rgba(52, 52, 52, 0)',
+        }}
+        isVisible={visible}
+        onBackdropPress={onPressLabel}
+      >
+        <View style={{ width: '100%', height: 700 }}>
+          <Calendar type="period" />
+        </View>
+      </Overlay>
+    </>
   );
 }
 

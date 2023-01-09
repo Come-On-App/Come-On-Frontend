@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unstable-nested-components */
 import React, { ReactNode, useState } from 'react';
-import { makeStyles, useTheme } from '@rneui/themed';
+import { makeStyles } from '@rneui/themed';
 import {
   CalendarProvider,
   CalendarList,
@@ -8,8 +8,6 @@ import {
 } from 'react-native-calendars';
 import { View } from 'react-native';
 import { MarkedDates } from 'react-native-calendars/src/types';
-import { DayProps } from 'react-native-calendars/src/calendar/day';
-import PeriodDay from './PeriodDay';
 import LocaleConfig from '../Calendar/LocaleConfig';
 import Font from '../StyledText';
 import CustomCalendarTheme, { DayTheme } from './CustomCalendarTheme';
@@ -63,12 +61,16 @@ const returnYYYYmmdd = (date: Date): string => {
   }`;
 };
 
-function Calendar(): JSX.Element {
+type CalendarProps = {
+  type: 'period' | 'dot';
+};
+
+function Calendar(props: CalendarProps): JSX.Element {
   const styles = useStyles();
-  const theme2 = useTheme();
   const [markedDate, setMarkedDate] = useState({});
   const [startDay, setStartDay] = useState('');
   const [endDay, setEndDay] = useState('');
+  const { type } = props;
 
   LocaleConfig.defaultLocale = 'kr';
 
@@ -161,7 +163,7 @@ function Calendar(): JSX.Element {
             //   console.log('now these months are visible', months);
             // }}
             onDayPress={onPressDayHandler}
-            markingType="period"
+            markingType={type}
             markedDates={markedDate}
             nestedScrollEnabled
             pastScrollRange={0}
@@ -170,7 +172,6 @@ function Calendar(): JSX.Element {
             showScrollIndicator={false}
             theme={CustomCalendarTheme}
             renderHeader={date => CalendarHeader(date!)}
-            // eslint-disable-next-line react/jsx-props-no-spreading
           />
         </View>
       </CalendarProvider>
@@ -185,6 +186,7 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     justifyContent: 'center',
     height: '98%',
+    backgroundColor: 'none',
   },
   calendarContainer: {
     shadowOffset: { width: 0, height: 8 },
