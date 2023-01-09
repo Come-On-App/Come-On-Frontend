@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 import React, { ReactNode, useState } from 'react';
 import { makeStyles, useTheme } from '@rneui/themed';
 import {
@@ -6,9 +7,9 @@ import {
   DateData,
 } from 'react-native-calendars';
 import { View } from 'react-native';
-
 import { MarkedDates } from 'react-native-calendars/src/types';
 import { DayProps } from 'react-native-calendars/src/calendar/day';
+import PeriodDay from './PeriodDay';
 import LocaleConfig from '../Calendar/LocaleConfig';
 import Font from '../StyledText';
 import CustomCalendarTheme, { DayTheme } from './CustomCalendarTheme';
@@ -169,6 +170,7 @@ function Calendar(): JSX.Element {
             showScrollIndicator={false}
             theme={CustomCalendarTheme}
             renderHeader={date => CalendarHeader(date!)}
+            // eslint-disable-next-line react/jsx-props-no-spreading
           />
         </View>
       </CalendarProvider>
