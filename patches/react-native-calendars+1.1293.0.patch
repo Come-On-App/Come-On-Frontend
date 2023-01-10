@@ -95,3 +95,16 @@ index f27db0e..79c8afa 100644
          <View style={containerStyle}>
            <Text allowFontScaling={false} style={textStyle}>
              {String(children)}
+diff --git a/node_modules/react-native-calendars/src/types.d.ts b/node_modules/react-native-calendars/src/types.d.ts
+index 31103ce..a80d83f 100644
+--- a/node_modules/react-native-calendars/src/types.d.ts
++++ b/node_modules/react-native-calendars/src/types.d.ts
+@@ -74,6 +74,8 @@ export interface Theme {
+     arrowHeight?: number;
+     arrowWidth?: number;
+     weekVerticalMargin?: number;
++    'stylesheet.calendar.header'?:object;
++    'stylesheet.day.period'?:object;
+     stylesheet?: {
+         calendar?: {
+             main?: object;
