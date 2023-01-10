@@ -1,4 +1,3 @@
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 import { Theme as CalendarTheme } from 'react-native-calendars/src/types';
 import { createTheme } from '@rneui/themed';
 import theme from '../../constants/themed';
@@ -22,18 +21,10 @@ const CustomCalendarTheme: CalendarTheme = {
       borderColor: 'black',
     },
   },
-  'stylesheet.marking.startingDay': {
-    color: 'blue',
-  },
   todayTextColor: theme.lightColors?.primary,
   selectedDayTextColor: 'black',
 
   selectedDotColor: 'red',
-  'stylesheet.dot.selected': {
-    backgroundColor: 'red',
-    width: 32,
-    height: 32,
-  },
 };
 
 export default CustomCalendarTheme;

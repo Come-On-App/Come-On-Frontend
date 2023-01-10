@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, KeyboardAvoidingView, Pressable, Text } from 'react-native';
+import { View, KeyboardAvoidingView, Pressable } from 'react-native';
 import { makeStyles, Overlay } from '@rneui/themed';
 import InputText from './InputText';
 import InputImage from './InputImage';
