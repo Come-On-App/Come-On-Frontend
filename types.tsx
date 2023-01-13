@@ -130,26 +130,72 @@ export interface InputTextProps {
 
 /*
  *PlaceCardProps
+ TODO : 추후 문서보고 수정
  */
-
-export interface PlaceProps {
-  data: {
-    id: number;
-    name: string;
-    description: string;
-    lat: number;
-    lng: number;
-    address: string;
-    order: number;
-    apiId: number;
-    category: string;
-  };
-}
 
 export type AddPlaceButtonProps = {
   navigation: RootStackScreenProps<'MeetingRoom'>;
   iconName: IconName;
   text: string;
+};
+
+export type MeetingResponse = {
+  id: number;
+  myMeetingUserId: number;
+  myMeetingRole: 'HOST' | 'EDITOR' | 'PARTICIPANT';
+  title: string;
+  startDate: string;
+  endDate: string;
+  meetingUsers: MeetingUser[];
+  meetingDates: MeetingDate[];
+  meetingPlaces: MeetingPlace[];
+};
+
+export type MeetingUser = {
+  id: number;
+  nickname: string;
+  imageLink: string;
+  meetingRole: 'HOST' | 'EDITOR' | 'PARTICIPANT';
+};
+
+export type MeetingDate = {
+  id: number;
+  date: string;
+  userCount: number;
+  dateStatus: 'FIXED' | 'UNFIXED';
+  isSelected: boolean;
+};
+
+export type MeetingPlace = {
+  id: number;
+  name: string;
+  description: string;
+  lat: number;
+  lng: number;
+  address: string;
+  order: number;
+  apiId: number;
+  category: string;
+};
+
+export type PlaceProps = {
+  data: MeetingPlace[];
+};
+
+export type PlaceCardBodyProps = {
+  data: MeetingPlace;
+};
+
+export type MemberBoxProps = {
+  myId: number;
+  myRole: 'HOST' | 'EDITOR' | 'PARTICIPANT';
+  meetingUsers: MeetingUser[];
+};
+
+// calendar
+export type CalendarProps = {
+  type: 'PERIOD' | 'DEFAULT';
+  data: MeetingResponse | undefined; // TODO: 추후 undefined 수정
 };
 
 // Icon
@@ -239,6 +285,7 @@ export interface RightAreaProps {
 export interface AvatarProps {
   path: string;
   size: number;
+  containerStyle?: StyleProp<ViewStyle>;
 }
 
 // TabBar
