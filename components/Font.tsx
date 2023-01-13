@@ -32,3 +32,5 @@ export function BoldFont({ style, children }: TextProps) {
     </Text>
   );
 }
+
+export default Font;
