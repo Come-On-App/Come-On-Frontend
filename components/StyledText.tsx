@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text } from '@rneui/themed';
+
 import theme from '../constants/themed';
 import { TextProps } from '../types';
 
