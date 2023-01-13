@@ -1,5 +1,5 @@
-/* eslint-disable react/no-unstable-nested-components */
-import React, { ReactNode, useState } from 'react';
+/* eslint-disable react/destructuring-assignment */
+import React, { ReactNode, useState, useEffect } from 'react';
 import { makeStyles } from '@rneui/themed';
 import {
   CalendarProvider,
@@ -8,9 +8,10 @@ import {
 } from 'react-native-calendars';
 import { View } from 'react-native';
 import { MarkedDates } from 'react-native-calendars/src/types';
-import LocaleConfig from '../Calendar/LocaleConfig';
+import LocaleConfig from './LocaleConfig';
 import Font from '../StyledText';
 import CustomCalendarTheme, { DayTheme } from './CustomCalendarTheme';
+import { CalendarProps, MeetingDate, MeetingUser } from '../../types';
 
 function CalendarHeader(date: XDate): ReactNode {
   const styles = useStyles();
@@ -51,6 +52,19 @@ const returnPeriodArray = (startDate: string, endDate: string) => {
 
   return arr;
 };
+const returnMonthDiff = (startDate: Date, endDate: Date) => {
+  const msecDiff = endDate.getTime() - startDate.getTime();
+  const monthDiff = msecDiff / (24 * 60 * 60 * 1000) / 12;
+
+  return monthDiff;
+};
+const renderMonth = (startDate: string, endDate: string) => {
+  const startDay = new Date(startDate);
+  const endDay = new Date(endDate);
+  const dayDiff = Math.floor(returnMonthDiff(startDay, endDay));
+
+  return dayDiff;
+};
 const returnYYYYmmdd = (date: Date): string => {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
@@ -60,21 +74,39 @@ const returnYYYYmmdd = (date: Date): string => {
     day >= 10 ? day : `0${day}`
   }`;
 };
+const renderSelectedDate = (
+  dates: MeetingDate[],
+  meetingUsers: MeetingUser[],
+): MarkedDates => {
+  const markedDates: MarkedDates = {};
+  const userCount = meetingUsers.length;
 
-type CalendarProps = {
-  type: 'period' | 'dot';
+  dates.forEach(item => {
+    markedDates[item.date] = {
+      customStyles: {
+        container: {
+          borderRadius: 0,
+          backgroundColor: `rgba(51,127,254, ${item.userCount / userCount!})`,
+        },
+        text: {
+          color: 'white',
+        },
+      },
+    };
+  });
+
+  return markedDates;
 };
 
-function Calendar(props: CalendarProps): JSX.Element {
+function Calendar({ type, data }: CalendarProps): JSX.Element {
   const styles = useStyles();
   const [markedDate, setMarkedDate] = useState({});
   const [startDay, setStartDay] = useState('');
   const [endDay, setEndDay] = useState('');
-  const { type } = props;
 
   LocaleConfig.defaultLocale = 'kr';
 
-  const onPressDayHandler = (date: DateData) => {
+  const onPressDayHandlerPeriod = (date: DateData) => {
     let start = startDay;
     let end = endDay;
     const markedDates: MarkedDates = {};
@@ -148,35 +180,72 @@ function Calendar(props: CalendarProps): JSX.Element {
 
     setMarkedDate(markedDates);
   };
+  const onPressHandler = () => {
+    console.log('날짜 클릭!');
+  };
+  const renderPeriodCalendar = () => {
+    return (
+      <View style={styles.viewview}>
+        <CalendarProvider
+          date="2023-1-1"
+          style={styles.calendarContainer}
+          theme={CustomCalendarTheme}
+        >
+          <View style={styles.shadowBox}>
+            <CalendarList
+              calendarStyle={styles.calendarStyle}
+              onDayPress={onPressDayHandlerPeriod}
+              markingType="period"
+              markedDates={markedDate}
+              nestedScrollEnabled
+              pastScrollRange={0}
+              displayLoadingIndicator={false}
+              futureScrollRange={12}
+              showScrollIndicator={false}
+              theme={CustomCalendarTheme}
+              renderHeader={date => CalendarHeader(date!)}
+            />
+          </View>
+        </CalendarProvider>
+      </View>
+    );
+  };
+  const renderDefaultCalendar = () => {
+    let selectedDate;
+    let month;
 
-  return (
-    <View style={styles.viewview}>
-      <CalendarProvider
-        date="2023-1-1"
-        style={styles.calendarContainer}
-        theme={CustomCalendarTheme}
-      >
-        <View style={styles.shadowBox}>
-          <CalendarList
-            calendarStyle={styles.calendarStyle}
-            // onVisibleMonthsChange={months => {
-            //   console.log('now these months are visible', months);
-            // }}
-            onDayPress={onPressDayHandler}
-            markingType={type}
-            markedDates={markedDate}
-            nestedScrollEnabled
-            pastScrollRange={0}
-            displayLoadingIndicator={false}
-            futureScrollRange={12}
-            showScrollIndicator={false}
-            theme={CustomCalendarTheme}
-            renderHeader={date => CalendarHeader(date!)}
-          />
+    if (data?.meetingDates) {
+      selectedDate = renderSelectedDate(data.meetingDates, data.meetingUsers);
+      month = renderMonth(data?.startDate, data?.endDate) - 1;
+    }
+
+    return (
+      <View style={styles.viewview}>
+        <View style={styles.calendarContainer}>
+          <View style={styles.shadowBox}>
+            <CalendarList
+              calendarStyle={styles.calendarStyle}
+              onDayPress={onPressHandler}
+              minDate={data?.startDate}
+              maxDate={data?.endDate}
+              markingType="custom"
+              disableAllTouchEventsForDisabledDays
+              markedDates={selectedDate}
+              nestedScrollEnabled
+              pastScrollRange={0}
+              displayLoadingIndicator={false}
+              futureScrollRange={month}
+              showScrollIndicator={false}
+              theme={CustomCalendarTheme}
+              renderHeader={date => CalendarHeader(date!)}
+            />
+          </View>
         </View>
-      </CalendarProvider>
-    </View>
-  );
+      </View>
+    );
+  };
+
+  return type === 'DEFAULT' ? renderDefaultCalendar() : renderPeriodCalendar();
 }
 
 export default Calendar;
