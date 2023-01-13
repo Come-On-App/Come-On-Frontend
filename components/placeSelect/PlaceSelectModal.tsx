@@ -7,10 +7,13 @@ import Icon from '../Icon';
 import Modal from '../Modal';
 import Button from '../buttons/Buttons';
 import Font, { BoldFont } from '../Font';
-import InputBox from '../inputComponents/InputText';
-import type { InputTextProps, ModalProps } from '../../types';
+import InputBox from '../input/InputText';
+import type { InputTextProps, PlaceSelectModalProps } from '../../types';
 
-export default function PlaceSelectModal({ isVisible, onClose }: ModalProps) {
+export default function PlaceSelectModal({
+  onClose,
+  isVisible,
+}: PlaceSelectModalProps) {
   const { width } = useWindowDimensions();
   const styles = useStyles();
 

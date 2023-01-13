@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, useTheme } from '@rneui/themed';
 
-import { TextProps } from '../types';
+import type { TextProps } from '../types';
 
 function useDefaultStyle() {
   const { theme } = useTheme();

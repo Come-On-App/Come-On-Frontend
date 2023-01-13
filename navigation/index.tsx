@@ -1,50 +1,27 @@
-/**
- * If you are not familiar with React Navigation, refer to the "Fundamentals" guide:
- * https://reactnavigation.org/docs/getting-started
- *
- */
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { Button } from '@rneui/themed';
+import theme from '../constants/themed';
 
-import Avatar from '../components/Avatar';
+import { Avatar } from '../components/Avatar';
+import MeetingRoom from '../screens/MeetingRoom';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import CreateMeeting from '../screens/CreateMeeting';
-import CancelIconButton from '../components/buttons/CancelIconButton';
-
 import TabThreeScreen from '../screens/TabThreeScreen';
-import Icon, { createTabBarIcon, PressableIcon } from '../components/Icon';
-import theme from '../constants/themed';
-import MeetingRoom from '../screens/MeetingRoom';
-import TestModal from '../screens/TestModal';
+import PlaceSelect from '../components/placeSelect/PlaceSelect';
+import LogoutButton from '../components/myPage/MyPageLogoutButton';
+import { createTabBarIcon, PressableIcon } from '../components/Icon';
 import { RootStackParamList, RootTabParamList } from '../navigation';
+import CancelIconButton from '../components/buttons/CancelIconButton';
+import MyPageHeaderTitle from '../components/myPage/MyPageHeaderTitle';
+import PlaceSelectHeaderTitle from '../components/placeSelect/PlaceSelectHeaderTitle';
 
-function TabThreeHeaderRight() {
-  return (
-    <View>
-      <Button
-        title="로그아웃"
-        type="clear"
-        titleStyle={{
-          fontFamily: 'pretendard-regular',
-          fontSize: 12,
-          color: '#9E9E9E',
-        }}
-        containerStyle={{
-          marginRight: 8,
-        }}
-      />
-    </View>
-  );
-}
-
-function TabBarIcon() {
-  const testImage = 'https://randomuser.me/api/portraits/men/36.jpg';
+function TabThreeIcon() {
+  const testImage = 'https://randomuser.me/api/portraits/men/36.jpg'; // SERVER-API: 추후 서버로 사용자 프로필 요청
   const size = 32;
 
   return <Avatar size={size} path={testImage} />;
@@ -58,10 +35,6 @@ export default function Navigation() {
   );
 }
 
-/**
- * A root stack navigator is often used for displaying modals on top of all other content.
- * https://reactnavigation.org/docs/modal
- */
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
@@ -84,21 +57,22 @@ function RootNavigator() {
         }}
       />
       <Stack.Screen
-        name="MeetingRoom"
-        component={MeetingRoom}
+        name="PlaceSelect"
+        component={PlaceSelect}
         options={({ navigation, route }) => ({
-          title: '임시타이틀Room1',
+          title: '장소선택',
           headerTitleAlign: 'center',
-          headerTitleStyle: styles.headerStyle,
+          headerTitle: PlaceSelectHeaderTitle,
+          headerShadowVisible: false,
           headerRight: CancelIconButton,
           headerBackVisible: false,
         })}
       />
       <Stack.Screen
-        name="TestModal"
-        component={TestModal}
+        name="MeetingRoom"
+        component={MeetingRoom}
         options={({ navigation, route }) => ({
-          title: '테스트용 모달',
+          title: '임시타이틀Room1',
           headerTitleAlign: 'center',
           headerTitleStyle: styles.headerStyle,
           headerRight: CancelIconButton,
@@ -141,16 +115,15 @@ function BottomTabNavigator() {
               name: 'sensor-door',
               size: 32,
               color: 'black',
-              onPress: () => navigation.navigate('MeetingRoom'),
+              onPress: () => navigation.navigate('CreateMeeting'),
             }),
           headerRight: () =>
             PressableIcon({
-              name: 'add',
+              name: 'map',
               size: 32,
               color: 'black',
-              onPress: () => navigation.navigate('CreateMeeting'),
+              onPress: () => navigation.navigate('PlaceSelect'),
             }),
-
           tabBarLabel: '모임입장',
           tabBarIcon: createTabBarIcon('meeting-room'),
         })}
@@ -159,8 +132,11 @@ function BottomTabNavigator() {
         name="TabThree"
         component={TabThreeScreen}
         options={{
+          headerTitleAlign: 'center',
+          headerTitle: MyPageHeaderTitle,
+          headerRight: LogoutButton,
           tabBarLabel: '마이페이지',
-          tabBarIcon: TabBarIcon,
+          tabBarIcon: TabThreeIcon,
         }}
       />
     </BottomTab.Navigator>

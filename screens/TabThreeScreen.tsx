@@ -3,8 +3,25 @@ import { View } from 'react-native';
 import { makeStyles, Divider } from '@rneui/themed';
 
 import { Font } from '../components/Font';
-import Profile from '../components/myPage/Profile';
-import NickName from '../components/myPage/NickName';
+import Profile from '../components/myPage/MyPageProfile';
+import NickName from '../components/myPage/MyPageNickName';
+
+export default function TabThreeScreen() {
+  const styles = useStyles();
+  const { divider } = styles;
+
+  return (
+    <View style={styles.screenContainer}>
+      <ScreenTop />
+      <Divider
+        width={divider.width}
+        color={divider.color}
+        style={{ marginVertical: divider.marginVertical }}
+      />
+      <ScreenMain />
+    </View>
+  );
+}
 
 function ScreenTop() {
   const styles = useStyles();
@@ -24,23 +41,6 @@ function ScreenMain() {
   return (
     <View style={styles.myPageMainContainer}>
       <Font>캘린더 컴포넌트</Font>
-    </View>
-  );
-}
-
-export default function TabThreeScreen() {
-  const styles = useStyles();
-  const { divider } = styles;
-
-  return (
-    <View style={styles.screenContainer}>
-      <ScreenTop />
-      <Divider
-        width={divider.width}
-        color={divider.color}
-        style={{ marginVertical: divider.marginVertical }}
-      />
-      <ScreenMain />
     </View>
   );
 }
