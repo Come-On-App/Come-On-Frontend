@@ -4,9 +4,27 @@ import { Alert, View } from 'react-native';
 import { Menu, MenuDivider, MenuItem } from 'react-native-material-menu';
 
 import { Font } from '../Font';
-import { CardMenuDisplayProps, CardMenuProps } from '../../types';
 import CardModal from './CardModal';
-import IconButton from '../buttons/IconButton';
+import { IconButton } from '../buttons/Buttons';
+import type { CardMenuDisplayProps, CardMenuProps } from '../../types';
+
+export default function CardMenu({ style }: CardMenuProps) {
+  const styles = useStyles();
+  const [menuVisible, setMenuVisible] = useState(false);
+  const hideMenu = () => setMenuVisible(false);
+  const showMenu = () => setMenuVisible(true);
+
+  return (
+    <Menu
+      visible={menuVisible}
+      anchor={<CardMenuDisplay showMenu={showMenu} style={style} />}
+      onRequestClose={hideMenu}
+      style={styles.menu}
+    >
+      <CardMenuItems />
+    </Menu>
+  );
+}
 
 function CardMenuDisplay({ showMenu, style }: CardMenuDisplayProps) {
   const { icon } = useStyles();
@@ -54,24 +72,6 @@ function CardMenuItems() {
   );
 }
 
-function CardMenu({ style }: CardMenuProps) {
-  const styles = useStyles();
-  const [menuVisible, setMenuVisible] = useState(false);
-  const hideMenu = () => setMenuVisible(false);
-  const showMenu = () => setMenuVisible(true);
-
-  return (
-    <Menu
-      visible={menuVisible}
-      anchor={<CardMenuDisplay showMenu={showMenu} style={style} />}
-      onRequestClose={hideMenu}
-      style={styles.menu}
-    >
-      <CardMenuItems />
-    </Menu>
-  );
-}
-
 const useStyles = makeStyles(theme => ({
   menu: {
     overflow: 'hidden',
@@ -87,5 +87,3 @@ const useStyles = makeStyles(theme => ({
     size: 24,
   },
 }));
-
-export default CardMenu;

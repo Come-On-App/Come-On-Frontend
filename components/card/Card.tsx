@@ -2,10 +2,10 @@ import React from 'react';
 import { Card as RneCard, makeStyles } from '@rneui/themed';
 
 import CardTopInfo from './CardTop';
-import { CardProps } from '../../types';
+import type { CardProps } from '../../types';
 import { CardSubTitle, CardTitle } from './CardText';
 
-function Card({ cardItem }: CardProps) {
+export default function Card({ cardItem }: CardProps) {
   const styles = useStyles();
 
   return (
@@ -45,5 +45,3 @@ const useStyles = makeStyles(() => ({
     marginBottom: 8,
   },
 }));
-
-export default Card;

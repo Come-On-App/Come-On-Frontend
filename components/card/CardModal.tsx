@@ -1,34 +1,44 @@
 import { View } from 'react-native';
 import React, { useState } from 'react';
-import { Button, Overlay, makeStyles } from '@rneui/themed';
+import { makeStyles } from '@rneui/themed';
 
-import { Font } from '../Font';
+import Modal from '../Modal';
+import { BoldFont, Font } from '../Font';
 import { CodeInput } from '../InviteCode';
-import { CardModalButtonProps, CardModalProps } from '../../types';
+import { ButtonGroup } from '../buttons/Buttons';
+import type { CardModalButtonProps, CardModalProps } from '../../types';
 
-function CardModal({ isVisible, onClose }: CardModalProps) {
+export default function CardModal({ isVisible, onClose }: CardModalProps) {
   const styles = useStyles();
 
   return (
-    <Overlay isVisible={isVisible} overlayStyle={styles.overlay}>
+    <Modal isVisible={isVisible}>
       <View style={styles.modalContainer}>
-        <CardModalTitle />
-        <CardModalCode />
-        <CardModalText />
-        <CardModalButtons onClose={onClose} />
+        <CardModalTop />
+        <CardModalMain />
+        <CardModalBottom onClose={onClose} />
       </View>
-    </Overlay>
+    </Modal>
   );
 }
 
-function CardModalTitle() {
+function CardModalTop() {
   const styles = useStyles();
   const TITLE_TEXT = '초대코드가 만료됐습니다!';
 
   return (
-    <View style={styles.titleContainer}>
-      <Font style={styles.title}>{TITLE_TEXT}</Font>
+    <View style={styles.topContainer}>
+      <BoldFont style={styles.title}>{TITLE_TEXT}</BoldFont>
     </View>
+  );
+}
+
+function CardModalMain() {
+  return (
+    <>
+      <CardModalCode />
+      <CardModalText />
+    </>
   );
 }
 
@@ -60,39 +70,26 @@ function CardModalText() {
   );
 }
 
-function CardModalButtons({ onClose }: CardModalButtonProps) {
-  const styles = useStyles();
+function CardModalBottom({ onClose }: CardModalButtonProps) {
+  const CANCEL_TEXT = '닫기';
+  const COPY_TEXT = '복사하기';
 
   return (
-    <View style={styles.buttonContainer}>
-      <Button
-        title="닫기"
-        buttonStyle={styles.buttonRight}
-        titleStyle={styles.buttonText}
-        onPress={onClose}
-      />
-      <Button
-        title="복사하기"
-        buttonStyle={styles.buttonLeft}
-        titleStyle={styles.buttonText}
-      />
-    </View>
+    <ButtonGroup
+      firstButton={{
+        text: CANCEL_TEXT,
+        onPress: onClose,
+      }}
+      secondButton={{
+        text: COPY_TEXT,
+        onPress: () => console.log('click secondButton'),
+      }}
+    />
   );
 }
 
 const useStyles = makeStyles(theme => ({
-  overlay: {
-    backgroundColor: theme.grayscale['0'],
-    height: 240,
-    width: '70%',
-    borderRadius: 8,
-    justifyContent: 'center',
-    padding: 28,
-  },
-  modalContainer: {
-    alignItems: 'center',
-  },
-  titleContainer: {
+  topContainer: {
     marginBottom: 12,
   },
   title: {
@@ -104,8 +101,8 @@ const useStyles = makeStyles(theme => ({
     width: 30,
     height: 40,
     lineHeight: 40,
-    fontSize: theme.textStyles.title2.fontSize,
     fontWeight: '400',
+    fontSize: theme.textStyles.title2.fontSize,
   },
   textContainer: {
     marginTop: 12,
@@ -113,33 +110,10 @@ const useStyles = makeStyles(theme => ({
   },
   text: {
     color: theme.grayscale['600'],
-    lineHeight: theme.textStyles.body1.lineHeight,
     fontSize: theme.textStyles.body1.fontSize,
+    lineHeight: theme.textStyles.body1.lineHeight,
   },
-  buttonContainer: {
-    flexDirection: 'row',
-    width: '100%',
-    height: 48,
-    justifyContent: 'center',
-  },
-  buttonRight: {
-    width: 100,
-    marginRight: 3,
-    height: '100%',
-    backgroundColor: theme.grayscale['300'],
-  },
-  buttonLeft: {
-    marginRight: -3,
-    width: '100%',
-    height: '100%',
-    backgroundColor: theme.colors.primary,
-  },
-  buttonText: {
-    color: theme.grayscale['50'],
-    fontFamily: 'pretendard-regular',
-    fontSize: 14,
-    fontWeight: '400',
+  modalContainer: {
+    alignItems: 'center',
   },
 }));
-
-export default CardModal;

@@ -2,10 +2,10 @@ import React from 'react';
 import { View } from 'react-native';
 import { makeStyles } from '@rneui/themed';
 
-import {
-  ConfirmDisplayProps,
+import type {
   DisplayIconProps,
   GroupDisplayProps,
+  ConfirmDisplayProps,
 } from '../../types';
 import Icon from '../Icon';
 import { Font } from '../Font';
