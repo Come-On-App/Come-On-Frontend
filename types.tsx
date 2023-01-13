@@ -57,22 +57,40 @@ export interface CodeInputProps {
 }
 
 // Input
-export interface InputProps {
-  inputProps: InputTextProps;
+export interface InputBoxProps {
+  config: InputTextProps;
   style?: StyleProp<TextStyle>;
+}
+
+export interface InputTopProps {
+  label: string;
+  text: string;
+  maxLength: number;
+}
+
+export interface InputBoxTopTextLengthProps {
+  text: string;
+  maxLength: number;
+}
+
+export interface InputBoxTopTitleProps {
+  label: string;
+}
+
+export interface InputProps {
+  value: string;
+  maxLength: number;
+  multiline: boolean;
+  placeholder: string;
+  onChangeText: (text: string) => void;
 }
 
 export interface InputFormProps {
   inputProps: InputTextProps;
 }
 
-export interface InputTextProps {
+export interface InputTextProps extends InputProps {
   label: string;
-  placeholder: string;
-  length: number;
-  value: string;
-  onChangeText: (enteredValue: string) => void;
-  isMultiline?: boolean;
 }
 
 // PlaceCard
@@ -118,8 +136,9 @@ export interface Icon {
   color: string;
 }
 
-// SerchBar
-export interface SerchBarProps {
+// SearchBar
+export interface SearchBarProps {
+  style?: StyleProp<TextStyle>;
   IconType: IconName;
   value: string;
   onChange?: (text: string) => void;
@@ -221,5 +240,84 @@ export interface TabBarIconProps {
 // StyledText
 export interface TextProps {
   style?: StyleProp<TextStyle>;
+  children: React.ReactNode;
+}
+
+// Buttons
+type ButtonStyle = {
+  backgroundColor: string;
+  width: number | string;
+  height: number | string;
+  borderRadius?: number;
+  marginRight?: number | string;
+};
+
+type ButtonTextStyle = {
+  fontSize: number;
+  color: string;
+};
+
+export interface ButtonProps {
+  text: string;
+  bold?: boolean;
+  onPress: () => void;
+  height?: number;
+  textStyle?: Partial<ButtonTextStyle>;
+  buttonStyle?: Partial<ButtonStyle> | Partial<ButtonStyle>[];
+}
+
+type ButtonGroupStyle = {
+  width: number;
+  backgroundColor: string;
+};
+
+type ButtonConfig = {
+  text: string;
+  onPress: () => void;
+  style?: Partial<ButtonGroupStyle>;
+};
+
+export interface ButtonGroupProps {
+  height?: number;
+  spacing?: number;
+  firstButton: ButtonConfig;
+  secondButton: ButtonConfig;
+}
+
+// PlaceSelect
+export interface AddressProps {
+  info: {
+    title: string;
+    category: string;
+  };
+}
+
+export interface AddressTitleProps {
+  text: string;
+}
+
+export interface CategoryProps {
+  text: string;
+}
+
+export interface SubAddressProps {
+  info: {
+    title: string;
+  };
+}
+
+export interface PlaceSelectButtonProps {
+  onPress: () => void;
+}
+
+export interface PlaceSelectModalProps {
+  isVisible: boolean;
+  onClose: () => void;
+}
+
+// modal
+export interface ModalProps {
+  isVisible: boolean;
+  style?: StyleProp<ViewStyle>;
   children: React.ReactNode;
 }
