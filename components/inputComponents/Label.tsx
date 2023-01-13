@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@rneui/themed';
+
 import { TextProps } from '../../types';
 import Font from '../StyledText';
 

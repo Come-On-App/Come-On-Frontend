@@ -1,10 +1,6 @@
 import React from 'react';
-import {
-  StyleSheet,
-  TextInput,
-  View,
-  KeyboardAvoidingView,
-} from 'react-native';
+import { StyleSheet, TextInput, View } from 'react-native';
+
 import theme from '../../constants/themed';
 import Font from '../StyledText';
 import { InputProps } from '../../types';

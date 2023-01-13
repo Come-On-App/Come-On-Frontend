@@ -9,21 +9,18 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import Avatar from '../components/Avatar';
+import Avatar from '../components/member/Avatar';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import CreateMeeting from '../screens/CreateMeeting';
 import CancelIconButton from '../components/buttons/CancelIconButton';
-import {
-  RootStackParamList,
-  RootStackScreenProps,
-  RootTabParamList,
-} from '../types';
+import { RootStackParamList, RootTabParamList } from '../types';
 import TabThreeScreen from '../screens/TabThreeScreen';
 import Icon, { createTabBarIcon, PressableIcon } from '../components/Icon';
 import theme from '../constants/themed';
 import MeetingRoom from '../screens/MeetingRoom';
 import TestModal from '../screens/TestModal';
+import LoginScreen from '../screens/LoginScreen';
 
 function TabBarIcon() {
   const testImage = 'https://randomuser.me/api/portraits/men/36.jpg';
@@ -57,19 +54,19 @@ function RootNavigator() {
       <Stack.Screen
         name="CreateMeeting"
         component={CreateMeeting}
-        options={{
+        options={({ navigation, route }) => ({
           title: '모임등록',
           headerTitleAlign: 'center',
           headerTitleStyle: styles.headerStyle,
           headerRight: CancelIconButton,
           headerBackVisible: false,
-        }}
+        })}
       />
       <Stack.Screen
         name="MeetingRoom"
         component={MeetingRoom}
         options={({ navigation, route }) => ({
-          title: '임시타이틀Room1',
+          title: route.name,
           headerTitleAlign: 'center',
           headerTitleStyle: styles.headerStyle,
           headerRight: CancelIconButton,
@@ -130,7 +127,8 @@ function BottomTabNavigator() {
               name: 'add',
               size: 32,
               color: 'black',
-              onPress: () => navigation.navigate('CreateMeeting'),
+              onPress: () =>
+                navigation.navigate('CreateMeeting', { title: '모임생성' }),
             }),
 
           tabBarLabel: '모임입장',
@@ -139,7 +137,7 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="TabThree"
-        component={TabThreeScreen}
+        component={TabTwoScreen}
         options={{
           tabBarLabel: '마이페이지',
           tabBarIcon: TabBarIcon,
