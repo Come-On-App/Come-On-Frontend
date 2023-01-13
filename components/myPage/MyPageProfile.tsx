@@ -5,6 +5,17 @@ import { makeStyles } from '@rneui/themed';
 import { Font, BoldFont } from '../Font';
 import { BadgedAvatar } from '../Avatar';
 
+export default function Profile() {
+  const styles = useStyles();
+
+  return (
+    <View style={styles.container}>
+      <ProfileImage />
+      <ProfileName />
+    </View>
+  );
+}
+
 function ProfileName() {
   const styles = useStyles();
   const WELCOME_TEXT = '어서오세요. @@님!';
@@ -38,17 +49,6 @@ function ProfileImage() {
   );
 }
 
-function Profile() {
-  const styles = useStyles();
-
-  return (
-    <View style={styles.container}>
-      <ProfileImage />
-      <ProfileName />
-    </View>
-  );
-}
-
 const useStyles = makeStyles(theme => ({
   container: {
     alignItems: 'center',
@@ -78,5 +78,3 @@ const useStyles = makeStyles(theme => ({
     lineHeight: 20,
   },
 }));
-
-export default Profile;

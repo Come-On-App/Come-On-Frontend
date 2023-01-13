@@ -3,25 +3,9 @@ import { View } from 'react-native';
 import { Input, makeStyles } from '@rneui/themed';
 
 import { Font, BoldFont } from '../Font';
-import IconButton from '../buttons/IconButton';
+import { IconButton } from '../buttons/Buttons';
 
-function NickNameIconButton() {
-  const { nickNameIcon } = useStyles();
-  const onPressHandler = () => console.log('click nickNameIconButton');
-
-  return (
-    <IconButton
-      icon={{
-        iconName: 'edit',
-        size: nickNameIcon.size,
-        color: nickNameIcon.color,
-      }}
-      onPress={onPressHandler}
-    />
-  );
-}
-
-function NickName() {
+export default function NickName() {
   const styles = useStyles();
   // SERVER-API: 추후 사용자 정보 처리
   const NICK_NAME = '스탠리';
@@ -44,6 +28,22 @@ function NickName() {
         }
       />
     </View>
+  );
+}
+
+function NickNameIconButton() {
+  const { nickNameIcon } = useStyles();
+  const onPressHandler = () => console.log('click nickNameIconButton');
+
+  return (
+    <IconButton
+      icon={{
+        iconName: 'edit',
+        size: nickNameIcon.size,
+        color: nickNameIcon.color,
+      }}
+      onPress={onPressHandler}
+    />
   );
 }
 
@@ -86,5 +86,3 @@ const useStyles = makeStyles(theme => ({
     color: theme.grayscale['500'],
   },
 }));
-
-export default NickName;
