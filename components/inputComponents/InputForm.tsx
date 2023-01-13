@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { View, KeyboardAvoidingView, Pressable } from 'react-native';
 import { makeStyles, Overlay } from '@rneui/themed';
+
 import InputText from './InputText';
 import InputImage from './InputImage';
-import LocaleConfig from '../Calendar/LocaleConfig';
+import LocaleConfig from '../calendar/LocaleConfig';
 import { InputFormProps } from '../../types';
 import Label from './Label';
-import Calendar from '../Calendar/Calendar';
+import Calendar from '../calendar/Calendar';
 
 function InputForm({ inputProps }: InputFormProps) {
   const styles = useStyles();
@@ -27,7 +28,7 @@ function InputForm({ inputProps }: InputFormProps) {
           <Label style={styles.subLabelStyle}>기간선택</Label>
         </Pressable>
         <View style={styles.calendarContainer}>
-          <Calendar type="period" />
+          <Calendar type="PERIOD" data={undefined} />
         </View>
       </KeyboardAvoidingView>
       <Overlay
@@ -41,7 +42,7 @@ function InputForm({ inputProps }: InputFormProps) {
         onBackdropPress={onPressLabel}
       >
         <View style={{ width: '100%', height: 700 }}>
-          <Calendar type="period" />
+          <Calendar type="PERIOD" data={undefined} />
         </View>
       </Overlay>
     </>
