@@ -17,6 +17,9 @@ export function BadgedAvatar({
       <RneAvatar.Accessory
         style={{
           backgroundColor,
+          elevation: 0,
+          borderWidth: 0,
+          shadowOpacity: 0,
         }}
         size={icon.size}
         color={icon.color}
