@@ -4,9 +4,9 @@ import { makeStyles } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import SerchBar from '../components/SerchBar';
+import SearchBar from '../components/SearchBar';
 import CardList from '../components/card/CardList';
-import IconButton from '../components/buttons/IconButton';
+import { IconButton } from '../components/buttons/Buttons';
 
 const testItems = [
   {
@@ -56,7 +56,7 @@ function DateRangeSerchBar() {
 
   return (
     <View style={styles.serchContainer}>
-      <SerchBar IconType="date-range" value={search} onChange={updateSearch} />
+      <SearchBar IconType="date-range" value={search} onChange={updateSearch} />
     </View>
   );
 }
@@ -117,12 +117,13 @@ export default function TabOneScreen() {
 const useStyles = makeStyles((theme, isLoggedin: boolean) => ({
   screenContainer: {
     flex: 1,
-    paddingBottom: -30, // 네비게이션 탭 패딩 공간 제거
+    paddingBottom: -38, // 네비게이션 탭 패딩 공간 제거
   },
   screenTopContainer: {
     paddingHorizontal: 10,
     flexDirection: 'row',
     alignItems: 'center',
+    paddingBottom: 2,
   },
   serchContainer: {
     flex: isLoggedin ? 0.85 : 1,
