@@ -1,4 +1,5 @@
 import { makeStyles } from '@rneui/themed';
+
 import React from 'react';
 import { View, Pressable } from 'react-native';
 import { PlaceProps } from '../../types';
@@ -9,12 +10,21 @@ function PlaceCard({ data }: PlaceProps) {
   const styles = useStyles();
 
   return (
-    <Pressable style={({ pressed }) => [pressed && styles.pressed]}>
-      <View style={styles.wrapContainer}>
-        <PlaceNumber>{data.order}</PlaceNumber>
-        <PlaceCardBody data={data} />
-      </View>
-    </Pressable>
+    <>
+      {data.map(item => {
+        return (
+          <Pressable
+            key={item.id}
+            style={({ pressed }) => [pressed && styles.pressed]}
+          >
+            <View style={styles.wrapContainer}>
+              <PlaceNumber>{item.order}</PlaceNumber>
+              <PlaceCardBody data={item} />
+            </View>
+          </Pressable>
+        );
+      })}
+    </>
   );
 }
 
