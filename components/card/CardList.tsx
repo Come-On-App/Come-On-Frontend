@@ -3,7 +3,7 @@ import { ScrollView, View } from 'react-native';
 import { makeStyles } from '@rneui/themed';
 
 import Card from './Card';
-import { CardListProps } from '../../types';
+import type { CardListProps } from '../../types';
 
 function CardList({ cardItems }: CardListProps) {
   const styles = useStyles();

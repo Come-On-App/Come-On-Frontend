@@ -2,16 +2,16 @@ import React from 'react';
 import { Card as RneCard, makeStyles } from '@rneui/themed';
 
 import CardTopInfo from './CardTop';
-import { CardProps } from '../../types';
+import type { CardProps } from '../../types';
 import { CardSubTitle, CardTitle } from './CardText';
 
-function Card({ cardItem }: CardProps) {
+export default function Card({ cardItem }: CardProps) {
   const styles = useStyles();
 
   return (
     <RneCard
       wrapperStyle={styles.cardWrapper}
-      containerStyle={styles.cardContianer}
+      containerStyle={styles.cardContainer}
     >
       <RneCard.Image style={styles.cardImage} source={{ uri: cardItem.path }}>
         <CardTopInfo
@@ -30,7 +30,7 @@ function Card({ cardItem }: CardProps) {
 
 const useStyles = makeStyles(() => ({
   cardWrapper: {},
-  cardContianer: {
+  cardContainer: {
     width: '100%',
     height: 255,
     marginBottom: 2.5,
@@ -45,5 +45,3 @@ const useStyles = makeStyles(() => ({
     marginBottom: 8,
   },
 }));
-
-export default Card;

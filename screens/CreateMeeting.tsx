@@ -4,7 +4,7 @@ import { RootStackScreenProps, InputTextProps } from '../types';
 
 import CancelButton from '../components/buttons/CancelButton';
 import ConfirmButton from '../components/buttons/ConfirmButton';
-import InputForm from '../components/inputComponents/InputForm';
+import InputForm from '../components/input/InputForm';
 
 function CreateMeeting(
   this: typeof CreateMeeting,
@@ -32,10 +32,10 @@ function CreateMeeting(
   const inputProps: InputTextProps = {
     label: '모임이름',
     placeholder: '모임이름을 입력해주세요!',
-    length: 30,
+    maxLength: 30,
     value: inputValues.meetingName,
     onChangeText: InputChangeHandler.bind(this, 'meetingName'),
-    isMultiline: false,
+    multiline: false,
   };
 
   return (

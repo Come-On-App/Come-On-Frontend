@@ -1,8 +1,8 @@
 import { makeStyles } from '@rneui/themed';
 import React from 'react';
 import { View } from 'react-native';
-import { PlaceCardBodyProps } from '../../types';
-import Font from '../StyledText';
+import { PlaceCardBodyProps, PlaceCardBodyProps } from '../../types';
+import { Font } from '../Font';
 import Caption from './Caption';
 
 function PlaceCardBody({ data }: PlaceCardBodyProps) {

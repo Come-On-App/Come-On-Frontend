@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { makeStyles } from '@rneui/themed';
 import { TextProps } from '../../types';
-import Font from '../StyledText';
+import { Font } from '../Font';
 
 function Caption({ children }: TextProps) {
   const styles = useStyles();

@@ -8,7 +8,7 @@ import {
 } from 'expo-image-picker';
 
 import theme from '../../constants/themed';
-import Font from '../StyledText';
+import { Font } from '../Font';
 import Icon from '../Icon';
 
 function InputImage() {

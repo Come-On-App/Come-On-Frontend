@@ -5,7 +5,7 @@ import { CalendarList, DateData } from 'react-native-calendars';
 import { View } from 'react-native';
 import { MarkedDates } from 'react-native-calendars/src/types';
 
-import Font from '../StyledText';
+import Font from '../Font';
 import LocaleConfig from './LocaleConfig';
 import CustomCalendarTheme, { DayTheme } from './CustomCalendarTheme';
 import {

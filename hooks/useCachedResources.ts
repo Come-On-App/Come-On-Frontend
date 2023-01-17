@@ -18,6 +18,8 @@ export default function useCachedResources() {
           pretendard: require('../assets/fonts/PretendardVariable.ttf'),
           blackHanSans: require('../assets/fonts/BlackHanSans-Regular.ttf'),
           'space-mono': require('../assets/fonts/SpaceMono-Regular.ttf'),
+          'pretendard-regular': require('../assets/fonts/Pretendard-Regular.ttf'),
+          'pretendard-bold': require('../assets/fonts/Pretendard-Bold.ttf'),
         });
       } catch (e) {
         // We might want to provide this error information to an error reporting service

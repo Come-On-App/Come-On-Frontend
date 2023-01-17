@@ -2,9 +2,20 @@ import React from 'react';
 import { makeStyles } from '@rneui/themed';
 import { View } from 'react-native';
 
-import { ConfirmDisplay, GroupDisplay } from './CardDisplay';
-import { InfoProps, LeftAreaProps, RightAreaProps } from '../../types';
 import CardMenu from './CardMenu';
+import { ConfirmDisplay, GroupDisplay } from './CardDisplay';
+import type { InfoProps, LeftAreaProps, RightAreaProps } from '../../types';
+
+export default function CardTopInfo(infoProps: InfoProps) {
+  const styles = useStyles();
+
+  return (
+    <View style={styles.container}>
+      <LeftArea style={styles.leftArea} infoProps={infoProps} />
+      <RightArea style={styles.rightArea} />
+    </View>
+  );
+}
 
 function LeftArea({ style, infoProps }: LeftAreaProps) {
   return (
@@ -17,17 +28,6 @@ function LeftArea({ style, infoProps }: LeftAreaProps) {
 
 function RightArea({ style }: RightAreaProps) {
   return <CardMenu style={style} />;
-}
-
-function CardTopInfo(infoProps: InfoProps) {
-  const styles = useStyles();
-
-  return (
-    <View style={styles.container}>
-      <LeftArea style={styles.leftArea} infoProps={infoProps} />
-      <RightArea style={styles.rightArea} />
-    </View>
-  );
 }
 
 const useStyles = makeStyles(() => ({
@@ -47,5 +47,3 @@ const useStyles = makeStyles(() => ({
     justifyContent: 'center',
   },
 }));
-
-export default CardTopInfo;
