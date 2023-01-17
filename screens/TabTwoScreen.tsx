@@ -6,17 +6,33 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Logo from '../components/Logo';
 import InviteCode from '../components/InviteCode';
 
+function ScreenTop() {
+  const styles = useStyles();
+
+  return (
+    <View style={styles.logoContainer}>
+      <Logo />
+    </View>
+  );
+}
+
+function ScreenMain() {
+  const styles = useStyles();
+
+  return (
+    <View style={styles.codeContainer}>
+      <InviteCode />
+    </View>
+  );
+}
+
 export default function TabTwoScreen() {
   const styles = useStyles();
 
   return (
     <SafeAreaView style={styles.screenContainer}>
-      <View style={styles.logoContainer}>
-        <Logo />
-      </View>
-      <View style={styles.codeContainer}>
-        <InviteCode />
-      </View>
+      <ScreenTop />
+      <ScreenMain />
     </SafeAreaView>
   );
 }

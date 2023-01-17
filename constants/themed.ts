@@ -57,13 +57,6 @@ const theme = createTheme({
       lineHeight: 14,
     },
   },
-  components: {
-    Text: props => ({
-      style: {
-        fontWeight: props.bold ? '700' : 'normal',
-      },
-    }),
-  },
 });
 
 export default theme;

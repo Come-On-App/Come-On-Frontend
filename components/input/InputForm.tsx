@@ -1,10 +1,10 @@
 import React from 'react';
 import { View } from 'react-native';
 import { makeStyles } from '@rneui/themed';
-import InputText from './InputText';
+import InputBox from './InputText';
 import InputImage from './InputImage';
 
-import { InputFormProps } from '../../types';
+import type { InputFormProps } from '../../types';
 
 function InputForm({ inputProps }: InputFormProps) {
   const styles = useStyles();
@@ -12,7 +12,7 @@ function InputForm({ inputProps }: InputFormProps) {
   return (
     <View style={styles.contianer}>
       <InputImage />
-      <InputText inputProps={inputProps} />
+      <InputBox config={inputProps} />
     </View>
   );
 }

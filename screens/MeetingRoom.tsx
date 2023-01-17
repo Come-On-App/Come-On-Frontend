@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { makeStyles, Avatar } from '@rneui/themed';
-
-import AddPlaceButton from '../components/buttons/AddPlaceButton';
-import Label from '../components/inputComponents/Label';
+import Label from '../components/input/Label';
 import PlaceCard from '../components/places/PlaceCard';
-import { PlaceProps, RootStackScreenProps } from '../types';
+import AddPlaceButton from '../components/buttons/AddPlaceButton';
+import { RootStackScreenProps } from '../navigation';
+import { PlaceProps } from '../types';
 
 function MeetingRoom({ navigation }: RootStackScreenProps<'MeetingRoom'>) {
   const styles = useStyles();

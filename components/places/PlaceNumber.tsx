@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { makeStyles } from '@rneui/themed';
-import Font from '../StyledText';
+import { Font } from '../Font';
 import { TextProps } from '../../types';
 
 function PlaceNumber({ children }: TextProps) {

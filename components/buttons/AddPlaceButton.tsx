@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Pressable } from 'react-native';
 import { makeStyles } from '@rneui/themed';
 import Icon from '../Icon';
-import Font from '../StyledText';
+import { Font } from '../Font';
 import { AddPlaceButtonProps } from '../../types';
 
 function AddPlaceButton({ navigation, iconName, text }: AddPlaceButtonProps) {

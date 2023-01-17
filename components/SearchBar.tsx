@@ -1,14 +1,19 @@
 import React from 'react';
-import { SearchBar, makeStyles } from '@rneui/themed';
+import { SearchBar as RneSearchBar, makeStyles } from '@rneui/themed';
 
 import Icon from '../components/Icon';
-import { SerchBarProps } from '../types';
+import type { SearchBarProps } from '../types';
 
-function SerchBar({ IconType, value, onChange }: SerchBarProps) {
+export default function SearchBar({
+  value,
+  style,
+  IconType,
+  onChange,
+}: SearchBarProps) {
   const styles = useStyles();
 
   return (
-    <SearchBar
+    <RneSearchBar
       value={value}
       onChangeText={onChange}
       searchIcon={
@@ -20,7 +25,7 @@ function SerchBar({ IconType, value, onChange }: SerchBarProps) {
       }
       containerStyle={styles.container}
       inputContainerStyle={styles.input}
-      style={styles.font}
+      style={[styles.font, style]}
     />
   );
 }
@@ -40,12 +45,10 @@ const useStyles = makeStyles(theme => ({
   font: {
     color: theme.grayscale['700'],
     fontSize: theme.textStyles.body1.fontSize,
-    fontFamily: 'pretendard',
+    fontFamily: 'pretendard-regular',
   },
   icon: {
     color: theme.grayscale['700'],
     size: 20,
   },
 }));
-
-export default SerchBar;

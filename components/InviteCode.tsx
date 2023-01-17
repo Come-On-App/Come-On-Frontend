@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import { makeStyles, Text } from '@rneui/themed';
 import { Keyboard, Platform, View } from 'react-native';
-import { Button, makeStyles, Text } from '@rneui/themed';
 import {
   Cursor,
   CodeField,
@@ -8,10 +8,11 @@ import {
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
 
-import Font from './StyledText';
-import { CodeInputProps } from '../types';
+import { Font } from './Font';
+import Button from './buttons/Buttons';
+import type { CodeInputProps } from '../types';
 
-function InviteCode() {
+export default function InviteCode() {
   const [codeText, setCodeText] = useState('');
 
   return (
@@ -95,13 +96,12 @@ function CodeButton() {
   const ENTER_TEXT = '입장하기';
 
   return (
-    <View>
+    <View style={styles.buttonContainer}>
       <Button
-        title={ENTER_TEXT}
-        radius={4}
-        containerStyle={styles.buttonContainer}
+        bold
+        text={ENTER_TEXT}
+        onPress={() => console.log('click CodeButton')}
         buttonStyle={styles.button}
-        titleStyle={styles.buttonText}
       />
     </View>
   );
@@ -129,7 +129,7 @@ const useStyles = makeStyles(theme => ({
     marginHorizontal: 2,
   },
   codeText: {
-    fontFamily: 'pretendard',
+    fontFamily: 'pretendard-regular',
     fontSize: theme.textStyles.title1.fontSize,
     fontWeight: '400',
     color: theme.grayscale['900'],
@@ -138,19 +138,11 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.grayscale['200'],
   },
   buttonContainer: {
-    alignItems: 'center',
     marginTop: 60,
+    alignItems: 'center',
   },
   button: {
-    backgroundColor: theme.colors.primary,
     width: 192,
     height: 56,
   },
-  buttonText: {
-    fontFamily: 'pretendard',
-    fontSize: theme.textStyles.title4.fontSize,
-    color: theme.grayscale['0'],
-  },
 }));
-
-export default InviteCode;

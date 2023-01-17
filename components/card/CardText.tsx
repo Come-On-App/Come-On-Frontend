@@ -3,13 +3,13 @@ import { View } from 'react-native';
 import { Divider, makeStyles } from '@rneui/themed';
 
 import Icon from '../Icon';
-import Font from '../StyledText';
-import { CardSubTitleProps, CardTtileProps } from '../../types';
+import { Font, BoldFont } from '../Font';
+import type { CardSubTitleProps, CardTtileProps } from '../../types';
 
 export function CardTitle({ titleText }: CardTtileProps) {
   const styles = useStyles();
 
-  return <Font style={styles.titleFont}>{titleText}</Font>;
+  return <BoldFont style={styles.titleFont}>{titleText}</BoldFont>;
 }
 
 export function CardSubTitle({ userText, dateText }: CardSubTitleProps) {

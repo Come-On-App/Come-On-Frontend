@@ -1,20 +1,44 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@rneui/themed';
-import { Alert, Pressable, View } from 'react-native';
+import { Alert, View } from 'react-native';
 import { Menu, MenuDivider, MenuItem } from 'react-native-material-menu';
 
-import Icon from '../Icon';
-import Font from '../StyledText';
-import { CardMenuDisplayProps, CardMenuProps } from '../../types';
+import { Font } from '../Font';
 import CardModal from './CardModal';
+import { IconButton } from '../buttons/Buttons';
+import type { CardMenuDisplayProps, CardMenuProps } from '../../types';
+
+export default function CardMenu({ style }: CardMenuProps) {
+  const styles = useStyles();
+  const [menuVisible, setMenuVisible] = useState(false);
+  const hideMenu = () => setMenuVisible(false);
+  const showMenu = () => setMenuVisible(true);
+
+  return (
+    <Menu
+      visible={menuVisible}
+      anchor={<CardMenuDisplay showMenu={showMenu} style={style} />}
+      onRequestClose={hideMenu}
+      style={styles.menu}
+    >
+      <CardMenuItems />
+    </Menu>
+  );
+}
 
 function CardMenuDisplay({ showMenu, style }: CardMenuDisplayProps) {
   const { icon } = useStyles();
 
   return (
-    <Pressable onPress={showMenu} style={style}>
-      <Icon name="more-vert" size={icon.size} color={icon.color} />
-    </Pressable>
+    <IconButton
+      style={style}
+      onPress={showMenu}
+      icon={{
+        iconName: 'more-vert',
+        color: icon.color,
+        size: icon.size,
+      }}
+    />
   );
 }
 
@@ -48,24 +72,6 @@ function CardMenuItems() {
   );
 }
 
-function CardMenu({ style }: CardMenuProps) {
-  const styles = useStyles();
-  const [menuVisible, setMenuVisible] = useState(false);
-  const hideMenu = () => setMenuVisible(false);
-  const showMenu = () => setMenuVisible(true);
-
-  return (
-    <Menu
-      visible={menuVisible}
-      anchor={<CardMenuDisplay showMenu={showMenu} style={style} />}
-      onRequestClose={hideMenu}
-      style={styles.menu}
-    >
-      <CardMenuItems />
-    </Menu>
-  );
-}
-
 const useStyles = makeStyles(theme => ({
   menu: {
     overflow: 'hidden',
@@ -81,5 +87,3 @@ const useStyles = makeStyles(theme => ({
     size: 24,
   },
 }));
-
-export default CardMenu;

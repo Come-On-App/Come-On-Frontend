@@ -1,41 +1,8 @@
-/**
- * Learn more about using TypeScript with React Navigation:
- * https://reactnavigation.org/docs/typescript/
- */
-
 import '@rneui/themed';
-import { MaterialIcons } from '@expo/vector-icons';
-import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import {
-  CompositeScreenProps,
-  NavigatorScreenParams,
-} from '@react-navigation/native';
-import { TextStyle, ViewStyle, StyleProp } from 'react-native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import type { MaterialIcons } from '@expo/vector-icons';
+import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
-export type RootStackParamList = {
-  Root: NavigatorScreenParams<RootTabParamList> | undefined;
-  Modal: undefined;
-  NotFound: undefined;
-  MeetingRoom: NavigatorScreenParams<RootTabParamList> | undefined;
-  CreateMeeting: NavigatorScreenParams<RootTabParamList> | undefined;
-  TestModal: NavigatorScreenParams<RootTabParamList> | undefined;
-};
-
-export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
-  NativeStackScreenProps<RootStackParamList, Screen>;
-
-export type RootTabParamList = {
-  TabOne: undefined;
-  TabTwo: undefined;
-  TabThree: undefined;
-};
-
-export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
-  CompositeScreenProps<
-    BottomTabScreenProps<RootTabParamList, Screen>,
-    NativeStackScreenProps<RootStackParamList>
-  >;
+import type { RootStackScreenProps } from './navigation';
 
 /**
  * Global Theme
@@ -79,14 +46,6 @@ declare module '@rneui/themed' {
       };
     };
   }
-
-  export interface TextProps {
-    bold?: boolean;
-  }
-
-  export interface ComponentTheme {
-    Text: Partial<TextProps>;
-  }
 }
 
 // Code
@@ -97,41 +56,44 @@ export interface CodeInputProps {
   showKeyboard: boolean;
 }
 
-// CardModal
-export interface CardModalProps {
-  isVisible: boolean;
-  onClose: () => void;
+// Input
+export interface InputBoxProps {
+  config: InputTextProps;
+  style?: StyleProp<TextStyle>;
 }
 
-export interface CardModalButtonProps {
-  onClose: () => void;
+export interface InputTopProps {
+  label: string;
+  text: string;
+  maxLength: number;
 }
-/*
- *inputType
- */
+
+export interface InputBoxTopTextLengthProps {
+  text: string;
+  maxLength: number;
+}
+
+export interface InputBoxTopTitleProps {
+  label: string;
+}
 
 export interface InputProps {
-  inputProps: InputTextProps;
-  style?: StyleProp<TextStyle>;
+  value: string;
+  maxLength: number;
+  multiline: boolean;
+  placeholder: string;
+  onChangeText: (text: string) => void;
 }
 
 export interface InputFormProps {
   inputProps: InputTextProps;
 }
 
-export interface InputTextProps {
+export interface InputTextProps extends InputProps {
   label: string;
-  placeholder: string;
-  length: number;
-  value: string;
-  onChangeText: (enteredValue: string) => void;
-  isMultiline?: boolean;
 }
 
-/*
- *PlaceCardProps
- */
-
+// PlaceCard
 export interface PlaceProps {
   data: {
     id: number;
@@ -152,6 +114,12 @@ export type AddPlaceButtonProps = {
   text: string;
 };
 
+export interface IconButtonProps {
+  style?: StyleProp<ViewStyle>;
+  onPress: () => void;
+  icon: Icon;
+}
+
 // Icon
 export type IconName = React.ComponentProps<typeof MaterialIcons>['name'];
 
@@ -162,8 +130,15 @@ export interface IconProps {
   onPress?: () => void;
 }
 
-// SerchBar
-export interface SerchBarProps {
+export interface Icon {
+  iconName: IconName;
+  size: number;
+  color: string;
+}
+
+// SearchBar
+export interface SearchBarProps {
+  style?: StyleProp<TextStyle>;
   IconType: IconName;
   value: string;
   onChange?: (text: string) => void;
@@ -182,6 +157,15 @@ export type CardItem = {
     date: string;
   };
 };
+
+export interface CardModalProps {
+  isVisible: boolean;
+  onClose: () => void;
+}
+
+export interface CardModalButtonProps {
+  onClose: () => void;
+}
 
 export interface CardListProps {
   cardItems: CardItem[];
@@ -241,6 +225,13 @@ export interface AvatarProps {
   size: number;
 }
 
+export interface BadgedAvatarProps extends AvatarProps {
+  badge: {
+    icon: Icon;
+    backgroundColor: string;
+  };
+}
+
 // TabBar
 export interface TabBarIconProps {
   color: string;
@@ -248,14 +239,85 @@ export interface TabBarIconProps {
 
 // StyledText
 export interface TextProps {
-  style?:
-    | {
-        color?: string;
-        fontSize?: number;
-        lineHeight?: number;
-        fontWeight?: TextStyle['fontWeight'];
-      }
-    | StyleProp<TextStyle>;
+  style?: StyleProp<TextStyle>;
+  children: React.ReactNode;
+}
 
+// Buttons
+type ButtonStyle = {
+  backgroundColor: string;
+  width: number | string;
+  height: number | string;
+  borderRadius?: number;
+  marginRight?: number | string;
+};
+
+type ButtonTextStyle = {
+  fontSize: number;
+  color: string;
+};
+
+export interface ButtonProps {
+  text: string;
+  bold?: boolean;
+  onPress: () => void;
+  height?: number;
+  textStyle?: Partial<ButtonTextStyle>;
+  buttonStyle?: Partial<ButtonStyle> | Partial<ButtonStyle>[];
+}
+
+type ButtonGroupStyle = {
+  width: number;
+  backgroundColor: string;
+};
+
+type ButtonConfig = {
+  text: string;
+  onPress: () => void;
+  style?: Partial<ButtonGroupStyle>;
+};
+
+export interface ButtonGroupProps {
+  height?: number;
+  spacing?: number;
+  firstButton: ButtonConfig;
+  secondButton: ButtonConfig;
+}
+
+// PlaceSelect
+export interface AddressProps {
+  info: {
+    title: string;
+    category: string;
+  };
+}
+
+export interface AddressTitleProps {
+  text: string;
+}
+
+export interface CategoryProps {
+  text: string;
+}
+
+export interface SubAddressProps {
+  info: {
+    title: string;
+  };
+}
+
+export interface PlaceSelectButtonProps {
+  onPress: () => void;
+}
+
+export interface PlaceSelectModalProps {
+  isVisible: boolean;
+  onClose: () => void;
+}
+
+// modal
+export interface ModalProps {
+  isVisible: boolean;
+  style?: StyleProp<ViewStyle>;
   children: React.ReactNode;
 }
