@@ -48,19 +48,19 @@ function RootNavigator() {
       <Stack.Screen
         name="CreateMeeting"
         component={CreateMeeting}
-        options={{
+        options={({ navigation, route }) => ({
           title: '모임등록',
           headerTitleAlign: 'center',
           headerTitleStyle: styles.headerStyle,
           headerRight: CancelIconButton,
           headerBackVisible: false,
-        }}
+        })}
       />
       <Stack.Screen
         name="PlaceSelect"
         component={PlaceSelect}
         options={({ navigation, route }) => ({
-          title: '장소선택',
+          title: route.name,
           headerTitleAlign: 'center',
           headerTitle: PlaceSelectHeaderTitle,
           headerShadowVisible: false,
@@ -122,7 +122,8 @@ function BottomTabNavigator() {
               name: 'map',
               size: 32,
               color: 'black',
-              onPress: () => navigation.navigate('PlaceSelect'),
+              onPress: () =>
+                navigation.navigate('CreateMeeting', { title: '모임생성' }),
             }),
           tabBarLabel: '모임입장',
           tabBarIcon: createTabBarIcon('meeting-room'),
@@ -130,7 +131,7 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="TabThree"
-        component={TabThreeScreen}
+        component={TabTwoScreen}
         options={{
           headerTitleAlign: 'center',
           headerTitle: MyPageHeaderTitle,

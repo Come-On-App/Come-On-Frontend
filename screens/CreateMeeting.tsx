@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { RootStackScreenProps, InputTextProps } from '../types';
 
-import { InputTextProps } from '../types';
-import { RootStackScreenProps } from '../navigation';
 import CancelButton from '../components/buttons/CancelButton';
 import ConfirmButton from '../components/buttons/ConfirmButton';
 import InputForm from '../components/input/InputForm';
@@ -63,13 +62,13 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
     backgroundColor: 'white',
+    justifyContent: 'center',
   },
 
-  inputContainer: {},
   buttons: {
-    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 20,
+    marginBottom: 20,
   },
 });

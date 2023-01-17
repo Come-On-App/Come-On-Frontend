@@ -1,7 +1,8 @@
 import '@rneui/themed';
-import type { MaterialIcons } from '@expo/vector-icons';
-import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
-
+import { MaterialIcons } from '@expo/vector-icons';
+import { TextStyle, ViewStyle, StyleProp } from 'react-native';
+import { DateData } from 'react-native-calendars';
+import { MarkedDates } from 'react-native-calendars/src/types';
 import type { RootStackScreenProps } from './navigation';
 
 /**
@@ -44,6 +45,9 @@ declare module '@rneui/themed' {
         fontSize: number;
         lineHeight: number;
       };
+    };
+    calendarStyles: {
+      period: string;
     };
   }
 }
@@ -93,20 +97,10 @@ export interface InputTextProps extends InputProps {
   label: string;
 }
 
-// PlaceCard
-export interface PlaceProps {
-  data: {
-    id: number;
-    name: string;
-    description: string;
-    lat: number;
-    lng: number;
-    address: string;
-    order: number;
-    apiId: number;
-    category: string;
-  };
-}
+/*
+ *PlaceCardProps
+ TODO : 추후 문서보고 수정
+ */
 
 export type AddPlaceButtonProps = {
   navigation: RootStackScreenProps<'MeetingRoom'>;
@@ -120,6 +114,94 @@ export interface IconButtonProps {
   icon: Icon;
 }
 
+export type MeetingResponse = {
+  id: number;
+  myMeetingUserId: number;
+  myMeetingRole: 'HOST' | 'EDITOR' | 'PARTICIPANT';
+  title: string;
+  startDate: string;
+  endDate: string;
+  meetingUsers: MeetingUser[];
+  meetingDates: MeetingDate[];
+  meetingPlaces: MeetingPlace[];
+};
+
+export type MeetingUser = {
+  id: number;
+  nickname: string;
+  imageLink: string;
+  meetingRole: 'HOST' | 'EDITOR' | 'PARTICIPANT';
+};
+
+export type MeetingDate = {
+  id: number;
+  date: string;
+  userCount: number;
+  dateStatus: 'FIXED' | 'UNFIXED';
+  isSelected: boolean;
+};
+
+export type MeetingPlace = {
+  id: number;
+  name: string;
+  description: string;
+  lat: number;
+  lng: number;
+  address: string;
+  order: number;
+  apiId: number;
+  category: string;
+};
+
+export type PlaceProps = {
+  data: MeetingPlace[];
+};
+
+export type PlaceCardBodyProps = {
+  data: MeetingPlace;
+};
+
+/// memberBox
+export type MemberBoxProps = {
+  myId: number;
+  myRole: 'HOST' | 'EDITOR' | 'PARTICIPANT';
+  meetingUsers: MeetingUser[];
+};
+
+export interface MemberBoxTitleProps {
+  userCount: number;
+}
+
+export interface MemberBoxSubTitleProps {
+  onClickManage: () => void;
+}
+
+export interface UserRowProps {
+  user: MeetingUser[];
+  renderAvatar: (users: MeetingUser[]) => JSX.Element[];
+}
+
+// calendar
+export type CalendarProps = {
+  type: 'PERIOD' | 'DEFAULT';
+  data: MeetingResponse | undefined; // TODO: 추후 undefined 수정
+};
+
+export interface CalendarTypeProps {
+  data: MeetingResponse | undefined; // TODO: 추후 undefined 수정
+  onPressHandler: (date: DateData) => void;
+  markedDate: MarkedDates | undefined;
+}
+
+export interface OverayCalendarProps {
+  visible: boolean;
+  onPressLabel: () => void;
+}
+
+export interface MeetingTitleProps {
+  onPressLabel: () => void;
+}
+
 // Icon
 export type IconName = React.ComponentProps<typeof MaterialIcons>['name'];
 
@@ -128,6 +210,10 @@ export interface IconProps {
   color?: string;
   size: number;
   onPress?: () => void;
+}
+
+export interface CalendarBoxProps {
+  data: MeetingResponse;
 }
 
 export interface Icon {
@@ -223,6 +309,7 @@ export interface RightAreaProps {
 export interface AvatarProps {
   path: string;
   size: number;
+  containerStyle?: StyleProp<ViewStyle>;
 }
 
 export interface BadgedAvatarProps extends AvatarProps {
@@ -320,4 +407,28 @@ export interface ModalProps {
   isVisible: boolean;
   style?: StyleProp<ViewStyle>;
   children: React.ReactNode;
+}
+
+declare module '@rneui/themed' {
+  export interface Theme {
+    DayTheme: {
+      colors: {
+        dayFilteredColor: string;
+        dayStartColor: string;
+        dayEndColor: string;
+      };
+      startDayStyle: {
+        container: object;
+        textColor: object;
+      };
+      endDayStyle: {
+        container: object;
+        textColor: object;
+      };
+      dayStyle: {
+        container: object;
+        oneDaySelectedStyle: object;
+      };
+    };
+  }
 }

@@ -1,0 +1,110 @@
+diff --git a/node_modules/react-native-calendars/src/calendar/day/period/index.js b/node_modules/react-native-calendars/src/calendar/day/period/index.js
+index f27db0e..79c8afa 100644
+--- a/node_modules/react-native-calendars/src/calendar/day/period/index.js
++++ b/node_modules/react-native-calendars/src/calendar/day/period/index.js
+@@ -4,9 +4,12 @@ import { TouchableWithoutFeedback, TouchableOpacity, Text, View } from 'react-na
+ import { xdateToData } from '../../../interface';
+ import styleConstructor from './style';
+ import Dot from '../dot';
++import XDate from 'xdate';
++import { backgroundColor } from 'react-native-calendars/src/style';
+ const PeriodDay = (props) => {
+     const { theme, marking, date, onPress, onLongPress, state, accessibilityLabel, testID, children } = props;
+     const dateData = date ? xdateToData(date) : undefined;
++    const xdate = new XDate(date)
+     const style = useRef(styleConstructor(theme));
+     const markingStyle = useMemo(() => {
+         const defaultStyle = { textStyle: {}, containerStyle: {} };
+@@ -40,6 +43,7 @@ const PeriodDay = (props) => {
+             }
+             if (marking.customContainerStyle) {
+                 defaultStyle.containerStyle = marking.customContainerStyle;
++             
+             }
+             return defaultStyle;
+         }
+@@ -60,7 +64,7 @@ const PeriodDay = (props) => {
+             const start = markingStyle.startingDay;
+             const end = markingStyle.endingDay;
+             if (start && !end) {
+-                containerStyle.push({ backgroundColor: markingStyle.startingDay?.backgroundColor });
++                containerStyle.push({ backgroundColor: markingStyle.startingDay?.backgroundColor,});
+             }
+             else if (end && !start || end && start) {
+                 containerStyle.push({ backgroundColor: markingStyle.endingDay?.backgroundColor });
+@@ -88,12 +92,13 @@ const PeriodDay = (props) => {
+     }, [marking, state]);
+     const fillerStyles = useMemo(() => {
+         const leftFillerStyle = { backgroundColor: undefined };
+-        const rightFillerStyle = { backgroundColor: undefined };
++        const rightFillerStyle = { backgroundColor: undefined ,borderRadius:undefined};
+         let fillerStyle = {};
+         const start = markingStyle.startingDay;
+         const end = markingStyle.endingDay;
+         if (start && !end) {
+             rightFillerStyle.backgroundColor = markingStyle.startingDay?.backgroundColor;
++
+         }
+         else if (end && !start) {
+             leftFillerStyle.backgroundColor = markingStyle.endingDay?.backgroundColor;
+@@ -102,17 +107,34 @@ const PeriodDay = (props) => {
+             leftFillerStyle.backgroundColor = markingStyle.day?.backgroundColor;
+             rightFillerStyle.backgroundColor = markingStyle.day?.backgroundColor;
+             fillerStyle = { backgroundColor: markingStyle.day?.backgroundColor };
++       
+         }
+         return { leftFillerStyle, rightFillerStyle, fillerStyle };
+     }, [marking]);
+-    const renderFillers = () => {
+-        if (marking) {
++    const renderFillers = (xdate) => {
++        const start = markingStyle.startingDay;
++        const end = markingStyle.endingDay;
++        //todo color theme으로 유동성있게 관리하기
++        const lrColor = '#EFF6FE'
++        
++        if(xdate.getDay()===0){
++            return (<View style={[style.current.fillers, fillerStyles.fillerStyle,{borderTopLeftRadius:30,borderBottomLeftRadius:30}]}>
++                <View style={[style.current.leftFiller, fillerStyles.leftFillerStyle,{borderTopLeftRadius:30,borderBottomLeftRadius:30},end? {backgroundColor:lrColor}:{borderRadius:0}]}/>
++                <View style={[style.current.rightFiller, fillerStyles.rightFillerStyle,start? {backgroundColor:lrColor}:{borderRadius:0}]}/>
++              </View>);
++        }else if(xdate.getDay() === 6){
++            return(<View style={[style.current.fillers, fillerStyles.fillerStyle,{borderTopRightRadius:30,borderBottomRightRadius:30}]}>
++                <View style={[style.current.leftFiller, fillerStyles.leftFillerStyle,end? {backgroundColor:lrColor}:{borderRadius:0}]}/>
++                <View style={[style.current.rightFiller, fillerStyles.rightFillerStyle,{borderTopRightRadius:30,borderBottomRightRadius:30},start? {backgroundColor:lrColor}:{borderRadius:0}]}/>
++              </View>);
++        }else  {
+             return (<View style={[style.current.fillers, fillerStyles.fillerStyle]}>
+-          <View style={[style.current.leftFiller, fillerStyles.leftFillerStyle]}/>
+-          <View style={[style.current.rightFiller, fillerStyles.rightFillerStyle]}/>
++          <View style={[style.current.leftFiller, fillerStyles.leftFillerStyle,end? {backgroundColor:lrColor}:{borderRadius:0}]}/>
++          <View style={[style.current.rightFiller, fillerStyles.rightFillerStyle,start? {backgroundColor:lrColor}:{borderRadius:0}]}/>
+         </View>);
+         }
+     };
++
+     const _onPress = useCallback(() => {
+         onPress?.(dateData);
+     }, [onPress]);
+@@ -122,7 +144,7 @@ const PeriodDay = (props) => {
+     const Component = marking ? TouchableWithoutFeedback : TouchableOpacity;
+     return (<Component testID={testID} onPress={_onPress} onLongPress={_onLongPress} disabled={marking?.disableTouchEvent} accessible accessibilityRole={marking?.disableTouchEvent ? undefined : 'button'} accessibilityLabel={accessibilityLabel}>
+       <View style={style.current.wrapper}>
+-        {renderFillers()}
++        {renderFillers(xdate)}
+         <View style={containerStyle}>
+           <Text allowFontScaling={false} style={textStyle}>
+             {String(children)}
+diff --git a/node_modules/react-native-calendars/src/types.d.ts b/node_modules/react-native-calendars/src/types.d.ts
+index 31103ce..a80d83f 100644
+--- a/node_modules/react-native-calendars/src/types.d.ts
++++ b/node_modules/react-native-calendars/src/types.d.ts
+@@ -74,6 +74,8 @@ export interface Theme {
+     arrowHeight?: number;
+     arrowWidth?: number;
+     weekVerticalMargin?: number;
++    'stylesheet.calendar.header'?:object;
++    'stylesheet.day.period'?:object;
+     stylesheet?: {
+         calendar?: {
+             main?: object;

@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { RootStackScreenProps } from '../../types';
 
 function CancelIconButton() {
   const navigation = useNavigation();
