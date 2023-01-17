@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { RootStackScreenProps, InputTextProps } from '../types';
+import { InputTextProps } from '../types';
 
 import CancelButton from '../components/buttons/CancelButton';
 import ConfirmButton from '../components/buttons/ConfirmButton';
 import InputForm from '../components/input/InputForm';
+import { RootStackScreenProps } from '../navigation';
 
 function CreateMeeting(
   this: typeof CreateMeeting,
