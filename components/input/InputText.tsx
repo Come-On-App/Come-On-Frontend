@@ -87,10 +87,7 @@ function Input(props: InputProps) {
       multiline={multiline}
       placeholder={placeholder}
       onChangeText={onChangeText}
-      style={[
-        styles.meetingNoteInput,
-        multiline && { minHeight: 100, maxHeight: 100 },
-      ]}
+      style={[styles.meetingNoteInput, multiline && styles.multiline]}
       placeholderTextColor={styles.meetingNoteInput.placeholder}
     />
   );
@@ -118,5 +115,9 @@ const useStyles = makeStyles(theme => ({
   inputLengthText: {
     fontSize: 14,
     color: theme.grayscale['500'],
+  },
+  multiline: {
+    minHeight: 100,
+    maxHeight: 100,
   },
 }));

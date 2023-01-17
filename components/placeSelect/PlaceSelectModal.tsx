@@ -88,6 +88,7 @@ function CategoryTitle() {
 }
 
 function CategoryDropdown() {
+  const styles = useStyles();
   const [value, setValue] = useState('');
   const data = [
     { key: 'SCHOOL', value: '학교' },
@@ -106,31 +107,12 @@ function CategoryDropdown() {
   return (
     <View style={{ marginTop: 12 }}>
       <Dropdown
-        style={{
-          borderWidth: 1,
-          borderRadius: 4,
-          borderColor: '#EEEEEE',
-          height: 44,
-          justifyContent: 'center',
-          padding: 12,
-        }}
+        style={styles.dropdown}
         placeholder="카테고리"
-        selectedTextStyle={{
-          fontSize: 14,
-          color: '#212121',
-        }}
-        placeholderStyle={{
-          fontSize: 14,
-          color: '#9E9E9E',
-        }}
-        containerStyle={{
-          borderRadius: 4,
-          borderColor: '#EEEEEE',
-        }}
-        itemTextStyle={{
-          color: '#212121',
-          fontSize: 12,
-        }}
+        selectedTextStyle={styles.dropdownSelectedText}
+        placeholderStyle={styles.dropdownPlaceholder}
+        containerStyle={styles.dropdownContainer}
+        itemTextStyle={styles.dropdownItemText}
         data={data}
         maxHeight={300}
         labelField="value"
@@ -140,7 +122,11 @@ function CategoryDropdown() {
           setValue(item.value);
         }}
         renderRightIcon={() => (
-          <Icon name="arrow-drop-down" color="#9E9E9E" size={20} />
+          <Icon
+            name="arrow-drop-down"
+            size={styles.dropdownRightIcon.size}
+            color={styles.dropdownRightIcon.color}
+          />
         )}
       />
     </View>
@@ -201,5 +187,33 @@ const useStyles = makeStyles(theme => ({
   },
   meetingNoteContainer: {
     marginBottom: 20,
+  },
+  dropdown: {
+    borderWidth: 1,
+    borderRadius: 4,
+    borderColor: theme.grayscale['200'],
+    height: 44,
+    justifyContent: 'center',
+    padding: 12,
+  },
+  dropdownPlaceholder: {
+    fontSize: theme.textStyles.body1.fontSize,
+    color: theme.grayscale['900'],
+  },
+  dropdownContainer: {
+    borderRadius: 4,
+    borderColor: theme.grayscale['200'],
+  },
+  dropdownItemText: {
+    color: theme.grayscale['900'],
+    fontSize: theme.textStyles.body3.fontSize,
+  },
+  dropdownSelectedText: {
+    fontSize: theme.textStyles.body1.fontSize,
+    color: theme.grayscale['900'],
+  },
+  dropdownRightIcon: {
+    color: theme.grayscale['500'],
+    size: 20,
   },
 }));
