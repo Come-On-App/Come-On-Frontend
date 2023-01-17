@@ -4,17 +4,18 @@ import { View, Pressable, ScrollView } from 'react-native';
 import { makeStyles, Overlay } from '@rneui/themed';
 
 import AddPlaceButton from '../components/buttons/AddPlaceButton';
-import Label from '../components/inputComponents/Label';
+
 import PlaceCard from '../components/places/PlaceCard';
 import {
   CalendarBoxProps,
   MeetingResponse,
   OverayCalendarProps,
-  RootStackScreenProps,
 } from '../types';
 import Calendar from '../components/calendar/Calendar';
 import MemberBox from '../components/member/MemberBox';
-import Font from '../components/StyledText';
+import Label from '../components/input/Label';
+import Font from '../components/Font';
+import { RootStackScreenProps } from '../navigation';
 
 function MeetingRoom({
   navigation,
@@ -131,7 +132,7 @@ function MeetingRoom({
         >
           <PlaceCard data={dummyMeetingData.meetingPlaces} />
           <AddPlaceButton
-            navigation={{ navigation, route }}
+            navigation={navigation}
             iconName="map"
             text={guideText}
           />

@@ -123,7 +123,7 @@ function BottomTabNavigator() {
               size: 32,
               color: 'black',
               onPress: () =>
-                navigation.navigate('CreateMeeting', { title: '모임생성' }),
+                navigation.navigate('MeetingRoom', { title: '모임생성' }),
             }),
           tabBarLabel: '모임입장',
           tabBarIcon: createTabBarIcon('meeting-room'),
@@ -131,7 +131,7 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="TabThree"
-        component={TabTwoScreen}
+        component={TabThreeScreen}
         options={{
           headerTitleAlign: 'center',
           headerTitle: MyPageHeaderTitle,
