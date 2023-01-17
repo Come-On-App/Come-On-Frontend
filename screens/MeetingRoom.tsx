@@ -6,7 +6,12 @@ import { makeStyles, Overlay } from '@rneui/themed';
 import AddPlaceButton from '../components/buttons/AddPlaceButton';
 import Label from '../components/inputComponents/Label';
 import PlaceCard from '../components/places/PlaceCard';
-import { MeetingResponse, RootStackScreenProps } from '../types';
+import {
+  CalendarBoxProps,
+  MeetingResponse,
+  OverayCalendarProps,
+  RootStackScreenProps,
+} from '../types';
 import Calendar from '../components/calendar/Calendar';
 import MemberBox from '../components/member/MemberBox';
 import Font from '../components/StyledText';
@@ -20,6 +25,7 @@ function MeetingRoom({
   const onPressLabel = () => {
     setVisible(!visible);
   };
+  const guideText = '새로운 코스를 추가해보세요!';
   const dummyMeetingData: MeetingResponse = {
     id: 1000,
     myMeetingUserId: 11,
@@ -116,9 +122,7 @@ function MeetingRoom({
             {dummyMeetingData.startDate} ~ {dummyMeetingData.endDate}
           </Font>
         </Pressable>
-        <View style={styles.calendarContainer}>
-          <Calendar type="DEFAULT" data={dummyMeetingData} />
-        </View>
+        <CalendarBox data={dummyMeetingData} />
         <Label style={styles.coursePlaceLabel}>모임장소</Label>
         {/* TODO map들어갈 자리 */}
         <ScrollView
@@ -129,25 +133,38 @@ function MeetingRoom({
           <AddPlaceButton
             navigation={{ navigation, route }}
             iconName="map"
-            text="새로운 코스를 추가해보세요!"
+            text={guideText}
           />
         </ScrollView>
       </View>
-      <Overlay
-        overlayStyle={{
-          width: '90%',
-          margin: 0,
-          padding: 0,
-          backgroundColor: 'rgba(52, 52, 52, 0)',
-        }}
-        isVisible={visible}
-        onBackdropPress={onPressLabel}
-      >
-        <View style={{ width: '100%', height: 700 }}>
-          <Calendar type="PERIOD" data={dummyMeetingData} />
-        </View>
-      </Overlay>
+      <OverlayCalendar visible={visible} onPressLabel={onPressLabel} />
     </>
+  );
+}
+
+function OverlayCalendar({ visible, onPressLabel }: OverayCalendarProps) {
+  const styles = useStyles();
+
+  return (
+    <Overlay
+      overlayStyle={styles.overlayStyle}
+      isVisible={visible}
+      onBackdropPress={onPressLabel}
+    >
+      <View style={styles.calendarViewStyle}>
+        <Calendar type="PERIOD" data={undefined} />
+      </View>
+    </Overlay>
+  );
+}
+
+function CalendarBox({ data }: CalendarBoxProps) {
+  const styles = useStyles();
+
+  return (
+    <View style={styles.calendarContainer}>
+      <Calendar type="DEFAULT" data={data} />
+    </View>
   );
 }
 
@@ -190,5 +207,15 @@ const useStyles = makeStyles(theme => ({
     lineHeight: theme.textStyles.body1.lineHeight,
     fontSize: theme.textStyles.body1.fontSize,
     fontWeight: 'normal', // TODO 추후 normal Weight로 재설정
+  },
+  overlayStyle: {
+    width: '90%',
+    margin: 0,
+    padding: 0,
+    backgroundColor: 'rgba(52, 52, 52, 0)',
+  },
+  calendarViewStyle: {
+    width: '100%',
+    height: 700,
   },
 }));

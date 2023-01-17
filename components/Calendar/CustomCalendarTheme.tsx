@@ -1,5 +1,6 @@
 import { Theme as CalendarTheme } from 'react-native-calendars/src/types';
 import { createTheme } from '@rneui/themed';
+
 import theme from '../../constants/themed';
 
 const CustomCalendarTheme: CalendarTheme = {
@@ -12,58 +13,40 @@ const CustomCalendarTheme: CalendarTheme = {
   textDayFontSize: 16,
   'stylesheet.day.period': {
     selected: {
-      backgroundColor: 'red',
-      width: 32,
-      height: 32,
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderWidth: 2,
-      borderColor: 'black',
+      selectedText: {
+        color: 'red',
+      },
+      customContainerStyle: {
+        backgroundColor: 'red',
+      },
+      // width: 32,
+      // height: 32,
+      // alignItems: 'center',
+      // justifyContent: 'center',
+      // borderWidth: 2,
+      // borderColor: 'black',
+      // color: 'red',
     },
+    color: 'black',
   },
-  todayTextColor: theme.lightColors?.primary,
   selectedDayTextColor: 'black',
-
-  selectedDotColor: 'red',
+  todayTextColor: theme.lightColors?.primary,
+  selectedDayBackgroundColor: theme.calendarStyles?.period,
 };
 
 export default CustomCalendarTheme;
-declare module '@rneui/themed' {
-  export interface Theme {
-    DayTheme: {
-      colors: {
-        dayFilteredColor: string;
-        dayStartColor: string;
-        dayEndColor: string;
-      };
-      startDayStyle: {
-        container: object;
-        textColor: object;
-      };
-      endDayStyle: {
-        container: object;
-        textColor: object;
-      };
-      dayStyle: {
-        container: object;
-        oneDaySelectedStyle: object;
-      };
-    };
-  }
-}
 
 export const DayTheme = createTheme({
   DayTheme: {
     colors: {
-      dayFilteredColor: '#EFF6FE',
-      dayStartColor: '#337FFE',
-      dayEndColor: '#337FFE',
+      dayFilteredColor: theme.calendarStyles?.period,
+      dayStartColor: theme.lightColors?.primary,
+      dayEndColor: theme.lightColors?.primary,
     },
     startDayStyle: {
       container: {
         width: 34,
         height: 34,
-        borderRadius: 10000,
       },
       textColor: {
         color: 'white',
@@ -86,7 +69,7 @@ export const DayTheme = createTheme({
       oneDaySelectedStyle: {
         width: 34,
         height: 34,
-        backgroundColor: '#337FFE',
+        backgroundColor: theme.lightColors?.primary,
       },
     },
   },

@@ -8,6 +8,9 @@ const theme = createTheme({
     info: '#24ABE4',
     success: '#20BD4A',
   },
+  calendarStyles: {
+    period: '#EFF6FE',
+  },
   darkColors: {},
   mode: 'light',
   grayscale: {

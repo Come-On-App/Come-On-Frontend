@@ -5,7 +5,11 @@ import { makeStyles, Overlay } from '@rneui/themed';
 import InputText from './InputText';
 import InputImage from './InputImage';
 import LocaleConfig from '../calendar/LocaleConfig';
-import { InputFormProps } from '../../types';
+import {
+  InputFormProps,
+  MeetingTitleProps,
+  OverayCalendarProps,
+} from '../../types';
 import Label from './Label';
 import Calendar from '../calendar/Calendar';
 
@@ -23,29 +27,48 @@ function InputForm({ inputProps }: InputFormProps) {
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <InputImage />
         <InputText inputProps={inputProps} />
-        <Pressable style={styles.labelContainer} onPress={onPressLabel}>
-          <Label>모임기간</Label>
-          <Label style={styles.subLabelStyle}>기간선택</Label>
-        </Pressable>
-        <View style={styles.calendarContainer}>
-          <Calendar type="PERIOD" data={undefined} />
-        </View>
+        <MeetingTitle onPressLabel={onPressLabel} />
+        <CalendarBox />
       </KeyboardAvoidingView>
-      <Overlay
-        overlayStyle={{
-          width: '90%',
-          margin: 0,
-          padding: 0,
-          backgroundColor: 'rgba(52, 52, 52, 0)',
-        }}
-        isVisible={visible}
-        onBackdropPress={onPressLabel}
-      >
-        <View style={{ width: '100%', height: 700 }}>
-          <Calendar type="PERIOD" data={undefined} />
-        </View>
-      </Overlay>
+      <OverlayCalendar visible={visible} onPressLabel={onPressLabel} />
     </>
+  );
+}
+
+function MeetingTitle({ onPressLabel }: MeetingTitleProps) {
+  const styles = useStyles();
+
+  return (
+    <Pressable style={styles.labelContainer} onPress={onPressLabel}>
+      <Label>모임기간</Label>
+      <Label style={styles.subLabelStyle}>기간선택</Label>
+    </Pressable>
+  );
+}
+
+function OverlayCalendar({ visible, onPressLabel }: OverayCalendarProps) {
+  const styles = useStyles();
+
+  return (
+    <Overlay
+      overlayStyle={styles.overlayStyle}
+      isVisible={visible}
+      onBackdropPress={onPressLabel}
+    >
+      <View style={styles.calendarViewStyle}>
+        <Calendar type="PERIOD" data={undefined} />
+      </View>
+    </Overlay>
+  );
+}
+
+function CalendarBox() {
+  const styles = useStyles();
+
+  return (
+    <View style={styles.calendarContainer}>
+      <Calendar type="PERIOD" data={undefined} />
+    </View>
   );
 }
 
@@ -74,5 +97,15 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     marginBottom: 12,
     marginTop: 12,
+  },
+  overlayStyle: {
+    width: '90%',
+    margin: 0,
+    padding: 0,
+    backgroundColor: 'rgba(52, 52, 52, 0)',
+  },
+  calendarViewStyle: {
+    width: '100%',
+    height: 700,
   },
 }));

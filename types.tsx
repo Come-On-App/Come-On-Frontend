@@ -12,6 +12,8 @@ import {
 } from '@react-navigation/native';
 import { TextStyle, ViewStyle, StyleProp } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { DateData } from 'react-native-calendars';
+import { MarkedDates } from 'react-native-calendars/src/types';
 
 export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
@@ -77,6 +79,9 @@ declare module '@rneui/themed' {
         fontSize: number;
         lineHeight: number;
       };
+    };
+    calendarStyles: {
+      period: string;
     };
   }
 
@@ -186,17 +191,46 @@ export type PlaceCardBodyProps = {
   data: MeetingPlace;
 };
 
+/// memberBox
 export type MemberBoxProps = {
   myId: number;
   myRole: 'HOST' | 'EDITOR' | 'PARTICIPANT';
   meetingUsers: MeetingUser[];
 };
 
+export interface MemberBoxTitleProps {
+  userCount: number;
+}
+
+export interface MemberBoxSubTitleProps {
+  onClickManage: () => void;
+}
+
+export interface UserRowProps {
+  user: MeetingUser[];
+  renderAvatar: (users: MeetingUser[]) => JSX.Element[];
+}
+
 // calendar
 export type CalendarProps = {
   type: 'PERIOD' | 'DEFAULT';
   data: MeetingResponse | undefined; // TODO: 추후 undefined 수정
 };
+
+export interface CalendarTypeProps {
+  data: MeetingResponse | undefined; // TODO: 추후 undefined 수정
+  onPressHandler: (date: DateData) => void;
+  markedDate: MarkedDates | undefined;
+}
+
+export interface OverayCalendarProps {
+  visible: boolean;
+  onPressLabel: () => void;
+}
+
+export interface MeetingTitleProps {
+  onPressLabel: () => void;
+}
 
 // Icon
 export type IconName = React.ComponentProps<typeof MaterialIcons>['name'];
@@ -206,6 +240,10 @@ export interface IconProps {
   color?: string;
   size: number;
   onPress?: () => void;
+}
+
+export interface CalendarBoxProps {
+  data: MeetingResponse;
 }
 
 // SerchBar
@@ -305,4 +343,28 @@ export interface TextProps {
     | StyleProp<TextStyle>;
 
   children: React.ReactNode;
+}
+
+declare module '@rneui/themed' {
+  export interface Theme {
+    DayTheme: {
+      colors: {
+        dayFilteredColor: string;
+        dayStartColor: string;
+        dayEndColor: string;
+      };
+      startDayStyle: {
+        container: object;
+        textColor: object;
+      };
+      endDayStyle: {
+        container: object;
+        textColor: object;
+      };
+      dayStyle: {
+        container: object;
+        oneDaySelectedStyle: object;
+      };
+    };
+  }
 }

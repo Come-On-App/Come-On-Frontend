@@ -2,7 +2,13 @@ import React, { useState } from 'react';
 import { View, ScrollView, Pressable } from 'react-native';
 import { makeStyles } from '@rneui/themed';
 
-import { MeetingUser, MemberBoxProps } from '../../types';
+import {
+  MeetingUser,
+  MemberBoxProps,
+  MemberBoxSubTitleProps,
+  MemberBoxTitleProps,
+  UserRowProps,
+} from '../../types';
 import Label from '../inputComponents/Label';
 import Avatar from './Avatar';
 import Font from '../StyledText';
@@ -18,29 +24,14 @@ function MemberBox({ myId, myRole, meetingUsers }: MemberBoxProps) {
 
     return [meetingStaff, meetingMembers];
   };
-  const filtered = filterStaff();
-  const staff = filtered[0];
-  const members = filtered[1];
+  const [staff, members] = filterStaff();
   const styles = useStyles(members);
   const [visible, setVisible] = useState(false);
   const onClickManage = () => {
     setVisible(!visible);
   };
-  const renderStaffAvatar = () => {
-    return staff.map((item, index) => (
-      <Avatar
-        key={item.id}
-        size={40}
-        path={item.imageLink}
-        containerStyle={[
-          item.id === myId ? styles.logOnAvatar : styles.logOffAvatar,
-          index === staff.length - 1 ? styles.lastAvatar : styles.avatar,
-        ]}
-      />
-    ));
-  };
-  const renderMemberAvatar = () => {
-    return members.map((item, index) => (
+  const renderAvatar = (users: MeetingUser[]) => {
+    return users.map((item, index) => (
       <Avatar
         key={item.id}
         size={40}
@@ -56,28 +47,14 @@ function MemberBox({ myId, myRole, meetingUsers }: MemberBoxProps) {
   return (
     <View>
       <View style={styles.meetingMembersubTitle}>
-        <View style={styles.meetingMemberLabelStyle}>
-          <Label>모임멤버 </Label>
-          <Label style={styles.colorText}>{meetingUsers.length}</Label>
-        </View>
+        <MemberBoxTitle userCount={meetingUsers.length} />
         {myRole === 'HOST' && (
-          <Pressable
-            onPress={onClickManage}
-            style={({ pressed }) => (pressed ? styles.pressed : {})}
-          >
-            <Font style={styles.editMember}>멤버관리</Font>
-          </Pressable>
+          <MemberBoxSubTitle onClickManage={onClickManage} />
         )}
       </View>
       <View style={styles.memberBox}>
-        <ScrollView style={styles.scrollContainer} horizontal>
-          <View style={styles.staffRow}>{renderStaffAvatar()}</View>
-        </ScrollView>
-        {members && (
-          <ScrollView horizontal style={styles.membersScrollContainer}>
-            <View style={styles.memberRow}>{renderMemberAvatar()}</View>
-          </ScrollView>
-        )}
+        <UserRow user={staff} renderAvatar={renderAvatar} />
+        {members && <UserRow user={members} renderAvatar={renderAvatar} />}
       </View>
       {visible && (
         <View>
@@ -86,6 +63,43 @@ function MemberBox({ myId, myRole, meetingUsers }: MemberBoxProps) {
         </View>
       )}
     </View>
+  );
+}
+
+function MemberBoxTitle({ userCount }: MemberBoxTitleProps) {
+  const styles = useStyles();
+
+  return (
+    <View style={styles.meetingMemberLabelStyle}>
+      <Label>모임멤버 </Label>
+      <Label style={styles.colorText}>{userCount}</Label>
+    </View>
+  );
+}
+
+function UserRow({ user, renderAvatar }: UserRowProps) {
+  const styles = useStyles();
+  const isParticipant = user[0].meetingRole === 'PARTICIPANT';
+
+  return (
+    <ScrollView style={styles.scrollContainer} horizontal>
+      <View style={isParticipant ? styles.memberRow : styles.staffRow}>
+        {renderAvatar(user)}
+      </View>
+    </ScrollView>
+  );
+}
+
+function MemberBoxSubTitle({ onClickManage }: MemberBoxSubTitleProps) {
+  const styles = useStyles();
+
+  return (
+    <Pressable
+      onPress={onClickManage}
+      style={({ pressed }) => (pressed ? styles.pressed : {})}
+    >
+      <Font style={styles.editMember}>멤버관리</Font>
+    </Pressable>
   );
 }
 
@@ -124,7 +138,6 @@ const useStyles = makeStyles((theme, members: MeetingUser[]) => ({
     height: 42,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    marginTop: 8,
   },
   avatar: {
     marginRight: 7,
