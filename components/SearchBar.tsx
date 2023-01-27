@@ -1,16 +1,13 @@
 import React from 'react';
 import { SearchBar as RneSearchBar, makeStyles } from '@rneui/themed';
+import { GestureResponderEvent, Pressable, View } from 'react-native';
 
 import Icon from '../components/Icon';
 import type { SearchBarProps } from '../types';
 
-export default function SearchBar({
-  value,
-  style,
-  IconType,
-  onChange,
-}: SearchBarProps) {
+export default function SearchBar(props: SearchBarProps) {
   const styles = useStyles();
+  const { value, style, IconType, onChange } = props;
 
   return (
     <RneSearchBar
@@ -27,6 +24,28 @@ export default function SearchBar({
       inputContainerStyle={styles.input}
       style={[styles.font, style]}
     />
+  );
+}
+
+interface SearchBarMockProps {
+  onPress: (event: GestureResponderEvent) => void;
+}
+
+export function SearchBarMock({ onPress }: SearchBarMockProps) {
+  const styles = useStyles();
+
+  return (
+    <Pressable onPress={onPress}>
+      <View style={styles.searchBarMockContainer}>
+        <View style={styles.searchBarMockInputContainer}>
+          <Icon
+            name="search"
+            color={styles.icon.color}
+            size={styles.icon.size}
+          />
+        </View>
+      </View>
+    </Pressable>
   );
 }
 
@@ -50,5 +69,21 @@ const useStyles = makeStyles(theme => ({
   icon: {
     color: theme.grayscale['700'],
     size: 20,
+  },
+  searchBarMockContainer: {
+    width: '100%',
+    height: 46,
+    backgroundColor: theme.grayscale['200'],
+
+    borderRadius: 4,
+    flexDirection: 'row',
+    paddingVertical: 8,
+  },
+  searchBarMockInputContainer: {
+    marginVertical: 4,
+    marginLeft: 10,
+    paddingRight: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 }));
