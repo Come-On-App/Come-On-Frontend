@@ -6,19 +6,27 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import theme from '../constants/themed';
 
-import { Avatar } from '../components/Avatar';
 import MeetingRoom from '../screens/MeetingRoom';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import CreateMeeting from '../screens/CreateMeeting';
 import TabThreeScreen from '../screens/TabThreeScreen';
-import PlaceSelect from '../components/placeSelect/PlaceSelect';
+
 import LogoutButton from '../components/myPage/MyPageLogoutButton';
 import { createTabBarIcon, PressableIcon } from '../components/Icon';
-import { RootStackParamList, RootTabParamList } from '../navigation';
+
 import CancelIconButton from '../components/buttons/CancelIconButton';
 import MyPageHeaderTitle from '../components/myPage/MyPageHeaderTitle';
 import PlaceSelectHeaderTitle from '../components/placeSelect/PlaceSelectHeaderTitle';
+
+import PlaceSelect from '../screens/place/PlaceSelect';
+import PlaceSearch from '../screens/place/PlaceSearch';
+import Avatar from '../components/member/Avatar';
+import type {
+  PlaceSelectParamList,
+  RootStackParamList,
+  RootTabParamList,
+} from '../types/navigation';
 
 function TabThreeIcon() {
   const testImage = 'https://randomuser.me/api/portraits/men/36.jpg'; // SERVER-API: 추후 서버로 사용자 프로필 요청
@@ -36,6 +44,26 @@ export default function Navigation() {
 }
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
+const PlaceSelectStack = createNativeStackNavigator<PlaceSelectParamList>();
+
+function PlaceSelectNavigator() {
+  return (
+    <PlaceSelectStack.Navigator>
+      <PlaceSelectStack.Screen
+        name="Main"
+        component={PlaceSelect}
+        options={() => ({
+          headerTitleAlign: 'center',
+          headerTitle: PlaceSelectHeaderTitle,
+          headerShadowVisible: false,
+          headerRight: CancelIconButton,
+          headerBackVisible: false,
+        })}
+      />
+      <PlaceSelectStack.Screen name="Map" component={PlaceSearch} />
+    </PlaceSelectStack.Navigator>
+  );
+}
 
 function RootNavigator() {
   return (
@@ -58,15 +86,8 @@ function RootNavigator() {
       />
       <Stack.Screen
         name="PlaceSelect"
-        component={PlaceSelect}
-        options={({ navigation, route }) => ({
-          title: route.name,
-          headerTitleAlign: 'center',
-          headerTitle: PlaceSelectHeaderTitle,
-          headerShadowVisible: false,
-          headerRight: CancelIconButton,
-          headerBackVisible: false,
-        })}
+        component={PlaceSelectNavigator}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="MeetingRoom"
