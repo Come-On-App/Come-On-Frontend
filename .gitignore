@@ -10,6 +10,7 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
+constants/getEnvVars.tsx
 
 # macOS
 .DS_Store
@@ -18,3 +19,5 @@ web-build/
 .vscode/
 .idea/
 
+#env
+.env
