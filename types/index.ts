@@ -3,7 +3,12 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { TextStyle, ViewStyle, StyleProp } from 'react-native';
 import { DateData } from 'react-native-calendars';
 import { MarkedDates } from 'react-native-calendars/src/types';
-import type { RootStackScreenProps } from './navigation';
+import {
+  GooglePlaceData,
+  GooglePlaceDetail,
+} from 'react-native-google-places-autocomplete';
+import { number } from 'prop-types';
+import { RootStackScreenProps } from './navigation';
 
 /**
  * Global Theme
@@ -349,6 +354,7 @@ export interface ButtonProps {
   bold?: boolean;
   onPress: () => void;
   height?: number;
+  disabled?: boolean;
   textStyle?: Partial<ButtonTextStyle>;
   buttonStyle?: Partial<ButtonStyle> | Partial<ButtonStyle>[];
 }
@@ -431,4 +437,67 @@ declare module '@rneui/themed' {
       };
     };
   }
+}
+
+// location
+export interface MapRegion {
+  latitude: number;
+  longitude: number;
+  latitudeDelta: number;
+  longitudeDelta: number;
+}
+
+export interface Location {
+  latitude: number;
+  longitude: number;
+}
+
+export interface LocationObject {
+  coords: {
+    accuracy: number | null;
+    altitude: number | null;
+    altitudeAccuracy: number | null;
+    heading: number | null;
+    latitude: number;
+    longitude: number;
+    speed: number | null;
+  };
+}
+
+export interface PlaceSelect {
+  address: string;
+  region: Location | null;
+  currentLocation: Location | null;
+  marker: Location | null;
+  name: string;
+  placeId: string;
+  category: string;
+  description: string;
+}
+
+export type GooglePlacesOnPressHandler = (
+  _data: GooglePlaceData,
+  detail: GooglePlaceDetail | null,
+) => void;
+
+// Google Map API Response
+export interface GoogleMapResult {
+  formatted_address: string;
+  geometry: {
+    location: {
+      lat: number;
+      lng: number;
+    };
+  };
+  place_id: string;
+}
+
+export interface ReverseGeocode {
+  results: GoogleMapResult[];
+  status: string;
+}
+
+export interface PlaceDetail {
+  result: GoogleMapResult & { name: string };
+  status: string;
 }
