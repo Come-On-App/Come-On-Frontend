@@ -1,13 +1,9 @@
 import React from 'react';
-import { Avatar as RneAvatar, makeStyles } from '@rneui/themed';
+import { Avatar, makeStyles } from '@rneui/themed';
 
-import type { AvatarProps, BadgedAvatarProps } from '../types';
+import type { BadgedAvatarProps } from '../../types';
 
-export function Avatar({ size, path }: AvatarProps) {
-  return <RneAvatar size={size} rounded source={{ uri: path }} />;
-}
-
-export function BadgedAvatar({
+export default function BadgedAvatar({
   size,
   path,
   badge: { icon, backgroundColor },
@@ -15,14 +11,14 @@ export function BadgedAvatar({
   const styles = useStyles(backgroundColor);
 
   return (
-    <RneAvatar size={size} rounded source={{ uri: path }}>
-      <RneAvatar.Accessory
+    <Avatar size={size} rounded source={{ uri: path }}>
+      <Avatar.Accessory
         style={styles.avatarAccessory}
         size={icon.size}
         color={icon.color}
         name={icon.iconName}
       />
-    </RneAvatar>
+    </Avatar>
   );
 }
 
