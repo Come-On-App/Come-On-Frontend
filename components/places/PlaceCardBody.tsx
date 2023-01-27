@@ -1,7 +1,7 @@
 import { makeStyles } from '@rneui/themed';
 import React from 'react';
 import { View } from 'react-native';
-import { PlaceCardBodyProps, PlaceCardBodyProps } from '../../types';
+import { PlaceCardBodyProps } from '../../types';
 import { Font } from '../Font';
 import Caption from './Caption';
 

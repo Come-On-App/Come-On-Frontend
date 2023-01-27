@@ -1,8 +1,10 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Button, makeStyles } from '@rneui/themed';
+import useAuth from '../../hooks/useAuth';
 
 export default function LogoutButton() {
+  const { setLogout } = useAuth();
   const styles = useStyles();
   const TITLE = '로그아웃';
 
@@ -13,6 +15,7 @@ export default function LogoutButton() {
         type="clear"
         titleStyle={styles.button}
         containerStyle={styles.buttonContainer}
+        onPress={() => setLogout()}
       />
     </View>
   );
