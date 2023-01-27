@@ -3,7 +3,8 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { TextStyle, ViewStyle, StyleProp } from 'react-native';
 import { DateData } from 'react-native-calendars';
 import { MarkedDates } from 'react-native-calendars/src/types';
-import type { RootStackScreenProps } from './navigation';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { RootStackParamList, RootStackScreenProps } from './navigation';
 
 /**
  * Global Theme
@@ -97,13 +98,32 @@ export interface InputTextProps extends InputProps {
   label: string;
 }
 
+// LoginResponse
+
+export interface AuthResponse {
+  accessToken: {
+    token: string;
+    expiry: number;
+    userId: number;
+  };
+  refreshToken: {
+    token: string;
+    expiry: number;
+    userId: number;
+  };
+}
+
 /*
  *PlaceCardProps
  TODO : 추후 문서보고 수정
  */
 
 export type AddPlaceButtonProps = {
-  navigation: RootStackScreenProps<'MeetingRoom'>;
+  navigation: NativeStackNavigationProp<
+    RootStackParamList,
+    'MeetingRoom',
+    undefined
+  >;
   iconName: IconName;
   text: string;
 };
@@ -189,8 +209,6 @@ export type CalendarProps = {
 
 export interface CalendarTypeProps {
   data: MeetingResponse | undefined; // TODO: 추후 undefined 수정
-  onPressHandler: (date: DateData) => void;
-  markedDate: MarkedDates | undefined;
 }
 
 export interface OverayCalendarProps {
