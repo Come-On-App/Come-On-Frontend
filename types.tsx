@@ -1,10 +1,8 @@
 import '@rneui/themed';
 import { MaterialIcons } from '@expo/vector-icons';
 import { TextStyle, ViewStyle, StyleProp } from 'react-native';
-import { DateData } from 'react-native-calendars';
-import { MarkedDates } from 'react-native-calendars/src/types';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import type { RootStackParamList, RootStackScreenProps } from './navigation';
+import type { RootStackParamList } from './navigation';
 
 /**
  * Global Theme
@@ -98,7 +96,33 @@ export interface InputTextProps extends InputProps {
   label: string;
 }
 
+// errorType
+export type ErrorType = {
+  errorCode: number;
+  errorDescription: string;
+  errors: object;
+};
+
 // LoginResponse
+export type userInfo = {
+  email: string;
+  name: string;
+  nickname: string;
+  profileImageUrl?: string | null;
+  role: string;
+  userId: number;
+};
+
+export type returnToken = {
+  token: string;
+  expiry: number;
+  userId: number;
+};
+
+export type SocialLoginProps = {
+  url: string;
+  data: object;
+};
 
 export interface AuthResponse {
   accessToken: {
@@ -107,6 +131,14 @@ export interface AuthResponse {
     userId: number;
   };
   refreshToken: {
+    token: string;
+    expiry: number;
+    userId: number;
+  };
+}
+
+export interface AccessTknResponse {
+  accessToken: {
     token: string;
     expiry: number;
     userId: number;
