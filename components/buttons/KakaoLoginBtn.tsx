@@ -1,9 +1,11 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { SetStateAction } from 'react';
 import WebView from 'react-native-webview';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Pressable, View } from 'react-native';
-import { REACT_APP_REST_API_KEY, REACT_APP_REDIRECT_URI } from '@env';
 import { makeStyles } from '@rneui/themed';
+import { Pressable, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+import { REACT_APP_REST_API_KEY, REACT_APP_REDIRECT_URI } from '@env';
+
 import apis from '../../api';
 import useAuth from '../../hooks/useAuth';
 import { SocialLoginProps } from '../../types';
@@ -50,13 +52,11 @@ export function KakaoLoginWebView() {
 
     await apis
       .setLogin(data)
-      .catch(err => {
-        console.log(err);
-
+      .catch(() => {
         return null;
       })
       .then(response => {
-        if (response) setTokens(response!.data);
+        if (response) setTokens(response.data);
       });
   };
 

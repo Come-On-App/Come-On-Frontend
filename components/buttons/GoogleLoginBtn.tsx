@@ -1,18 +1,20 @@
 import { Pressable } from 'react-native';
+import { ResponseType } from 'expo-auth-session';
 import React, { useCallback, useEffect } from 'react';
+import * as Google from 'expo-auth-session/providers/google';
+import { makeStyles } from '@rneui/themed';
+
 import {
   REACT_APP_EXPO_CLIENT_ID,
   REACT_APP_IOS_CLIENT_ID,
   REACT_APP_ANDROID_CLIENT_ID,
   REACT_APP_WEB_CLIENT_ID,
 } from '@env';
-import * as Google from 'expo-auth-session/providers/google';
-import { ResponseType } from 'expo-auth-session';
-import { makeStyles } from '@rneui/themed';
-import GoogleLogo from '../../assets/images/logo/GoogleLogo';
-import { SocialLoginProps } from '../../types';
+
 import apis from '../../api';
 import useAuth from '../../hooks/useAuth';
+import { SocialLoginProps } from '../../types';
+import GoogleLogo from '../../assets/images/logo/GoogleLogo';
 
 function GoogleLoginBtn() {
   const styles = useStyles();
@@ -34,11 +36,11 @@ function GoogleLoginBtn() {
 
       await apis
         .setLogin(data)
-        .catch(err => {
-          console.log(err);
+        .catch(() => {
+          return null;
         })
         .then(async newData => {
-          await setTokens(newData!.data);
+          if (newData) await setTokens(newData.data);
         });
     },
     [setTokens],
