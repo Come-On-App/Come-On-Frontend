@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-
 import { getValueFor } from './secureStore';
+import apis from '../api';
 
 export interface authProps {
   ChildComponent: JSX.Element;
@@ -17,8 +17,6 @@ export const isAuth = () => {
     return true;
   });
 
-  console.log(`access${accessToken}`);
-
   return accessToken;
 };
 
@@ -32,7 +30,6 @@ export function Auth() {
 
     result = true;
   });
-  console.log('asd', result);
 
   return result;
 }
