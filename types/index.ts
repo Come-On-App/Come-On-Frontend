@@ -501,3 +501,5 @@ export interface PlaceDetail {
   result: GoogleMapResult & { name: string };
   status: string;
 }
+
+export type Address = GoogleMapResult & { name: string };
