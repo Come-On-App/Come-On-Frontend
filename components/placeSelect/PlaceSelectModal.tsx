@@ -81,15 +81,8 @@ function PlaceSelectModalTop() {
       <Input
         onChangeText={onChnageHandler}
         value={placeState.name}
-        style={{
-          textAlign: 'center',
-          color: '#212121',
-          fontSize: 22,
-          fontFamily: 'pretendard-bold',
-        }}
-        errorStyle={{
-          display: 'none',
-        }}
+        style={styles.topInput}
+        errorStyle={styles.topInputError}
       />
       <View style={styles.subAddressContainer}>
         <Icon
@@ -166,7 +159,7 @@ function CategoryDropdown() {
   };
 
   return (
-    <View style={{ marginTop: 12 }}>
+    <View style={styles.dropdownWrap}>
       <Dropdown
         style={styles.dropdown}
         placeholder="카테고리"
@@ -225,6 +218,15 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     marginBottom: 10,
   },
+  topInput: {
+    textAlign: 'center',
+    color: theme.grayscale['900'],
+    fontSize: 22,
+    fontFamily: 'pretendard-bold',
+  },
+  topInputError: {
+    display: 'none',
+  },
   addressText: {
     fontSize: 22,
   },
@@ -251,6 +253,9 @@ const useStyles = makeStyles(theme => ({
   },
   meetingNoteContainer: {
     marginBottom: 20,
+  },
+  dropdownWrap: {
+    marginTop: 12,
   },
   dropdown: {
     borderWidth: 1,
