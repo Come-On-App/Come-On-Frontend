@@ -1,17 +1,62 @@
 import { useCallback } from 'react';
-import { getItemAsync } from 'expo-secure-store';
+import { AccessTokenRes, AuthResponse, RefreshTokenRes } from '../types';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { login, logout } from '../slices/authSlice';
-import { deleteValueFor, save } from '../utils/secureStore';
-import { AccessTknResponse, AuthResponse } from '../types';
+import { deleteValueFor, save, getValueFor } from '../utils/secureStore';
 
-const useAuth = () => {
+const saveAccessToken = async (accessTokenData: AccessTokenRes) => {
+  await save('accessToken', JSON.stringify(accessTokenData.accessToken)).catch(
+    err => console.log(err),
+  );
+};
+const saveRefreshToken = async (refreshTokennData: RefreshTokenRes) => {
+  await save(
+    'refreshToken',
+    JSON.stringify(refreshTokennData.refreshToken),
+  ).catch(err => console.log(err));
+};
+const getAccessToken = async () => {
+  const data = await getTokenData('accessToken');
+
+  if (data != null) {
+    data as AccessTokenRes;
+
+    return data.accessToken.token;
+  }
+
+  return null;
+};
+
+enum StoreKey {
+  refreshToken = 'refreshToken',
+  accessToken = 'accessToken',
+}
+
+const getTokenData = async (name: 'accessToken' | 'refreshToken') => {
+  const tokenData = await getValueFor(name);
+
+  if (tokenData) return JSON.parse(tokenData);
+
+  return null;
+};
+
+function useAuth() {
   const dispatch = useAppDispatch();
   const isAuth = useAppSelector(state => state.auth.haveToken);
-  // 토큰이 있는지 검사.
-  const getToken = useCallback(async () => {
-    const accessToken = await getItemAsync('accessToken');
-    const refreshToken = await getItemAsync('refreshToken');
+  const isValidToken = () => {
+    getTokenData(StoreKey.accessToken).then(value => {
+      if (value === null) {
+        return false;
+      }
+
+      return true;
+    });
+  };
+  const setLogoin = useCallback(async () => {
+    const accessToken = await getTokenData(StoreKey.accessToken);
+    const refreshToken = await getTokenData(StoreKey.refreshToken);
+
+    console.log(accessToken);
 
     if (accessToken !== null && refreshToken !== null) {
       dispatch(login());
@@ -19,28 +64,16 @@ const useAuth = () => {
   }, [dispatch]);
   const setTokens = useCallback(
     async (data: AuthResponse) => {
-      await save('accessToken', JSON.stringify(data.accessToken)).catch(err =>
-        console.log(err),
-      );
-
-      await save('refreshToken', JSON.stringify(data.refreshToken)).catch(
-        err => {
-          console.log(err);
-        },
-      );
+      await saveAccessToken(data);
+      await saveRefreshToken(data);
 
       dispatch(login());
     },
     [dispatch],
   );
-  const setAccessToken = useCallback(async (data: AccessTknResponse) => {
-    await save('accessToken', JSON.stringify(data.accessToken)).catch(err =>
-      console.log(err),
-    );
-  }, []);
   const setLogout = useCallback(async () => {
-    await deleteValueFor('accessToken');
-    await deleteValueFor('refreshToken').catch(err => {
+    await deleteValueFor(StoreKey.accessToken);
+    await deleteValueFor(StoreKey.refreshToken).catch(err => {
       console.log(err);
     });
     dispatch(logout());
@@ -50,9 +83,10 @@ const useAuth = () => {
     isAuth,
     setTokens,
     setLogout,
-    getToken,
-    setAccessToken,
+    setLogoin,
+    isValidToken,
+    getAccessToken,
   };
-};
+}
 
 export default useAuth;

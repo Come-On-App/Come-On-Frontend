@@ -86,6 +86,7 @@ export interface InputProps {
   multiline: boolean;
   placeholder: string;
   onChangeText: (text: string) => void;
+  style?: StyleProp<TextStyle>;
 }
 
 export interface InputFormProps {
@@ -137,12 +138,18 @@ export interface AuthResponse {
   };
 }
 
-export interface AccessTknResponse {
-  accessToken: {
-    token: string;
-    expiry: number;
-    userId: number;
-  };
+export interface AccessTokenRes {
+  accessToken: Token;
+}
+
+export interface RefreshTokenRes {
+  refreshToken: Token;
+}
+
+export interface Token {
+  token: string;
+  expiry: number;
+  userId: number;
 }
 
 /*
@@ -234,13 +241,35 @@ export interface UserRowProps {
 }
 
 // calendar
+
+export type SubDateProps = {
+  date: date;
+};
+
+export type date = {
+  startDate: string;
+  endDate: string;
+};
+
 export type CalendarProps = {
   type: 'PERIOD' | 'DEFAULT';
   data: MeetingResponse | undefined; // TODO: 추후 undefined 수정
+  setDate?: React.Dispatch<
+    React.SetStateAction<{
+      startDate: string;
+      endDate: string;
+    }>
+  >;
 };
 
 export interface CalendarTypeProps {
   data: MeetingResponse | undefined; // TODO: 추후 undefined 수정
+  setDate?: React.Dispatch<
+    React.SetStateAction<{
+      startDate: string;
+      endDate: string;
+    }>
+  >;
 }
 
 export interface OverayCalendarProps {
@@ -251,6 +280,14 @@ export interface OverayCalendarProps {
 export interface MeetingTitleProps {
   onPressLabel: () => void;
 }
+// api
+
+export type MeetingInfo = {
+  meetingName: string;
+  meetingImageUrl: string;
+  calendarStartFrom: string;
+  calendarEndTo: string;
+};
 
 // Icon
 export type IconName = React.ComponentProps<typeof MaterialIcons>['name'];

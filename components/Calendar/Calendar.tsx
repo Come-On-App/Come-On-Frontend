@@ -1,5 +1,5 @@
 /* eslint-disable react/destructuring-assignment */
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { makeStyles } from '@rneui/themed';
 import { CalendarList, DateData } from 'react-native-calendars';
 import { View } from 'react-native';
@@ -33,6 +33,11 @@ const PERIODSTYLE = {
   selected: true,
   customContainerStyle: DayTheme.DayTheme?.dayStyle?.container,
   color: DayTheme.DayTheme?.colors?.dayFilteredColor,
+};
+const DAYSTYLE = {
+  selected: true,
+  textColor: 'white',
+  customContainerStyle: DayTheme.DayTheme?.dayStyle?.oneDaySelectedStyle,
 };
 /** 로직에 사용되는 함수들 */
 const returnMonthDiff = (startDate: Date, endDate: Date) => {
@@ -99,9 +104,7 @@ function CalendarHeader(date: XDate) {
   const styles = useStyles();
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
-  let strMonth = '';
-
-  strMonth = month < 10 ? `0${month}` : String(month);
+  const strMonth = month < 10 ? `0${month}` : String(month);
 
   return (
     <View style={styles.calendarTitle}>
@@ -110,77 +113,71 @@ function CalendarHeader(date: XDate) {
   );
 }
 
-function PeriodCalendar({ data }: CalendarTypeProps) {
-  const [markedDate, setMarkedDate] = useState<MarkedDates>();
+function setCalendarStyle(array: Array<string>) {
+  const dataMap = new Map<string, object>();
+
+  array.forEach((key: string, index: number) => {
+    if (index === 0) {
+      dataMap.set(key, STARTSTYLE);
+    } else if (index === array.length - 1) {
+      dataMap.set(key, ENDSTYLE);
+    } else {
+      dataMap.set(key, PERIODSTYLE);
+    }
+  });
+
+  return dataMap;
+}
+
+function PeriodCalendar({ data, setDate }: CalendarTypeProps) {
+  console.log('asd');
   const styles = useStyles();
+  const [markedDate, setMarkedDate] = useState<MarkedDates>();
   const [day, setDay] = useState({ startDay: '', endDay: '' });
   const onPressDayHandlerPeriod = useCallback(
     (date: DateData) => {
-      let start = day.startDay;
-      let end = day.endDay;
+      const { startDay, endDay } = day;
+      const isEnd = !!endDay;
+      const isStart = !!startDay;
+      const selectedDay = date.dateString;
       const markedDates = new Map<string, object>();
-      let periodArray = [];
 
-      if (!start) {
-        markedDates.set(date.dateString, {
-          selected: true,
-          textColor: 'white',
-          customContainerStyle:
-            DayTheme.DayTheme?.dayStyle?.oneDaySelectedStyle,
-        });
-        start = date.dateString;
-        setDay({ ...day, startDay: start });
-        const result = Object.fromEntries(markedDates.entries());
+      console.log(selectedDay);
 
-        setMarkedDate(result);
+      // 1. 단일 날짜만 선택됐을 경우
+      if (!startDay) {
+        markedDates.set(selectedDay, DAYSTYLE);
+        setDay({ ...day, startDay: selectedDay });
+        setMarkedDate(Object.fromEntries(markedDates.entries()));
+
+        return;
       }
 
-      if (!!start && !!end && start >= date.dateString) {
-        start = '';
+      // 2. start와 end가 있는데 시작날짜보다 작은 값을 선택했을 경우 => 초기화
+      if (isStart && isEnd && startDay >= selectedDay) {
         setDay({ startDay: '', endDay: '' });
         setMarkedDate({});
 
-        return {};
+        return;
       }
 
-      if (!!start && start < date.dateString) {
-        end = date.dateString;
-      } else if (!!start && !!end) {
-        if (date.dateString >= end) {
-          end = date.dateString;
-        } else {
-          setDay({ startDay: '', endDay: '' });
+      // 3. start가 있을때 들어온 값이 start보다 큰 경우
+      if (isStart && startDay < selectedDay) {
+        const newDay = { ...day, endDay: selectedDay };
+        const periodArray = getDatesRangeArray(startDay, selectedDay);
+        const periodMap = setCalendarStyle(periodArray);
 
-          return {};
-        }
+        setDay(newDay);
+        setMarkedDate(Object.fromEntries(periodMap.entries()));
       }
-
-      if (start && end) {
-        periodArray = getDatesRangeArray(start, end);
-        periodArray.forEach((key, index) => {
-          if (index === 0) {
-            markedDates.set(key, STARTSTYLE);
-          } else if (index === periodArray.length - 1) {
-            markedDates.set(key, ENDSTYLE);
-          } else {
-            markedDates.set(key, PERIODSTYLE);
-          }
-        });
-      }
-
-      let result;
-
-      if (markedDates) {
-        result = Object.fromEntries(markedDates.entries());
-        setMarkedDate(result);
-      }
-
-      setDay({ startDay: start, endDay: end });
-
-      return {};
     },
     [day],
   );
+
+  useEffect(() => {
+    if (setDate && day.startDay && day.endDay)
+      setDate({ startDate: day.startDay, endDate: day.endDay });
+  }, [day.endDay, day.startDay, setDate]);
 
   return (
     <CalendarList
@@ -245,22 +242,18 @@ export const MemorizedPeriodCalendar = React.memo(PeriodCalendar);
 
 export const MemorizedDefaultCalendar = React.memo(DefaultCalendar);
 
-function Calendar({ type, data }: CalendarProps): JSX.Element {
+function Calendar({ type, data, setDate }: CalendarProps): JSX.Element {
   const styles = useStyles();
 
   LocaleConfig.defaultLocale = 'kr';
 
   return (
-    <View style={styles.viewview}>
-      <View style={styles.calendarContainer}>
-        <View style={styles.shadowBox}>
-          {data && type === 'DEFAULT' ? (
-            <MemorizedDefaultCalendar data={data} />
-          ) : (
-            <MemorizedPeriodCalendar data={data} />
-          )}
-        </View>
-      </View>
+    <View style={styles.calendarContainer}>
+      {data && type === 'DEFAULT' ? (
+        <MemorizedDefaultCalendar data={data} />
+      ) : (
+        <MemorizedPeriodCalendar data={data} setDate={setDate} />
+      )}
     </View>
   );
 }
@@ -268,32 +261,15 @@ function Calendar({ type, data }: CalendarProps): JSX.Element {
 export default Calendar;
 
 const useStyles = makeStyles(theme => ({
-  viewview: {
+  calendarContainer: {
     width: '100%',
     justifyContent: 'center',
     height: '98%',
     backgroundColor: 'none',
-  },
-  calendarContainer: {
-    shadowOffset: { width: 0, height: 8 },
-    elevation: 4,
-    shadowRadius: 12,
-    shadowOpacity: 0.1,
-    shadowColor: '#000',
-    overflow: 'hidden',
     borderRadius: 12,
   },
   calendarStyle: {
     width: '100%',
-    borderRadius: 12,
-  },
-  shadowBox: {
-    shadowOffset: { width: 0, height: 4 },
-    elevation: 4,
-    shadowRadius: 12,
-    shadowOpacity: 0.25,
-    overflow: 'hidden',
-    shadowColor: '#000',
     borderRadius: 12,
   },
   dayTextAtIndex0: {

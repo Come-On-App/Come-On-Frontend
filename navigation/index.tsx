@@ -22,6 +22,7 @@ import { RootStackParamList, RootTabParamList } from '../navigation';
 import CancelIconButton from '../components/buttons/CancelIconButton';
 import MyPageHeaderTitle from '../components/myPage/MyPageHeaderTitle';
 import PlaceSelectHeaderTitle from '../components/placeSelect/PlaceSelectHeaderTitle';
+import CreateMeeting2 from '../screens/CreateMeeting2';
 
 function TabThreeIcon() {
   const testImage = 'https://randomuser.me/api/portraits/men/36.jpg'; // SERVER-API: 추후 서버로 사용자 프로필 요청
@@ -41,13 +42,19 @@ export default function Navigation() {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
-  const { isAuth: isLogin, getToken } = useAuth();
+  const { isAuth: isLogin, setLogoin } = useAuth();
 
   useEffect(() => {
-    getToken(); // 토큰이 있는지 없는지 검사
-  }, [getToken, isLogin]);
-
-  apis.getUser();
+    setLogoin(); // 토큰이 있는지 없는지 검사
+    apis
+      .getUser()
+      .then(value => {
+        console.log(value);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, [setLogoin, isLogin]);
 
   return (
     <Stack.Navigator>
@@ -61,6 +68,17 @@ function RootNavigator() {
           <Stack.Screen
             name="CreateMeeting"
             component={CreateMeeting}
+            options={({ navigation, route }) => ({
+              title: '모임등록',
+              headerTitleAlign: 'center',
+              headerTitleStyle: styles.headerStyle,
+              headerRight: CancelIconButton,
+              headerBackVisible: false,
+            })}
+          />
+          <Stack.Screen
+            name="CreateMeeting2"
+            component={CreateMeeting2}
             options={({ navigation, route }) => ({
               title: '모임등록',
               headerTitleAlign: 'center',

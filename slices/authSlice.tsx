@@ -1,7 +1,5 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
-import { getItemAsync } from 'expo-secure-store';
-import { ActionSheetIOS } from 'react-native';
 
 const initialState = {
   haveToken: false,

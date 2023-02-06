@@ -1,75 +1,39 @@
 import React, { useState } from 'react';
-import { View, KeyboardAvoidingView, Pressable } from 'react-native';
-import { makeStyles, Overlay } from '@rneui/themed';
+import { View, TextInput, KeyboardAvoidingView, Pressable } from 'react-native';
+import { makeStyles } from '@rneui/themed';
 
+import { useNavigation } from '@react-navigation/native';
 import InputBox from './InputText';
 import InputImage from './InputImage';
-import LocaleConfig from '../calendar/LocaleConfig';
-import {
-  InputFormProps,
-  MeetingTitleProps,
-  OverayCalendarProps,
-} from '../../types';
-import Label from './Label';
-import Calendar from '../calendar/Calendar';
+import { InputFormProps } from '../../types';
+import Font from '../Font';
 
 function InputForm({ inputProps }: InputFormProps) {
   const styles = useStyles();
-  const [visible, setVisible] = useState(false);
+  const [date, setDate] = useState<string>();
+  const navigation = useNavigation();
   const onPressLabel = () => {
-    setVisible(!visible);
+    navigation.navigate('CreateMeeting2');
   };
-
-  LocaleConfig.defaultLocale = 'kr';
-
-  return (
-    <>
-      <KeyboardAvoidingView behavior="padding" style={styles.container}>
-        <InputImage />
-        <InputBox config={inputProps} />
-
-        <MeetingTitle onPressLabel={onPressLabel} />
-        <CalendarBox />
-      </KeyboardAvoidingView>
-      <OverlayCalendar visible={visible} onPressLabel={onPressLabel} />
-    </>
-  );
-}
-
-function MeetingTitle({ onPressLabel }: MeetingTitleProps) {
-  const styles = useStyles();
+  // const onChangeHandler = () => {};
 
   return (
-    <Pressable style={styles.labelContainer} onPress={onPressLabel}>
-      <Label>모임기간</Label>
-      <Label style={styles.subLabelStyle}>기간선택</Label>
-    </Pressable>
-  );
-}
-
-function OverlayCalendar({ visible, onPressLabel }: OverayCalendarProps) {
-  const styles = useStyles();
-
-  return (
-    <Overlay
-      overlayStyle={styles.overlayStyle}
-      isVisible={visible}
-      onBackdropPress={onPressLabel}
-    >
-      <View style={styles.calendarViewStyle}>
-        <Calendar type="PERIOD" data={undefined} />
+    <KeyboardAvoidingView behavior="padding" style={styles.container}>
+      <InputImage />
+      <InputBox config={inputProps} style={{ textAlignVertical: 'center' }} />
+      <View style={styles.inputContainer}>
+        <Font style={styles.title}>모임 캘린더</Font>
+        <Pressable style={styles.inputContainer} onPress={onPressLabel}>
+          <TextInput
+            placeholder="날짜 범위를 선택해주세요"
+            editable={false}
+            placeholderTextColor={styles.meetingNoteInput.placeholder}
+            style={styles.meetingNoteInput}
+            value={date}
+          />
+        </Pressable>
       </View>
-    </Overlay>
-  );
-}
-
-function CalendarBox() {
-  const styles = useStyles();
-
-  return (
-    <View style={styles.calendarContainer}>
-      <Calendar type="PERIOD" data={undefined} />
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -79,12 +43,19 @@ const useStyles = makeStyles(theme => ({
   container: {
     width: '100%',
   },
-  calendarContainer: {
-    width: '100%',
-    height: 280,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+  title: {
+    fontSize: 16,
+  },
+  inputContainer: {
+    marginTop: 12,
+  },
+  meetingNoteInput: {
+    padding: 12,
+    borderWidth: 1,
+    borderRadius: 4,
+    textAlignVertical: 'center',
+    placeholder: theme.grayscale['500'],
+    borderColor: theme.grayscale['200'],
   },
   subLabelStyle: {
     color: theme.grayscale[700],
