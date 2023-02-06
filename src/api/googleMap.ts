@@ -59,19 +59,22 @@ export const getPlaceDetailResult = _.flow(
 );
 
 export const getAddress = async (location: Location): Promise<Address> => {
-  return getPlaceId(location)
-    .then(getPlaceDetailResult)
-    .then(placeDetail => {
-      return {
-        ...placeDetail,
-        name: `${placeDetail.name}*`,
-        geometry: {
-          location: {
-            lat: location.latitude,
-            lng: location.longitude,
+  return (
+    getPlaceId(location)
+      .then(getPlaceDetailResult)
+      .then(placeDetail => {
+        return {
+          ...placeDetail,
+          name: `${placeDetail.name}*`,
+          geometry: {
+            location: {
+              lat: location.latitude,
+              lng: location.longitude,
+            },
           },
-        },
-      };
-    })
-    .catch(() => errorHandler(location));
+        };
+      })
+      // .catch(() => errorHandler(location))
+      .catch(console.log)
+  );
 };

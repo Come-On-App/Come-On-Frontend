@@ -9,12 +9,15 @@ import {
   REACT_APP_IOS_CLIENT_ID,
   REACT_APP_ANDROID_CLIENT_ID,
   REACT_APP_WEB_CLIENT_ID,
+  SERVER_ADDRESS,
+  REACT_APP_REDIRECT_URI,
 } from '@env';
 
 import apis from '../../api';
 import useAuth from '../../hooks/useAuth';
 import { SocialLoginProps } from '../../types';
 import GoogleLogo from '../../assets/images/logo/GoogleLogo';
+import Button from './Buttons';
 
 function GoogleLoginBtn() {
   const styles = useStyles();
@@ -57,7 +60,10 @@ function GoogleLoginBtn() {
   return (
     <Pressable
       style={({ pressed }) => [pressed && styles.pressed, styles.btnStyle]}
-      onPress={() => promptAsync()}
+      onPress={() => {
+        console.log('first1');
+        promptAsync();
+      }}
     >
       <GoogleLogo />
     </Pressable>

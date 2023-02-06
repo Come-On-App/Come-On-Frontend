@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Pressable, ScrollView } from 'react-native';
 import { makeStyles, Overlay } from '@rneui/themed';
 
+import Calendar from '@components/calendar/Calendar';
 import {
   CalendarBoxProps,
   MeetingResponse,
@@ -12,7 +13,6 @@ import Font from '../components/Font';
 import Label from '../components/input/Label';
 import PlaceCard from '../components/places/PlaceCard';
 import { RootStackScreenProps } from '../navigation';
-import Calendar from '../components/calendar/Calendar';
 import MemberBox from '../components/member/MemberBox';
 import AddPlaceButton from '../components/buttons/AddPlaceButton';
 
