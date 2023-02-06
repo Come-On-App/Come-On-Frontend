@@ -1,9 +1,8 @@
 import '@rneui/themed';
 import { MaterialIcons } from '@expo/vector-icons';
 import { TextStyle, ViewStyle, StyleProp } from 'react-native';
-import { DateData } from 'react-native-calendars';
-import { MarkedDates } from 'react-native-calendars/src/types';
-import type { RootStackScreenProps } from './navigation';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { RootStackParamList } from './navigation';
 
 /**
  * Global Theme
@@ -87,6 +86,7 @@ export interface InputProps {
   multiline: boolean;
   placeholder: string;
   onChangeText: (text: string) => void;
+  style?: StyleProp<TextStyle>;
 }
 
 export interface InputFormProps {
@@ -97,13 +97,72 @@ export interface InputTextProps extends InputProps {
   label: string;
 }
 
+// errorType
+export type ErrorType = {
+  errorCode: number;
+  errorDescription: string;
+  errors: object;
+};
+
+// LoginResponse
+export type userInfo = {
+  email: string;
+  name: string;
+  nickname: string;
+  profileImageUrl?: string | null;
+  role: string;
+  userId: number;
+};
+
+export type returnToken = {
+  token: string;
+  expiry: number;
+  userId: number;
+};
+
+export type SocialLoginProps = {
+  url: string;
+  data: object;
+};
+
+export interface AuthResponse {
+  accessToken: {
+    token: string;
+    expiry: number;
+    userId: number;
+  };
+  refreshToken: {
+    token: string;
+    expiry: number;
+    userId: number;
+  };
+}
+
+export interface AccessTokenRes {
+  accessToken: Token;
+}
+
+export interface RefreshTokenRes {
+  refreshToken: Token;
+}
+
+export interface Token {
+  token: string;
+  expiry: number;
+  userId: number;
+}
+
 /*
  *PlaceCardProps
  TODO : 추후 문서보고 수정
  */
 
 export type AddPlaceButtonProps = {
-  navigation: RootStackScreenProps<'MeetingRoom'>;
+  navigation: NativeStackNavigationProp<
+    RootStackParamList,
+    'MeetingRoom',
+    undefined
+  >;
   iconName: IconName;
   text: string;
 };
@@ -182,15 +241,35 @@ export interface UserRowProps {
 }
 
 // calendar
+
+export type SubDateProps = {
+  date: date;
+};
+
+export type date = {
+  startDate: string;
+  endDate: string;
+};
+
 export type CalendarProps = {
   type: 'PERIOD' | 'DEFAULT';
   data: MeetingResponse | undefined; // TODO: 추후 undefined 수정
+  setDate?: React.Dispatch<
+    React.SetStateAction<{
+      startDate: string;
+      endDate: string;
+    }>
+  >;
 };
 
 export interface CalendarTypeProps {
   data: MeetingResponse | undefined; // TODO: 추후 undefined 수정
-  onPressHandler: (date: DateData) => void;
-  markedDate: MarkedDates | undefined;
+  setDate?: React.Dispatch<
+    React.SetStateAction<{
+      startDate: string;
+      endDate: string;
+    }>
+  >;
 }
 
 export interface OverayCalendarProps {
@@ -201,6 +280,14 @@ export interface OverayCalendarProps {
 export interface MeetingTitleProps {
   onPressLabel: () => void;
 }
+// api
+
+export type MeetingInfo = {
+  meetingName: string;
+  meetingImageUrl: string;
+  calendarStartFrom: string;
+  calendarEndTo: string;
+};
 
 // Icon
 export type IconName = React.ComponentProps<typeof MaterialIcons>['name'];

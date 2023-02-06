@@ -3,24 +3,20 @@ import React, { useState, useEffect } from 'react';
 import { View, Pressable, ScrollView } from 'react-native';
 import { makeStyles, Overlay } from '@rneui/themed';
 
-import AddPlaceButton from '../components/buttons/AddPlaceButton';
-
-import PlaceCard from '../components/places/PlaceCard';
 import {
   CalendarBoxProps,
   MeetingResponse,
   OverayCalendarProps,
 } from '../types';
+import Font from '../components/Font';
+import Label from '../components/input/Label';
+import PlaceCard from '../components/places/PlaceCard';
+import { RootStackScreenProps } from '../navigation';
 import Calendar from '../components/calendar/Calendar';
 import MemberBox from '../components/member/MemberBox';
-import Label from '../components/input/Label';
-import Font from '../components/Font';
-import { RootStackScreenProps } from '../navigation';
+import AddPlaceButton from '../components/buttons/AddPlaceButton';
 
-function MeetingRoom({
-  navigation,
-  route,
-}: RootStackScreenProps<'MeetingRoom'>) {
+function MeetingRoom({ navigation }: RootStackScreenProps<'MeetingRoom'>) {
   const styles = useStyles();
   const [visible, setVisible] = useState(false);
   const onPressLabel = () => {

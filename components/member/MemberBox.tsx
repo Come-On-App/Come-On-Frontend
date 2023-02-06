@@ -9,10 +9,9 @@ import {
   MemberBoxTitleProps,
   UserRowProps,
 } from '../../types';
-
+import Label from '../input/Label';
 import Avatar from './Avatar';
 import Font from '../Font';
-import Label from '../input/Label';
 
 function MemberBox({ myId, myRole, meetingUsers }: MemberBoxProps) {
   const filterStaff = () => {

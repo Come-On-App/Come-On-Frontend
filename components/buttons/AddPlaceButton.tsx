@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Pressable } from 'react-native';
 import { makeStyles } from '@rneui/themed';
+import { View, Pressable } from 'react-native';
 import Icon from '../Icon';
 import { Font } from '../Font';
 import { AddPlaceButtonProps } from '../../types';

@@ -18,6 +18,7 @@ export type RootTabParamList = {
   TabOne: undefined;
   TabTwo: undefined;
   TabThree: undefined;
+  LoginScreen: undefined;
 };
 
 export type RootStackParamList = {
@@ -25,6 +26,7 @@ export type RootStackParamList = {
   MeetingRoom: undefined;
   CreateMeeting: undefined;
   PlaceSelect: undefined;
+  LoginScreen: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =

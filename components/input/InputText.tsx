@@ -11,7 +11,7 @@ import type {
   InputBoxTopTextLengthProps,
 } from '../../types';
 
-export default function InputBox({ config }: InputBoxProps) {
+export default function InputBox({ config, style }: InputBoxProps) {
   const { label, placeholder, maxLength, onChangeText, value, multiline } =
     config;
 
@@ -24,6 +24,7 @@ export default function InputBox({ config }: InputBoxProps) {
         multiline={multiline}
         placeholder={placeholder}
         onChangeText={onChangeText}
+        style={style}
       />
     </View>
   );
@@ -35,13 +36,16 @@ function InputBoxTop({ label, text, maxLength }: InputTopProps) {
   return (
     <View style={styles.inputTextContainer}>
       <InputBoxTopTitle label={label} />
-      <InputBoxTopTextLength text={text} maxLength={maxLength} />
+      {maxLength !== 0 && (
+        <InputBoxTopTextLength text={text} maxLength={maxLength} />
+      )}
     </View>
   );
 }
 
 function InputBoxMain(props: InputProps) {
-  const { value, maxLength, multiline, placeholder, onChangeText } = props;
+  const { value, maxLength, multiline, placeholder, onChangeText, style } =
+    props;
   const styles = useStyles();
 
   return (
@@ -52,6 +56,7 @@ function InputBoxMain(props: InputProps) {
         multiline={multiline}
         placeholder={placeholder}
         onChangeText={onChangeText}
+        style={style}
       />
     </View>
   );
@@ -77,7 +82,8 @@ function InputBoxTopTextLength({
 }
 
 function Input(props: InputProps) {
-  const { value, maxLength, onChangeText, placeholder, multiline } = props;
+  const { value, maxLength, onChangeText, placeholder, multiline, style } =
+    props;
   const styles = useStyles();
 
   return (
@@ -87,7 +93,7 @@ function Input(props: InputProps) {
       multiline={multiline}
       placeholder={placeholder}
       onChangeText={onChangeText}
-      style={[styles.meetingNoteInput, multiline && styles.multiline]}
+      style={[styles.meetingNoteInput, multiline && styles.multiline, style]}
       placeholderTextColor={styles.meetingNoteInput.placeholder}
     />
   );
