@@ -10,7 +10,7 @@ function AddPlaceButton({ navigation, iconName, text }: AddPlaceButtonProps) {
 
   return (
     <Pressable
-      onPress={() => navigation.navigate('MeetingRoom')}
+      onPress={() => navigation.navigate('PlaceSelect')}
       style={({ pressed }) => [pressed && styles.pressed]}
     >
       <View style={styles.courseContainer}>
