@@ -2,7 +2,7 @@ import React from 'react';
 import { SearchBar as RneSearchBar, makeStyles } from '@rneui/themed';
 import { GestureResponderEvent, Pressable, View } from 'react-native';
 
-import Icon from '../components/Icon';
+import Icon from './Icon';
 import type { SearchBarProps } from '../types';
 
 export default function SearchBar(props: SearchBarProps) {

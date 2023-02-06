@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { AccessTokenRes, AuthResponse, RefreshTokenRes } from '../types';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { login, logout } from '../slices/authSlice';
+import { login, logout } from '../features/authSlice';
 import { deleteValueFor, save, getValueFor } from '../utils/secureStore';
 
 const saveAccessToken = async (accessTokenData: AccessTokenRes) => {

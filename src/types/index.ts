@@ -8,7 +8,8 @@ import {
   GooglePlaceDetail,
 } from 'react-native-google-places-autocomplete';
 import { number } from 'prop-types';
-import { RootStackScreenProps } from './navigation';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList, RootStackScreenProps } from './navigation';
 
 /**
  * Global Theme
@@ -158,9 +159,8 @@ export interface Token {
   userId: number;
 }
 
-
 export type AddPlaceButtonProps = {
-   navigation: NativeStackNavigationProp<
+  navigation: NativeStackNavigationProp<
     RootStackParamList,
     'MeetingRoom',
     undefined

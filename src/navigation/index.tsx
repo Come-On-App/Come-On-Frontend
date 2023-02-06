@@ -4,11 +4,11 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import Avatar from '@components/member/Avatar';
 import theme from '../constants/themed';
 
 import apis from '../api';
 import useAuth from '../hooks/useAuth';
-import { Avatar } from '../components/Avatar';
 import MeetingRoom from '../screens/MeetingRoom';
 import LoginScreen from '../screens/LoginScreen';
 import TabOneScreen from '../screens/TabOneScreen';
@@ -25,13 +25,11 @@ import PlaceSelectHeaderTitle from '../components/placeSelect/PlaceSelectHeaderT
 
 import PlaceSelect from '../screens/place/PlaceSelect';
 import PlaceSearch from '../screens/place/PlaceSearch';
-import Avatar from '../components/member/Avatar';
 import type {
   PlaceSelectParamList,
   RootStackParamList,
   RootTabParamList,
 } from '../types/navigation';
-import CreateMeeting2 from '../screens/CreateMeeting2';
 
 function TabThreeIcon() {
   const testImage = 'https://randomuser.me/api/portraits/men/36.jpg'; // SERVER-API: 추후 서버로 사용자 프로필 요청
@@ -107,7 +105,7 @@ function RootNavigator() {
           />
           <Stack.Screen
             name="CreateMeeting2"
-            component={CreateMeeting2}
+            component={CreateMeeting}
             options={({ navigation, route }) => ({
               title: '모임등록',
               headerTitleAlign: 'center',

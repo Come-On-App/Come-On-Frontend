@@ -4,15 +4,13 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { StatusBar } from 'expo-status-bar';
 import { ThemeProvider } from '@rneui/themed';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { Provider } from 'react-redux';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { store } from './app/store';
-import Navigation from './navigation';
-import theme from './constants/themed';
-import useCachedResources from './hooks/useCachedResources';
-import store from './store';
+import Navigation from './src/navigation';
+import theme from './src/constants/themed';
+import useCachedResources from './src/hooks/useCachedResources';
+import { store } from './src/app/store';
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
