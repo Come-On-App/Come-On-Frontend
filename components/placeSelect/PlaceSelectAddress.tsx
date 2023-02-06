@@ -9,16 +9,18 @@ import type {
   SubAddressProps,
   AddressTitleProps,
 } from '../../types';
+import usePlace from '../../hooks/usePlace';
 
 export default function AddressInfo() {
+  const { placeState: locationState } = usePlace();
   const styles = useStyles();
   const data = {
     address: {
-      title: '용산역',
-      category: '음식점',
+      title: locationState.name,
+      category: locationState.category,
     },
     subAddress: {
-      title: '서울특별시 마포구 망원동',
+      title: locationState.address,
     },
   };
 

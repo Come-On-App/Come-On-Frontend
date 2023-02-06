@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import { makeStyles } from '@rneui/themed';
 
-import Map from './PlaceSelectMap';
-import AddressInfo from './PlaceSelectAddress';
-import PlaceSelectModal from './PlaceSelectModal';
-import PlaceSelectButton from './PlaceSelectButton';
-import PlaceSelectSearchBar from './PlaceSelectSearchBar';
+import { Map } from '../../components/placeSelect/PlaceSelectMap';
+import AddressInfo from '../../components/placeSelect/PlaceSelectAddress';
+import PlaceSelectModal from '../../components/placeSelect/PlaceSelectModal';
+import PlaceSelectButton from '../../components/placeSelect/PlaceSelectButton';
+import PlaceSelectSearchBar from '../../components/placeSelect/PlaceSelectSearchBar';
 
 export default function PlaceSelect() {
   const styles = useStyles();
@@ -38,7 +38,7 @@ function PlaceSelectMain() {
   const styles = useStyles();
 
   return (
-    <View style={styles.mainContainer}>
+    <View style={[styles.mainContainer]}>
       <Map />
     </View>
   );
@@ -63,12 +63,11 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.grayscale['0'],
   },
   searchContainer: {
-    flex: 0.15,
     marginHorizontal: 20,
     justifyContent: 'center',
   },
   mainContainer: {
-    flex: 0.6,
+    flex: 0.7,
     paddingVertical: 10,
   },
   footerContainer: {

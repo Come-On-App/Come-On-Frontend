@@ -10,11 +10,13 @@ import type {
 } from '../../types';
 
 export default function Button(props: ButtonProps) {
-  const { text, bold, buttonStyle, textStyle, height, onPress } = props;
+  const { text, bold, buttonStyle, textStyle, height, onPress, disabled } =
+    props;
   const styles = useStyles({ bold, height });
 
   return (
     <RneButton
+      disabled={disabled}
       title={text}
       onPress={onPress}
       buttonStyle={[styles.button, buttonStyle]}

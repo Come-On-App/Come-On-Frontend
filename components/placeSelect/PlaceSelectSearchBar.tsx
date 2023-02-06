@@ -1,9 +1,11 @@
-import { View } from 'react-native';
-import React, { useState } from 'react';
+import React from 'react';
+import { StyleProp, View, ViewStyle } from 'react-native';
 import { makeStyles } from '@rneui/themed';
+import { useNavigation } from '@react-navigation/native';
 
 import { BoldFont } from '../Font';
-import SearchBar from '../SearchBar';
+import { SearchBarMock } from '../SearchBar';
+import { PlaceSelectNavigation } from '../../types/navigation';
 
 export default function PlaceSelectSearchBar() {
   return (
@@ -14,32 +16,22 @@ export default function PlaceSelectSearchBar() {
   );
 }
 
-function Search() {
-  const styles = useStyles();
-  const [search, setSearch] = useState('용산');
-  const updateSearch = (text: string) => {
-    setSearch(text);
-  };
-
-  return (
-    <SearchBar
-      value={search}
-      IconType="search"
-      onChange={updateSearch}
-      style={styles.searchBarText}
-    />
-  );
-}
-
-function SearchTitle() {
+export function SearchTitle({ style }: { style?: StyleProp<ViewStyle> }) {
   const SEARCH_TITLE = '장소검색';
   const styles = useStyles();
 
   return (
-    <View style={styles.titleContainer}>
+    <View style={[styles.titleContainer, style]}>
       <BoldFont style={styles.searchText}>{SEARCH_TITLE}</BoldFont>
     </View>
   );
+}
+
+function Search() {
+  const navigation = useNavigation<PlaceSelectNavigation>();
+  const onPressHandler = () => navigation.navigate('Map');
+
+  return <SearchBarMock onPress={onPressHandler} />;
 }
 
 const useStyles = makeStyles(theme => ({

@@ -6,7 +6,7 @@
     "prettier",
     "plugin:prettier/recommended"
   ],
-  "plugins": ["@typescript-eslint", "react", "prettier"],
+  "plugins": ["@typescript-eslint", "react", "prettier", "lodash-fp"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
@@ -18,6 +18,39 @@
   },
   "ignorePatterns": ["babel.config.js", "node_modules"],
   "rules": {
+    // lodash rule -
+    "lodash-fp/consistent-compose": "off",
+    "lodash-fp/consistent-name": ["error", "_"],
+    "lodash-fp/no-argumentless-calls": "error",
+    "lodash-fp/no-chain": "error",
+    "lodash-fp/no-extraneous-args": "error",
+    "lodash-fp/no-extraneous-function-wrapping": "error",
+    "lodash-fp/no-extraneous-iteratee-args": "error",
+    "lodash-fp/no-extraneous-partials": "error",
+    "lodash-fp/no-for-each": "off",
+    "lodash-fp/no-partial-of-curried": "error",
+    "lodash-fp/no-single-composition": "error",
+    "lodash-fp/no-submodule-destructuring": "error",
+    "lodash-fp/no-unused-result": "error",
+    "lodash-fp/prefer-compact": "error",
+    "lodash-fp/prefer-composition-grouping": "error",
+    "lodash-fp/prefer-constant": [
+      "error",
+      {
+        "arrowFunctions": false
+      }
+    ],
+    "lodash-fp/prefer-flat-map": "error",
+    "lodash-fp/prefer-get": "error",
+    "lodash-fp/prefer-identity": [
+      "error",
+      {
+        "arrowFunctions": false
+      }
+    ],
+    "lodash-fp/preferred-alias": "off",
+    "lodash-fp/use-fp": "error",
+    // - lodash rule
     "import/no-unresolved": 0,
     "react/jsx-filename-extension": [
       1,
@@ -51,6 +84,7 @@
       { "blankLine": "always", "prev": "function", "next": "*" },
       { "blankLine": "always", "prev": "export", "next": "export" }
     ],
+
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": ["off"],
     "import/extensions": ["error", "never"],

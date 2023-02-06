@@ -18,15 +18,22 @@ export type RootTabParamList = {
   TabOne: undefined;
   TabTwo: undefined;
   TabThree: undefined;
-  LoginScreen: undefined;
 };
+
+export type PlaceSelectParamList = {
+  Main: undefined;
+  Map: undefined;
+};
+
+export type PlaceSelectScreen = NativeStackScreenProps<PlaceSelectParamList>;
+
+export type PlaceSelectNavigation = PlaceSelectScreen['navigation'];
 
 export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList>;
   MeetingRoom: undefined;
   CreateMeeting: undefined;
-  PlaceSelect: undefined;
-  LoginScreen: undefined;
+  PlaceSelect: NavigatorScreenParams<PlaceSelectParamList>;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =

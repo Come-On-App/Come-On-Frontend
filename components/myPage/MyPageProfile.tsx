@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { makeStyles } from '@rneui/themed';
 
 import { Font, BoldFont } from '../Font';
-import { BadgedAvatar } from '../Avatar';
+import BadgedAvatar from '../member/BadgedAvatar';
 
 export default function Profile() {
   const styles = useStyles();

@@ -1,52 +1,98 @@
-import React, { useState } from 'react';
-import { makeStyles } from '@rneui/themed';
-import { useWindowDimensions, View } from 'react-native';
+import _ from 'lodash/fp';
+import React, { Fragment, useEffect, useState } from 'react';
+import { Input, makeStyles } from '@rneui/themed';
+import { Dimensions, Keyboard, ScrollView, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 
 import Icon from '../Icon';
 import Modal from '../Modal';
 import Button from '../buttons/Buttons';
-import Font, { BoldFont } from '../Font';
+import Font from '../Font';
 import InputBox from '../input/InputText';
+import usePlace from '../../hooks/usePlace';
 import type { InputTextProps, PlaceSelectModalProps } from '../../types';
+
+function PlaceSelectModalContent({
+  children,
+  width,
+}: {
+  children: React.ReactNode;
+  width: number;
+}) {
+  const Wrap = width < 375 ? ScrollView : Fragment;
+
+  return <Wrap>{children}</Wrap>;
+}
 
 export default function PlaceSelectModal({
   onClose,
   isVisible,
 }: PlaceSelectModalProps) {
-  const { width } = useWindowDimensions();
   const styles = useStyles();
+  const { width } = Dimensions.get('screen');
+  const [modalBottom, setModalBottom] = useState(0);
+
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener('keyboardWillShow', () => {
+      setModalBottom(-60);
+    });
+    const hideSubscription = Keyboard.addListener('keyboardWillHide', () => {
+      setModalBottom(0);
+    });
+
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, []);
 
   return (
     <Modal
       isVisible={isVisible}
-      style={[styles.modalContainer, { width: width < 375 ? '80%' : '70%' }]}
+      style={[
+        styles.modalContainer,
+        {
+          width: width < 375 ? '80%' : '70%',
+          transform: [{ translateY: modalBottom }],
+        },
+      ]}
     >
-      <PlaceSelectModalTop />
-      <PlaceSelectModalMain />
-      <PlaceSelectModalBottom onClose={onClose} />
+      <PlaceSelectModalContent width={width}>
+        <PlaceSelectModalTop />
+        <PlaceSelectModalMain />
+        <PlaceSelectModalBottom onClose={onClose} />
+      </PlaceSelectModalContent>
     </Modal>
   );
 }
 
 function PlaceSelectModalTop() {
   const styles = useStyles();
-  const data = {
-    address: '수노래연습장 홍대 본점',
-    subAddress: '서울 마포구 서교동 364-24',
+  const { placeState, setPlaceSelectDispatch } = usePlace();
+  const onChnageHandler = (text: string) => {
+    setPlaceSelectDispatch({
+      ...placeState,
+      name: text,
+    });
   };
 
   return (
     <View style={styles.topContainer}>
-      {/* TODO: 기능적 스타일링 작업 - 최대 글자수의 따른 표기법 표시하기 */}
-      <BoldFont style={styles.addressText}>{data.address}</BoldFont>
+      <Input
+        onChangeText={onChnageHandler}
+        value={placeState.name}
+        style={styles.topInput}
+        errorStyle={styles.topInputError}
+      />
       <View style={styles.subAddressContainer}>
         <Icon
           name="location-on"
           color={styles.subAddressIcon.color}
           size={styles.subAddressIcon.size}
         />
-        <Font style={styles.subAddressText}>{data.subAddress}</Font>
+        <Font style={styles.subAddressText}>
+          {_.truncate({ length: 25 }, placeState.address)}
+        </Font>
       </View>
     </View>
   );
@@ -87,25 +133,33 @@ function CategoryTitle() {
   );
 }
 
+const DROPDOWN_DATA = [
+  { key: 'SCHOOL', value: '학교' },
+  { key: 'CAFE', value: '카페' },
+  { key: 'BAR', value: '술집' },
+  { key: 'SPORT', value: '스포츠' },
+  { key: 'SHOPPING', value: '쇼핑' },
+  { key: 'ATTRACTION', value: '관광명소' },
+  { key: 'RESTAURANT', value: '음식점' },
+  { key: 'ACCOMMODATION', value: '숙박' },
+  { key: 'CULTURE', value: '문화시설' },
+  { key: 'ACTIVITY', value: '액티비티' },
+  { key: 'ETC', value: '기타' },
+];
+
 function CategoryDropdown() {
   const styles = useStyles();
-  const [value, setValue] = useState('');
-  const data = [
-    { key: 'SCHOOL', value: '학교' },
-    { key: 'CAFE', value: '카페' },
-    { key: 'BAR', value: '술집' },
-    { key: 'SPORT', value: '스포츠' },
-    { key: 'SHOPPING', value: '쇼핑' },
-    { key: 'ATTRACTION', value: '관광명소' },
-    { key: 'RESTAURANT', value: '음식점' },
-    { key: 'ACCOMMODATION', value: '숙박' },
-    { key: 'CULTURE', value: '문화시설' },
-    { key: 'ACTIVITY', value: '액티비티' },
-    { key: 'ETC', value: '기타' },
-  ];
+  const { setPlaceSelectDispatch, placeState } = usePlace();
+  const [value, setValue] = useState(placeState.category);
+  const onPressHandler = (item: { key: string; value: string }) => {
+    const category = item.value;
+
+    setValue(category);
+    setPlaceSelectDispatch({ ...placeState, category });
+  };
 
   return (
-    <View style={{ marginTop: 12 }}>
+    <View style={styles.dropdownWrap}>
       <Dropdown
         style={styles.dropdown}
         placeholder="카테고리"
@@ -113,14 +167,12 @@ function CategoryDropdown() {
         placeholderStyle={styles.dropdownPlaceholder}
         containerStyle={styles.dropdownContainer}
         itemTextStyle={styles.dropdownItemText}
-        data={data}
+        data={DROPDOWN_DATA}
         maxHeight={300}
         labelField="value"
         valueField="value"
         value={value}
-        onChange={(item: { key: string; value: string }) => {
-          setValue(item.value);
-        }}
+        onChange={onPressHandler}
         renderRightIcon={() => (
           <Icon
             name="arrow-drop-down"
@@ -134,14 +186,18 @@ function CategoryDropdown() {
 }
 
 function MeetingNote() {
-  const [text, setText] = useState('');
-  const onChangeHandler = (enteredValue: string) => setText(enteredValue);
   const styles = useStyles();
+  const { setPlaceSelectDispatch, placeState: placeSelectState } = usePlace();
+  const [description, setDescription] = useState(placeSelectState.description);
+  const onChangeHandler = (text: string) => {
+    setDescription(text);
+    setPlaceSelectDispatch({ ...placeSelectState, description: text });
+  };
   const config: InputTextProps = {
     label: '모임메모',
     placeholder: '모임장소에 대한 메모를 남겨보세요',
     maxLength: 150,
-    value: text,
+    value: description,
     onChangeText: onChangeHandler,
     multiline: true,
   };
@@ -160,12 +216,22 @@ const useStyles = makeStyles(theme => ({
   },
   topContainer: {
     alignItems: 'center',
-    marginBottom: 28,
+    marginBottom: 10,
+  },
+  topInput: {
+    textAlign: 'center',
+    color: theme.grayscale['900'],
+    fontSize: 22,
+    fontFamily: 'pretendard-bold',
+  },
+  topInputError: {
+    display: 'none',
   },
   addressText: {
     fontSize: 22,
   },
   subAddressContainer: {
+    width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 8,
@@ -180,13 +246,16 @@ const useStyles = makeStyles(theme => ({
     size: 20,
   },
   categoryContainer: {
-    marginBottom: 28,
+    marginBottom: 20,
   },
   title: {
     fontSize: 16,
   },
   meetingNoteContainer: {
     marginBottom: 20,
+  },
+  dropdownWrap: {
+    marginTop: 12,
   },
   dropdown: {
     borderWidth: 1,
