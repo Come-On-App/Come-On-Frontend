@@ -5,10 +5,12 @@ import { makeStyles, Divider } from '@rneui/themed';
 import { Font } from '../components/Font';
 import Profile from '../components/myPage/MyPageProfile';
 import NickName from '../components/myPage/MyPageNickName';
+import useImagePath from '../hooks/useImagePicker';
 
 export default function TabThreeScreen() {
   const styles = useStyles();
   const { divider } = styles;
+  const [path, pickImage] = useImagePath();
 
   return (
     <View style={styles.screenContainer}>
