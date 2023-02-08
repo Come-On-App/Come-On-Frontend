@@ -57,7 +57,9 @@ function GoogleLoginBtn() {
   return (
     <Pressable
       style={({ pressed }) => [pressed && styles.pressed, styles.btnStyle]}
-      onPress={() => promptAsync()}
+      onPress={() => {
+        promptAsync();
+      }}
     >
       <GoogleLogo />
     </Pressable>
