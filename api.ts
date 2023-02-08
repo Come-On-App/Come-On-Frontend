@@ -1,98 +1,125 @@
+/* eslint-disable no-param-reassign */
 import React from 'react';
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import { SERVER_ADDRESS } from '@env';
 import Toast from 'react-native-toast-message';
-
-import {
-  AuthResponse,
-  ErrorType,
-  returnToken,
-  SocialLoginProps,
-} from './types';
+import { ErrorType, MeetingInfo, returnToken, SocialLoginProps } from './types';
 import { getValueFor, save } from './utils/secureStore';
 
-const TOKEN = async () => {
+enum StoreKey {
+  refreshToken = 'refreshToken',
+  accessToken = 'accessToken',
+}
+
+function setAuthorizationHeader(token: string) {
+  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+}
+
+export const getToken = async () => {
   const token = await getValueFor('accessToken');
-  let result = null;
 
   if (token) {
-    result = JSON.parse(token);
+    return JSON.parse(token).token;
   }
 
-  return result;
+  return null;
 };
 const api = axios.create({
   baseURL: SERVER_ADDRESS,
-  headers: {},
+  headers: { Authorization: '' },
 });
+
+api.interceptors.request.use(
+  async (config: AxiosRequestConfig) => {
+    const accessToken = await getToken();
+
+    config.headers.Authorization = `Bearer ${accessToken}`;
+
+    return config;
+  },
+  error => error,
+);
 
 export const apis = {
   setHeader: (accessToken: returnToken) => {
-    api.defaults.headers.common.Authorization = `Bearer ${accessToken.token}`;
+    setAuthorizationHeader(accessToken.token);
   },
   getUser: async () => {
-    const token = await TOKEN();
+    const URL = '/api/v1/users/me';
+    const token = await getToken();
 
-    if (token) {
-      api.defaults.headers.common.Authorization = `Bearer ${token.token}`;
+    if (!token) return null;
 
-      return api
-        .get('/api/v1/users/me')
-        .catch(async err => {
-          const error: ErrorType = err?.response?.data;
+    return api
+      .get(URL)
+      .catch(async err => {
+        const error: ErrorType = err?.response?.data;
 
-          if (error.errorCode === 1102) {
-            Toast.show({
-              type: 'error',
-              text1: error.errorDescription,
-            });
-          }
+        if (error.errorCode === 1102) {
+          Toast.show({
+            type: 'error',
+            text1: error.errorDescription,
+          });
+        }
 
-          if (error.errorCode === 1103) {
-            const response = await apis.postRefreshToken();
-
-            return response;
-          }
-
-          throw err;
-        })
-        .then(response => {
-          if (response.data.accessTokne && response) {
-            api.defaults.headers.common.Authorization = `Bearer ${response.data.accessToken.token}`;
-
-            return api.get('/api/v1/users/me');
-          }
+        if (error.errorCode === 1103) {
+          const response = await apis.postRefreshToken();
 
           return response;
-        });
-    }
+        }
 
-    return null;
+        throw err;
+      })
+      .then(response => {
+        if (response.data.accessTokne && response) {
+          const newToken = response.data.accessToken.token;
+
+          setAuthorizationHeader(newToken);
+
+          return api.get(URL);
+        }
+
+        return response;
+      });
   },
   setLogin: async (data: SocialLoginProps) => {
-    let tokenDatas: AuthResponse | null = null;
-
     if (!data.data) return null;
 
     const res = await api.post(`${data.url}`, data.data);
+    const tokenDatas = res.data;
+    const accessToken = tokenDatas.accessToken.token;
 
-    if (res) {
-      tokenDatas = res.data;
-
-      api.defaults.headers.common.Authorization =
-        tokenDatas && `Bearer ${tokenDatas.accessToken.token}`;
-    }
+    setAuthorizationHeader(accessToken);
 
     return res;
   },
+
+  createMeeting: async (data: MeetingInfo) => {
+    const URL = '/api/v1/meetings';
+    const { meetingName, meetingImageUrl, calendarStartFrom, calendarEndTo } =
+      data;
+    const meetingData = {
+      meetingName,
+      meetingImageUrl,
+      calendarStartFrom,
+      calendarEndTo,
+    };
+
+    api
+      .post(URL, meetingData)
+      .then(res => console.log(res))
+      .catch(err => console.log(err.response));
+  },
+
   postRefreshToken: async () => {
-    const refreshTokens = await getValueFor('refreshToken');
+    const URL = '/api/v1/auth/reissue';
+    const refreshTokens = await getValueFor(StoreKey.refreshToken);
     const refreshToken = refreshTokens && (await JSON.parse(refreshTokens));
-    const res = await api.post('/api/v1/auth/reissue', {
+    const res = await api.post(URL, {
       refreshToken: refreshToken.token,
     });
 
-    await save('accessToken', JSON.stringify(res.data));
+    await save(StoreKey.accessToken, JSON.stringify(res.data));
 
     return res;
   },
