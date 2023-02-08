@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { InputTextProps } from '../types';
 
@@ -6,16 +6,42 @@ import CancelButton from '../components/buttons/CancelButton';
 import ConfirmButton from '../components/buttons/ConfirmButton';
 import InputForm from '../components/input/InputForm';
 import { RootStackScreenProps } from '../navigation';
+import { setMeetingName, setMeetingImageUrl } from '../slices/meetingSlice';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import imageUpload from '../utils/imageUpload';
+import apis from '../api';
 
 function CreateMeeting(
   this: typeof CreateMeeting,
   { navigation }: RootStackScreenProps<'CreateMeeting'>,
 ) {
+  const dispatch = useAppDispatch();
+  const data = useAppSelector(state => state.meeting.meetingData);
+  const imgPath = useAppSelector(state => state.meeting.meetingImgPath);
   const cancelHandler = () => {
     navigation.goBack();
   };
-  const confirmHandelr = () => {
-    console.log('확인');
+  const confirmHandelr = async () => {
+    const { meetingName, calendarStartFrom, calendarEndTo } = data;
+
+    imageUpload(imgPath)
+      .then(imgUrl => {
+        console.log(imgUrl);
+        dispatch(setMeetingImageUrl(imgUrl));
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    const { meetingImageUrl } = data;
+    const meetingData = {
+      meetingName,
+      meetingImageUrl,
+      calendarStartFrom,
+      calendarEndTo,
+    };
+
+    await apis.createMeeting(meetingData).catch(err => err.response);
+    console.log('전송?');
   };
   const [inputValues, setInputValues] = useState({
     meetingName: '',
@@ -39,9 +65,15 @@ function CreateMeeting(
     multiline: false,
   };
 
+  useEffect(() => {
+    dispatch(setMeetingName(inputValues.meetingName));
+  }, [dispatch, inputValues]);
+
   return (
     <View style={styles.container}>
-      <InputForm inputProps={inputProps} />
+      <View>
+        <InputForm inputProps={inputProps} />
+      </View>
       <View style={styles.buttons}>
         <CancelButton
           title="취소"
@@ -63,7 +95,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
     backgroundColor: 'white',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
   },
 
   buttons: {
