@@ -1,74 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Image, Pressable, View, Alert } from 'react-native';
-import {
-  useMediaLibraryPermissions,
-  launchImageLibraryAsync,
-  MediaTypeOptions,
-  PermissionStatus,
-} from 'expo-image-picker';
+
+import useImagePath from '../../hooks/useImagePicker';
 
 import theme from '../../constants/themed';
 import { Font } from '../Font';
 import Icon from '../Icon';
+import { setMeetingImgPath } from '../../slices/meetingSlice';
+import { useAppDispatch } from '../../app/hooks';
 
 function InputImage() {
-  const [libraryPermisson, requestPermission] = useMediaLibraryPermissions();
-  const [image, setImage] = useState('');
-  const title = '허가요청';
-  const description = '이 앱을 사용하려면 사진첩 접근권한이 필요합니다.';
-
-  // TODO ios permission 뜨는지 확인하기
-  async function verifyPermissions() {
-    if (libraryPermisson?.status === PermissionStatus.UNDETERMINED) {
-      const permissionResponse = await requestPermission();
-
-      return permissionResponse.granted;
-    }
-
-    if (libraryPermisson?.status === PermissionStatus.DENIED) {
-      Alert.alert(title, description);
-
-      return false;
-    }
-
-    return true;
-  }
-
-  async function pickImage() {
-    const hasPermission = await verifyPermissions();
-
-    if (!hasPermission) {
-      return;
-    }
-
-    const result = await launchImageLibraryAsync({
-      mediaTypes: MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 0.5,
-    });
-
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
-    }
-  }
-
-  let picture = (
+  const dispatch = useAppDispatch();
+  const [path, pickImage2] = useImagePath();
+  const picture = path ? (
+    <Image source={path} style={styles.image} />
+  ) : (
     <View style={styles.imageBox}>
       <Icon name="camera-alt" size={28} color={theme.grayscale?.[500]} />
       <Font style={styles.fontColor}>사진을 등록해 주세요</Font>
     </View>
   );
 
-  if (image) {
-    picture = <Image source={{ uri: image }} style={styles.image} />;
-  }
+  useEffect(() => {
+    if (path) {
+      dispatch(setMeetingImgPath(path));
+    }
+  }, [dispatch, path]);
 
   // 추후 이미지 권한 얻어오기
   return (
     <View style={styles.container}>
       <Font style={styles.label}>사진등록</Font>
-      <Pressable onPress={() => pickImage()} style={[styles.imageContainer]}>
+      <Pressable onPress={pickImage2} style={[styles.imageContainer]}>
         {picture}
       </Pressable>
     </View>
@@ -80,6 +43,7 @@ export default InputImage;
 const styles = StyleSheet.create({
   container: {
     marginTop: 28,
+    marginBottom: 28,
   },
   imageContainer: {
     overflow: 'hidden',
