@@ -4,11 +4,12 @@ import * as WebBrowser from 'expo-web-browser';
 import { View, Text, Pressable } from 'react-native';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
+import { RootStackScreenProps } from '@type/navigation';
 import Logo from '../components/Logo';
 import KakaoLoginBtn, {
   KakaoLoginWebView,
 } from '../components/buttons/KakaoLoginBtn';
-import { RootStackScreenProps } from '../navigation';
+
 import AppleLogo from '../assets/images/logo/AppleLogo';
 import GoogleLoginBtn from '../components/buttons/GoogleLoginBtn';
 

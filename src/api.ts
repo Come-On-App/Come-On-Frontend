@@ -30,7 +30,7 @@ const api = axios.create({
 });
 
 api.interceptors.request.use(
-  async (config: AxiosRequestConfig) => {
+  async config => {
     const accessToken = await getToken();
 
     config.headers.Authorization = `Bearer ${accessToken}`;

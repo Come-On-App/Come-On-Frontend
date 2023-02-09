@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { RootStackScreenProps } from '@type/navigation';
 
-import { setMeetingImageUrl, setMeetingName } from 'src/features/meetingSlice';
+import { setMeetingImageUrl, setMeetingName } from '../features/meetingSlice';
 import { InputTextProps } from '../types';
 
 import CancelButton from '../components/buttons/CancelButton';

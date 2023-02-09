@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Avatar from '@components/member/Avatar';
+
 import theme from '../constants/themed';
 
 import apis from '../api';
@@ -15,6 +16,7 @@ import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import CreateMeeting from '../screens/CreateMeeting';
 import TabThreeScreen from '../screens/TabThreeScreen';
+import CreateMeeting2 from '../screens/CreateMeeting2';
 
 import LogoutButton from '../components/myPage/MyPageLogoutButton';
 import { createTabBarIcon, PressableIcon } from '../components/Icon';
@@ -105,7 +107,7 @@ function RootNavigator() {
           />
           <Stack.Screen
             name="CreateMeeting2"
-            component={CreateMeeting}
+            component={CreateMeeting2}
             options={({ navigation, route }) => ({
               title: '모임등록',
               headerTitleAlign: 'center',

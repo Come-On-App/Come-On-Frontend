@@ -6,7 +6,7 @@ import { RootStackScreenProps } from '@type/navigation';
 import {
   setCalendarEndTo,
   setCalendarStartFrom,
-} from 'src/features/meetingSlice';
+} from '../features/meetingSlice';
 import CancelButton from '../components/buttons/CancelButton';
 import ConfirmButton from '../components/buttons/ConfirmButton';
 

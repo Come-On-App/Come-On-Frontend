@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Image, Pressable, View, Alert } from 'react-native';
 
+import { setMeetingImgPath } from '../../features/meetingSlice';
 import useImagePath from '../../hooks/useImagePicker';
 
 import theme from '../../constants/themed';
 import { Font } from '../Font';
 import Icon from '../Icon';
-import { setMeetingImgPath } from '../../slices/meetingSlice';
+
 import { useAppDispatch } from '../../app/hooks';
 
 function InputImage() {
