@@ -8,10 +8,24 @@ module.exports = function (api) {
         {
           moduleName: '@env',
           path: '.env',
-          blacklist: null,
-          whitelist: null,
+          blocklist: null,
+          allowlist: null,
           safe: false,
           allowUndefined: true,
+          verbose: false,
+        },
+      ],
+      [
+        'module-resolver',
+        {
+          root: ['.'],
+          alias: {
+            '@api': './src/api',
+            '@hooks': './src/hooks',
+            '@utils': './src/utils',
+            '@type': './src/types',
+            '@components': './src/components',
+          },
         },
       ],
     ],
