@@ -3,26 +3,44 @@ import {
   PermissionStatus,
   launchImageLibraryAsync,
   useMediaLibraryPermissions,
+  ImagePickerAsset,
 } from 'expo-image-picker';
 import { useCallback, useState } from 'react';
+import { promiseFlow } from '@utils/promise';
+import { getFileName, inferTypeImage } from '@utils/image';
 
-export type ImageState = {
-  assetId: string | null | undefined;
-  fileName: string | null | undefined;
-  base64: string | null | undefined;
+export type AssetState = {
+  name: string;
+  type: string;
   uri: string;
+  base64?: string | null | undefined;
 };
 type PickImage = () => void;
 
-function startPromise<T>(
-  func0: () => Promise<T>,
-  func1: (value: T) => void,
-): void {
-  func0().then(func1);
+function getAssetState(assets: ImagePickerAsset): AssetState {
+  const imageURI = assets.uri;
+  const fileNmae = getFileName(imageURI);
+  const imageType = inferTypeImage(fileNmae);
+
+  return {
+    name: fileNmae,
+    type: imageType,
+    uri: imageURI,
+    base64: assets.base64,
+  };
 }
 
-const useImagePath = (): [ImageState | null, PickImage] => {
-  const [path, setPath] = useState<ImageState | null>(null);
+function emitImageErrorAlert() {
+  const text = {
+    title: '사진 로드에 실패하였습니다.',
+    message: '해당 앱을 사용하려면 \n 사진 권한을 허용해 주세요.',
+  };
+
+  //  native(text);
+}
+
+const useImagePath = (): [AssetState | null, PickImage] => {
+  const [assetState, setAsset] = useState<AssetState | null>(null);
   const [libraryPermisson, requestPermission] = useMediaLibraryPermissions();
   const permissionStatus = libraryPermisson?.status;
   const verifyPermissions = useCallback(async () => {
@@ -33,6 +51,8 @@ const useImagePath = (): [ImageState | null, PickImage] => {
     }
 
     if (permissionStatus === PermissionStatus.DENIED) {
+      emitImageErrorAlert();
+
       return false;
     }
 
@@ -50,22 +70,17 @@ const useImagePath = (): [ImageState | null, PickImage] => {
     });
 
     if (!imagePickerResult.canceled) {
-      const assets = imagePickerResult.assets[0];
+      const asset = getAssetState(imagePickerResult.assets[0]);
 
-      setPath({
-        assetId: assets.assetId,
-        fileName: assets.fileName,
-        base64: assets.base64,
-        uri: assets.uri,
-      });
+      setAsset(asset);
     }
   }, []);
   const pickImage = useCallback(
-    () => startPromise(verifyPermissions, getImagePickerResult),
+    () => promiseFlow(verifyPermissions, [getImagePickerResult]),
     [verifyPermissions, getImagePickerResult],
   );
 
-  return [path, pickImage];
+  return [assetState, pickImage];
 };
 
 export default useImagePath;

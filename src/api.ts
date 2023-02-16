@@ -1,15 +1,24 @@
 /* eslint-disable no-param-reassign */
 import React from 'react';
-import axios, { AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 import { SERVER_ADDRESS } from '@env';
 import Toast from 'react-native-toast-message';
-import { ErrorType, MeetingInfo, returnToken, SocialLoginProps } from './types';
+import {
+  AuthResponse,
+  ErrorType,
+  MeetingInfo,
+  returnToken,
+  SocialLoginProps,
+} from './types';
 import { getValueFor, save } from './utils/secureStore';
 
 enum StoreKey {
   refreshToken = 'refreshToken',
   accessToken = 'accessToken',
 }
+type MeetingId = {
+  meetingId: number;
+};
 
 function setAuthorizationHeader(token: string) {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -83,18 +92,24 @@ export const apis = {
       });
   },
   setLogin: async (data: SocialLoginProps) => {
-    if (!data.data) return null;
+    let tokenDatas: AuthResponse | null = null;
+    const res = await api.post(`${SERVER_ADDRESS}${data.url}`, data.data, {
+      headers: {
+        'Cache-Control': 'no-store',
+        Pragma: 'no-store',
+        Expires: '0',
+      },
+    });
 
-    const res = await api.post(`${data.url}`, data.data);
-    const tokenDatas = res.data;
-    const accessToken = tokenDatas.accessToken.token;
-
-    setAuthorizationHeader(accessToken);
+    if (res) {
+      tokenDatas = res.data;
+      api.defaults.headers.common.Authorization =
+        tokenDatas && `Bearer ${tokenDatas.accessToken.token}`;
+    }
 
     return res;
   },
-
-  createMeeting: async (data: MeetingInfo) => {
+  createMeeting: async (data: MeetingInfo): Promise<MeetingId> => {
     const URL = '/api/v1/meetings';
     const { meetingName, meetingImageUrl, calendarStartFrom, calendarEndTo } =
       data;
@@ -104,11 +119,9 @@ export const apis = {
       calendarStartFrom,
       calendarEndTo,
     };
+    const { data: datas } = await api.post<MeetingId>(URL, meetingData);
 
-    api
-      .post(URL, meetingData)
-      .then(res => console.log(res))
-      .catch(err => console.log(err.response));
+    return datas;
   },
 
   postRefreshToken: async () => {
