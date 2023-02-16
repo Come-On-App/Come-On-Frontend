@@ -1,18 +1,15 @@
 import { makeStyles } from '@rneui/themed';
-import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
-import MapView, {
-  MapPressEvent,
-  Marker,
-  PoiClickEvent,
-  PROVIDER_GOOGLE,
-} from 'react-native-maps';
-import { getAddress } from '@api/googleMap';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import type { MapPressEvent, PoiClickEvent } from 'react-native-maps';
 
-import usePlace from '../../hooks/usePlace';
-import useCurrentPosition from '../../hooks/useCurrentPosition';
-import type { Location, MapRegion, PlaceSelect } from '../../types';
+import usePlace from '@hooks/usePlace';
+import { requestGetAddress } from '@api/map/googleMap';
+import useCurrentPosition from '@hooks/useCurrentPosition';
+import type { MapLocation } from '@type/api.map';
+import type { MapRegion, PlaceSelect } from '@type/index';
 
-const getCurrentLocation = (currentLocation: Location | null): MapRegion => {
+const getCurrentLocation = (currentLocation: MapLocation | null): MapRegion => {
   // 대한민국 위치
   const defaultLocation = {
     latitude: 36.25654399290141,
@@ -52,10 +49,9 @@ export function Map() {
   const styles = useStyles();
   const firstLoad = useRef(true);
   const mapRef = useRef<MapView>(null);
-  const [marker, setMarker] = useState<Location | null>(null);
+  const [marker, setMarker] = useState<MapLocation | null>(null);
   const currentLocation = useCurrentPosition();
   const { placeState, setPlaceSelectDispatch } = usePlace();
-  const MarkerMemo = memo(Marker);
   const region = getRegion(placeState);
   const changeHandler = useCallback(
     async (event: PoiClickEvent | MapPressEvent) => {
@@ -63,7 +59,7 @@ export function Map() {
 
       setMarker(location);
 
-      const data = await getAddress(location);
+      const data = await requestGetAddress(location);
 
       setPlaceSelectDispatch({
         ...placeState,
@@ -104,7 +100,7 @@ export function Map() {
       showsMyLocationButton
       provider={PROVIDER_GOOGLE}
     >
-      {marker && <MarkerMemo coordinate={marker} pinColor="#337FFE" />}
+      {marker && <Marker coordinate={marker} pinColor="#337FFE" />}
     </MapView>
   );
 }
