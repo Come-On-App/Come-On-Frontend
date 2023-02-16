@@ -1,15 +1,15 @@
 import '@rneui/themed';
-import { MaterialIcons } from '@expo/vector-icons';
-import { TextStyle, ViewStyle, StyleProp } from 'react-native';
-import { DateData } from 'react-native-calendars';
-import { MarkedDates } from 'react-native-calendars/src/types';
-import {
+import type { MaterialIcons } from '@expo/vector-icons';
+import type { TextStyle, ViewStyle, StyleProp } from 'react-native';
+
+import type {
   GooglePlaceData,
   GooglePlaceDetail,
 } from 'react-native-google-places-autocomplete';
-import { number } from 'prop-types';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList, RootStackScreenProps } from './navigation';
+import type { MapLocation } from '@type/api.map';
+import type { GetMeetingResponse } from '@type/api.meeting';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { RootStackParamList } from './navigation';
 
 /**
  * Global Theme
@@ -81,10 +81,13 @@ export interface InputTopProps {
 export interface InputBoxTopTextLengthProps {
   text: string;
   maxLength: number;
+  style?: StyleProp<TextStyle>;
 }
 
 export interface InputBoxTopTitleProps {
   label: string;
+  bold?: boolean;
+  style?: StyleProp<TextStyle>;
 }
 
 export interface InputProps {
@@ -318,20 +321,6 @@ export interface SearchBarProps {
   onChange?: (text: string) => void;
 }
 
-// Card
-export type CardItem = {
-  path: string;
-  people: {
-    member: number;
-    isDecided: boolean;
-  };
-  title: string;
-  subTitle: {
-    user: string;
-    date: string;
-  };
-};
-
 export interface CardModalProps {
   isVisible: boolean;
   onClose: () => void;
@@ -342,11 +331,11 @@ export interface CardModalButtonProps {
 }
 
 export interface CardListProps {
-  cardItems: CardItem[];
+  cardItems: GetMeetingResponse[];
 }
 
 export interface CardProps {
-  cardItem: CardItem;
+  cardItem: GetMeetingResponse;
 }
 
 export interface DisplayIconProps {
@@ -367,7 +356,10 @@ export interface CardTtileProps {
 
 export interface CardSubTitleProps {
   userText: string;
-  dateText: string;
+  dateRange: {
+    calendarStartFrom: string;
+    calendarEndTo: string;
+  };
 }
 
 export interface InfoProps {
@@ -395,7 +387,7 @@ export interface RightAreaProps {
 
 // Avatar
 export interface AvatarProps {
-  path: string;
+  path?: string | null;
   size: number;
   containerStyle?: StyleProp<ViewStyle>;
 }
@@ -405,6 +397,7 @@ export interface BadgedAvatarProps extends AvatarProps {
     icon: Icon;
     backgroundColor: string;
   };
+  onPress: () => void;
 }
 
 // TabBar
@@ -530,11 +523,6 @@ export interface MapRegion {
   longitudeDelta: number;
 }
 
-export interface Location {
-  latitude: number;
-  longitude: number;
-}
-
 export interface LocationObject {
   coords: {
     accuracy: number | null;
@@ -549,9 +537,9 @@ export interface LocationObject {
 
 export interface PlaceSelect {
   address: string;
-  region: Location | null;
-  currentLocation: Location | null;
-  marker: Location | null;
+  region: MapLocation | null;
+  currentLocation: MapLocation | null;
+  marker: MapLocation | null;
   name: string;
   placeId: string;
   category: string;
@@ -562,27 +550,3 @@ export type GooglePlacesOnPressHandler = (
   _data: GooglePlaceData,
   detail: GooglePlaceDetail | null,
 ) => void;
-
-// Google Map API Response
-export interface GoogleMapResult {
-  formatted_address: string;
-  geometry: {
-    location: {
-      lat: number;
-      lng: number;
-    };
-  };
-  place_id: string;
-}
-
-export interface ReverseGeocode {
-  results: GoogleMapResult[];
-  status: string;
-}
-
-export interface PlaceDetail {
-  result: GoogleMapResult & { name: string };
-  status: string;
-}
-
-export type Address = GoogleMapResult & { name: string };
