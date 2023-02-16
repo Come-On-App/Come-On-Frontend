@@ -4,7 +4,6 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   meetingData: {
     meetingName: '',
-    meetingImageUrl: '',
     calendarStartFrom: '',
     calendarEndTo: '',
   },
@@ -21,13 +20,13 @@ interface AssetState extends FormDataBody {
   assetId: string | null | undefined;
 }
 interface IMeeting {
+  meetingId: number;
   meetingData: {
     meetingName: string;
-    meetingImageUrl: string;
     calendarStartFrom: string;
     calendarEndTo: string;
   };
-  meetingImgPath: AssetState;
+  meetingImgPath: AssetState | null;
 }
 
 const meetingSlice = createSlice({
@@ -37,10 +36,7 @@ const meetingSlice = createSlice({
     setMeetingName: (state, action) => {
       state.meetingData.meetingName = action.payload;
     },
-    setMeetingImageUrl: (state, action) => {
-      console.log(action.payload);
-      state.meetingData.meetingImageUrl = action.payload;
-    },
+
     setMeetingImgPath: (state, action) => {
       state.meetingImgPath = action.payload;
     },
@@ -50,15 +46,36 @@ const meetingSlice = createSlice({
     setCalendarEndTo: (state, action) => {
       state.meetingData.calendarEndTo = action.payload;
     },
+    setMeetingId: (state, action) => {
+      state.meetingId = action.payload;
+    },
+    resetMeetingData: state => {
+      const newData = {
+        meetingName: '',
+        calendarStartFrom: '',
+        calendarEndTo: '',
+      };
+
+      if (
+        state.meetingData.meetingName &&
+        state.meetingData.calendarStartFrom &&
+        state.meetingData.calendarEndTo
+      ) {
+        state.meetingData = newData;
+      }
+
+      state.meetingImgPath = null;
+    },
   },
 });
 
 export const {
   setMeetingName,
-  setMeetingImageUrl,
   setCalendarStartFrom,
   setCalendarEndTo,
   setMeetingImgPath,
+  setMeetingId,
+  resetMeetingData,
 } = meetingSlice.actions;
 
 export default meetingSlice.reducer;

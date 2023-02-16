@@ -2,73 +2,75 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { RootStackScreenProps } from '@type/navigation';
 
-import { setMeetingImageUrl, setMeetingName } from '../features/meetingSlice';
+import useMeeting from '@hooks/useMeeting';
+import { usePromiseFlow } from '@utils/promise';
+import apis from '../api';
 import { InputTextProps } from '../types';
+import { setMeetingName } from '../features/meetingSlice';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import imageUpload, { AssetState } from '../utils/imageUpload';
 
 import CancelButton from '../components/buttons/CancelButton';
 import ConfirmButton from '../components/buttons/ConfirmButton';
 import InputForm from '../components/input/InputForm';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
-import imageUpload from '../utils/imageUpload';
-import apis from '../api';
+
+type MeetingId = {
+  meetingId: number;
+};
 
 function CreateMeeting(
   this: typeof CreateMeeting,
   { navigation }: RootStackScreenProps<'CreateMeeting'>,
 ) {
+  const [name, setName] = useState('');
   const dispatch = useAppDispatch();
   const data = useAppSelector(state => state.meeting.meetingData);
   const imgPath = useAppSelector(state => state.meeting.meetingImgPath);
+  const { meetingName, calendarStartFrom, calendarEndTo } = data;
+  const { resetMeetingData } = useMeeting();
   const cancelHandler = () => {
     navigation.goBack();
   };
-  const confirmHandelr = async () => {
-    const { meetingName, calendarStartFrom, calendarEndTo } = data;
-
-    imageUpload(imgPath)
-      .then(imgUrl => {
-        console.log(imgUrl);
-        dispatch(setMeetingImageUrl(imgUrl));
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    const { meetingImageUrl } = data;
-    const meetingData = {
-      meetingName,
-      meetingImageUrl,
-      calendarStartFrom,
-      calendarEndTo,
-    };
-
-    await apis.createMeeting(meetingData).catch(err => err.response);
-    console.log('전송?');
-  };
-  const [inputValues, setInputValues] = useState({
-    meetingName: '',
-  });
-
-  function InputChangeHandler(
-    inputIdentifier: string,
-    enteredValue: string,
-  ): void {
-    setInputValues(currInputValues => {
-      return { ...currInputValues, [inputIdentifier]: enteredValue };
-    });
-  }
-
   const inputProps: InputTextProps = {
     label: '모임이름',
     placeholder: '모임이름을 입력해주세요!',
     maxLength: 30,
-    value: inputValues.meetingName,
-    onChangeText: InputChangeHandler.bind(this, 'meetingName'),
+    value: name,
+    onChangeText: setName,
     multiline: false,
   };
+  const then2 = (imgUrl: string) => {
+    const meetingData = {
+      meetingName,
+      meetingImageUrl: imgUrl,
+      calendarStartFrom,
+      calendarEndTo,
+    };
+
+    return meetingData;
+  };
+  const {
+    error,
+    isSuccess,
+    promiseFlow,
+    isError,
+    data: datas,
+  } = usePromiseFlow<AssetState, MeetingId>();
 
   useEffect(() => {
-    dispatch(setMeetingName(inputValues.meetingName));
-  }, [dispatch, inputValues]);
+    dispatch(setMeetingName(name));
+  }, [dispatch, name]);
+
+  useEffect(() => {
+    if (isSuccess && datas) {
+      resetMeetingData();
+      navigation.navigate('MeetingRoom');
+    }
+
+    if (isError) {
+      console.log(error);
+    }
+  }, [datas, error, isError, isSuccess, navigation, resetMeetingData]);
 
   return (
     <View style={styles.container}>
@@ -79,11 +81,16 @@ function CreateMeeting(
         <CancelButton
           title="취소"
           onPressHandler={cancelHandler}
-          style={{
-            marginRight: 12,
+          style={styles.buttonStyle}
+        />
+        <ConfirmButton
+          title="확인"
+          onPressHandler={() => {
+            if (!imgPath) return;
+
+            promiseFlow(imgPath, [imageUpload, then2, apis.createMeeting]);
           }}
         />
-        <ConfirmButton title="확인" onPressHandler={confirmHandelr} />
       </View>
     </View>
   );
@@ -98,7 +105,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'space-between',
   },
-
+  buttonStyle: {
+    marginRight: 12,
+  },
   buttons: {
     flexDirection: 'row',
     justifyContent: 'space-between',

@@ -130,7 +130,6 @@ function setCalendarStyle(array: Array<string>) {
 }
 
 function PeriodCalendar({ data, setDate }: CalendarTypeProps) {
-  console.log('asd');
   const styles = useStyles();
   const [markedDate, setMarkedDate] = useState<MarkedDates>();
   const [day, setDay] = useState({ startDay: '', endDay: '' });
