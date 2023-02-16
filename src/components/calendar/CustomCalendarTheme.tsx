@@ -19,13 +19,6 @@ const CustomCalendarTheme: CalendarTheme = {
       customContainerStyle: {
         backgroundColor: 'red',
       },
-      // width: 32,
-      // height: 32,
-      // alignItems: 'center',
-      // justifyContent: 'center',
-      // borderWidth: 2,
-      // borderColor: 'black',
-      // color: 'red',
     },
     color: 'black',
   },
