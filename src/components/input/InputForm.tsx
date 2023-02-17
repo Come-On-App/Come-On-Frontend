@@ -8,37 +8,7 @@ import InputBox from './InputText';
 import InputImage from './InputImage';
 import { IconProps, InputFormProps } from '../../types';
 import Font from '../Font';
-
-interface IconInputBoxProps {
-  iconConfig: IconProps;
-  condition: boolean;
-  value: string;
-  placeholder: string;
-}
-const isValid = <T extends string | object>(data: T): boolean => {
-  if (!data) return false;
-
-  return true;
-};
-
-function IconInputBox({
-  iconConfig,
-  condition,
-  value,
-  placeholder,
-}: IconInputBoxProps) {
-  const styles = useStyles();
-  const { name, size, color } = iconConfig;
-
-  return (
-    <View style={styles.dateContainer}>
-      <Icon name={name} size={size} color={color} />
-      <Text style={styles.meetingNoteInput}>
-        {condition ? value : placeholder}
-      </Text>
-    </View>
-  );
-}
+import IconInputBox, { isValid } from './IconInputBox';
 
 function InputForm({ inputProps }: InputFormProps) {
   const styles = useStyles();
@@ -89,21 +59,8 @@ const useStyles = makeStyles(theme => ({
   inputBoxStyle: {
     textAlignVertical: 'center',
   },
-  meetingNoteInput: {
-    textAlignVertical: 'center',
-    color: theme.grayscale['500'],
-    marginLeft: 10,
-  },
   iconColor: {
     color: theme.grayscale['500'],
-  },
-  dateContainer: {
-    flexDirection: 'row',
-    borderWidth: 1,
-    borderRadius: 4,
-    borderColor: theme.grayscale['200'],
-    padding: 12,
-    alignItems: 'center',
   },
   subLabelStyle: {
     color: theme.grayscale[700],

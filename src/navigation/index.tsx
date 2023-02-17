@@ -6,6 +6,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Avatar from '@components/member/Avatar';
 
+import type {
+  PlaceSelectParamList,
+  RootStackParamList,
+  RootTabParamList,
+} from '@type/navigation';
 import theme from '../constants/themed';
 
 import apis from '../api';
@@ -27,11 +32,6 @@ import PlaceSelectHeaderTitle from '../components/placeSelect/PlaceSelectHeaderT
 
 import PlaceSelect from '../screens/place/PlaceSelect';
 import PlaceSearch from '../screens/place/PlaceSearch';
-import type {
-  PlaceSelectParamList,
-  RootStackParamList,
-  RootTabParamList,
-} from '../types/navigation';
 
 function TabThreeIcon() {
   const testImage = 'https://randomuser.me/api/portraits/men/36.jpg'; // SERVER-API: 추후 서버로 사용자 프로필 요청

@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react';
 
-import type { PlaceSelect } from '../types';
+import { PlaceSelect } from '@type/index';
 import { setPlace } from '../features/placeSlice';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 

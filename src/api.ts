@@ -9,7 +9,7 @@ import {
   MeetingInfo,
   returnToken,
   SocialLoginProps,
-} from './types';
+} from '@type/index';
 import { getValueFor, save } from './utils/secureStore';
 
 enum StoreKey {
@@ -93,13 +93,7 @@ export const apis = {
   },
   setLogin: async (data: SocialLoginProps) => {
     let tokenDatas: AuthResponse | null = null;
-    const res = await api.post(`${SERVER_ADDRESS}${data.url}`, data.data, {
-      headers: {
-        'Cache-Control': 'no-store',
-        Pragma: 'no-store',
-        Expires: '0',
-      },
-    });
+    const res = await api.post(`${SERVER_ADDRESS}${data.url}`, data.data);
 
     if (res) {
       tokenDatas = res.data;

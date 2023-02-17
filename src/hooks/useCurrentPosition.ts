@@ -7,7 +7,7 @@ import {
   useForegroundPermissions,
 } from 'expo-location';
 
-import type { Location, LocationObject } from '../types';
+import type { Location, LocationObject } from '@type/index';
 
 function emitGPSErrorAlert() {
   const text = {

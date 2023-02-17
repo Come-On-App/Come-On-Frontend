@@ -3,6 +3,7 @@ import { Text, View } from 'react-native';
 import { makeStyles } from '@rneui/themed';
 
 import { RootStackScreenProps } from '@type/navigation';
+import { SubDateProps } from '@type/index';
 import {
   setCalendarEndTo,
   setCalendarStartFrom,
@@ -12,7 +13,6 @@ import ConfirmButton from '../components/buttons/ConfirmButton';
 
 import Calendar from '../components/calendar/Calendar';
 import Font from '../components/Font';
-import { SubDateProps } from '../types';
 import { useAppDispatch } from '../app/hooks';
 
 function SubLabelDate({ date }: SubDateProps) {

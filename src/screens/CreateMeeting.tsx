@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { RootStackScreenProps } from '@type/navigation';
 
 import useMeeting from '@hooks/useMeeting';
 import { usePromiseFlow } from '@utils/promise';
+import { RootStackScreenProps } from '@type/navigation';
+import { InputTextProps } from '@type/index';
 import apis from '../api';
-import { InputTextProps } from '../types';
 import { setMeetingName } from '../features/meetingSlice';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import imageUpload, { AssetState } from '../utils/imageUpload';
