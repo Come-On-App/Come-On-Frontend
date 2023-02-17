@@ -1,29 +1,64 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Keyboard, View } from 'react-native';
 import { Input, makeStyles } from '@rneui/themed';
 
-import { Font, BoldFont } from '../Font';
+import { useUser, useMutateUser } from '@hooks/useUser';
+import type { NickNameIconButtonProps } from '@type/mypage.nickname';
+import { mutateStateRefToast } from '@utils/alert';
 import { IconButton } from '../buttons/Buttons';
+import { InputBoxTopTextLength, InputBoxTopTitle } from '../input/InputText';
 
-export default function NickName() {
+export default function Nickname() {
+  const [NICK_NAME_LABLE, NICK_NAME_LENGHT] = ['닉네임', 20];
+  const isNicknameSubmit = useRef(false);
   const styles = useStyles();
-  // SERVER-API: 추후 사용자 정보 처리
-  const NICK_NAME = '스탠리';
-  const NICK_NAME_LABLE = '닉네임';
-  const NICK_NAME_LENGHT = '3/20';
+  const { user } = useUser();
+  const { mutate, isSuccess } = useMutateUser();
+  const [nickName, setNickName] = useState('');
+  const onPressHandler = () => {
+    mutate({
+      nickname: nickName,
+      profileImageUrl: user?.profileImageUrl,
+    });
+    Keyboard.dismiss();
+    isNicknameSubmit.current = false;
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      mutateStateRefToast(isNicknameSubmit, '닉네임 업데이트 완료 ✏️');
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if (!user) return;
+
+    setNickName(user.nickname);
+  }, [user]);
 
   return (
     <View style={styles.container}>
       <Input
-        value={NICK_NAME}
+        value={nickName}
+        onChangeText={setNickName}
         inputStyle={styles.nickNameText}
-        rightIcon={<NickNameIconButton />}
+        rightIcon={<NickNameIconButton onPress={onPressHandler} />}
         containerStyle={styles.nickNameWrap}
         inputContainerStyle={styles.nickNameContainer}
+        onSubmitEditing={onPressHandler}
+        maxLength={NICK_NAME_LENGHT}
         label={
           <View style={styles.nickNameLable}>
-            <BoldFont style={styles.lableRightText}>{NICK_NAME_LABLE}</BoldFont>
-            <Font style={styles.labelLeftText}>{NICK_NAME_LENGHT}</Font>
+            <InputBoxTopTitle
+              style={styles.lableRightText}
+              label={NICK_NAME_LABLE}
+              bold
+            />
+            <InputBoxTopTextLength
+              style={styles.labelLeftText}
+              text={nickName}
+              maxLength={NICK_NAME_LENGHT}
+            />
           </View>
         }
       />
@@ -31,9 +66,8 @@ export default function NickName() {
   );
 }
 
-function NickNameIconButton() {
+function NickNameIconButton({ onPress }: NickNameIconButtonProps) {
   const { nickNameIcon } = useStyles();
-  const onPressHandler = () => console.log('click nickNameIconButton');
 
   return (
     <IconButton
@@ -42,7 +76,7 @@ function NickNameIconButton() {
         size: nickNameIcon.size,
         color: nickNameIcon.color,
       }}
-      onPress={onPressHandler}
+      onPress={onPress}
     />
   );
 }
