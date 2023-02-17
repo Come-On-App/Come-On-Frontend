@@ -1,42 +1,78 @@
-import React from 'react';
 import { View } from 'react-native';
-import { makeStyles } from '@rneui/themed';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import { Font, BoldFont } from '../Font';
-import BadgedAvatar from '../member/BadgedAvatar';
+import fn from '@utils/fn';
+import { mutateStateRefToast } from '@utils/alert';
+import { promiseFlow } from '@utils/promise';
+import useImagePath from '@hooks/useImagePicker';
+import { requestImageUpload } from '@api/image/upload';
+import { makeStyles, Skeleton } from '@rneui/themed';
+import { useMutateUser, useUser } from '@hooks/useUser';
+import Font, { BoldFont } from '@components/Font';
+import BadgedAvatar from '@components/member/BadgedAvatar';
+import type { ProfileImageProps, ProfileNameProps } from '@type/mypage.profile';
 
 export default function Profile() {
+  const { user } = useUser();
   const styles = useStyles();
+
+  if (fn.isEmpty(user)) {
+    return <ProfileSkeleton />;
+  }
 
   return (
     <View style={styles.container}>
-      <ProfileImage />
-      <ProfileName />
+      <ProfileImage
+        image={user.profileImageUrl || ''}
+        nickname={user.nickname}
+      />
+      <ProfileName name={user.name} email={user.email || ''} />
     </View>
   );
 }
 
-function ProfileName() {
+function ProfileName({ name, email }: ProfileNameProps) {
   const styles = useStyles();
-  const WELCOME_TEXT = '어서오세요. @@님!';
-  const EMAIL = 'asdf@zxc.com';
 
   return (
     <View style={styles.profileNameContainer}>
-      <BoldFont style={styles.profileWelcomeText}>{WELCOME_TEXT}</BoldFont>
-      <Font style={styles.profileEmailText}>{EMAIL}</Font>
+      <BoldFont style={styles.profileWelcomeText}>{name}</BoldFont>
+      <Font style={styles.profileEmailText}>{email}</Font>
     </View>
   );
 }
 
-function ProfileImage() {
-  const TEST_IMG = 'https://randomuser.me/api/portraits/men/36.jpg'; // SERVER-API: 추후 서버 처리
+function ProfileImage({ image, nickname }: ProfileImageProps) {
+  const [imagePath, setImagePath] = useState(image);
+  const [assetState, pickImage] = useImagePath();
   const { profileImageIcon, profileAvatarImage, profileBadge } = useStyles();
+  const isImageSubmit = useRef(false);
+  const { mutate } = useMutateUser();
+  const mutateFn = useCallback(
+    (payalod: string) => mutate({ profileImageUrl: payalod, nickname }),
+    [mutate, nickname],
+  );
+  const onPressHandler = () => {
+    pickImage();
+    isImageSubmit.current = false;
+  };
+
+  useEffect(() => {
+    if (fn.isEmpty(assetState) || isImageSubmit.current) return;
+
+    setImagePath(assetState.uri);
+    promiseFlow(assetState, [requestImageUpload, mutateFn], {
+      onSucess: () => {
+        mutateStateRefToast(isImageSubmit, '이미지 업데이트 완료 ✏️');
+      },
+    });
+  }, [assetState, mutateFn]);
 
   return (
     <BadgedAvatar
+      onPress={onPressHandler}
       size={profileAvatarImage.size}
-      path={TEST_IMG}
+      path={imagePath}
       badge={{
         icon: {
           iconName: 'photo-camera',
@@ -46,6 +82,21 @@ function ProfileImage() {
         backgroundColor: profileBadge.backgroundColor,
       }}
     />
+  );
+}
+
+function ProfileSkeleton() {
+  const styles = useStyles();
+  const skeletonMargin = { marginBottom: 2 };
+
+  return (
+    <View style={styles.container}>
+      <Skeleton circle width={56} height={56} />
+      <View style={styles.profileNameContainer}>
+        <Skeleton width={49} height={24} style={skeletonMargin} />
+        <Skeleton width={115} height={20} />
+      </View>
+    </View>
   );
 }
 
