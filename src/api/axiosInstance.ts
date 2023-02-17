@@ -7,19 +7,10 @@ const googleMapConfig: AxiosRequestConfig = {
     key: GOOGLE_PLACES_API_KEY,
   },
 };
-const config: AxiosRequestConfig = {
+const comeonConfig: AxiosRequestConfig = {
   baseURL: COMEON_API,
 };
 
-// FIXME:
-export function getJWTHeader(JWT: string): Record<string, string> {
-  if (!JWT) {
-    throw new Error('JWT does not exist.');
-  }
-
-  return { Authorization: `Bearer ${JWT}` };
-}
-
 export const mapAxios = axios.create(googleMapConfig);
 
-export const serverAxios = axios.create(config);
+export const serverAxios = axios.create(comeonConfig);

@@ -121,18 +121,6 @@ function RootNavigator() {
             })}
           />
           <Stack.Screen
-            name="PlaceSelect"
-            component={PlaceSelect}
-            options={({ navigation, route }) => ({
-              title: route.name,
-              headerTitleAlign: 'center',
-              headerTitle: PlaceSelectHeaderTitle,
-              headerShadowVisible: false,
-              headerRight: CancelIconButton,
-              headerBackVisible: false,
-            })}
-          />
-          <Stack.Screen
             name="MeetingRoom"
             component={MeetingRoom}
             options={({ navigation, route }) => ({

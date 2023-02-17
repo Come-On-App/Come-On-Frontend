@@ -1,6 +1,5 @@
-import jwt from '@api/jwt';
 import { promiseFlow } from '@utils/promise';
-import { getJWTHeader, serverAxios } from '@api/axiosInstance';
+import { serverAxios } from '@api/axiosInstance';
 import { convertImageFormData, createImageFormData } from '@utils/image';
 
 import type {
@@ -25,7 +24,6 @@ export async function requestUploadImage(
   const URL = '/api/v1/image';
   const { data } = await serverAxios.post(URL, payload, {
     headers: {
-      ...getJWTHeader(jwt),
       'Content-Type': 'multipart/form-data',
     },
   });

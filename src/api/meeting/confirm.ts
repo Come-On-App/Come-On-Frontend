@@ -1,5 +1,4 @@
-import jwt from '@api/jwt';
-import { getJWTHeader, serverAxios } from '@api/axiosInstance';
+import { serverAxios } from '@api/axiosInstance';
 import type {
   GetConfirmMeetingDatePayload,
   GetConfirmMeetingDateResponse,
@@ -19,9 +18,7 @@ export async function requestConfirmMeetingDate({
 }: PostConfirmMeetingDatePayload): Promise<PostConfirmMeetingDateResponse> {
   const URL = `/api/v1/meetings/${meetingId}/date/confirm`;
   const { data } = await serverAxios.post(URL, payload, {
-    headers: {
-      ...getJWTHeader(jwt),
-    },
+    headers: {},
   });
 
   return data;
@@ -38,9 +35,7 @@ export async function requestGetConfirmMeetingDate(
 ): Promise<GetConfirmMeetingDateResponse> {
   const URL = `/api/v1/meetings/${payload}/date/confirm`;
   const { data } = await serverAxios.post(URL, payload, {
-    headers: {
-      ...getJWTHeader(jwt),
-    },
+    headers: {},
   });
 
   return data;

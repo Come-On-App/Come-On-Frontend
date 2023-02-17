@@ -1,5 +1,4 @@
-import jwt from '@api/jwt';
-import { getJWTHeader, serverAxios } from '@api/axiosInstance';
+import { serverAxios } from '@api/axiosInstance';
 import type {
   GetEntryCodePayload,
   GetEntryCodeResponse,
@@ -28,9 +27,7 @@ export async function requestCreateMeetings(
 ): Promise<PostMeetingResponse> {
   const URL = '/api/v1/meetings';
   const { data } = await serverAxios.post(URL, payload, {
-    headers: {
-      ...getJWTHeader(jwt),
-    },
+    headers: {},
   });
 
   return data;
@@ -50,9 +47,7 @@ export async function requestGetMeetings(
   const URL = '/api/v1/meetings';
   const { data } = await serverAxios.get(URL, {
     params: payload,
-    headers: {
-      ...getJWTHeader(jwt),
-    },
+    headers: {},
   });
 
   return data;
@@ -69,9 +64,7 @@ export async function requestGetMeetingDetail(
 ): Promise<GetMeetingDetailResponse> {
   const URL = `/api/v1/meetings/${payload}`;
   const { data } = await serverAxios.get(URL, {
-    headers: {
-      ...getJWTHeader(jwt),
-    },
+    headers: {},
   });
 
   return data;
@@ -88,9 +81,7 @@ export async function requestMeetingJoin(
 ): Promise<PostJoinResponse> {
   const URL = `/api/v1/meetings/join`;
   const { data } = await serverAxios.post(URL, payload, {
-    headers: {
-      ...getJWTHeader(jwt),
-    },
+    headers: {},
   });
 
   return data;
@@ -107,9 +98,7 @@ export async function requestGetEntryCode(
 ): Promise<GetEntryCodeResponse> {
   const URL = `/api/v1/meetings/${payload}/entry-code`;
   const { data } = await serverAxios.get(URL, {
-    headers: {
-      ...getJWTHeader(jwt),
-    },
+    headers: {},
   });
 
   return data;
@@ -126,9 +115,7 @@ export async function requestPostEntryCode(
 ): Promise<PostEntryCodeResponse> {
   const URL = `/api/v1/meetings/${payload}/entry-code`;
   const { data } = await serverAxios.post(URL, {
-    headers: {
-      ...getJWTHeader(jwt),
-    },
+    headers: {},
   });
 
   return data;
@@ -145,9 +132,7 @@ export async function requestPostMeetingTime(
 ): Promise<PostMeetingTimeResponse> {
   const URL = `/api/v1/meetings/${payload.meetingId}/entry-code`;
   const { data } = await serverAxios.post(URL, payload.meetingStartTime, {
-    headers: {
-      ...getJWTHeader(jwt),
-    },
+    headers: {},
   });
 
   return data;

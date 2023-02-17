@@ -1,5 +1,4 @@
-import jwt from '@api/jwt';
-import { getJWTHeader, serverAxios } from '@api/axiosInstance';
+import { serverAxios } from '@api/axiosInstance';
 import type {
   DeleteMeetingPlacePayload,
   DeleteMeetingPlaceResponse,
@@ -21,9 +20,7 @@ export async function requestMeetingPlaces(
 ): Promise<GetMeetingPlacesListResponse> {
   const URL = `/api/v1/meetings/${payload}/places`;
   const { data } = await serverAxios.get(URL, {
-    headers: {
-      ...getJWTHeader(jwt),
-    },
+    headers: {},
   });
 
   return data;
@@ -41,9 +38,7 @@ export async function requestAddMeetingPlaces({
 }: PostAddMeetingPlacesPayload): Promise<PostAddMeetingPlacesResponse> {
   const URL = `/api/v1/meetings/${meetingId}/places`;
   const { data } = await serverAxios.post(URL, payalod, {
-    headers: {
-      ...getJWTHeader(jwt),
-    },
+    headers: {},
   });
 
   return data;
@@ -62,9 +57,7 @@ export async function requestUpdateMeetingPlaces({
 }: PutUpdateMeetingPlacesPayload): Promise<PostAddMeetingPlacesResponse> {
   const URL = `/api/v1/meetings/${meetingId}/places/${placeId}`;
   const { data } = await serverAxios.put(URL, payload, {
-    headers: {
-      ...getJWTHeader(jwt),
-    },
+    headers: {},
   });
 
   return data;
@@ -82,9 +75,7 @@ export async function requestDeleteMeetingPlaces({
 }: DeleteMeetingPlacePayload): Promise<DeleteMeetingPlaceResponse> {
   const URL = `/api/v1/meetings/${meetingId}/places/${placeId}`;
   const { data } = await serverAxios.delete(URL, {
-    headers: {
-      ...getJWTHeader(jwt),
-    },
+    headers: {},
   });
 
   return data;

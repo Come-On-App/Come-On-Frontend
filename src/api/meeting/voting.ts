@@ -1,5 +1,4 @@
-import jwt from '@api/jwt';
-import { getJWTHeader, serverAxios } from '@api/axiosInstance';
+import { serverAxios } from '@api/axiosInstance';
 import type {
   DeleteDateVotingPayload,
   DeleteDateVotingResponse,
@@ -22,9 +21,7 @@ export async function requestAddDateVoting({
 }: PostDateVotingPayload): Promise<PostDateVotingResponse> {
   const URL = `/api/v1/meetings/${meetingId}/places`;
   const { data } = await serverAxios.post(URL, payload, {
-    headers: {
-      ...getJWTHeader(jwt),
-    },
+    headers: {},
   });
 
   return data;
@@ -42,9 +39,7 @@ export async function requestDeleteDateVoting({
 }: DeleteDateVotingPayload): Promise<DeleteDateVotingResponse> {
   const URL = `/api/v1/meetings/${meetingId}/date/voting`;
   const { data } = await serverAxios.post(URL, payload, {
-    headers: {
-      ...getJWTHeader(jwt),
-    },
+    headers: {},
   });
 
   return data;
@@ -61,9 +56,7 @@ export async function requestGetDateVoting(
 ): Promise<GetDateVotingListResponse> {
   const URL = `/api/v1/meetings/${payload}/date/voting`;
   const { data } = await serverAxios.get(URL, {
-    headers: {
-      ...getJWTHeader(jwt),
-    },
+    headers: {},
   });
 
   return data;
@@ -84,9 +77,7 @@ export async function requestGetDateVotingDetails({
     params: {
       date: payload.date,
     },
-    headers: {
-      ...getJWTHeader(jwt),
-    },
+    headers: {},
   });
 
   return data;

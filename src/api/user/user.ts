@@ -1,5 +1,4 @@
-import jwt from '@api/jwt';
-import { getJWTHeader, serverAxios } from '@api/axiosInstance';
+import { serverAxios } from '@api/axiosInstance';
 import type {
   GetMyInfoResponse,
   PutMyInfoPayload,
@@ -17,9 +16,7 @@ export async function requestGetMyInfo(
   const URL = `/api/v1/users/me`;
   const { data } = await serverAxios.get(URL, {
     signal: signal || undefined,
-    headers: {
-      ...getJWTHeader(jwt),
-    },
+    headers: {},
   });
 
   return data;
@@ -36,9 +33,7 @@ export async function requestUpdateMyInfo(
 ): Promise<PutMyInfoResponse> {
   const URL = `/api/v1/users/me`;
   const { data } = await serverAxios.put(URL, payload, {
-    headers: {
-      ...getJWTHeader(jwt),
-    },
+    headers: {},
   });
 
   return data;

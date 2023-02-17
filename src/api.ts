@@ -1,8 +1,6 @@
-import React from 'react';
-import axios from 'axios';
-import { SERVER_ADDRESS } from '@env';
 import Toast from 'react-native-toast-message';
 
+import { serverAxios } from '@api/axiosInstance';
 import {
   AuthResponse,
   ErrorType,
@@ -21,22 +19,18 @@ const TOKEN = async () => {
 
   return result;
 };
-const api = axios.create({
-  baseURL: SERVER_ADDRESS,
-  headers: {},
-});
 
 export const apis = {
   setHeader: (accessToken: returnToken) => {
-    api.defaults.headers.common.Authorization = `Bearer ${accessToken.token}`;
+    serverAxios.defaults.headers.common.Authorization = `Bearer ${accessToken.token}`;
   },
   getUser: async () => {
     const token = await TOKEN();
 
     if (token) {
-      api.defaults.headers.common.Authorization = `Bearer ${token.token}`;
+      serverAxios.defaults.headers.common.Authorization = `Bearer ${token.token}`;
 
-      return api
+      return serverAxios
         .get('/api/v1/users/me')
         .catch(async err => {
           const error: ErrorType = err?.response?.data;
@@ -58,9 +52,9 @@ export const apis = {
         })
         .then(response => {
           if (response.data.accessTokne && response) {
-            api.defaults.headers.common.Authorization = `Bearer ${response.data.accessToken.token}`;
+            serverAxios.defaults.headers.common.Authorization = `Bearer ${response.data.accessToken.token}`;
 
-            return api.get('/api/v1/users/me');
+            return serverAxios.get('/api/v1/users/me');
           }
 
           return response;
@@ -74,12 +68,12 @@ export const apis = {
 
     if (!data.data) return null;
 
-    const res = await api.post(`${data.url}`, data.data);
+    const res = await serverAxios.post(`${data.url}`, data.data);
 
     if (res) {
       tokenDatas = res.data;
 
-      api.defaults.headers.common.Authorization =
+      serverAxios.defaults.headers.common.Authorization =
         tokenDatas && `Bearer ${tokenDatas.accessToken.token}`;
     }
 
@@ -88,7 +82,7 @@ export const apis = {
   postRefreshToken: async () => {
     const refreshTokens = await getValueFor('refreshToken');
     const refreshToken = refreshTokens && (await JSON.parse(refreshTokens));
-    const res = await api.post('/api/v1/auth/reissue', {
+    const res = await serverAxios.post('/api/v1/auth/reissue', {
       refreshToken: refreshToken.token,
     });
 

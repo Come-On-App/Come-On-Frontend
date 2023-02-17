@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
-import jwt from '@api/jwt';
-import { getJWTHeader, serverAxios } from '@api/axiosInstance';
+
+import { serverAxios } from '@api/axiosInstance';
 import type {
   GetMeetingMembersListResponse,
   GetMeetingMembersPayload,
@@ -17,9 +17,7 @@ export async function requestMeetingMembers(
 ): Promise<GetMeetingMembersListResponse> {
   const URL = `/api/v1/meetings/${payload}/members`;
   const { data } = await serverAxios.get(URL, {
-    headers: {
-      ...getJWTHeader(jwt),
-    },
+    headers: {},
   });
 
   return data;
