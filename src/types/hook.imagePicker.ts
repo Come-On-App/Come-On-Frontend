@@ -4,3 +4,5 @@ export type AssetState = {
   uri: string;
   base64?: string | null | undefined;
 };
+
+export type PickImage = () => void;
