@@ -1,8 +1,8 @@
 import fn from '@utils/fn';
 import axios, { AxiosRequestConfig } from 'axios';
 
-import type { AssetState } from '@hooks/useImagePicker';
 import type { FormDataValue } from '@type/api.image';
+import { AssetState } from '@type/hook.imagePicker';
 
 export function getFileName(uri: string) {
   const emptyFileName = 'noname.jpg';
