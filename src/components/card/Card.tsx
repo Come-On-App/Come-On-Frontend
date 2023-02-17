@@ -11,10 +11,7 @@ export default function Card({ cardItem }: CardProps) {
   const styles = useStyles();
 
   return (
-    <RneCard
-      wrapperStyle={styles.cardWrapper}
-      containerStyle={styles.cardContainer}
-    >
+    <RneCard containerStyle={styles.cardContainer}>
       <RneCard.Image
         style={styles.cardImage}
         source={{ uri: cardItem.meetingImageUrl }}
@@ -47,7 +44,7 @@ export function CardSkeleton() {
       height: 20,
     },
     titleMargin: { marginBottom: 5 },
-    cardMargin: { marginBottom: 10 },
+    cardMargin: { marginBottom: 10, marginTop: 15 },
   };
   const styles = useStyles();
 
@@ -65,7 +62,6 @@ export function CardSkeleton() {
 }
 
 const useStyles = makeStyles(() => ({
-  cardWrapper: {},
   cardContainer: {
     width: '100%',
     height: 255,
