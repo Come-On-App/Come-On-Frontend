@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Avatar from '@components/member/Avatar';
+import { useUser } from '@hooks/useUser';
 import theme from '../constants/themed';
 
 import apis from '../api';
@@ -32,10 +33,10 @@ import type {
 } from '../types/navigation';
 
 function TabThreeIcon() {
-  const testImage = 'https://randomuser.me/api/portraits/men/36.jpg'; // SERVER-API: 추후 서버로 사용자 프로필 요청
+  const { user } = useUser();
   const size = 32;
 
-  return <Avatar size={size} path={testImage} />;
+  return <Avatar size={size} path={user?.profileImageUrl} />;
 }
 
 export default function Navigation() {
@@ -90,6 +91,11 @@ function RootNavigator() {
           <Stack.Screen
             name="Root"
             component={BottomTabNavigator}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="PlaceSelect"
+            component={PlaceSelectNavigator}
             options={{ headerShown: false }}
           />
           <Stack.Screen
