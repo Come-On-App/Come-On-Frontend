@@ -10,6 +10,7 @@ import {
   returnToken,
   SocialLoginProps,
 } from '@type/index';
+import useAuth from '@hooks/useAuth';
 import { getValueFor, save } from './utils/secureStore';
 
 enum StoreKey {
@@ -55,9 +56,6 @@ export const apis = {
   },
   getUser: async () => {
     const URL = '/api/v1/users/me';
-    const token = await getToken();
-
-    if (!token) return null;
 
     return api
       .get(URL)
@@ -81,9 +79,9 @@ export const apis = {
       })
       .then(response => {
         if (response.data.accessTokne && response) {
-          const newToken = response.data.accessToken.token;
+          const { setTokens } = useAuth();
 
-          setAuthorizationHeader(newToken);
+          setTokens(response.data);
 
           return api.get(URL);
         }
@@ -124,9 +122,8 @@ export const apis = {
     const refreshToken = refreshTokens && (await JSON.parse(refreshTokens));
     const res = await api.post(URL, {
       refreshToken: refreshToken.token,
+      reissueRefreshTokenAlways: true,
     });
-
-    await save(StoreKey.accessToken, JSON.stringify(res.data));
 
     return res;
   },
