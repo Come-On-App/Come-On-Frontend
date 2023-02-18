@@ -1,5 +1,5 @@
 import { promiseFlow } from '@utils/promise';
-import fn, { enableCache } from '@utils/fn';
+import fn, { generateCache } from '@utils/fn';
 import type {
   Address,
   MapLocation,
@@ -79,7 +79,7 @@ export const getPlaceDetailResult = fn.flow(
 );
 
 // 캐싱 작업으로 불필요한 API 요청을 최적화
-const cache = enableCache<string, Address>();
+const cache = generateCache<string, Address>();
 
 export async function requestGetAddress(
   location: MapLocation,
