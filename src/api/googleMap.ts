@@ -2,7 +2,12 @@ import _ from 'lodash/fp';
 import axios from 'axios';
 import { GOOGLE_PLACES_API_KEY } from '@env';
 
-import type { Location, PlaceDetail, ReverseGeocode, Address } from '../types';
+import type {
+  Location,
+  PlaceDetail,
+  ReverseGeocode,
+  Address,
+} from '../screens/types';
 
 const BASE_URL = 'https://maps.googleapis.com/maps/api';
 
