@@ -25,6 +25,22 @@ interface TimePickerProps {
   ) => void;
 }
 
+type timePickerListProps = {
+  arrayItem: number[];
+  setItem: React.Dispatch<React.SetStateAction<string>>;
+};
+
+function renderItem(
+  array: number[],
+  setArray: React.Dispatch<React.SetStateAction<string>>,
+) {
+  return array.map(elem => (
+    <Item handler={setArray} key={elem - 500}>
+      {elem}
+    </Item>
+  ));
+}
+
 function Item({ key, children, handler }: ItemProps) {
   const styles = useStyles();
   const onPressClick = () => {
@@ -47,6 +63,16 @@ function Item({ key, children, handler }: ItemProps) {
   );
 }
 
+function TimePickerList({ arrayItem, setItem }: timePickerListProps) {
+  return (
+    <ScrollView nestedScrollEnabled showsVerticalScrollIndicator={false}>
+      <TouchableWithoutFeedback>
+        <>{renderItem(arrayItem, setItem)}</>
+      </TouchableWithoutFeedback>
+    </ScrollView>
+  );
+}
+
 function TimePicker({ onPressOut }: TimePickerProps) {
   const [visible, setVisible] = useState(false);
   const [dropBoxTop, setDropBoxTop] = useState<number>(0);
@@ -56,6 +82,11 @@ function TimePicker({ onPressOut }: TimePickerProps) {
   const styles = useStyles(dropBoxTop);
   const timeHours = Array.from({ length: 23 }, (v, i) => i + 1);
   const timeMinutes = Array.from({ length: 60 }, (v, i) => i);
+  const iconConfig2: IconProps = {
+    name: 'access-time',
+    size: 24,
+    color: styles.iconColor.color,
+  };
   const onPressHandler = () => {
     setVisible(!visible);
 
@@ -69,11 +100,6 @@ function TimePicker({ onPressOut }: TimePickerProps) {
   useEffect(() => {
     onPressOut(visible, setVisible);
   }, [onPressOut, visible]);
-  const iconConfig2: IconProps = {
-    name: 'access-time',
-    size: 24,
-    color: styles.iconColor.color,
-  };
 
   return (
     <>
@@ -88,37 +114,9 @@ function TimePicker({ onPressOut }: TimePickerProps) {
       </Pressable>
       {visible && (
         <View style={[styles.dropdown, { top: dropBoxTop - 2 }]}>
-          <ScrollView
-            style={{ zIndex: 10 }}
-            nestedScrollEnabled
-            showsVerticalScrollIndicator={false}
-          >
-            <TouchableWithoutFeedback>
-              <>
-                {timeHours.map(h => (
-                  <Item handler={setHour} key={h + 500}>
-                    {h}
-                  </Item>
-                ))}
-              </>
-            </TouchableWithoutFeedback>
-          </ScrollView>
+          <TimePickerList arrayItem={timeHours} setItem={setHour} />
           <Font>:</Font>
-          <ScrollView
-            style={{ zIndex: 10 }}
-            nestedScrollEnabled
-            showsVerticalScrollIndicator={false}
-          >
-            <TouchableWithoutFeedback>
-              <>
-                {timeMinutes.map(m => (
-                  <Item handler={setMinute} key={m - 500}>
-                    {m}
-                  </Item>
-                ))}
-              </>
-            </TouchableWithoutFeedback>
-          </ScrollView>
+          <TimePickerList arrayItem={timeMinutes} setItem={setMinute} />
         </View>
       )}
     </>
