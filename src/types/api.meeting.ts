@@ -165,8 +165,8 @@ export type GetEntryCodePayload = number;
 // GET /api/v1/meetings/{meeting-id}/entry-code (response)
 export interface GetEntryCodeResponse {
   meetingId: number;
-  entryCode?: string | null;
-  expiredAt?: string | null;
+  entryCode: string;
+  expiredAt: string;
 }
 
 // POST /api/v1/meetings/{meeting-id}/entry-code (payalod)
