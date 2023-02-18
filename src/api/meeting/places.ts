@@ -19,9 +19,7 @@ export async function requestMeetingPlaces(
   payload: GetMeetingPlacesPayalod,
 ): Promise<GetMeetingPlacesListResponse> {
   const URL = `/api/v1/meetings/${payload}/places`;
-  const { data } = await serverAxios.get(URL, {
-    headers: {},
-  });
+  const { data } = await serverAxios.get(URL);
 
   return data;
 }
@@ -37,9 +35,7 @@ export async function requestAddMeetingPlaces({
   payalod,
 }: PostAddMeetingPlacesPayload): Promise<PostAddMeetingPlacesResponse> {
   const URL = `/api/v1/meetings/${meetingId}/places`;
-  const { data } = await serverAxios.post(URL, payalod, {
-    headers: {},
-  });
+  const { data } = await serverAxios.post(URL, payalod);
 
   return data;
 }
@@ -56,9 +52,7 @@ export async function requestUpdateMeetingPlaces({
   payload,
 }: PutUpdateMeetingPlacesPayload): Promise<PostAddMeetingPlacesResponse> {
   const URL = `/api/v1/meetings/${meetingId}/places/${placeId}`;
-  const { data } = await serverAxios.put(URL, payload, {
-    headers: {},
-  });
+  const { data } = await serverAxios.put(URL, payload);
 
   return data;
 }
@@ -74,9 +68,7 @@ export async function requestDeleteMeetingPlaces({
   placeId,
 }: DeleteMeetingPlacePayload): Promise<DeleteMeetingPlaceResponse> {
   const URL = `/api/v1/meetings/${meetingId}/places/${placeId}`;
-  const { data } = await serverAxios.delete(URL, {
-    headers: {},
-  });
+  const { data } = await serverAxios.delete(URL);
 
   return data;
 }

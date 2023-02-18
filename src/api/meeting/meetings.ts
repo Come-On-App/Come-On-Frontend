@@ -26,9 +26,7 @@ export async function requestCreateMeetings(
   payload: PostMeetingPayload,
 ): Promise<PostMeetingResponse> {
   const URL = '/api/v1/meetings';
-  const { data } = await serverAxios.post(URL, payload, {
-    headers: {},
-  });
+  const { data } = await serverAxios.post(URL, payload);
 
   return data;
 }
@@ -47,7 +45,6 @@ export async function requestGetMeetings(
   const URL = '/api/v1/meetings';
   const { data } = await serverAxios.get(URL, {
     params: payload,
-    headers: {},
   });
 
   return data;
@@ -63,9 +60,7 @@ export async function requestGetMeetingDetail(
   payload: GetMeetingDetailPayload,
 ): Promise<GetMeetingDetailResponse> {
   const URL = `/api/v1/meetings/${payload}`;
-  const { data } = await serverAxios.get(URL, {
-    headers: {},
-  });
+  const { data } = await serverAxios.get(URL);
 
   return data;
 }
@@ -80,9 +75,7 @@ export async function requestMeetingJoin(
   payload: PostJoinPayload,
 ): Promise<PostJoinResponse> {
   const URL = `/api/v1/meetings/join`;
-  const { data } = await serverAxios.post(URL, payload, {
-    headers: {},
-  });
+  const { data } = await serverAxios.post(URL, payload);
 
   return data;
 }
@@ -97,9 +90,7 @@ export async function requestGetEntryCode(
   payload: GetEntryCodePayload,
 ): Promise<GetEntryCodeResponse> {
   const URL = `/api/v1/meetings/${payload}/entry-code`;
-  const { data } = await serverAxios.get(URL, {
-    headers: {},
-  });
+  const { data } = await serverAxios.get(URL);
 
   return data;
 }
@@ -114,9 +105,7 @@ export async function requestPostEntryCode(
   payload: PostEntryCodePayalod,
 ): Promise<PostEntryCodeResponse> {
   const URL = `/api/v1/meetings/${payload}/entry-code`;
-  const { data } = await serverAxios.post(URL, {
-    headers: {},
-  });
+  const { data } = await serverAxios.post(URL);
 
   return data;
 }
@@ -131,9 +120,7 @@ export async function requestPostMeetingTime(
   payload: PostMeetingTimePayalod,
 ): Promise<PostMeetingTimeResponse> {
   const URL = `/api/v1/meetings/${payload.meetingId}/entry-code`;
-  const { data } = await serverAxios.post(URL, payload.meetingStartTime, {
-    headers: {},
-  });
+  const { data } = await serverAxios.post(URL, payload.meetingStartTime);
 
   return data;
 }

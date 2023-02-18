@@ -17,9 +17,7 @@ export async function requestConfirmMeetingDate({
   payload,
 }: PostConfirmMeetingDatePayload): Promise<PostConfirmMeetingDateResponse> {
   const URL = `/api/v1/meetings/${meetingId}/date/confirm`;
-  const { data } = await serverAxios.post(URL, payload, {
-    headers: {},
-  });
+  const { data } = await serverAxios.post(URL, payload);
 
   return data;
 }
@@ -34,9 +32,7 @@ export async function requestGetConfirmMeetingDate(
   payload: GetConfirmMeetingDatePayload,
 ): Promise<GetConfirmMeetingDateResponse> {
   const URL = `/api/v1/meetings/${payload}/date/confirm`;
-  const { data } = await serverAxios.post(URL, payload, {
-    headers: {},
-  });
+  const { data } = await serverAxios.post(URL, payload);
 
   return data;
 }

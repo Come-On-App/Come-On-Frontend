@@ -20,9 +20,7 @@ export async function requestAddDateVoting({
   payload,
 }: PostDateVotingPayload): Promise<PostDateVotingResponse> {
   const URL = `/api/v1/meetings/${meetingId}/places`;
-  const { data } = await serverAxios.post(URL, payload, {
-    headers: {},
-  });
+  const { data } = await serverAxios.post(URL, payload);
 
   return data;
 }
@@ -38,9 +36,7 @@ export async function requestDeleteDateVoting({
   payload,
 }: DeleteDateVotingPayload): Promise<DeleteDateVotingResponse> {
   const URL = `/api/v1/meetings/${meetingId}/date/voting`;
-  const { data } = await serverAxios.post(URL, payload, {
-    headers: {},
-  });
+  const { data } = await serverAxios.post(URL, payload);
 
   return data;
 }
@@ -55,9 +51,7 @@ export async function requestGetDateVoting(
   payload: GetDateVotingPayload,
 ): Promise<GetDateVotingListResponse> {
   const URL = `/api/v1/meetings/${payload}/date/voting`;
-  const { data } = await serverAxios.get(URL, {
-    headers: {},
-  });
+  const { data } = await serverAxios.get(URL);
 
   return data;
 }
@@ -77,7 +71,6 @@ export async function requestGetDateVotingDetails({
     params: {
       date: payload.date,
     },
-    headers: {},
   });
 
   return data;

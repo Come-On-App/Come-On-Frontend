@@ -16,9 +16,7 @@ export async function requestMeetingMembers(
   payload: GetMeetingMembersPayload,
 ): Promise<GetMeetingMembersListResponse> {
   const URL = `/api/v1/meetings/${payload}/members`;
-  const { data } = await serverAxios.get(URL, {
-    headers: {},
-  });
+  const { data } = await serverAxios.get(URL);
 
   return data;
 }
