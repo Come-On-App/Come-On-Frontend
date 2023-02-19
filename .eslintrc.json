@@ -84,9 +84,12 @@
       { "blankLine": "always", "prev": "function", "next": "*" },
       { "blankLine": "always", "prev": "export", "next": "export" }
     ],
-
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": ["off"],
+    "no-param-reassign": [
+      "error",
+      { "props": true, "ignorePropertyModificationsFor": ["state"] }
+    ],
     "import/extensions": ["error", "never"],
     "react/prop-types": 0,
     "no-shadow": "off",

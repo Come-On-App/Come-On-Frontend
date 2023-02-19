@@ -9,11 +9,12 @@ import {
   GooglePlacesAutocompleteRef,
 } from 'react-native-google-places-autocomplete';
 
+import { GooglePlacesOnPressHandler } from '@type/index';
+import { PlaceSelectScreen } from '@type/navigation';
 import Icon from '../../components/Icon';
 import usePlace from '../../hooks/usePlace';
 import { TestBox } from '../../experimental/MapContent';
-import { GooglePlacesOnPressHandler } from '../../types';
-import { PlaceSelectScreen } from '../../types/navigation';
+
 import { SearchTitle } from '../../components/placeSelect/PlaceSelectSearchBar';
 
 export default function PlaceSearch({ navigation }: PlaceSelectScreen) {

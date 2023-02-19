@@ -3,9 +3,9 @@ import { StyleProp, View, ViewStyle } from 'react-native';
 import { makeStyles } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 
+import { PlaceSelectNavigation } from '@type/navigation';
 import { BoldFont } from '../Font';
 import { SearchBarMock } from '../SearchBar';
-import { PlaceSelectNavigation } from '../../types/navigation';
 
 export default function PlaceSelectSearchBar() {
   return (

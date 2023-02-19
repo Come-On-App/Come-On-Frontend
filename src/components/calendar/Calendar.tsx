@@ -130,9 +130,9 @@ function setCalendarStyle(array: Array<string>) {
 }
 
 function PeriodCalendar({ data, setDate }: CalendarTypeProps) {
-  console.log('asd');
   const styles = useStyles();
   const [markedDate, setMarkedDate] = useState<MarkedDates>();
+  const today = new Date().toISOString().substring(0, 10);
   const [day, setDay] = useState({ startDay: '', endDay: '' });
   const onPressDayHandlerPeriod = useCallback(
     (date: DateData) => {
@@ -141,8 +141,6 @@ function PeriodCalendar({ data, setDate }: CalendarTypeProps) {
       const isStart = !!startDay;
       const selectedDay = date.dateString;
       const markedDates = new Map<string, object>();
-
-      console.log(selectedDay);
 
       // 1. 단일 날짜만 선택됐을 경우
       if (!startDay) {
@@ -184,7 +182,9 @@ function PeriodCalendar({ data, setDate }: CalendarTypeProps) {
       theme={CustomCalendarTheme}
       calendarStyle={styles.calendarStyle}
       onDayPress={onPressDayHandlerPeriod}
+      minDate={today}
       markingType="period"
+      disableAllTouchEventsForDisabledDays
       markedDates={markedDate || {}}
       nestedScrollEnabled
       pastScrollRange={0}

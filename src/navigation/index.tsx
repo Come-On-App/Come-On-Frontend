@@ -5,6 +5,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Avatar from '@components/member/Avatar';
+
+import type {
+  PlaceSelectParamList,
+  RootStackParamList,
+  RootTabParamList,
+} from '@type/navigation';
 import theme from '../constants/themed';
 
 import apis from '../api';
@@ -15,6 +21,7 @@ import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import CreateMeeting from '../screens/CreateMeeting';
 import TabThreeScreen from '../screens/TabThreeScreen';
+import CreateMeetingCalender from '../screens/CreateMeetingCalender';
 
 import LogoutButton from '../components/myPage/MyPageLogoutButton';
 import { createTabBarIcon, PressableIcon } from '../components/Icon';
@@ -25,11 +32,6 @@ import PlaceSelectHeaderTitle from '../components/placeSelect/PlaceSelectHeaderT
 
 import PlaceSelect from '../screens/place/PlaceSelect';
 import PlaceSearch from '../screens/place/PlaceSearch';
-import type {
-  PlaceSelectParamList,
-  RootStackParamList,
-  RootTabParamList,
-} from '../types/navigation';
 
 function TabThreeIcon() {
   const testImage = 'https://randomuser.me/api/portraits/men/36.jpg'; // SERVER-API: 추후 서버로 사용자 프로필 요청
@@ -73,14 +75,7 @@ function RootNavigator() {
 
   useEffect(() => {
     setLogoin(); // 토큰이 있는지 없는지 검사
-    apis
-      .getUser()
-      .then(value => {
-        console.log(value);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    apis.getUser();
   }, [setLogoin, isLogin]);
 
   return (
@@ -104,8 +99,8 @@ function RootNavigator() {
             })}
           />
           <Stack.Screen
-            name="CreateMeeting2"
-            component={CreateMeeting}
+            name="CreateMeetingCalender"
+            component={CreateMeetingCalender}
             options={({ navigation, route }) => ({
               title: '모임등록',
               headerTitleAlign: 'center',

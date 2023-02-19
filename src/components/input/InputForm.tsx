@@ -1,35 +1,42 @@
-import React, { useState } from 'react';
-import { View, TextInput, KeyboardAvoidingView, Pressable } from 'react-native';
+import React from 'react';
+import { View, KeyboardAvoidingView, Pressable, Text } from 'react-native';
 import { makeStyles } from '@rneui/themed';
-
 import { useNavigation } from '@react-navigation/native';
+import Icon from '@components/Icon';
+import useMeeting from '@hooks/useMeeting';
 import InputBox from './InputText';
 import InputImage from './InputImage';
-import { InputFormProps } from '../../types';
+import { IconProps, InputFormProps } from '../../types';
 import Font from '../Font';
+import IconInputBox, { isValid } from './IconInputBox';
 
 function InputForm({ inputProps }: InputFormProps) {
   const styles = useStyles();
-  const [date, setDate] = useState<string>();
+  const { meetingData } = useMeeting();
   const navigation = useNavigation();
-  const onPressLabel = () => {
-    navigation.navigate('CreateMeeting2');
+  const placeholder = '날짜 범위를 선택해주세요';
+  const value = `${meetingData.calendarStartFrom} ~ ${meetingData.calendarEndTo}`;
+  const iconConfig: IconProps = {
+    name: 'calendar-today',
+    size: 24,
+    color: styles.iconColor.color,
   };
-  // const onChangeHandler = () => {};
+  const onPressLabel = () => {
+    navigation.navigate('CreateMeetingCalender');
+  };
 
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
       <InputImage />
-      <InputBox config={inputProps} style={{ textAlignVertical: 'center' }} />
+      <InputBox config={inputProps} style={styles.inputBoxStyle} />
       <View style={styles.inputContainer}>
         <Font style={styles.title}>모임 캘린더</Font>
         <Pressable style={styles.inputContainer} onPress={onPressLabel}>
-          <TextInput
-            placeholder="날짜 범위를 선택해주세요"
-            editable={false}
-            placeholderTextColor={styles.meetingNoteInput.placeholder}
-            style={styles.meetingNoteInput}
-            value={date}
+          <IconInputBox
+            iconConfig={iconConfig}
+            condition={isValid(meetingData.calendarStartFrom)}
+            value={value}
+            placeholder={placeholder}
           />
         </Pressable>
       </View>
@@ -49,13 +56,11 @@ const useStyles = makeStyles(theme => ({
   inputContainer: {
     marginTop: 12,
   },
-  meetingNoteInput: {
-    padding: 12,
-    borderWidth: 1,
-    borderRadius: 4,
+  inputBoxStyle: {
     textAlignVertical: 'center',
-    placeholder: theme.grayscale['500'],
-    borderColor: theme.grayscale['200'],
+  },
+  iconColor: {
+    color: theme.grayscale['500'],
   },
   subLabelStyle: {
     color: theme.grayscale[700],
