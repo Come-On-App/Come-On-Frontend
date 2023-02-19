@@ -6,11 +6,11 @@ import { requestGetMyInfo, requestUpdateMyInfo } from '@api/user/user';
 import type { GetMyInfoResponse } from '@type/api.user';
 
 export const useUser = () => {
-  const { data: user } = useQuery(QueryKeys.user, ({ signal }) =>
+  const { data: user, refetch } = useQuery(QueryKeys.user, ({ signal }) =>
     requestGetMyInfo(signal),
   );
 
-  return { user };
+  return { user, refetch };
 };
 
 export const useMutateUser = () => {
