@@ -9,7 +9,7 @@ import { useCallback, useState } from 'react';
 
 import { promiseFlow } from '@utils/promise';
 import { getFileName, inferTypeImage } from '@utils/image';
-import { native } from '@utils/alert';
+import { nativeAlert } from '@utils/alert';
 import type { AssetState, PickImage } from '@type/hook.imagePicker';
 
 function getAssetState(assets: ImagePickerAsset): AssetState {
@@ -31,7 +31,7 @@ function emitImageErrorAlert() {
     message: '해당 앱을 사용하려면 \n 사진 권한을 허용해 주세요.',
   };
 
-  native(text);
+  nativeAlert(text);
 }
 
 const useImagePath = (): [AssetState | null, PickImage] => {

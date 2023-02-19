@@ -5,7 +5,7 @@ import type { NativeAlert, RefState } from '@type/util.alert';
 
 export const toast = Toast;
 
-export function native(text: NativeAlert) {
+export function nativeAlert(text: NativeAlert) {
   Alert.alert(text.title, text.message);
 }
 

@@ -7,7 +7,7 @@ import {
 
 import { promiseFlow } from '@utils/promise';
 import { LocationObject } from '@type/index';
-import { native } from '@utils/alert';
+import { nativeAlert } from '@utils/alert';
 import type { MapLocation } from '@type/api.map';
 
 function emitGPSErrorAlert() {
@@ -16,7 +16,7 @@ function emitGPSErrorAlert() {
     message: '해당 앱을 사용하려면 \n GPS 권한을 허용해 주세요.',
   };
 
-  native(text);
+  nativeAlert(text);
 }
 
 function getLatitudeLongitude({ coords }: LocationObject) {
