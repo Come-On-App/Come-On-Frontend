@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Pressable } from 'react-native';
+import { View } from 'react-native';
 import { makeStyles } from '@rneui/themed';
 
 import { Font, BoldFont } from '../Font';
@@ -34,20 +34,18 @@ function ProfileImage() {
   const { profileImageIcon, profileAvatarImage, profileBadge } = useStyles();
 
   return (
-    <Pressable>
-      <BadgedAvatar
-        size={profileAvatarImage.size}
-        path={TEST_IMG}
-        badge={{
-          icon: {
-            iconName: 'photo-camera',
-            size: profileImageIcon.size,
-            color: profileImageIcon.color,
-          },
-          backgroundColor: profileBadge.backgroundColor,
-        }}
-      />
-    </Pressable>
+    <BadgedAvatar
+      size={profileAvatarImage.size}
+      path={TEST_IMG}
+      badge={{
+        icon: {
+          iconName: 'photo-camera',
+          size: profileImageIcon.size,
+          color: profileImageIcon.color,
+        },
+        backgroundColor: profileBadge.backgroundColor,
+      }}
+    />
   );
 }
 

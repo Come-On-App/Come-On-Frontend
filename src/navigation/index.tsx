@@ -21,7 +21,7 @@ import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import CreateMeeting from '../screens/CreateMeeting';
 import TabThreeScreen from '../screens/TabThreeScreen';
-import CreateMeeting2 from '../screens/CreateMeeting2';
+import CreateMeetingCalender from '../screens/CreateMeetingCalender';
 
 import LogoutButton from '../components/myPage/MyPageLogoutButton';
 import { createTabBarIcon, PressableIcon } from '../components/Icon';
@@ -75,14 +75,7 @@ function RootNavigator() {
 
   useEffect(() => {
     setLogoin(); // 토큰이 있는지 없는지 검사
-    apis
-      .getUser()
-      .then(value => {
-        console.log(value);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    apis.getUser();
   }, [setLogoin, isLogin]);
 
   return (
@@ -106,8 +99,8 @@ function RootNavigator() {
             })}
           />
           <Stack.Screen
-            name="CreateMeeting2"
-            component={CreateMeeting2}
+            name="CreateMeetingCalender"
+            component={CreateMeetingCalender}
             options={({ navigation, route }) => ({
               title: '모임등록',
               headerTitleAlign: 'center',

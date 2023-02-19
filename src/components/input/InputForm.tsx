@@ -22,7 +22,7 @@ function InputForm({ inputProps }: InputFormProps) {
     color: styles.iconColor.color,
   };
   const onPressLabel = () => {
-    navigation.navigate('CreateMeeting2');
+    navigation.navigate('CreateMeetingCalender');
   };
 
   return (

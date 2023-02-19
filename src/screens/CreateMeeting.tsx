@@ -66,10 +66,6 @@ function CreateMeeting(
       resetMeetingData();
       navigation.navigate('MeetingRoom');
     }
-
-    if (isError) {
-      console.log(error);
-    }
   }, [datas, error, isError, isSuccess, navigation, resetMeetingData]);
 
   return (

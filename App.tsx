@@ -7,6 +7,7 @@ import { ThemeProvider } from '@rneui/themed';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import DevMode from './src/DevMode';
 import Navigation from './src/navigation';
 import theme from './src/constants/themed';
 import useCachedResources from './src/hooks/useCachedResources';
@@ -28,6 +29,7 @@ export default function App() {
           <SafeAreaProvider>
             <Provider store={store}>
               <Navigation />
+              <DevMode />
             </Provider>
           </SafeAreaProvider>
         </ThemeProvider>

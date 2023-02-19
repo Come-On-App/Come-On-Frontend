@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import React from 'react';
 import axios from 'axios';
 import { SERVER_ADDRESS } from '@env';
@@ -10,7 +9,7 @@ import {
   returnToken,
   SocialLoginProps,
 } from '@type/index';
-import useAuth from '@hooks/useAuth';
+import { copy } from './utils/fn';
 import { getValueFor, save } from './utils/secureStore';
 
 enum StoreKey {
@@ -34,16 +33,21 @@ export const getToken = async () => {
 
   return null;
 };
-const api = axios.create({
+const setTokens = async (data: AuthResponse) => {
+  await save(StoreKey.accessToken, JSON.stringify(data.accessToken));
+  await save(StoreKey.refreshToken, JSON.stringify(data.refreshToken));
+};
+
+export const api = axios.create({
   baseURL: SERVER_ADDRESS,
-  headers: { Authorization: '' },
 });
 
 api.interceptors.request.use(
   async config => {
     const accessToken = await getToken();
+    const configCopy = copy(config);
 
-    config.headers.Authorization = `Bearer ${accessToken}`;
+    if (accessToken) configCopy.headers.Authorization = `Bearer ${accessToken}`;
 
     return config;
   },
@@ -77,11 +81,9 @@ export const apis = {
 
         throw err;
       })
-      .then(response => {
-        if (response.data.accessTokne && response) {
-          const { setTokens } = useAuth();
-
-          setTokens(response.data);
+      .then(async response => {
+        if (response.data.accessToken && response) {
+          await setTokens(response.data);
 
           return api.get(URL);
         }
@@ -93,7 +95,7 @@ export const apis = {
     let tokenDatas: AuthResponse | null = null;
     const res = await api.post(`${SERVER_ADDRESS}${data.url}`, data.data);
 
-    if (res) {
+    if (res.status === 200) {
       tokenDatas = res.data;
       api.defaults.headers.common.Authorization =
         tokenDatas && `Bearer ${tokenDatas.accessToken.token}`;
@@ -119,7 +121,7 @@ export const apis = {
   postRefreshToken: async () => {
     const URL = '/api/v1/auth/reissue';
     const refreshTokens = await getValueFor(StoreKey.refreshToken);
-    const refreshToken = refreshTokens && (await JSON.parse(refreshTokens));
+    const refreshToken = refreshTokens && JSON.parse(refreshTokens);
     const res = await api.post(URL, {
       refreshToken: refreshToken.token,
       reissueRefreshTokenAlways: true,

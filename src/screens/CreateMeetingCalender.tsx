@@ -28,10 +28,10 @@ function SubLabelDate({ date }: SubDateProps) {
   );
 }
 
-function CreateMeeting2({
+function CreateMeetingCalender({
   navigation,
   route,
-}: RootStackScreenProps<'CreateMeeting2'>) {
+}: RootStackScreenProps<'CreateMeetingCalender'>) {
   const styles = useStyles();
   const dispatch = useAppDispatch();
   const [date, setDate] = useState({
@@ -70,7 +70,7 @@ function CreateMeeting2({
   );
 }
 
-export default CreateMeeting2;
+export default CreateMeetingCalender;
 
 const useStyles = makeStyles(theme => ({
   container: {

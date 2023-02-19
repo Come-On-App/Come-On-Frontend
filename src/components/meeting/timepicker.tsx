@@ -1,4 +1,3 @@
-/* eslint-disable max-params */
 import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
@@ -11,37 +10,24 @@ import { makeStyles } from '@rneui/themed';
 import IconInputBox from '@components/input/IconInputBox';
 import Font from '@components/Font';
 import { IconProps } from '@type/index';
-
-interface ItemProps {
-  key: string | number;
-  children: number;
-  handler: React.Dispatch<React.SetStateAction<string>>;
-}
-
-interface TimePickerProps {
-  onPressOut: (
-    openTime: boolean,
-    setOpenTime: React.Dispatch<React.SetStateAction<boolean>>,
-  ) => void;
-}
-
-type timePickerListProps = {
-  arrayItem: number[];
-  setItem: React.Dispatch<React.SetStateAction<string>>;
-};
+import {
+  ItemProps,
+  TimePickerListProps,
+  TimePickerProps,
+} from '@type/meeting.Timepicker';
 
 function renderItem(
   array: number[],
   setArray: React.Dispatch<React.SetStateAction<string>>,
 ) {
   return array.map(elem => (
-    <Item handler={setArray} key={elem - 500}>
+    <Item handler={setArray} key={Math.random() * 100000}>
       {elem}
     </Item>
   ));
 }
 
-function Item({ key, children, handler }: ItemProps) {
+function Item({ children, handler }: ItemProps) {
   const styles = useStyles();
   const onPressClick = () => {
     handler(children < 10 ? `0${children}` : `${children}`);
@@ -49,7 +35,6 @@ function Item({ key, children, handler }: ItemProps) {
 
   return (
     <Pressable
-      key={key}
       onPress={onPressClick}
       style={({ pressed }) => [
         styles.dropdownItem,
@@ -63,7 +48,7 @@ function Item({ key, children, handler }: ItemProps) {
   );
 }
 
-function TimePickerList({ arrayItem, setItem }: timePickerListProps) {
+function TimePickerList({ arrayItem, setItem }: TimePickerListProps) {
   return (
     <ScrollView nestedScrollEnabled showsVerticalScrollIndicator={false}>
       <TouchableWithoutFeedback>
@@ -80,8 +65,8 @@ function TimePicker({ onPressOut }: TimePickerProps) {
   const [hour, setHour] = useState('');
   const timeRef = useRef<View>(null);
   const styles = useStyles(dropBoxTop);
-  const timeHours = Array.from({ length: 23 }, (v, i) => i + 1);
-  const timeMinutes = Array.from({ length: 60 }, (v, i) => i);
+  const timeHours = Array.from({ length: 23 }, (_v, i) => i + 1);
+  const timeMinutes = Array.from({ length: 60 }, (_v, i) => i);
   const iconConfig2: IconProps = {
     name: 'access-time',
     size: 24,
@@ -89,12 +74,6 @@ function TimePicker({ onPressOut }: TimePickerProps) {
   };
   const onPressHandler = () => {
     setVisible(!visible);
-
-    if (timeRef) {
-      timeRef.current?.measure((x, y, width, height, pageX, pageY) => {
-        setDropBoxTop(height);
-      });
-    }
   };
 
   useEffect(() => {
@@ -103,7 +82,11 @@ function TimePicker({ onPressOut }: TimePickerProps) {
 
   return (
     <>
-      <Pressable onPress={onPressHandler} ref={timeRef}>
+      <Pressable
+        onLayout={e => setDropBoxTop(e.nativeEvent.layout.height)}
+        onPress={onPressHandler}
+        ref={timeRef}
+      >
         <IconInputBox
           iconConfig={iconConfig2}
           value={`${hour} : ${minute}`}
