@@ -49,7 +49,7 @@ api.interceptors.request.use(
 
     if (accessToken) configCopy.headers.Authorization = `Bearer ${accessToken}`;
 
-    return config;
+    return configCopy;
   },
   error => error,
 );
