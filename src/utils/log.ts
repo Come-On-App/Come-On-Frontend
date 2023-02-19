@@ -1,13 +1,17 @@
 /* eslint-disable no-console */
 
-function GenerateLog(
-  type: 'log' | 'warn' | 'error' | 'table',
-  option?: {
-    time: boolean;
-    hidden: boolean;
-  },
-) {
+import { Option, Type } from '@type/util.log';
+
+function GenerateLog(type: Type, option: Option) {
   const print = console[type];
+  const style = {
+    background: '#222',
+    dark: '#bada55',
+    light: '#ffffff',
+  };
+  const mode = option.style?.mode || 'light';
+  const color = style[mode];
+  const styles = `background: ${style.background}; color: ${color}`;
 
   return <T>(title: string, value: T) => {
     if (option?.hidden) return undefined;
@@ -15,10 +19,10 @@ function GenerateLog(
     if (option?.time) {
       const time = new Date().toLocaleString();
 
-      return print(`[${time}] ${title}`, value);
+      return print(`%c [${time}] ${title}`, styles, value);
     }
 
-    return print(`${title}`, value);
+    return print(`%c ${title}`, styles, value);
   };
 }
 
