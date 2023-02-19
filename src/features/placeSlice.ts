@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { PlaceSelect } from '../types';
+import { PlaceSelect } from '@type/index';
 
 const initialState: PlaceSelect = {
   address: '',

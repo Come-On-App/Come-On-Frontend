@@ -4,16 +4,16 @@ import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { login, logout } from '../features/authSlice';
 import { deleteValueFor, save, getValueFor } from '../utils/secureStore';
 
+enum StoreKey {
+  refreshToken = 'refreshToken',
+  accessToken = 'accessToken',
+}
+
 const saveAccessToken = async (accessTokenData: AccessTokenRes) => {
-  await save('accessToken', JSON.stringify(accessTokenData.accessToken)).catch(
-    err => console.log(err),
-  );
+  await save('accessToken', JSON.stringify(accessTokenData.accessToken));
 };
 const saveRefreshToken = async (refreshTokennData: RefreshTokenRes) => {
-  await save(
-    'refreshToken',
-    JSON.stringify(refreshTokennData.refreshToken),
-  ).catch(err => console.log(err));
+  await save('refreshToken', JSON.stringify(refreshTokennData.refreshToken));
 };
 const getAccessToken = async () => {
   const data = await getTokenData('accessToken');
@@ -26,12 +26,6 @@ const getAccessToken = async () => {
 
   return null;
 };
-
-enum StoreKey {
-  refreshToken = 'refreshToken',
-  accessToken = 'accessToken',
-}
-
 const getTokenData = async (name: 'accessToken' | 'refreshToken') => {
   const tokenData = await getValueFor(name);
 
@@ -56,8 +50,6 @@ function useAuth() {
     const accessToken = await getTokenData(StoreKey.accessToken);
     const refreshToken = await getTokenData(StoreKey.refreshToken);
 
-    console.log(accessToken);
-
     if (accessToken !== null && refreshToken !== null) {
       dispatch(login());
     }
@@ -73,9 +65,7 @@ function useAuth() {
   );
   const setLogout = useCallback(async () => {
     await deleteValueFor(StoreKey.accessToken);
-    await deleteValueFor(StoreKey.refreshToken).catch(err => {
-      console.log(err);
-    });
+    await deleteValueFor(StoreKey.refreshToken);
     dispatch(logout());
   }, [dispatch]);
 

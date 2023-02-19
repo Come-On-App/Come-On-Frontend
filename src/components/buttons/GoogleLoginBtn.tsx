@@ -61,7 +61,6 @@ function GoogleLoginBtn() {
     <Pressable
       style={({ pressed }) => [pressed && styles.pressed, styles.btnStyle]}
       onPress={() => {
-        console.log('first1');
         promptAsync();
       }}
     >
