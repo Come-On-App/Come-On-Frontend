@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useId } from 'react';
 import {
   View,
   Pressable,
@@ -20,9 +20,9 @@ function renderItem(
   array: number[],
   setArray: React.Dispatch<React.SetStateAction<string>>,
 ) {
-  return array.map(elem => (
-    <Item handler={setArray} key={Math.random() * 100000}>
-      {elem}
+  return array.map(item => (
+    <Item handler={setArray} key={useId()}>
+      {item}
     </Item>
   ));
 }
