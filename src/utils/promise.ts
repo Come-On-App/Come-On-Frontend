@@ -1,22 +1,16 @@
 import { useState, useCallback } from 'react';
 import { promisify as _promisify } from 'es6-promisify';
+
+import type {
+  CallbackFns,
+  OnError,
+  OnSucess,
+  Options,
+  StartValue,
+} from '@type/util.promise';
 import fn, { copy, getSize, nextIndex } from './fn';
 
-export type OnError = (error: Error) => void;
-
-export type OnSucess<T> = (received: T) => void;
-
-export interface Option<T> {
-  onError: OnError;
-  onSucess: OnSucess<T>;
-}
-
-export type StartValue<SV> = Exclude<SV, () => any> | (() => Promise<SV>);
-
-export type CallbackFns = ((value: any) => any)[];
-
-export type Options<R> = Partial<Option<R>>;
-const createOn = {
+export const createOn = {
   error(onError: OnError | undefined) {
     return (error: Error) => {
       if (onError) {
@@ -52,11 +46,14 @@ export function promisify<T>(
   return target as () => Promise<T>;
 }
 
-function nextPromise<T, R>(promise: Promise<T>, nextFn: (value: T) => R) {
+export function nextPromise<T, R>(
+  promise: Promise<T>,
+  nextFn: (value: T) => R,
+) {
   return promise.then(nextFn);
 }
 
-function createPromiseRecursiveFn<R>(callbackFns: CallbackFns) {
+export function createPromiseRecursiveFn<R>(callbackFns: CallbackFns) {
   const fns = copy(callbackFns);
   const fnsLength = getSize(fns);
 
@@ -122,8 +119,17 @@ export function usePromiseFlow<SV, R>() {
   const [data, setData] = useState<R>();
   const [error, setErrorObject] = useState<Error>();
   const [isError, setError] = useState(false);
-  const [isSuccess, setSucess] = useState(false);
+  const [isSucess, setSucess] = useState(false);
   const [isLoading, setLoading] = useState(false);
+  const fn0 = useCallback((arg0: R) => {
+    setData(arg0);
+    setSucess(true);
+  }, []);
+  const fn1 = useCallback((e: Error) => {
+    setError(true);
+    setErrorObject(e);
+  }, []);
+  const fn2 = useCallback(() => setLoading(false), []);
   const promiseFlowFn = useCallback(
     (
       _startValue: StartValue<SV>,
@@ -132,24 +138,18 @@ export function usePromiseFlow<SV, R>() {
     ) => {
       setLoading(true);
       promiseFlow(_startValue, _callbackFns, _option)
-        .then(arg0 => {
-          setData(arg0);
-          setSucess(true);
-        })
-        .catch(e => {
-          setError(true);
-          setErrorObject(e);
-        })
-        .finally(() => setLoading(false));
+        .then(fn0)
+        .catch(fn1)
+        .finally(fn2);
     },
-    [],
+    [fn0, fn1, fn2],
   );
 
   return {
     data,
     error,
     isError,
-    isSuccess,
+    isSucess,
     isLoading,
     promiseFlow: promiseFlowFn,
   };

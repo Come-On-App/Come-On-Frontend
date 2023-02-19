@@ -8,6 +8,7 @@ import {
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
 
+import { getSize } from '@utils/fn';
 import { Font } from './Font';
 import Button from './buttons/Buttons';
 import type { CodeInputProps } from '../types';
@@ -19,7 +20,7 @@ export default function InviteCode() {
     <View>
       <CodeTitle />
       <CodeInput codeText={codeText} setCodeText={setCodeText} showKeyboard />
-      <CodeButton />
+      <CodeButton codeText={codeText} />
     </View>
   );
 }
@@ -91,14 +92,17 @@ export function CodeInput({
   );
 }
 
-function CodeButton() {
+function CodeButton({ codeText }: { codeText: string }) {
   const styles = useStyles();
   const ENTER_TEXT = '입장하기';
+  const MAX_NUM = 6;
+  const isDisabled = getSize(codeText) !== MAX_NUM;
 
   return (
     <View style={styles.buttonContainer}>
       <Button
         bold
+        disabled={isDisabled}
         text={ENTER_TEXT}
         onPress={() => console.log('click CodeButton')}
         buttonStyle={styles.button}

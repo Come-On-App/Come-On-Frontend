@@ -1,17 +1,23 @@
 import React from 'react';
 import { Avatar, makeStyles } from '@rneui/themed';
 
-import type { BadgedAvatarProps } from '../../types';
+import type { BadgedAvatarProps } from '@type/index';
 
 export default function BadgedAvatar({
   size,
   path,
+  onPress,
   badge: { icon, backgroundColor },
 }: BadgedAvatarProps) {
   const styles = useStyles(backgroundColor);
 
   return (
-    <Avatar size={size} rounded source={{ uri: path }}>
+    <Avatar
+      size={size}
+      rounded
+      source={path ? { uri: path } : undefined}
+      onPress={onPress}
+    >
       <Avatar.Accessory
         style={styles.avatarAccessory}
         size={icon.size}

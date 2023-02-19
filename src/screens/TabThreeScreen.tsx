@@ -2,10 +2,9 @@ import React from 'react';
 import { View } from 'react-native';
 import { makeStyles, Divider } from '@rneui/themed';
 
-import { Font } from '../components/Font';
-import Profile from '../components/myPage/MyPageProfile';
-import NickName from '../components/myPage/MyPageNickName';
-import useImagePath from '../hooks/useImagePicker';
+import { Font } from '@components/Font';
+import Profile from '@components/myPage/MyPageProfile';
+import Nickname from '@components/myPage/MyPageNickName';
 
 export default function TabThreeScreen() {
   const styles = useStyles();
@@ -31,7 +30,7 @@ function ScreenTop() {
   return (
     <View style={styles.myPageTopContainer}>
       <Profile />
-      <NickName />
+      <Nickname />
     </View>
   );
 }

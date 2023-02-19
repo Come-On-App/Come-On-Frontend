@@ -5,12 +5,17 @@
     "baseUrl": ".",
     "paths": {
       "@api/*": ["src/api/*"],
+      "@app/*": ["src/app/*"],
+      "@assets/*": ["src/assets/*"],
+      "@components/*": ["src/components/*"],
+      "@features/*": ["src/features/*"],
       "@hooks/*": ["src/hooks/*"],
+      "@navigation/*": ["src/navigation/*"],
+      "@screens/*": ["src/screens/*"],
       "@utils/*": ["src/utils/*"],
-      "@type/*": ["src/types/*"],
-      "@components/*": ["src/components/*"]
+      "@type/*": ["src/types/*"]
     }
   },
 
-  "typeRoots": ["./types"]
+  "typeRoots": ["./src/types"]
 }

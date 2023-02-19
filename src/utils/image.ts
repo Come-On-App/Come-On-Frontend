@@ -1,6 +1,8 @@
 import fn from '@utils/fn';
 import axios, { AxiosRequestConfig } from 'axios';
-import type { AssetState } from '@hooks/useImagePicker';
+
+import type { FormDataValue } from '@type/api.image';
+import { AssetState } from '@type/hook.imagePicker';
 
 export function getFileName(uri: string) {
   const emptyFileName = 'noname.jpg';
@@ -19,6 +21,7 @@ export function inferTypeImage(fileName: string) {
 
   return imageType;
 }
+
 // 수동으로 blob 변환이 필요할떄 true로 할당한다.
 const MANUAL_CONVERSION = true;
 const config = {

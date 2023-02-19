@@ -12,7 +12,7 @@ export function CardTitle({ titleText }: CardTtileProps) {
   return <BoldFont style={styles.titleFont}>{titleText}</BoldFont>;
 }
 
-export function CardSubTitle({ userText, dateText }: CardSubTitleProps) {
+export function CardSubTitle({ userText, dateRange }: CardSubTitleProps) {
   const styles = useStyles();
 
   return (
@@ -34,7 +34,9 @@ export function CardSubTitle({ userText, dateText }: CardSubTitleProps) {
         size={styles.icon.size}
         color={styles.icon.color}
       />
-      <Font style={styles.subTitleDateFont}>{dateText}</Font>
+      <Font style={styles.subTitleDateFont}>
+        {dateRange.calendarStartFrom} ~ {dateRange.calendarEndTo}
+      </Font>
     </View>
   );
 }

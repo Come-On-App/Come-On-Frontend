@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@rneui/themed';
 import { TextInput, View } from 'react-native';
 
-import { Font } from '../Font';
+import { BoldFont, Font } from '../Font';
 import type {
   InputProps,
   InputBoxProps,
@@ -11,7 +11,7 @@ import type {
   InputBoxTopTextLengthProps,
 } from '../../types';
 
-export default function InputBox({ config, style }: InputBoxProps) {
+export default function InputBox({ config }: InputBoxProps) {
   const { label, placeholder, maxLength, onChangeText, value, multiline } =
     config;
 
@@ -24,7 +24,6 @@ export default function InputBox({ config, style }: InputBoxProps) {
         multiline={multiline}
         placeholder={placeholder}
         onChangeText={onChangeText}
-        style={style}
       />
     </View>
   );
@@ -36,16 +35,13 @@ function InputBoxTop({ label, text, maxLength }: InputTopProps) {
   return (
     <View style={styles.inputTextContainer}>
       <InputBoxTopTitle label={label} />
-      {maxLength !== 0 && (
-        <InputBoxTopTextLength text={text} maxLength={maxLength} />
-      )}
+      <InputBoxTopTextLength text={text} maxLength={maxLength} />
     </View>
   );
 }
 
 function InputBoxMain(props: InputProps) {
-  const { value, maxLength, multiline, placeholder, onChangeText, style } =
-    props;
+  const { value, maxLength, multiline, placeholder, onChangeText } = props;
   const styles = useStyles();
 
   return (
@@ -56,34 +52,38 @@ function InputBoxMain(props: InputProps) {
         multiline={multiline}
         placeholder={placeholder}
         onChangeText={onChangeText}
-        style={style}
       />
     </View>
   );
 }
 
-function InputBoxTopTitle({ label }: InputBoxTopTitleProps) {
+export function InputBoxTopTitle({
+  label,
+  style,
+  bold,
+}: InputBoxTopTitleProps) {
   const styles = useStyles();
+  const TitleText = bold ? BoldFont : Font;
 
-  return <Font style={styles.title}>{label}</Font>;
+  return <TitleText style={[styles.title, style]}>{label}</TitleText>;
 }
 
-function InputBoxTopTextLength({
+export function InputBoxTopTextLength({
   text,
   maxLength,
+  style,
 }: InputBoxTopTextLengthProps) {
   const styles = useStyles();
 
   return (
-    <Font style={styles.inputLengthText}>
+    <Font style={[styles.inputLengthText, style]}>
       {text.length}/{maxLength}
     </Font>
   );
 }
 
 function Input(props: InputProps) {
-  const { value, maxLength, onChangeText, placeholder, multiline, style } =
-    props;
+  const { value, maxLength, onChangeText, placeholder, multiline } = props;
   const styles = useStyles();
 
   return (
@@ -93,7 +93,7 @@ function Input(props: InputProps) {
       multiline={multiline}
       placeholder={placeholder}
       onChangeText={onChangeText}
-      style={[styles.meetingNoteInput, multiline && styles.multiline, style]}
+      style={[styles.meetingNoteInput, multiline && styles.multiline]}
       placeholderTextColor={styles.meetingNoteInput.placeholder}
     />
   );

@@ -15,7 +15,7 @@ export function nextIndex(currentIndex: number) {
   return _.add(currentIndex, ONE);
 }
 
-export function enableCache<K, V>() {
+export function generateCache<K, V>() {
   const map = new Map<K, V>();
   const hasCache = (key: K) => map.has(key);
   const getCache = (Key: K) => map.get(Key);

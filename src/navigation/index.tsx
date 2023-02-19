@@ -11,6 +11,7 @@ import type {
   RootStackParamList,
   RootTabParamList,
 } from '@type/navigation';
+import { useUser } from '@hooks/useUser';
 import theme from '../constants/themed';
 
 import apis from '../api';
@@ -34,10 +35,10 @@ import PlaceSelect from '../screens/place/PlaceSelect';
 import PlaceSearch from '../screens/place/PlaceSearch';
 
 function TabThreeIcon() {
-  const testImage = 'https://randomuser.me/api/portraits/men/36.jpg'; // SERVER-API: 추후 서버로 사용자 프로필 요청
+  const { user } = useUser();
   const size = 32;
 
-  return <Avatar size={size} path={testImage} />;
+  return <Avatar size={size} path={user?.profileImageUrl} />;
 }
 
 export default function Navigation() {
@@ -88,6 +89,11 @@ function RootNavigator() {
             options={{ headerShown: false }}
           />
           <Stack.Screen
+            name="PlaceSelect"
+            component={PlaceSelectNavigator}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
             name="CreateMeeting"
             component={CreateMeeting}
             options={({ navigation, route }) => ({
@@ -105,18 +111,6 @@ function RootNavigator() {
               title: '모임등록',
               headerTitleAlign: 'center',
               headerTitleStyle: styles.headerStyle,
-              headerRight: CancelIconButton,
-              headerBackVisible: false,
-            })}
-          />
-          <Stack.Screen
-            name="PlaceSelect"
-            component={PlaceSelect}
-            options={({ navigation, route }) => ({
-              title: route.name,
-              headerTitleAlign: 'center',
-              headerTitle: PlaceSelectHeaderTitle,
-              headerShadowVisible: false,
               headerRight: CancelIconButton,
               headerBackVisible: false,
             })}

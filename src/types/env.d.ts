@@ -3,7 +3,6 @@ declare module '@env' {
   export const GOOGLE_PLACES_API_KEY: string;
   export const GOOGLE_PLACES_API: string;
   export const COMEON_API: string;
-  export const DEBUGGER_MODE: string;
 
   export const REACT_APP_REST_API_KEY: string;
   export const REACT_APP_REDIRECT_URI: string;
