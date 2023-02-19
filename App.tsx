@@ -13,6 +13,7 @@ import Navigation from './src/navigation';
 import { queryClient } from './src/api/queryClient';
 import useCachedResources from './src/hooks/useCachedResources';
 import theme from './src/constants/themed';
+import DevMode from './src/experimental/DevMode';
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -29,6 +30,7 @@ export default function App() {
           <ThemeProvider theme={theme}>
             <SafeAreaProvider>
               <Navigation />
+              <DevMode />
             </SafeAreaProvider>
           </ThemeProvider>
         </Provider>

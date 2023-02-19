@@ -9,7 +9,6 @@ import Nickname from '@components/myPage/MyPageNickName';
 export default function TabThreeScreen() {
   const styles = useStyles();
   const { divider } = styles;
-  const [path, pickImage] = useImagePath();
 
   return (
     <View style={styles.screenContainer}>

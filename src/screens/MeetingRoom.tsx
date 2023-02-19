@@ -15,7 +15,8 @@ import { IconProps, MeetingResponse, OverayCalendarProps } from '@type/index';
 import { RootStackScreenProps } from '@type/navigation';
 import TimePicker from '@components/meeting/Timepicker';
 import GenerateLog from '@utils/GenerateLog';
-import { api } from '../api';
+
+import { serverAxios } from '@api/axiosInstance';
 import Label from '../components/input/Label';
 import PlaceCard from '../components/places/PlaceCard';
 import MemberBox from '../components/member/MemberBox';
@@ -170,7 +171,7 @@ function MeetingRoom({ navigation }: RootStackScreenProps<'MeetingRoom'>) {
   const log2 = GenerateLog('log', { time: true, hidden: false });
   const [metaData, setMeetingMetaData] = useState({});
   const getMeetingData = async () => {
-    const res = await api.get<MeetingResponse>(URL);
+    const res = await serverAxios.get<MeetingResponse>(URL);
     const { data } = res;
   };
 
