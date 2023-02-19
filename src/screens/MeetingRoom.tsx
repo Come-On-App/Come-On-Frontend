@@ -1,12 +1,8 @@
-/* eslint-disable max-params */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable react/jsx-props-no-spreading */
 import React, { useState, useEffect } from 'react';
 import {
   View,
   Pressable,
   ScrollView,
-  Text,
   TouchableWithoutFeedback,
 } from 'react-native';
 import { makeStyles, Overlay } from '@rneui/themed';
@@ -17,8 +13,9 @@ import IconInputBox from '@components/input/IconInputBox';
 
 import { IconProps, MeetingResponse, OverayCalendarProps } from '@type/index';
 import { RootStackScreenProps } from '@type/navigation';
-import { ReactChildren } from 'react-native-toast-message';
-import TimePicker from '@components/meeting/timepicker';
+import TimePicker from '@components/meeting/Timepicker';
+import GenerateLog from '@utils/GenerateLog';
+import { api } from '../api';
 import Label from '../components/input/Label';
 import PlaceCard from '../components/places/PlaceCard';
 import MemberBox from '../components/member/MemberBox';
@@ -169,7 +166,15 @@ function MeetingRoom({ navigation }: RootStackScreenProps<'MeetingRoom'>) {
       },
     ],
   };
+  const URL = `/api/v1/meetings/${10}`;
+  const log2 = GenerateLog('log', { time: true, hidden: false });
+  const [metaData, setMeetingMetaData] = useState({});
+  const getMeetingData = async () => {
+    const res = await api.get<MeetingResponse>(URL);
+    const { data } = res;
+  };
 
+  getMeetingData();
   useEffect(() => {
     navigation.setOptions({
       title: dummyMeetingData.title,
