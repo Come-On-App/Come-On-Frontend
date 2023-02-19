@@ -100,15 +100,20 @@ export function Map() {
       showsMyLocationButton
       provider={PROVIDER_GOOGLE}
     >
-      {marker && <Marker coordinate={marker} pinColor="#337FFE" />}
+      {marker && (
+        <Marker coordinate={marker} pinColor={styles.pinColor.color} />
+      )}
     </MapView>
   );
 }
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
   map: {
     width: '100%',
     height: '100%',
+  },
+  pinColor: {
+    color: theme.colors.primary,
   },
 }));
 

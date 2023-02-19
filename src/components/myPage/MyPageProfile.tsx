@@ -87,13 +87,12 @@ function ProfileImage({ image, nickname }: ProfileImageProps) {
 
 function ProfileSkeleton() {
   const styles = useStyles();
-  const skeletonMargin = { marginBottom: 2 };
 
   return (
     <View style={styles.container}>
       <Skeleton circle width={56} height={56} />
       <View style={styles.profileNameContainer}>
-        <Skeleton width={49} height={24} style={skeletonMargin} />
+        <Skeleton width={49} height={24} style={styles.skeleton} />
         <Skeleton width={115} height={20} />
       </View>
     </View>
@@ -127,5 +126,8 @@ const useStyles = makeStyles(theme => ({
     color: theme.grayscale['500'],
     fontSize: 14,
     lineHeight: 20,
+  },
+  skeleton: {
+    marginBottom: 2,
   },
 }));
