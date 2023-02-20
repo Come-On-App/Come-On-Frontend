@@ -19,6 +19,10 @@ export function mutateStateRefToast(refState: RefState, text: string) {
 
   // eslint-disable-next-line no-param-reassign
   refState.current = true;
+  sucessAlert(text);
+}
+
+export function sucessAlert(text: string) {
   toast.show({
     type: ToastAlert.success,
     text1: text,
