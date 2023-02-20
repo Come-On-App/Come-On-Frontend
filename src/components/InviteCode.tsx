@@ -22,7 +22,7 @@ import Button from './buttons/Buttons';
 
 export default function InviteCode() {
   const navigation = useNavigation<BottomTabScreenNavigation>();
-  const sucessFn = () => {
+  const successFn = () => {
     invalidateQueries([QueryKeys.meeting]);
     sucessAlert('가입 성공');
     navigation.navigate('TabOne');
@@ -41,7 +41,7 @@ export default function InviteCode() {
   const [codeText, setCodeText] = useState('');
   const onPressHandler = async () => {
     promiseFlow({ entryCode: codeText }, [requestMeetingJoin], {
-      onSuccess: sucessFn,
+      onSuccess: successFn,
       onError: errorFn,
     });
   };

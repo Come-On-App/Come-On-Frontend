@@ -5,10 +5,12 @@ import useMeeting from '@hooks/useMeeting';
 import { usePromiseFlow } from '@utils/promise';
 import { RootStackScreenProps } from '@type/navigation';
 import { InputTextProps } from '@type/index';
+import { requestUploadImage } from '@api/image/upload';
+import { convertImageFormData, createImageFormData } from '@utils/image';
+import { AssetState } from '@type/hook.imagePicker';
 import apis from '../api';
 import { setMeetingName } from '../features/meetingSlice';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import imageUpload, { AssetState } from '../utils/imageUpload';
 
 import CancelButton from '../components/buttons/CancelButton';
 import ConfirmButton from '../components/buttons/ConfirmButton';
@@ -84,7 +86,13 @@ function CreateMeeting(
           onPressHandler={() => {
             if (!imgPath) return;
 
-            promiseFlow(imgPath, [imageUpload, then2, apis.createMeeting]);
+            promiseFlow(imgPath, [
+              convertImageFormData,
+              createImageFormData,
+              requestUploadImage,
+              then2,
+              apis.createMeeting,
+            ]);
           }}
         />
       </View>
