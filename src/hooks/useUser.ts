@@ -1,9 +1,7 @@
-import { useMutation, useQuery } from 'react-query';
+import { useQuery } from 'react-query';
 
-import fn from '@utils/fn';
-import { QueryKeys, useQueryCache } from '@api/queryClient';
-import { requestGetMyInfo, requestUpdateMyInfo } from '@api/user/user';
-import type { GetMyInfoResponse } from '@type/api.user';
+import { QueryKeys } from '@api/queryClient';
+import { requestGetMyInfo } from '@api/user/user';
 
 const useUser = () => {
   const { data: user, refetch } = useQuery(QueryKeys.user, ({ signal }) =>
