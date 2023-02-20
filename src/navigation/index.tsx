@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -12,7 +11,7 @@ import type {
   RootTabParamList,
 } from '@type/navigation';
 import { useUser } from '@hooks/useUser';
-import theme from '../constants/themed';
+import { makeStyles } from '@rneui/themed';
 
 import apis from '../api';
 import useAuth from '../hooks/useAuth';
@@ -73,6 +72,7 @@ function PlaceSelectNavigator() {
 
 function RootNavigator() {
   const { isAuth: isLogin, setLogoin } = useAuth();
+  const styles = useStyles();
 
   useEffect(() => {
     setLogoin(); // 토큰이 있는지 없는지 검사
@@ -207,11 +207,11 @@ function BottomTabNavigator() {
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles(theme => ({
   headerStyle: {
     fontFamily: 'pretendard',
     fontWeight: 'bold',
     fontSize: theme.textStyles?.title3?.fontSize,
     lineHeight: theme.textStyles?.title3?.lineHeight,
   },
-});
+}));

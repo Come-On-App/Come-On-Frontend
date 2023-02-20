@@ -1,8 +1,7 @@
 /* eslint-disable padding-line-between-statements */
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { SpeedDial } from '@rneui/themed';
-import { ScrollView, View } from 'react-native';
-
+import { View, ScrollView } from 'react-native';
 import useAuth from '@hooks/useAuth';
 import { api } from './api';
 import Modal from './components/Modal';
@@ -48,7 +47,7 @@ function UserDevScreen({
 
   return (
     <DevScreen isVisible={isVisible}>
-      <View style={{ minHeight: 1000 }}>
+      <view style={{ minHeight: 1000 }}>
         <View
           style={{
             marginVertical: 10,
@@ -91,7 +90,7 @@ function UserDevScreen({
         </View>
 
         <Button text="닫기" onPress={closeModal} />
-      </View>
+      </view>
       <View style={{ alignItems: 'center' }}>
         <BoldFont>:carrot:</BoldFont>
       </View>

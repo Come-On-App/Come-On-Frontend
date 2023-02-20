@@ -1,10 +1,11 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { makeStyles } from '@rneui/themed';
 
 function CancelIconButton() {
   const navigation = useNavigation();
+  const styles = useStyles();
 
   return (
     <MaterialIcons
@@ -17,10 +18,10 @@ function CancelIconButton() {
 
 export default CancelIconButton;
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles(theme => ({
   cancelIcon: {
     color: 'black',
     fontSize: 24,
     justifyContent: 'center',
   },
-});
+}));

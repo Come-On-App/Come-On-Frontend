@@ -6,6 +6,8 @@ import {
   returnToken,
   SocialLoginProps,
 } from '@type/index';
+import axios, { AxiosRequestConfig } from 'axios';
+import { SERVER_ADDRESS } from '@env';
 import { copy } from './utils/fn';
 import { getValueFor, save } from './utils/secureStore';
 

@@ -14,11 +14,11 @@ import type { AssetState, PickImage } from '@type/hook.imagePicker';
 
 function getAssetState(assets: ImagePickerAsset): AssetState {
   const imageURI = assets.uri;
-  const fileNmae = getFileName(imageURI);
-  const imageType = inferTypeImage(fileNmae);
+  const fileName = getFileName(imageURI);
+  const imageType = inferTypeImage(fileName);
 
   return {
-    name: fileNmae,
+    name: fileName,
     type: imageType,
     uri: imageURI,
     base64: assets.base64,

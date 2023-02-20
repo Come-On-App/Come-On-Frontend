@@ -5,6 +5,7 @@ import { makeStyles, Divider } from '@rneui/themed';
 import { Font } from '@components/Font';
 import Profile from '@components/myPage/MyPageProfile';
 import Nickname from '@components/myPage/MyPageNickName';
+import useImagePath from '@hooks/useImagePicker';
 
 export default function TabThreeScreen() {
   const styles = useStyles();

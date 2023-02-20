@@ -14,7 +14,7 @@ import {
   ItemProps,
   TimePickerListProps,
   TimePickerProps,
-} from '@type/meeting.Timepicker';
+} from '@type/meeting.timepicker';
 
 function renderItem(
   array: number[],

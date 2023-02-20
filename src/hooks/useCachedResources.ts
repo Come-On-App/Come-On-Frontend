@@ -23,6 +23,7 @@ export default function useCachedResources() {
         });
       } catch (e) {
         // We might want to provide this error information to an error reporting service
+        console.log('asds');
         console.warn(e);
       } finally {
         setLoadingComplete(true);
