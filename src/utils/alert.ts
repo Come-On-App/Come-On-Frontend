@@ -3,6 +3,11 @@ import Toast from 'react-native-toast-message';
 
 import type { NativeAlert, RefState } from '@type/util.alert';
 
+enum ToastAlert {
+  success = 'success',
+  error = 'error',
+}
+
 export const toast = Toast;
 
 export function nativeAlert(text: NativeAlert) {
@@ -15,7 +20,14 @@ export function mutateStateRefToast(refState: RefState, text: string) {
   // eslint-disable-next-line no-param-reassign
   refState.current = true;
   toast.show({
-    type: 'success',
+    type: ToastAlert.success,
+    text1: text,
+  });
+}
+
+export function errorAlert(text: string) {
+  toast.show({
+    type: ToastAlert.error,
     text1: text,
   });
 }
