@@ -2,11 +2,15 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Keyboard, View } from 'react-native';
 import { Input, makeStyles } from '@rneui/themed';
 
-import { useUser, useMutateUser } from '@hooks/useUser';
-import type { NickNameIconButtonProps } from '@type/mypage.nickname';
+import useUser from '@hooks/useUser';
+import useMutateUser from '@hooks/useMutateUser';
 import { mutateStateRefToast } from '@utils/alert';
-import { IconButton } from '../buttons/Buttons';
-import { InputBoxTopTextLength, InputBoxTopTitle } from '../input/InputText';
+import type { NickNameIconButtonProps } from '@type/mypage.nickname';
+import {
+  InputBoxTopTextLength,
+  InputBoxTopTitle,
+} from '@components/input/InputText';
+import { IconButton } from '@components/buttons/Buttons';
 
 export default function Nickname() {
   const [NICK_NAME_LABLE, NICK_NAME_LENGHT] = ['닉네임', 20];
@@ -20,6 +24,7 @@ export default function Nickname() {
       nickname: nickName,
       profileImageUrl: user?.profileImageUrl,
     });
+
     Keyboard.dismiss();
     isNicknameSubmit.current = false;
   };
