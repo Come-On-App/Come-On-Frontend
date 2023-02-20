@@ -336,3 +336,11 @@ export interface GetConfirmMeetingDateResponse {
   meetingId: number;
   fixedDate?: FixedDate | null;
 }
+
+// DELETE /api/v1/meetings/{meeting-id}/members/me (payload)
+export type DeleteMeetingPayload = number;
+
+// DELETE /api/v1/meetings/{meeting-id}/members/me (response)
+export interface DeleteMeetingResponse {
+  success: boolean;
+}
