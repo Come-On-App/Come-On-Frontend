@@ -14,9 +14,9 @@ import IconInputBox from '@components/input/IconInputBox';
 import { IconProps, MeetingResponse, OverayCalendarProps } from '@type/index';
 import { RootStackScreenProps } from '@type/navigation';
 import TimePicker from '@components/meeting/Timepicker';
-import GenerateLog from '@utils/GenerateLog';
 
 import { serverAxios } from '@api/axiosInstance';
+import GenerateLog from '@utils/log';
 import Label from '../components/input/Label';
 import PlaceCard from '../components/places/PlaceCard';
 import MemberBox from '../components/member/MemberBox';
