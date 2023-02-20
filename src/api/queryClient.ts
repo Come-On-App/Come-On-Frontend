@@ -19,6 +19,10 @@ export const cancelQueries = (queryKey: QueryKeys) => {
   queryClient.cancelQueries(queryKey);
 };
 
+export const invalidateQueries = (queryKey: QueryKeys[]) => {
+  queryClient.invalidateQueries(queryKey);
+};
+
 export const useQueryCache = <Payalod>(queryKey: QueryKeys) => {
   const updateQueryCache = (payload: Partial<Payalod>) => {
     updateCache(queryKey, payload);
