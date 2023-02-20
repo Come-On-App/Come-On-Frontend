@@ -41,7 +41,7 @@ export default function InviteCode() {
   const [codeText, setCodeText] = useState('');
   const onPressHandler = async () => {
     promiseFlow({ entryCode: codeText }, [requestMeetingJoin], {
-      onSucess: sucessFn,
+      onSuccess: sucessFn,
       onError: errorFn,
     });
   };

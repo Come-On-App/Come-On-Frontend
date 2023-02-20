@@ -63,7 +63,7 @@ function ProfileImage({ image, nickname }: ProfileImageProps) {
 
     setImagePath(assetState.uri);
     promiseFlow(assetState, [requestImageUpload, mutateFn], {
-      onSucess: () => {
+      onSuccess: () => {
         mutateStateRefToast(isImageSubmit, '이미지 업데이트 완료 ✏️');
       },
     });
