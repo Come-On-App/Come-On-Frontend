@@ -2,7 +2,7 @@
 
 import { Option, Type } from '@type/util.log';
 
-function GenerateLog(type: Type, option: Option) {
+function generateLog(type: Type, option: Option) {
   const print = console[type];
   const style = {
     background: '#222',
@@ -26,4 +26,4 @@ function GenerateLog(type: Type, option: Option) {
   };
 }
 
-export default GenerateLog;
+export default generateLog;

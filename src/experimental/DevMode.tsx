@@ -18,7 +18,7 @@ import {
   PostMeetingResponse,
 } from '@type/api.meeting';
 import { serverAxios } from '@api/axiosInstance';
-import GenerateLog from '@utils/log';
+import generateLog from '@utils/log';
 import { toast } from '@utils/alert';
 import useMeetings from '@hooks/useMeetings';
 import { setTokens } from '../api';
@@ -26,7 +26,7 @@ import Modal from '../components/Modal';
 import Button from '../components/buttons/Buttons';
 import { BoldFont } from '../components/Font';
 
-const log = GenerateLog('log', {
+const log = generateLog('log', {
   time: true,
   hidden: false,
   style: {

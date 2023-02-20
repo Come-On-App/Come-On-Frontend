@@ -13,7 +13,7 @@
  * interface PostMeetingResponse <- 응답 형식
  */
 
-import type { Error, ListResponse, SliceResponse } from './api';
+import type { ErrorResponse, ListResponse, SliceResponse } from './api';
 
 export type ErrorMeetingCode =
   | 3000
@@ -29,7 +29,7 @@ export type ErrorMeetingCode =
   | 3203
   | 3204;
 
-export type ErrorMeetingResponse = Error<ErrorMeetingCode>;
+export type ErrorMeetingResponse = ErrorResponse<ErrorMeetingCode>;
 
 export type Category =
   | 'ACCOMMODATION'

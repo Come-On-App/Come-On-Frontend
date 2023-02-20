@@ -16,7 +16,7 @@ import { RootStackScreenProps } from '@type/navigation';
 import TimePicker from '@components/meeting/Timepicker';
 
 import { serverAxios } from '@api/axiosInstance';
-import GenerateLog from '@utils/log';
+import generateLog from '@utils/log';
 import Label from '../components/input/Label';
 import PlaceCard from '../components/places/PlaceCard';
 import MemberBox from '../components/member/MemberBox';
@@ -168,7 +168,7 @@ function MeetingRoom({ navigation }: RootStackScreenProps<'MeetingRoom'>) {
     ],
   };
   const URL = `/api/v1/meetings/${10}`;
-  const log2 = GenerateLog('log', { time: true, hidden: false });
+  const log2 = generateLog('log', { time: true, hidden: false });
   const [metaData, setMeetingMetaData] = useState({});
   const getMeetingData = async () => {
     const res = await serverAxios.get<MeetingResponse>(URL);

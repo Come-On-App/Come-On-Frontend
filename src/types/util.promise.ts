@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export type OnError = (error: Error) => void;
+export type OnError = (error: any) => void;
 
 export type OnSucess<T> = (received: T) => void;
 
