@@ -25,15 +25,25 @@ export type PlaceSelectParamList = {
   Map: undefined;
 };
 
-export type PlaceSelectScreen = NativeStackScreenProps<PlaceSelectParamList>;
+export type PlaceSelectScreenProps =
+  NativeStackScreenProps<PlaceSelectParamList>;
 
-export type PlaceSelectNavigation = PlaceSelectScreen['navigation'];
+export type PlaceSelectScreenParams =
+  NavigatorScreenParams<PlaceSelectParamList>;
+
+export type PlaceSelectNavigation = PlaceSelectScreenProps['navigation'];
+
+export type RootScreenParams = NavigatorScreenParams<RootTabParamList>;
+
+export type BottomTabScreenNavigation =
+  BottomTabScreenProps<RootTabParamList>['navigation'];
 
 export type RootStackParamList = {
-  Root: NavigatorScreenParams<RootTabParamList>;
+  Root: RootScreenParams;
   MeetingRoom: undefined;
   CreateMeeting: undefined;
-  PlaceSelect: NavigatorScreenParams<PlaceSelectParamList>;
+  PlaceSelect: PlaceSelectScreenParams;
+  MeetingDetail: undefined;
   CreateMeetingCalender: undefined;
   LoginScreen: undefined;
 };
