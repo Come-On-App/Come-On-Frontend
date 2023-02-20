@@ -13,11 +13,11 @@
  * interface PostMeetingResponse <- 응답 형식
  */
 
-import type { ErrorResponse } from './api';
+import type { Error } from './api';
 
 export type ErrorUserCode = 2500 | 2501 | 2600 | 2601 | 2602;
 
-export type ErrorMeetingResponse = ErrorResponse<ErrorUserCode>;
+export type ErrorMeetingResponse = Error<ErrorUserCode>;
 
 export type Role = 'ADMIN' | 'USER';
 

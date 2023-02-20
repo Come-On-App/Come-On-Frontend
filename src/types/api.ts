@@ -33,8 +33,15 @@ type ErrorField = {
   rejectedValue: unknown;
 };
 
-export interface ErrorResponse<T> {
+export interface Error<T> {
   errorCode: ErrorCode | T;
   errorDescription: string;
   errors: null | ErrorField;
+}
+
+export interface ErrorResponse<T> {
+  response: {
+    data: Error<T>;
+    status: number;
+  };
 }
