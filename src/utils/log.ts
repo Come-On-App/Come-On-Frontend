@@ -19,10 +19,10 @@ function generateLog(type: Type, option: Option) {
     if (option?.time) {
       const time = new Date().toLocaleString();
 
-      return print(`%c [${time}] ${title}`, styles, value);
+      return print(`%c[${time}] ${title}`, styles, value);
     }
 
-    return print(`%c ${title}`, styles, value);
+    return print(`%c${title}`, styles, value);
   };
 }
 
