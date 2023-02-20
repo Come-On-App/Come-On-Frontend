@@ -9,18 +9,48 @@ import {
 } from 'react-native-confirmation-code-field';
 
 import { getSize } from '@utils/fn';
+import { requestMeetingJoin } from '@api/meeting/meetings';
+import { promiseFlow } from '@utils/promise';
+import { ErrorMeetingResponse } from '@type/api.meeting';
+import { errorAlert, sucessAlert } from '@utils/alert';
+import { useNavigation } from '@react-navigation/native';
+import type { BottomTabScreenNavigation } from '@type/navigation';
+import type { CodeInputProps } from '@type/index';
+import { invalidateQueries, QueryKeys } from '@api/queryClient';
 import { Font } from './Font';
 import Button from './buttons/Buttons';
-import type { CodeInputProps } from '../types';
 
 export default function InviteCode() {
+  const navigation = useNavigation<BottomTabScreenNavigation>();
+  const sucessFn = () => {
+    invalidateQueries([QueryKeys.meeting]);
+    sucessAlert('가입 성공');
+    navigation.navigate('TabOne');
+  };
+  const errorFn = (error: ErrorMeetingResponse) => {
+    if (error.response.data.errorCode === 3000) {
+      return errorAlert('이미 해당 모임에 가입하셨습니다.');
+    }
+
+    if (error.response.data.errorCode === 3001) {
+      return errorAlert('입력한 입장코드와 일치하는 모임이 없습니다.');
+    }
+
+    throw error;
+  };
   const [codeText, setCodeText] = useState('');
+  const onPressHandler = async () => {
+    promiseFlow({ entryCode: codeText }, [requestMeetingJoin], {
+      onSucess: sucessFn,
+      onError: errorFn,
+    });
+  };
 
   return (
     <View>
       <CodeTitle />
       <CodeInput codeText={codeText} setCodeText={setCodeText} showKeyboard />
-      <CodeButton codeText={codeText} />
+      <CodeButton codeText={codeText} onPress={onPressHandler} />
     </View>
   );
 }
@@ -53,7 +83,7 @@ export function CodeInput({
     const isEnglish = /^[a-zA-Z0-9]+$/.test(text);
 
     // 마지막 텍스트 제거
-    if (text.length === 0) {
+    if (getSize(text) === 0) {
       setCodeText('');
     }
 
@@ -92,7 +122,13 @@ export function CodeInput({
   );
 }
 
-function CodeButton({ codeText }: { codeText: string }) {
+function CodeButton({
+  codeText,
+  onPress,
+}: {
+  codeText: string;
+  onPress: () => void;
+}) {
   const styles = useStyles();
   const ENTER_TEXT = '입장하기';
   const MAX_NUM = 6;
@@ -104,7 +140,7 @@ function CodeButton({ codeText }: { codeText: string }) {
         bold
         disabled={isDisabled}
         text={ENTER_TEXT}
-        onPress={() => console.log('click CodeButton')}
+        onPress={onPress}
         buttonStyle={styles.button}
       />
     </View>
