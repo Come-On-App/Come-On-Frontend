@@ -70,7 +70,7 @@ interface MeetingMetaData {
   fixedDate?: FixedDate | null;
 }
 
-interface Members {
+export interface Members {
   memberId: number;
   userId: number;
   nickname: string;
@@ -84,7 +84,7 @@ interface VotingDates {
   myVoting: boolean;
 }
 
-interface Places {
+export interface Places {
   meetingPlaceId: number;
   placeName: string;
   memo?: string | null;
@@ -142,7 +142,7 @@ export interface GetMeetingDetailResponse {
   meetingMetaData: MeetingMetaData;
   members: Members[];
   votingDates: VotingDates[];
-  places?: Places | null;
+  places?: Places[] | null;
 }
 
 // POST /api/v1/meetings/join (payalod)

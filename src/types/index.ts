@@ -7,7 +7,7 @@ import type {
   GooglePlaceDetail,
 } from 'react-native-google-places-autocomplete';
 import type { MapLocation } from '@type/api.map';
-import type { GetMeetingResponse } from '@type/api.meeting';
+import type { GetMeetingResponse, Members } from '@type/api.meeting';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from './navigation';
 
@@ -185,16 +185,9 @@ export type MeetingResponse = {
   title: string;
   startDate: string;
   endDate: string;
-  meetingUsers: MeetingUser[];
+  meetingUsers: Members[];
   meetingDates: MeetingDate[];
   meetingPlaces: MeetingPlace[];
-};
-
-export type MeetingUser = {
-  id: number;
-  nickname: string;
-  imageLink: string;
-  meetingRole: 'HOST' | 'EDITOR' | 'PARTICIPANT';
 };
 
 export type MeetingDate = {
@@ -227,9 +220,8 @@ export type PlaceCardBodyProps = {
 
 /// memberBox
 export type MemberBoxProps = {
-  myId: number;
-  myRole: 'HOST' | 'EDITOR' | 'PARTICIPANT';
-  meetingUsers: MeetingUser[];
+  hostId: number | undefined;
+  meetingUsers: Members[];
 };
 
 export interface MemberBoxTitleProps {
@@ -241,8 +233,8 @@ export interface MemberBoxSubTitleProps {
 }
 
 export interface UserRowProps {
-  user: MeetingUser[];
-  renderAvatar: (users: MeetingUser[]) => JSX.Element[];
+  user: Members[];
+  renderAvatar: (users: Members[]) => JSX.Element[];
 }
 
 // calendar

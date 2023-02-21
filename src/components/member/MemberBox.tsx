@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { View, ScrollView, Pressable } from 'react-native';
 import { makeStyles } from '@rneui/themed';
 
+import { Members } from '@type/api.meeting';
 import {
-  MeetingUser,
   MemberBoxProps,
   MemberBoxSubTitleProps,
   MemberBoxTitleProps,
@@ -13,13 +13,13 @@ import Label from '../input/Label';
 import Avatar from './Avatar';
 import Font from '../Font';
 
-function MemberBox({ myId, myRole, meetingUsers }: MemberBoxProps) {
+function MemberBox({ hostId, meetingUsers }: MemberBoxProps) {
   const filterStaff = () => {
     const meetingStaff = meetingUsers.filter(
-      item => item.meetingRole === 'HOST' || item.meetingRole === 'EDITOR',
+      item => item.memberRole === 'HOST',
     );
     const meetingMembers = meetingUsers.filter(
-      item => item.meetingRole === 'PARTICIPANT',
+      item => item.memberRole === 'PARTICIPANT',
     );
 
     return [meetingStaff, meetingMembers];
@@ -30,14 +30,15 @@ function MemberBox({ myId, myRole, meetingUsers }: MemberBoxProps) {
   const onClickManage = () => {
     setVisible(!visible);
   };
-  const renderAvatar = (users: MeetingUser[]) => {
+  // TODO: 회의 후 수정하기, hostId => 접속해있는 유저가 뜨기로
+  const renderAvatar = (users: Members[]) => {
     return users.map((item, index) => (
       <Avatar
-        key={item.id}
+        key={item.memberId}
         size={40}
-        path={item.imageLink}
+        path={item.profileImageUrl}
         containerStyle={[
-          item.id === myId ? styles.logOnAvatar : styles.logOffAvatar,
+          item.memberId === hostId ? styles.logOnAvatar : styles.logOffAvatar,
           index === members.length - 1 ? styles.lastAvatar : styles.avatar,
         ]}
       />
@@ -48,9 +49,10 @@ function MemberBox({ myId, myRole, meetingUsers }: MemberBoxProps) {
     <View>
       <View style={styles.meetingMembersubTitle}>
         <MemberBoxTitle userCount={meetingUsers.length} />
-        {myRole === 'HOST' && (
-          <MemberBoxSubTitle onClickManage={onClickManage} />
-        )}
+        {
+          // TODO: 회의 후 수정하기, 접속해있는 유저가 뜨기로
+          hostId === 11 && <MemberBoxSubTitle onClickManage={onClickManage} />
+        }
       </View>
       <View style={styles.memberBox}>
         <UserRow user={staff} renderAvatar={renderAvatar} />
@@ -79,7 +81,7 @@ function MemberBoxTitle({ userCount }: MemberBoxTitleProps) {
 
 function UserRow({ user, renderAvatar }: UserRowProps) {
   const styles = useStyles();
-  const isParticipant = user[0].meetingRole === 'PARTICIPANT';
+  const isParticipant = user[0].memberRole === 'PARTICIPANT';
 
   return (
     <ScrollView style={styles.scrollContainer} horizontal>
@@ -105,7 +107,7 @@ function MemberBoxSubTitle({ onClickManage }: MemberBoxSubTitleProps) {
 
 export default MemberBox;
 
-const useStyles = makeStyles((theme, members: MeetingUser[]) => ({
+const useStyles = makeStyles((theme, members: Members[]) => ({
   meetingMemberLabelStyle: {
     flexDirection: 'row',
   },

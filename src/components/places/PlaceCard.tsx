@@ -1,30 +1,36 @@
 import { makeStyles } from '@rneui/themed';
+import { Places } from '@type/api.meeting';
 
 import React from 'react';
 import { View, Pressable } from 'react-native';
-import { PlaceProps } from '../../types';
 import PlaceCardBody from './PlaceCardBody';
 import PlaceNumber from './PlaceNumber';
 
-function PlaceCard({ data }: PlaceProps) {
+type PlaceCardProps = {
+  data: Places[] | null | undefined;
+};
+
+function PlaceCard({ data }: PlaceCardProps) {
   const styles = useStyles();
+  const places = data;
 
   return (
-    <>
-      {data.map(item => {
-        return (
-          <Pressable
-            key={item.id}
-            style={({ pressed }) => [pressed && styles.pressed]}
-          >
-            <View style={styles.wrapContainer}>
-              <PlaceNumber>{item.order}</PlaceNumber>
-              <PlaceCardBody data={item} />
-            </View>
-          </Pressable>
-        );
-      })}
-    </>
+    <View>
+      {places &&
+        places.map(item => {
+          return (
+            <Pressable
+              key={item.meetingPlaceId}
+              style={({ pressed }) => [pressed && styles.pressed]}
+            >
+              <View style={styles.wrapContainer}>
+                <PlaceNumber>{item.order}</PlaceNumber>
+                <PlaceCardBody data={item} />
+              </View>
+            </Pressable>
+          );
+        })}
+    </View>
   );
 }
 

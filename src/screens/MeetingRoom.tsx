@@ -15,7 +15,9 @@ import { IconProps, MeetingResponse, OverayCalendarProps } from '@type/index';
 import { RootStackScreenProps } from '@type/navigation';
 import TimePicker from '@components/meeting/Timepicker';
 import GenerateLog from '@utils/GenerateLog';
-import { api } from '../api';
+import { GetMeetingDetailResponse, Places } from '@type/api.meeting';
+
+import { requestGetMeetingDetail } from '@api/meeting/meetings';
 import Label from '../components/input/Label';
 import PlaceCard from '../components/places/PlaceCard';
 import MemberBox from '../components/member/MemberBox';
@@ -92,125 +94,58 @@ function MeetingRoom({ navigation }: RootStackScreenProps<'MeetingRoom'>) {
     }
   };
   const guideText = '새로운 코스를 추가해보세요!';
-  const dummyMeetingData: MeetingResponse = {
-    id: 1000,
-    myMeetingUserId: 11,
-    myMeetingRole: 'HOST',
-    title: '여름이었다',
-    startDate: '2023-01-10',
-    endDate: '2023-01-30',
-    meetingUsers: [
-      {
-        id: 10,
-        nickname: 'nickname1',
-        imageLink: 'https://randomuser.me/api/portraits/men/36.jpg',
-        meetingRole: 'EDITOR',
-      },
-      {
-        id: 11,
-        nickname: 'nickname2',
-        imageLink: 'https://randomuser.me/api/portraits/men/37.jpg',
-        meetingRole: 'HOST',
-      },
-      {
-        id: 12,
-        nickname: 'nickname2',
-        imageLink: 'https://randomuser.me/api/portraits/men/38.jpg',
-        meetingRole: 'PARTICIPANT',
-      },
-      {
-        id: 13,
-        nickname: 'nickname2',
-        imageLink: 'https://randomuser.me/api/portraits/men/39.jpg',
-        meetingRole: 'PARTICIPANT',
-      },
-    ],
-    meetingDates: [
-      {
-        id: 10,
-        date: '2023-01-15',
-        userCount: 1,
-        dateStatus: 'UNFIXED',
-        isSelected: true,
-      },
-      {
-        id: 11,
-        date: '2023-01-25',
-        userCount: 2,
-        dateStatus: 'FIXED',
-        isSelected: false,
-      },
-    ],
-    meetingPlaces: [
-      {
-        id: 10,
-        apiId: 1000,
-        category: 'BAR',
-        name: 'place1',
-        address: 'address1',
-        description: 'memo1',
-        lat: 10.1,
-        lng: 20.1,
-        order: 1,
-      },
-      {
-        id: 11,
-        apiId: 2000,
-        category: 'CAFE',
-        name: 'place2',
-        address: 'address1',
-        description: 'memo2',
-        lat: 110.1,
-        lng: 120.1,
-        order: 2,
-      },
-    ],
-  };
-  const URL = `/api/v1/meetings/${10}`;
   const log2 = GenerateLog('log', { time: true, hidden: false });
-  const [metaData, setMeetingMetaData] = useState({});
-  const getMeetingData = async () => {
-    const res = await api.get<MeetingResponse>(URL);
-    const { data } = res;
+  const [meetingData, setMeetingData] = useState<GetMeetingDetailResponse>();
+  const getMeetingData = () => {
+    requestGetMeetingDetail(10).then(data => setMeetingData(data));
   };
 
-  getMeetingData();
   useEffect(() => {
-    navigation.setOptions({
-      title: dummyMeetingData.title,
-    });
-  }, [dummyMeetingData.title, navigation]);
+    getMeetingData();
+  }, []);
+
+  useEffect(() => {
+    console.log(meetingData);
+
+    if (meetingData) {
+      navigation.setOptions({
+        title: meetingData.meetingMetaData.meetingName,
+      });
+    }
+  }, [meetingData, navigation]);
 
   return (
-    <>
-      <TouchableWithoutFeedback onPress={() => setCloseTime(!closeTime)}>
-        <View style={styles.container}>
-          <View>
-            <MemberBox
-              myId={dummyMeetingData.myMeetingUserId}
-              myRole={dummyMeetingData.myMeetingRole}
-              meetingUsers={dummyMeetingData.meetingUsers}
-            />
+    meetingData && (
+      <>
+        <TouchableWithoutFeedback onPress={() => setCloseTime(!closeTime)}>
+          <View style={styles.container}>
+            <View>
+              <MemberBox
+                hostId={meetingData?.meetingMetaData.hostUser.userId}
+                meetingUsers={meetingData.members}
+              />
+            </View>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <Label>모임기간</Label>
+              <DateContainer
+                onPressOut={onPressOut}
+                onPressLabel={onPressLabel}
+              />
+              <Label style={styles.coursePlaceLabel}>모임장소</Label>
+              <MapView style={styles.mapStyle} />
+
+              {meetingData?.places && <PlaceCard data={meetingData.places} />}
+              <AddPlaceButton
+                navigation={navigation}
+                iconName="map"
+                text={guideText}
+              />
+            </ScrollView>
           </View>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <Label>모임기간</Label>
-            <DateContainer
-              onPressOut={onPressOut}
-              onPressLabel={onPressLabel}
-            />
-            <Label style={styles.coursePlaceLabel}>모임장소</Label>
-            <MapView style={styles.mapStyle} />
-            <PlaceCard data={dummyMeetingData.meetingPlaces} />
-            <AddPlaceButton
-              navigation={navigation}
-              iconName="map"
-              text={guideText}
-            />
-          </ScrollView>
-        </View>
-      </TouchableWithoutFeedback>
-      <OverlayCalendar visible={visible} onPressLabel={onPressLabel} />
-    </>
+        </TouchableWithoutFeedback>
+        <OverlayCalendar visible={visible} onPressLabel={onPressLabel} />
+      </>
+    )
   );
 }
 

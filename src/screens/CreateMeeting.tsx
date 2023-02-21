@@ -5,7 +5,7 @@ import useMeeting from '@hooks/useMeeting';
 import { usePromiseFlow } from '@utils/promise';
 import { RootStackScreenProps } from '@type/navigation';
 import { InputTextProps } from '@type/index';
-import apis from '../api';
+import { requestCreateMeetings } from '@api/meeting/meetings';
 import { setMeetingName } from '../features/meetingSlice';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import imageUpload, { AssetState } from '../utils/imageUpload';
@@ -64,7 +64,10 @@ function CreateMeeting(
   useEffect(() => {
     if (isSuccess && datas) {
       resetMeetingData();
-      navigation.navigate('MeetingRoom');
+      navigation.reset({
+        index: 1,
+        routes: [{ name: 'Root' }, { name: 'MeetingRoom' }],
+      });
     }
   }, [datas, error, isError, isSuccess, navigation, resetMeetingData]);
 
@@ -84,7 +87,7 @@ function CreateMeeting(
           onPressHandler={() => {
             if (!imgPath) return;
 
-            promiseFlow(imgPath, [imageUpload, then2, apis.createMeeting]);
+            promiseFlow(imgPath, [imageUpload, then2, requestCreateMeetings]);
           }}
         />
       </View>

@@ -1,24 +1,29 @@
 import { makeStyles } from '@rneui/themed';
+import { Places } from '@type/api.meeting';
 import React from 'react';
 import { View } from 'react-native';
-import { PlaceCardBodyProps } from '../../types';
 import { Font } from '../Font';
 import Caption from './Caption';
 
+type PlaceCardBodyProps = {
+  data: Places;
+};
+
 function PlaceCardBody({ data }: PlaceCardBodyProps) {
   const styles = useStyles();
+  const { placeName, category, memo, address } = data;
 
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
-        <Font style={styles.title}>{data.name}</Font>
-        <Caption>{data.category}</Caption>
+        <Font style={styles.title}>{placeName}</Font>
+        <Caption>{category}</Caption>
       </View>
       <View>
-        <Font style={styles.subTitle}>{data.description}</Font>
+        <Font style={styles.subTitle}>{memo}</Font>
       </View>
       <View>
-        <Font style={styles.address}>{data.address}</Font>
+        <Font style={styles.address}>{address}</Font>
       </View>
     </View>
   );
