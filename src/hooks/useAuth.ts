@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { AccessTokenRes, AuthResponse, RefreshTokenRes } from '../types';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { login, logout } from '../features/authSlice';
@@ -46,12 +47,15 @@ function useAuth() {
       return true;
     });
   };
-  const setLogoin = useCallback(async () => {
+  // 토큰이 있는지 없는지 검사하고, 없다면 로그아웃 시킴
+  const isValidUser = useCallback(async () => {
     const accessToken = await getTokenData(StoreKey.accessToken);
     const refreshToken = await getTokenData(StoreKey.refreshToken);
 
     if (accessToken !== null && refreshToken !== null) {
       dispatch(login());
+    } else {
+      dispatch(logout());
     }
   }, [dispatch]);
   const setTokens = useCallback(
@@ -73,7 +77,7 @@ function useAuth() {
     isAuth,
     setTokens,
     setLogout,
-    setLogoin,
+    isValidUser,
     isValidToken,
     getAccessToken,
   };

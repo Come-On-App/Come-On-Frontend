@@ -36,6 +36,7 @@ export type RootStackParamList = {
   PlaceSelect: NavigatorScreenParams<PlaceSelectParamList>;
   CreateMeetingCalender: undefined;
   LoginScreen: undefined;
+  KakaoLoginWebView: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =

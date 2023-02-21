@@ -13,7 +13,8 @@ import type {
 import { useUser } from '@hooks/useUser';
 import { makeStyles } from '@rneui/themed';
 
-import apis from '../api';
+import { requestGetMyInfo } from '@api/user/user';
+import KakaoLoginWebView from '@screens/KakaoLoginView';
 import useAuth from '../hooks/useAuth';
 import MeetingRoom from '../screens/MeetingRoom';
 import LoginScreen from '../screens/LoginScreen';
@@ -71,13 +72,12 @@ function PlaceSelectNavigator() {
 }
 
 function RootNavigator() {
-  const { isAuth: isLogin, setLogoin } = useAuth();
+  const { isAuth: isLogin, isValidUser } = useAuth();
   const styles = useStyles();
 
   useEffect(() => {
-    setLogoin(); // 토큰이 있는지 없는지 검사
-    apis.getUser();
-  }, [setLogoin, isLogin]);
+    isValidUser(); // 토큰이 있는지 없는지 검사
+  }, [isValidUser, isLogin]);
 
   return (
     <Stack.Navigator>
@@ -128,17 +128,22 @@ function RootNavigator() {
           />
         </>
       ) : (
-        <Stack.Screen
-          name="LoginScreen"
-          component={LoginScreen}
-          options={navigation => ({
-            title: '로그인',
-            headerTitleAlign: 'center',
-            headerTitleStyle: styles.headerStyle,
-            headerRight: CancelIconButton,
-            headerBackVisible: false,
-          })}
-        />
+        <>
+          <Stack.Screen
+            name="LoginScreen"
+            component={LoginScreen}
+            options={navigation => ({
+              title: '로그인',
+              headerTitleAlign: 'center',
+              headerTitleStyle: styles.headerStyle,
+              headerBackVisible: false,
+            })}
+          />
+          <Stack.Screen
+            name="KakaoLoginWebView"
+            component={KakaoLoginWebView}
+          />
+        </>
       )}
     </Stack.Navigator>
   );
