@@ -1,20 +1,14 @@
 import { useCallback } from 'react';
-import { AccessTokenRes, AuthResponse, RefreshTokenRes } from '../types';
+import { AccessTokenRes } from '../types';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { login, logout } from '../features/authSlice';
-import { deleteValueFor, save, getValueFor } from '../utils/secureStore';
+import { login, logout, setToken } from '../features/authSlice';
+import { deleteValueFor, getValueFor } from '../utils/secureStore';
 
 enum StoreKey {
   refreshToken = 'refreshToken',
   accessToken = 'accessToken',
 }
 
-const saveAccessToken = async (accessTokenData: AccessTokenRes) => {
-  await save('accessToken', JSON.stringify(accessTokenData.accessToken));
-};
-const saveRefreshToken = async (refreshTokennData: RefreshTokenRes) => {
-  await save('refreshToken', JSON.stringify(refreshTokennData.refreshToken));
-};
 const getAccessToken = async () => {
   const data = await getTokenData('accessToken');
 
@@ -43,20 +37,15 @@ function useAuth() {
     const refreshToken = await getTokenData(StoreKey.refreshToken);
 
     if (accessToken !== null && refreshToken !== null) {
+      const data = { accessToken, refreshToken };
+
+      // TODO추후 토큰 암호화해서 저장
+      dispatch(setToken(data));
       dispatch(login());
     } else {
       dispatch(logout());
     }
   }, [dispatch]);
-  const setTokens = useCallback(
-    async (data: AuthResponse) => {
-      await saveAccessToken(data);
-      await saveRefreshToken(data);
-
-      dispatch(login());
-    },
-    [dispatch],
-  );
   const setLogout = useCallback(async () => {
     await deleteValueFor(StoreKey.accessToken);
     await deleteValueFor(StoreKey.refreshToken);
@@ -65,7 +54,6 @@ function useAuth() {
 
   return {
     isAuth,
-    setTokens,
     setLogout,
     isValidUser,
     getAccessToken,
