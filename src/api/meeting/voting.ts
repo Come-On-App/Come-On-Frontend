@@ -7,6 +7,7 @@ import type {
   PostDateVotingPayload,
   PostDateVotingResponse,
   GetDateVotingDetailsPayload,
+  GetDateVotingResponse,
 } from '@type/api.meeting';
 
 /**
@@ -19,7 +20,7 @@ export async function requestAddDateVoting({
   meetingId,
   payload,
 }: PostDateVotingPayload): Promise<PostDateVotingResponse> {
-  const URL = `/api/v1/meetings/${meetingId}/places`;
+  const URL = `/api/v1/meetings/${meetingId}/date/voting`;
   const { data } = await serverAxios.post(URL, payload);
 
   return data;
@@ -36,7 +37,7 @@ export async function requestDeleteDateVoting({
   payload,
 }: DeleteDateVotingPayload): Promise<DeleteDateVotingResponse> {
   const URL = `/api/v1/meetings/${meetingId}/date/voting`;
-  const { data } = await serverAxios.post(URL, payload);
+  const { data } = await serverAxios.delete(URL, { data: payload });
 
   return data;
 }
@@ -49,7 +50,7 @@ export async function requestDeleteDateVoting({
  */
 export async function requestGetDateVoting(
   payload: GetDateVotingPayload,
-): Promise<GetDateVotingListResponse> {
+): Promise<GetDateVotingResponse> {
   const URL = `/api/v1/meetings/${payload}/date/voting`;
   const { data } = await serverAxios.get(URL);
 
