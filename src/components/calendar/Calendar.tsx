@@ -1,19 +1,25 @@
 /* eslint-disable react/destructuring-assignment */
 import React, { useCallback, useState, useEffect } from 'react';
 import { makeStyles } from '@rneui/themed';
-import { CalendarList, DateData } from 'react-native-calendars';
 import { View } from 'react-native';
+import { CalendarList, DateData } from 'react-native-calendars';
 import { MarkedDates } from 'react-native-calendars/src/types';
+
+import {
+  requestAddDateVoting,
+  requestDeleteDateVoting,
+} from '@api/meeting/voting';
 
 import Font from '../Font';
 import LocaleConfig from './LocaleConfig';
 import CustomCalendarTheme, { DayTheme } from './CustomCalendarTheme';
 import {
+  CalendarPeriodTypeProps,
   CalendarProps,
-  CalendarTypeProps,
-  MeetingDate,
-  MeetingUser,
+  CalendarVotingTypeProps,
+  CalenderClickEventType,
 } from '../../types';
+import LoadingComponent from './LoadingComponent';
 
 const STARTSTYLE = {
   selected: true,
@@ -54,18 +60,18 @@ const renderMonth = (startDate: string, endDate: string) => {
   return dayDiff;
 };
 const renderSelectedDate = (
-  dates: MeetingDate[],
-  meetingUsers: MeetingUser[],
+  dates: string[],
+  userCounts: number[],
+  totalUsers: number,
 ) => {
   const markedDates = new Map<string, object>();
-  const userCount = meetingUsers.length;
 
-  dates.forEach(item => {
-    markedDates.set(item.date, {
+  dates.forEach((date, idx) => {
+    markedDates.set(date, {
       customStyles: {
         container: {
           borderRadius: 0,
-          backgroundColor: `rgba(51,127,254, ${item.userCount / userCount})`,
+          backgroundColor: `rgba(51,127,254, ${userCounts[idx] / totalUsers})`,
         },
         text: {
           color: 'white',
@@ -129,7 +135,7 @@ function setCalendarStyle(array: Array<string>) {
   return dataMap;
 }
 
-function PeriodCalendar({ data, setDate }: CalendarTypeProps) {
+function PeriodCalendar({ setDate }: CalendarPeriodTypeProps) {
   const styles = useStyles();
   const [markedDate, setMarkedDate] = useState<MarkedDates>();
   const today = new Date().toISOString().substring(0, 10);
@@ -201,30 +207,70 @@ function PeriodCalendar({ data, setDate }: CalendarTypeProps) {
   );
 }
 
-function DefaultCalendar({ data }: CalendarTypeProps) {
+function DefaultCalendar({
+  data,
+  startFrom,
+  endTo,
+  totalUsers,
+}: CalendarVotingTypeProps) {
   const styles = useStyles();
-  let selectedDate; // 임시
-  let month;
-  const onPressHandler = useCallback(() => {
-    console.log('날짜 클릭!');
-  }, []);
+  const { contents, contentsCount } = data;
+  const [meetingDates, setMeetingDates] = useState<string[]>([]);
+  const [meetingMemberCount, setMeetingMemberCount] = useState<number[]>([]);
+  const [myVotingDates, setMyVotingDates] = useState<string[]>([]);
+  const [selectedDates, setSelectedDates] = useState<{
+    [k: string]: object;
+  }>({});
+  let month = renderMonth(startFrom, endTo) - 1;
 
-  if (data?.meetingDates) {
-    selectedDate = renderSelectedDate(data.meetingDates, data.meetingUsers);
-    month = renderMonth(data?.startDate, data?.endDate) - 1;
-  }
+  if (month <= 0) month = 0;
+
+  useEffect(() => {
+    if (contentsCount !== 0) {
+      setMeetingDates(contents.map(content => content.date));
+      setMeetingMemberCount(contents.map(content => content.memberCount));
+      setMyVotingDates(
+        contents
+          .filter(content => content.myVoting === true)
+          .map(content => content.date),
+      );
+    }
+  }, [contents, contentsCount]);
+
+  useEffect(() => {
+    setSelectedDates(
+      renderSelectedDate(meetingDates, meetingMemberCount, totalUsers),
+    );
+  }, [meetingDates, meetingMemberCount, totalUsers]);
+
+  const onPressHandler = useCallback(
+    async (e: CalenderClickEventType) => {
+      const date = {
+        date: e.dateString,
+      };
+
+      if (myVotingDates.includes(date.date)) {
+        await requestDeleteDateVoting({ meetingId: 10, payload: date });
+      } else {
+        await requestAddDateVoting({ meetingId: 10, payload: date });
+      }
+
+      // api받아오기
+    },
+    [myVotingDates],
+  );
 
   return (
     <CalendarList
       calendarStyle={styles.calendarStyle}
       onDayPress={onPressHandler}
-      minDate={data?.startDate}
-      maxDate={data?.endDate}
+      minDate={startFrom}
+      maxDate={endTo}
       markingType="custom"
-      disableAllTouchEventsForDisabledDays
-      markedDates={selectedDate}
-      nestedScrollEnabled
+      markedDates={selectedDates}
       pastScrollRange={0}
+      scrollEnabled
+      renderPlaceholder={(year, months) => <LoadingComponent />}
       displayLoadingIndicator={false}
       futureScrollRange={month}
       showScrollIndicator={false}
@@ -242,17 +288,33 @@ export const MemorizedPeriodCalendar = React.memo(PeriodCalendar);
 
 export const MemorizedDefaultCalendar = React.memo(DefaultCalendar);
 
-function Calendar({ type, data, setDate }: CalendarProps): JSX.Element {
+function Calendar({
+  type,
+  data,
+  totalUsers,
+  startFrom,
+  endTo,
+  setDate,
+}: CalendarProps): JSX.Element {
   const styles = useStyles();
 
   LocaleConfig.defaultLocale = 'kr';
 
   return (
     <View style={styles.calendarContainer}>
-      {data && type === 'DEFAULT' ? (
-        <MemorizedDefaultCalendar data={data} />
+      {type === 'DEFAULT' &&
+      data &&
+      totalUsers !== undefined &&
+      startFrom &&
+      endTo ? (
+        <MemorizedDefaultCalendar
+          data={data}
+          totalUsers={totalUsers}
+          startFrom={startFrom}
+          endTo={endTo}
+        />
       ) : (
-        <MemorizedPeriodCalendar data={data} setDate={setDate} />
+        <MemorizedPeriodCalendar setDate={setDate} />
       )}
     </View>
   );
@@ -263,7 +325,7 @@ export default Calendar;
 const useStyles = makeStyles(theme => ({
   calendarContainer: {
     width: '100%',
-    justifyContent: 'center',
+
     height: '98%',
     backgroundColor: 'none',
     borderRadius: 12,
@@ -281,5 +343,10 @@ const useStyles = makeStyles(theme => ({
     marginBottom: 10,
 
     width: '100%',
+  },
+  loadingContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
   },
 }));
