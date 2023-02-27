@@ -1,35 +1,47 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@rneui/themed';
 import { TextInput, View } from 'react-native';
 
+import useAnimationBounce from '@hooks/useAnim';
+import { useAppDispatch, useAppSelector } from '@app/hooks';
+import { setMeetingName } from '@features/meetingSlice';
 import { BoldFont, Font } from '../Font';
 import type {
   InputProps,
-  InputBoxProps,
   InputTopProps,
   InputBoxTopTitleProps,
   InputBoxTopTextLengthProps,
 } from '../../types';
 
-export default function InputBox({ config }: InputBoxProps) {
+export default function InputBox({
+  AnimView,
+  inputProps,
+}: any & { AnimView: any }) {
   const { label, placeholder, maxLength, onChangeText, value, multiline } =
-    config;
+    inputProps;
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(setMeetingName(value));
+  }, [dispatch, value]);
 
   return (
     <View>
       <InputBoxTop label={label} maxLength={maxLength} text={value} />
-      <InputBoxMain
-        value={value}
-        maxLength={maxLength}
-        multiline={multiline}
-        placeholder={placeholder}
-        onChangeText={onChangeText}
-      />
+      <AnimView id="name">
+        <InputBoxMain
+          value={value}
+          maxLength={maxLength}
+          multiline={multiline}
+          placeholder={placeholder}
+          onChangeText={onChangeText}
+        />
+      </AnimView>
     </View>
   );
 }
 
-function InputBoxTop({ label, text, maxLength }: InputTopProps) {
+export function InputBoxTop({ label, text, maxLength }: InputTopProps) {
   const styles = useStyles();
 
   return (
@@ -40,7 +52,7 @@ function InputBoxTop({ label, text, maxLength }: InputTopProps) {
   );
 }
 
-function InputBoxMain(props: InputProps) {
+export function InputBoxMain(props: InputProps) {
   const { value, maxLength, multiline, placeholder, onChangeText } = props;
   const styles = useStyles();
 

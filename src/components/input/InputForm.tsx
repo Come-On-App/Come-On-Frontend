@@ -1,16 +1,44 @@
-import React from 'react';
-import { View, KeyboardAvoidingView, Pressable, Text } from 'react-native';
+import React, { useState } from 'react';
+import { View, KeyboardAvoidingView, Pressable } from 'react-native';
 import { makeStyles } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
-import Icon from '@components/Icon';
 import useMeeting from '@hooks/useMeeting';
-import InputBox from './InputText';
+import { useAppDispatch } from '@app/hooks';
+import { setMeetingName } from '@features/meetingSlice';
+import {
+  AnimationViewType,
+  IconProps,
+  InputFormAnimProps,
+  InputTextProps,
+} from '@type/index';
+import { InputBoxMain, InputBoxTop } from './InputText';
 import InputImage from './InputImage';
-import { IconProps, InputFormProps } from '../../types';
 import Font from '../Font';
 import IconInputBox, { isValid } from './IconInputBox';
 
-function InputForm({ inputProps }: InputFormProps) {
+function AnimationInputBox({ inputProps, AnimationView }: InputFormAnimProps) {
+  const { label, placeholder, maxLength, onChangeText, value, multiline } =
+    inputProps;
+
+  return (
+    <View>
+      <InputBoxTop label={label} maxLength={maxLength} text={value} />
+      <AnimationView id="name">
+        <InputBoxMain
+          value={value}
+          maxLength={maxLength}
+          multiline={multiline}
+          placeholder={placeholder}
+          onChangeText={onChangeText}
+        />
+      </AnimationView>
+    </View>
+  );
+}
+
+function InputForm({ AnimationView }: AnimationViewType) {
+  const [name, setName] = useState('');
+  const dispatch = useAppDispatch();
   const styles = useStyles();
   const { meetingData } = useMeeting();
   const navigation = useNavigation();
@@ -24,21 +52,41 @@ function InputForm({ inputProps }: InputFormProps) {
   const onPressLabel = () => {
     navigation.navigate('CreateMeetingCalender');
   };
+  const onChangeHandler = (text: string) => {
+    setName(text);
+    dispatch(setMeetingName(text));
+  };
+  const inputProps: InputTextProps = {
+    label: '모임이름',
+    placeholder: '모임이름을 입력해주세요!',
+    maxLength: 30,
+    value: name,
+    onChangeText: onChangeHandler,
+    multiline: false,
+  };
 
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
-      <InputImage />
-      <InputBox config={inputProps} style={styles.inputBoxStyle} />
+      <AnimationView id="image">
+        <InputImage />
+      </AnimationView>
+      <AnimationInputBox
+        inputProps={inputProps}
+        AnimationView={AnimationView}
+      />
       <View style={styles.inputContainer}>
         <Font style={styles.title}>모임 캘린더</Font>
-        <Pressable style={styles.inputContainer} onPress={onPressLabel}>
-          <IconInputBox
-            iconConfig={iconConfig}
-            condition={isValid(meetingData.calendarStartFrom)}
-            value={value}
-            placeholder={placeholder}
-          />
-        </Pressable>
+
+        <AnimationView id="date">
+          <Pressable style={styles.inputContainer} onPress={onPressLabel}>
+            <IconInputBox
+              iconConfig={iconConfig}
+              condition={isValid(meetingData.calendarStartFrom)}
+              value={value}
+              placeholder={placeholder}
+            />
+          </Pressable>
+        </AnimationView>
       </View>
     </KeyboardAvoidingView>
   );

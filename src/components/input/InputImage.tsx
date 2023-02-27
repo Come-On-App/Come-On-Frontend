@@ -1,17 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Image, Pressable, View, Alert } from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet, Image, Pressable, View } from 'react-native';
 
 import useImagePath from '@hooks/useImagePicker';
+import useAnimationBounce from '@hooks/useAnim';
 import { setMeetingImgPath } from '../../features/meetingSlice';
 
 import theme from '../../constants/themed';
 import { Font } from '../Font';
 import Icon from '../Icon';
 
-import { useAppDispatch } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 
 function InputImage() {
   const dispatch = useAppDispatch();
+  const onSubmit = useAppSelector(state => state.meeting.onSubmit);
+  const imgPath = useAppSelector(state => state.meeting.meetingImgPath);
   const [path, pickImage2] = useImagePath();
   const picture = path ? (
     <Image source={path} style={styles.image} />
@@ -21,6 +24,7 @@ function InputImage() {
       <Font style={styles.fontColor}>사진을 등록해 주세요</Font>
     </View>
   );
+  const { trigger, AnimationBounceView } = useAnimationBounce(['image']);
 
   useEffect(() => {
     if (path) {
@@ -28,13 +32,19 @@ function InputImage() {
     }
   }, [dispatch, path]);
 
+  if (onSubmit && !imgPath) {
+    trigger('image');
+  }
+
   // 추후 이미지 권한 얻어오기
   return (
     <View style={styles.container}>
       <Font style={styles.label}>사진등록</Font>
-      <Pressable onPress={pickImage2} style={[styles.imageContainer]}>
-        {picture}
-      </Pressable>
+      <AnimationBounceView id="image">
+        <Pressable onPress={pickImage2} style={[styles.imageContainer]}>
+          {picture}
+        </Pressable>
+      </AnimationBounceView>
     </View>
   );
 }
