@@ -33,8 +33,9 @@ export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList>;
   MeetingRoom: undefined;
   CreateMeeting: undefined;
-  PlaceSelect: NavigatorScreenParams<PlaceSelectParamList>;
+  PlaceSelect: NavigatorScreenParams<PlaceSelectParamList> | undefined;
   CreateMeetingCalender: undefined;
+  MeetingRoomCalendar: undefined;
   LoginScreen: undefined;
   KakaoLoginWebView: undefined;
 };

@@ -31,11 +31,11 @@ interface IMeeting {
 const meetingSlice = createSlice({
   name: 'meeting',
   initialState: initialState as IMeeting,
+
   reducers: {
     setMeetingName: (state, action) => {
       state.meetingData.meetingName = action.payload;
     },
-
     setMeetingImgPath: (state, action) => {
       state.meetingImgPath = action.payload;
     },
@@ -48,6 +48,7 @@ const meetingSlice = createSlice({
     setMeetingId: (state, action) => {
       state.meetingId = action.payload;
     },
+
     resetMeetingData: state => {
       const newData = {
         meetingName: '',

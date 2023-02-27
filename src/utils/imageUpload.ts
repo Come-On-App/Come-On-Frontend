@@ -4,7 +4,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 // 실제 디바이스 기기는 RNDebugger Network formData blob 변환이 안됨. -> 내부에는 다른 스펙을 사용하기 때문.
 // see https://github.com/jhen0409/react-native-debugger/blob/master/docs/network-inspect-of-chrome-devtools.md
 
-import { DEBUGGER_MODE, SERVER_ADDRESS } from '@env';
+import { SERVER_ADDRESS } from '@env';
 import { getValueFor } from './secureStore';
 
 interface FormDataBody {
