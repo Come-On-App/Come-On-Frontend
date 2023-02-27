@@ -7,8 +7,13 @@ import type {
   GooglePlaceDetail,
 } from 'react-native-google-places-autocomplete';
 import type { MapLocation } from '@type/api.map';
-import type { GetMeetingResponse, Members } from '@type/api.meeting';
+import type {
+  GetDateVotingResponse,
+  GetMeetingResponse,
+  Members,
+} from '@type/api.meeting';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { ReactNode } from 'react';
 import type { RootStackParamList } from './navigation';
 
 /**
@@ -100,7 +105,23 @@ export interface InputProps {
 }
 
 export interface InputFormProps {
+  inputProps?: InputTextProps;
+}
+
+export type Type<T> = {
+  children: ReactNode;
+  id: T;
+};
+
+export type Ids = 'image' | 'name' | 'date';
+
+export type AnimationViewType = {
+  AnimationView: ({ children, id }: Type<Ids>) => JSX.Element;
+};
+
+export interface InputFormAnimProps {
   inputProps: InputTextProps;
+  AnimationView: ({ children, id }: Type<Ids>) => JSX.Element;
 }
 
 export interface InputTextProps extends InputProps {
@@ -163,11 +184,6 @@ export interface Token {
 }
 
 export type AddPlaceButtonProps = {
-  navigation: NativeStackNavigationProp<
-    RootStackParamList,
-    'MeetingRoom',
-    undefined
-  >;
   iconName: IconName;
   text: string;
 };
@@ -249,7 +265,10 @@ export type date = {
 
 export type CalendarProps = {
   type: 'PERIOD' | 'DEFAULT';
-  data: MeetingResponse | undefined; // TODO: 추후 undefined 수정
+  data?: GetDateVotingResponse;
+  totalUsers?: number;
+  startFrom?: string;
+  endTo?: string;
   setDate?: React.Dispatch<
     React.SetStateAction<{
       startDate: string;
@@ -258,8 +277,29 @@ export type CalendarProps = {
   >;
 };
 
-export interface CalendarTypeProps {
-  data: MeetingResponse | undefined; // TODO: 추후 undefined 수정
+export type CalenderClickEventType = {
+  dateString: string;
+  day: number;
+  month: number;
+  timestamp: number;
+  year: number;
+};
+
+export interface CalendarVotingTypeProps {
+  data: GetDateVotingResponse;
+  startFrom: string;
+  endTo: string;
+  totalUsers: number;
+  setDate?: React.Dispatch<
+    React.SetStateAction<{
+      startDate: string;
+      endDate: string;
+    }>
+  >;
+}
+
+export interface CalendarPeriodTypeProps {
+  data?: GetDateVotingResponse;
   setDate?: React.Dispatch<
     React.SetStateAction<{
       startDate: string;

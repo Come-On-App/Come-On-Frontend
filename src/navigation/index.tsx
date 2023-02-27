@@ -13,8 +13,8 @@ import type {
 import { useUser } from '@hooks/useUser';
 import { makeStyles } from '@rneui/themed';
 
-import { requestGetMyInfo } from '@api/user/user';
-import KakaoLoginWebView from '@screens/KakaoLoginView';
+import KakaoLoginWebView from '../screens/KakaoLoginView';
+import MeetingRoomCalendar from '../screens/MeetingRoomCalendar';
 import useAuth from '../hooks/useAuth';
 import MeetingRoom from '../screens/MeetingRoom';
 import LoginScreen from '../screens/LoginScreen';
@@ -124,6 +124,18 @@ function RootNavigator() {
               headerTitleStyle: styles.headerStyle,
               headerRight: CancelIconButton,
               headerBackVisible: false,
+            })}
+          />
+          <Stack.Screen
+            name="MeetingRoomCalendar"
+            component={MeetingRoomCalendar}
+            options={({ navigation, route }) => ({
+              headerTitleAlign: 'center',
+              headerTitleStyle: styles.headerStyle,
+              headerRight: CancelIconButton,
+              headerBackVisible: false,
+              animationTypeForReplace: 'push',
+              animation: 'slide_from_right',
             })}
           />
         </>
