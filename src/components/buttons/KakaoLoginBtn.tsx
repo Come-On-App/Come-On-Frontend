@@ -1,4 +1,4 @@
-import React, { SetStateAction } from 'react';
+import React from 'react';
 import { makeStyles } from '@rneui/themed';
 import { Pressable } from 'react-native';
 

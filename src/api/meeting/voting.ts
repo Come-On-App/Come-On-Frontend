@@ -8,6 +8,7 @@ import type {
   PostDateVotingResponse,
   GetDateVotingDetailsPayload,
   GetDateVotingResponse,
+  GetDateVotingDetailsResponse,
 } from '@type/api.meeting';
 
 /**
@@ -66,7 +67,7 @@ export async function requestGetDateVoting(
 export async function requestGetDateVotingDetails({
   meetingId,
   payload,
-}: GetDateVotingDetailsPayload): Promise<GetDateVotingListResponse> {
+}: GetDateVotingDetailsPayload): Promise<GetDateVotingDetailsResponse> {
   const URL = `/api/v1/meetings/${meetingId}/date/voting/details`;
   const { data } = await serverAxios.get(URL, {
     params: {
