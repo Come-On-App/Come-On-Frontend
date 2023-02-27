@@ -1,6 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 import React, { useCallback, useState, useEffect } from 'react';
-import { makeStyles } from '@rneui/themed';
+import { makeStyles, Overlay } from '@rneui/themed';
 import { View } from 'react-native';
 import { CalendarList, DateData } from 'react-native-calendars';
 import { MarkedDates } from 'react-native-calendars/src/types';
@@ -10,7 +10,8 @@ import {
   requestDeleteDateVoting,
 } from '@api/meeting/voting';
 
-import Font from '../Font';
+import GenerateLog from '@utils/GenerateLog';
+import Font, { BoldFont } from '../Font';
 import LocaleConfig from './LocaleConfig';
 import CustomCalendarTheme, { DayTheme } from './CustomCalendarTheme';
 import {
@@ -20,6 +21,7 @@ import {
   CalenderClickEventType,
 } from '../../types';
 import LoadingComponent from './LoadingComponent';
+import DateModal, { NoUserModal } from './DateModal';
 
 const STARTSTYLE = {
   selected: true,
@@ -215,12 +217,17 @@ function DefaultCalendar({
 }: CalendarVotingTypeProps) {
   const styles = useStyles();
   const { contents, contentsCount } = data;
+  const log = GenerateLog('log', { time: true, hidden: false });
   const [meetingDates, setMeetingDates] = useState<string[]>([]);
+  const [visible, setVisible] = useState<boolean>(false);
   const [meetingMemberCount, setMeetingMemberCount] = useState<number[]>([]);
   const [myVotingDates, setMyVotingDates] = useState<string[]>([]);
   const [selectedDates, setSelectedDates] = useState<{
     [k: string]: object;
   }>({});
+  const [userSelected, setUserSelected] = useState<boolean>();
+  const [userSelectedDate, setUserSelectedDate] =
+    useState<CalenderClickEventType>();
   let month = renderMonth(startFrom, endTo) - 1;
 
   if (month <= 0) month = 0;
@@ -259,28 +266,57 @@ function DefaultCalendar({
     },
     [myVotingDates],
   );
+  const onDayLongPressHandler = useCallback(
+    (e: CalenderClickEventType) => {
+      // log('log', '꾹 클릭!');
+      setVisible(true);
+      const isSelected = meetingDates.includes(e.dateString);
+
+      setUserSelected(isSelected);
+      setUserSelectedDate(e);
+    },
+    [meetingDates],
+  );
 
   return (
-    <CalendarList
-      calendarStyle={styles.calendarStyle}
-      onDayPress={onPressHandler}
-      minDate={startFrom}
-      maxDate={endTo}
-      markingType="custom"
-      markedDates={selectedDates}
-      pastScrollRange={0}
-      scrollEnabled
-      renderPlaceholder={(year, months) => <LoadingComponent />}
-      displayLoadingIndicator={false}
-      futureScrollRange={month}
-      showScrollIndicator={false}
-      theme={CustomCalendarTheme}
-      renderHeader={date => {
-        if (!date) return null;
+    <>
+      <CalendarList
+        calendarStyle={styles.calendarStyle}
+        onDayPress={onPressHandler}
+        minDate={startFrom}
+        maxDate={endTo}
+        markingType="custom"
+        markedDates={selectedDates}
+        pastScrollRange={0}
+        scrollEnabled
+        onDayLongPress={onDayLongPressHandler}
+        renderPlaceholder={(year, months) => <LoadingComponent />}
+        displayLoadingIndicator={false}
+        futureScrollRange={month}
+        showScrollIndicator={false}
+        theme={CustomCalendarTheme}
+        renderHeader={date => {
+          if (!date) return null;
 
-        return CalendarHeader(date);
-      }}
-    />
+          return CalendarHeader(date);
+        }}
+      />
+      {userSelectedDate ? (
+        <Overlay
+          isVisible={visible}
+          onBackdropPress={() => setVisible(!visible)}
+          style={{ padding: 0 }}
+          overlayStyle={{ padding: 0, borderRadius: 100 }}
+        >
+          {/* 방장인지 보내기, 오늘 며칠인지 보내기 */}
+          {userSelected ? (
+            <DateModal date={userSelectedDate} />
+          ) : (
+            <NoUserModal date={userSelectedDate} />
+          )}
+        </Overlay>
+      ) : null}
+    </>
   );
 }
 

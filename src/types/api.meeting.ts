@@ -71,7 +71,7 @@ interface MeetingMetaData {
 }
 
 export interface Members {
-  memberId: number;
+  memberId?: number;
   userId: number;
   nickname: string;
   profileImageUrl?: string | null;
@@ -295,7 +295,9 @@ interface GetDateVotingResponseContents {
 }
 
 // GET /api/v1/meetings/{meeting-id}/date/voting (response)
-export type GetDateVotingListResponse = ListResponse<GetDateVotingResponse>;
+export type GetDateVotingListResponse =
+  | ListResponse<GetDateVotingResponse>
+  | undefined;
 
 // GET /api/v1/meetings/{meeting-id}/date/voting/details (payload)
 export interface GetDateVotingDetailsPayload {
@@ -310,13 +312,15 @@ export interface GetDateVotingDetailsResponse {
   date: string;
   memberCount: number;
   myVoting: boolean;
-  votingUsers: {
-    userId: number;
-    nickname: string;
-    profileImageUrl?: string | null;
-    memberRole: MemberRole;
-  };
+  votingUsers: VotingUsers[];
 }
+
+export type VotingUsers = {
+  userId: number;
+  nickname: string;
+  profileImageUrl?: string | null;
+  memberRole: MemberRole;
+};
 
 // POST /api/v1/meetings/{meeting-id}/date/confirm (payload)
 export interface PostConfirmMeetingDatePayload {

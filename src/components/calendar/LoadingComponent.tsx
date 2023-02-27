@@ -2,12 +2,16 @@ import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { makeStyles } from '@rneui/themed';
 
-export default function LoadingComponent(): JSX.Element {
+export default function LoadingComponent({
+  size,
+}: {
+  size?: number | 'small' | 'large' | undefined;
+}): JSX.Element {
   const styles = useStyles();
 
   return (
     <View style={styles.loadingContainer}>
-      <ActivityIndicator size="large" color="pink" />
+      <ActivityIndicator size={size} color="pink" />
       {/* <Font>
           {year}년 {month < 10 ? `0${month}` : month}월
         </Font> */}

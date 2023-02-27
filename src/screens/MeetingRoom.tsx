@@ -18,6 +18,8 @@ import { GetMeetingDetailResponse } from '@type/api.meeting';
 import { requestGetMeetingDetail } from '@api/meeting/meetings';
 import { useNavigation } from '@react-navigation/native';
 import GenerateLog from '@utils/GenerateLog';
+import { useAppDispatch } from '@app/hooks';
+import { setTotalMeetingMembers } from '@features/meetingSlice';
 import Label from '../components/input/Label';
 import PlaceCard from '../components/places/PlaceCard';
 import MemberBox from '../components/member/MemberBox';
@@ -162,8 +164,9 @@ function DateContainer({ onPressLabel, onPressOut }: DateContainerProps) {
 
 function MeetingRoom({ navigation }: RootStackScreenProps<'MeetingRoom'>) {
   const styles = useStyles();
-  const [closeTime, setCloseTime] = useState(false);
   const navi = useNavigation();
+  const dispatch = useAppDispatch();
+  const [closeTime, setCloseTime] = useState(false);
   const log = GenerateLog('log', { time: true, hidden: false });
   const onPressLabel = () => {
     navi.navigate('MeetingRoomCalendar');
@@ -178,7 +181,11 @@ function MeetingRoom({ navigation }: RootStackScreenProps<'MeetingRoom'>) {
     }
   };
   const guideText = '새로운 코스를 추가해보세요!';
+  // TODO 소켓에 따라 자동 갱신되도록
   const [meetingData, setMeetingData] = useState<GetMeetingDetailResponse>();
+  const totalMembers = dispatch(
+    setTotalMeetingMembers(meetingData?.members.length),
+  );
   const getMeetingData = () => {
     requestGetMeetingDetail(10).then(data => setMeetingData(data));
   };
