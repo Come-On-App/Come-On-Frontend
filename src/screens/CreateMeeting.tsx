@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable padding-line-between-statements */
+import React, { useCallback, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import useMeeting from '@hooks/useMeeting';
 import { usePromiseFlow } from '@utils/promise';
 import { RootStackScreenProps } from '@type/navigation';
-import { InputTextProps } from '@type/index';
+
+import useAnimationBounce from '@hooks/useAnim';
 import { requestCreateMeetings } from '@api/meeting/meetings';
-import { setMeetingName } from '../features/meetingSlice';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
+import GenerateLog from '@utils/GenerateLog';
+import { useAppSelector } from '../app/hooks';
 import imageUpload, { AssetState } from '../utils/imageUpload';
 
 import CancelButton from '../components/buttons/CancelButton';
@@ -22,8 +24,7 @@ function CreateMeeting(
   this: typeof CreateMeeting,
   { navigation }: RootStackScreenProps<'CreateMeeting'>,
 ) {
-  const [name, setName] = useState('');
-  const dispatch = useAppDispatch();
+  const log2 = GenerateLog('log', { time: true, hidden: false });
   const data = useAppSelector(state => state.meeting.meetingData);
   const imgPath = useAppSelector(state => state.meeting.meetingImgPath);
   const { meetingName, calendarStartFrom, calendarEndTo } = data;
@@ -31,24 +32,7 @@ function CreateMeeting(
   const cancelHandler = () => {
     navigation.goBack();
   };
-  const inputProps: InputTextProps = {
-    label: '모임이름',
-    placeholder: '모임이름을 입력해주세요!',
-    maxLength: 30,
-    value: name,
-    onChangeText: setName,
-    multiline: false,
-  };
-  const then2 = (imgUrl: string) => {
-    const meetingData = {
-      meetingName,
-      meetingImageUrl: imgUrl,
-      calendarStartFrom,
-      calendarEndTo,
-    };
 
-    return meetingData;
-  };
   const {
     error,
     isSuccess,
@@ -56,10 +40,6 @@ function CreateMeeting(
     isError,
     data: datas,
   } = usePromiseFlow<AssetState, MeetingId>();
-
-  useEffect(() => {
-    dispatch(setMeetingName(name));
-  }, [dispatch, name]);
 
   useEffect(() => {
     if (isSuccess && datas) {
@@ -71,10 +51,47 @@ function CreateMeeting(
     }
   }, [datas, error, isError, isSuccess, navigation, resetMeetingData]);
 
+  const ids = ['name', 'image', 'date'];
+  const { trigger, AnimationBounceView } = useAnimationBounce([
+    'name',
+    'image',
+    'date',
+  ]);
+
+  const onPressConfirm = useCallback(() => {
+    if (imgPath?.uri == null) {
+      trigger('image');
+    } else if (meetingName === '') {
+      trigger('name');
+    } else if (calendarStartFrom === '' && calendarEndTo === '') {
+      trigger('date');
+    } else {
+      const then2 = (imgUrl: string) => {
+        const meetingData = {
+          meetingName,
+          meetingImageUrl: imgUrl,
+          calendarStartFrom,
+          calendarEndTo,
+        };
+
+        return meetingData;
+      };
+      promiseFlow(imgPath!, [imageUpload, then2, requestCreateMeetings]);
+    }
+  }, [
+    calendarEndTo,
+    calendarStartFrom,
+    imgPath,
+    meetingName,
+    promiseFlow,
+    trigger,
+  ]);
+  // 이름
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container]}>
       <View>
-        <InputForm inputProps={inputProps} />
+        <InputForm AnimationView={AnimationBounceView} />
       </View>
       <View style={styles.buttons}>
         <CancelButton
@@ -82,14 +99,7 @@ function CreateMeeting(
           onPressHandler={cancelHandler}
           style={styles.buttonStyle}
         />
-        <ConfirmButton
-          title="확인"
-          onPressHandler={() => {
-            if (!imgPath) return;
-
-            promiseFlow(imgPath, [imageUpload, then2, requestCreateMeetings]);
-          }}
-        />
+        <ConfirmButton title="확인" onPressHandler={onPressConfirm} />
       </View>
     </View>
   );
