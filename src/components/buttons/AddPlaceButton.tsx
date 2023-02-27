@@ -1,16 +1,21 @@
 import React from 'react';
 import { makeStyles } from '@rneui/themed';
 import { View, Pressable } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Icon from '../Icon';
 import { Font } from '../Font';
 import { AddPlaceButtonProps } from '../../types';
 
-function AddPlaceButton({ navigation, iconName, text }: AddPlaceButtonProps) {
+function AddPlaceButton({ iconName, text }: AddPlaceButtonProps) {
   const styles = useStyles();
+  const navigation = useNavigation();
+  const onPressButton = () => {
+    navigation.navigate('PlaceSelect');
+  };
 
   return (
     <Pressable
-      onPress={() => navigation.navigate('PlaceSelect')}
+      onPress={onPressButton}
       style={({ pressed }) => [pressed && styles.pressed]}
     >
       <View style={styles.courseContainer}>
