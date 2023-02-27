@@ -284,7 +284,11 @@ export interface DeleteDateVotingResponse {
 // GET /api/v1/meetings/{meeting-id}/date/voting (payload)
 export type GetDateVotingPayload = number;
 
-interface GetDateVotingResponse {
+export interface GetDateVotingResponse {
+  contentsCount: number;
+  contents: GetDateVotingResponseContents[];
+}
+interface GetDateVotingResponseContents {
   date: string;
   memberCount: number;
   myVoting: boolean;
