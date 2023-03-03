@@ -33,7 +33,7 @@ index f8943de..86ad94d 100644
      const renderStaticHeader = () => {
          if (staticHeader && horizontal) {
 diff --git a/node_modules/react-native-calendars/src/calendar-list/item.d.ts b/node_modules/react-native-calendars/src/calendar-list/item.d.ts
-index 1a8aca0..a5bc683 100644
+index 1a8aca0..c642a79 100644
 --- a/node_modules/react-native-calendars/src/calendar-list/item.d.ts
 +++ b/node_modules/react-native-calendars/src/calendar-list/item.d.ts
 @@ -3,13 +3,14 @@ import React from 'react';
@@ -48,15 +48,20 @@ index 1a8aca0..a5bc683 100644
      theme?: Theme;
      scrollToMonth?: (date: XDate) => void;
      visible?: boolean;
-+    renderPlaceholder?:boolean;
++    renderPlaceholder?:(year: number, month: number) => React.ReactElement;
  };
  declare const CalendarListItem: React.MemoExoticComponent<(props: CalendarListItemProps) => JSX.Element>;
  export default CalendarListItem;
 diff --git a/node_modules/react-native-calendars/src/calendar-list/item.js b/node_modules/react-native-calendars/src/calendar-list/item.js
-index 0e5be76..af696aa 100644
+index 0e5be76..a00eeb2 100644
 --- a/node_modules/react-native-calendars/src/calendar-list/item.js
 +++ b/node_modules/react-native-calendars/src/calendar-list/item.js
-@@ -5,7 +5,7 @@ import { extractCalendarProps } from '../componentUpdater';
+@@ -1,11 +1,11 @@
+ import React, { useRef, useMemo, useCallback } from 'react';
+-import { Text } from 'react-native';
++import { Text,View } from 'react-native';
+ import { toMarkingFormat } from '../interface';
+ import { extractCalendarProps } from '../componentUpdater';
  import styleConstructor from './style';
  import Calendar from '../calendar';
  const CalendarListItem = React.memo((props) => {
@@ -71,8 +76,8 @@ index 0e5be76..af696aa 100644
      if (!visible) {
 +        if(renderPlaceholder){
 +            const year = item.getFullYear();
-+            const month = item.getFullMonth();
-+            return renderPlaceholder(year,month);
++            const month = item.getMonth();
++            return <View style={calendarStyle}>{renderPlaceholder(year,month)}</View>;
 +            
 +        }
          return (<Text style={textStyle}>{dateString}</Text>);
