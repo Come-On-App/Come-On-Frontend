@@ -23,6 +23,7 @@ import TabTwoScreen from '../screens/TabTwoScreen';
 import CreateMeeting from '../screens/CreateMeeting';
 import TabThreeScreen from '../screens/TabThreeScreen';
 import CreateMeetingCalender from '../screens/CreateMeetingCalender';
+import WebSocketProvider from '../WebSocketProvider';
 
 import LogoutButton from '../components/myPage/MyPageLogoutButton';
 import { createTabBarIcon, PressableIcon } from '../components/Icon';
@@ -80,84 +81,86 @@ function RootNavigator() {
   }, [isValidUser, isLogin]);
 
   return (
-    <Stack.Navigator>
-      {isLogin ? (
-        <>
-          <Stack.Screen
-            name="Root"
-            component={BottomTabNavigator}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="PlaceSelect"
-            component={PlaceSelectNavigator}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="CreateMeeting"
-            component={CreateMeeting}
-            options={({ navigation, route }) => ({
-              title: '모임등록',
-              headerTitleAlign: 'center',
-              headerTitleStyle: styles.headerStyle,
-              headerRight: CancelIconButton,
-              headerBackVisible: false,
-            })}
-          />
-          <Stack.Screen
-            name="CreateMeetingCalender"
-            component={CreateMeetingCalender}
-            options={({ navigation, route }) => ({
-              title: '모임등록',
-              headerTitleAlign: 'center',
-              headerTitleStyle: styles.headerStyle,
-              headerRight: CancelIconButton,
-              headerBackVisible: false,
-            })}
-          />
-          <Stack.Screen
-            name="MeetingRoom"
-            component={MeetingRoom}
-            options={({ navigation, route }) => ({
-              title: '임시타이틀Room1',
-              headerTitleAlign: 'center',
-              headerTitleStyle: styles.headerStyle,
-              headerRight: CancelIconButton,
-              headerBackVisible: false,
-            })}
-          />
-          <Stack.Screen
-            name="MeetingRoomCalendar"
-            component={MeetingRoomCalendar}
-            options={({ navigation, route }) => ({
-              headerTitleAlign: 'center',
-              headerTitleStyle: styles.headerStyle,
-              headerRight: CancelIconButton,
-              headerBackVisible: false,
-              animationTypeForReplace: 'push',
-              animation: 'slide_from_right',
-            })}
-          />
-        </>
-      ) : (
-        <>
-          <Stack.Screen
-            name="LoginScreen"
-            component={LoginScreen}
-            options={navigation => ({
-              title: '로그인',
-              headerTitleAlign: 'center',
-              headerTitleStyle: styles.headerStyle,
-              headerBackVisible: false,
-            })}
-          />
-          <Stack.Screen
-            name="KakaoLoginWebView"
-            component={KakaoLoginWebView}
-          />
-        </>
-      )}
-    </Stack.Navigator>
+    <WebSocketProvider>
+      <Stack.Navigator>
+        {isLogin ? (
+          <>
+            <Stack.Screen
+              name="Root"
+              component={BottomTabNavigator}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="PlaceSelect"
+              component={PlaceSelectNavigator}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="CreateMeeting"
+              component={CreateMeeting}
+              options={({ navigation, route }) => ({
+                title: '모임등록',
+                headerTitleAlign: 'center',
+                headerTitleStyle: styles.headerStyle,
+                headerRight: CancelIconButton,
+                headerBackVisible: false,
+              })}
+            />
+            <Stack.Screen
+              name="CreateMeetingCalender"
+              component={CreateMeetingCalender}
+              options={({ navigation, route }) => ({
+                title: '모임등록',
+                headerTitleAlign: 'center',
+                headerTitleStyle: styles.headerStyle,
+                headerRight: CancelIconButton,
+                headerBackVisible: false,
+              })}
+            />
+            <Stack.Screen
+              name="MeetingRoom"
+              component={MeetingRoom}
+              options={({ navigation, route }) => ({
+                title: '임시타이틀Room1',
+                headerTitleAlign: 'center',
+                headerTitleStyle: styles.headerStyle,
+                headerRight: CancelIconButton,
+                headerBackVisible: false,
+              })}
+            />
+            <Stack.Screen
+              name="MeetingRoomCalendar"
+              component={MeetingRoomCalendar}
+              options={({ navigation, route }) => ({
+                headerTitleAlign: 'center',
+                headerTitleStyle: styles.headerStyle,
+                headerRight: CancelIconButton,
+                headerBackVisible: false,
+                animationTypeForReplace: 'push',
+                animation: 'slide_from_right',
+              })}
+            />
+          </>
+        ) : (
+          <>
+            <Stack.Screen
+              name="LoginScreen"
+              component={LoginScreen}
+              options={navigation => ({
+                title: '로그인',
+                headerTitleAlign: 'center',
+                headerTitleStyle: styles.headerStyle,
+                headerBackVisible: false,
+              })}
+            />
+            <Stack.Screen
+              name="KakaoLoginWebView"
+              component={KakaoLoginWebView}
+            />
+          </>
+        )}
+      </Stack.Navigator>
+    </WebSocketProvider>
   );
 }
 
