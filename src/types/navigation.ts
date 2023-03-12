@@ -5,7 +5,10 @@ import type {
   CompositeScreenProps,
   NavigatorScreenParams,
 } from '@react-navigation/native';
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import type {
+  NativeStackScreenProps,
+  NativeStackNavigationProp,
+} from '@react-navigation/native-stack';
 import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
 declare global {
@@ -38,12 +41,18 @@ export type RootScreenParams = NavigatorScreenParams<RootTabParamList>;
 export type BottomTabScreenNavigation =
   BottomTabScreenProps<RootTabParamList>['navigation'];
 
+export type MeetingDetailNavigation = NativeStackNavigationProp<
+  RootStackParamList,
+  'MeetingDetail',
+  undefined
+>;
+
 export type RootStackParamList = {
   Root: RootScreenParams;
   MeetingRoom: undefined;
   CreateMeeting: undefined;
   PlaceSelect: PlaceSelectScreenParams;
-  MeetingDetail: undefined;
+  MeetingDetail: { meetingId: number };
   CreateMeetingCalender: undefined;
   LoginScreen: undefined;
 };

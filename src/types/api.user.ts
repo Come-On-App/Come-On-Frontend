@@ -13,11 +13,11 @@
  * interface PostMeetingResponse <- 응답 형식
  */
 
-import type { Error } from './api';
+import type { ErrorResponse } from './api';
 
 export type ErrorUserCode = 2500 | 2501 | 2600 | 2601 | 2602;
 
-export type ErrorMeetingResponse = Error<ErrorUserCode>;
+export type ErrorUserResponse = ErrorResponse<ErrorUserCode>;
 
 export type Role = 'ADMIN' | 'USER';
 
@@ -25,16 +25,16 @@ export type Role = 'ADMIN' | 'USER';
 export interface GetMyInfoResponse {
   userId: number;
   nickname: string;
-  profileImageUrl?: string | null;
+  profileImageUrl: string | null;
   role: Role;
-  email?: string | null;
+  email: string | null;
   name: string;
 }
 
 // PUT /api/v1/users/me (payload)
 export interface PutMyInfoPayload {
   nickname: string;
-  profileImageUrl?: string | null;
+  profileImageUrl: string | null;
 }
 
 // PUT /api/v1/users/me (response)

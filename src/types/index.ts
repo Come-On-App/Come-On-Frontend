@@ -7,9 +7,10 @@ import type {
   GooglePlaceDetail,
 } from 'react-native-google-places-autocomplete';
 import type { MapLocation } from '@type/api.map';
-import type { GetMeetingResponse } from '@type/api.meeting';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import type { RootStackParamList } from './navigation';
+import type { CategoryKey } from '@type/api.meeting';
+import { Dispatch, SetStateAction } from 'react';
+
+export type SetState<T> = Dispatch<SetStateAction<T>>;
 
 /**
  * Global Theme
@@ -61,9 +62,15 @@ declare module '@rneui/themed' {
 // Code
 export interface CodeInputProps {
   codeText: string;
-  setCodeText: React.Dispatch<React.SetStateAction<string>>;
+  setCodeText: SetState<string>;
   style?: StyleProp<TextStyle>;
   showKeyboard: boolean;
+}
+
+export interface CodeButtonProps {
+  codeText: string;
+  isLoading: boolean;
+  onPress: () => void;
 }
 
 // Input
@@ -160,22 +167,6 @@ export interface Token {
   token: string;
   expiry: number;
   userId: number;
-}
-
-export type AddPlaceButtonProps = {
-  navigation: NativeStackNavigationProp<
-    RootStackParamList,
-    'MeetingRoom',
-    undefined
-  >;
-  iconName: IconName;
-  text: string;
-};
-
-export interface IconButtonProps {
-  style?: StyleProp<ViewStyle>;
-  onPress: () => void;
-  icon: Icon;
 }
 
 export type MeetingResponse = {
@@ -321,70 +312,6 @@ export interface SearchBarProps {
   onChange?: (text: string) => void;
 }
 
-export interface CardModalProps {
-  isVisible: boolean;
-  onClose: () => void;
-}
-
-export interface CardModalButtonProps {
-  onClose: () => void;
-}
-
-export interface CardListProps {
-  cardItems: GetMeetingResponse[];
-}
-
-export interface CardProps {
-  cardItem: GetMeetingResponse;
-}
-
-export interface DisplayIconProps {
-  icon: IconName;
-}
-
-export interface GroupDisplayProps {
-  people: number;
-}
-
-export interface ConfirmDisplayProps {
-  isDecided: boolean;
-}
-
-export interface CardTtileProps {
-  titleText: string;
-}
-
-export interface CardSubTitleProps {
-  userText: string;
-  dateRange: {
-    calendarStartFrom: string;
-    calendarEndTo: string;
-  };
-}
-
-export interface InfoProps {
-  people: number;
-  isDecided: boolean;
-}
-
-export interface LeftAreaProps {
-  style: ViewStyle;
-  infoProps: InfoProps;
-}
-
-export interface CardMenuProps {
-  style: ViewStyle;
-}
-
-export interface CardMenuDisplayProps {
-  showMenu: () => void;
-  style: ViewStyle;
-}
-
-export interface RightAreaProps {
-  style: ViewStyle;
-}
-
 // Avatar
 export interface AvatarProps {
   path?: string | null;
@@ -411,78 +338,7 @@ export interface TextProps {
   children: React.ReactNode;
 }
 
-// Buttons
-type ButtonStyle = {
-  backgroundColor: string;
-  width: number | string;
-  height: number | string;
-  borderRadius?: number;
-  marginRight?: number | string;
-};
-
-type ButtonTextStyle = {
-  fontSize: number;
-  color: string;
-};
-
-export interface ButtonProps {
-  text: string;
-  bold?: boolean;
-  onPress: () => void;
-  height?: number;
-  disabled?: boolean;
-  textStyle?: Partial<ButtonTextStyle>;
-  buttonStyle?: Partial<ButtonStyle> | Partial<ButtonStyle>[];
-}
-
-type ButtonGroupStyle = {
-  width: number;
-  backgroundColor: string;
-};
-
-type ButtonConfig = {
-  text: string;
-  onPress: () => void;
-  style?: Partial<ButtonGroupStyle>;
-};
-
-export interface ButtonGroupProps {
-  height?: number;
-  spacing?: number;
-  firstButton: ButtonConfig;
-  secondButton: ButtonConfig;
-}
-
 // PlaceSelect
-export interface AddressProps {
-  info: {
-    title: string;
-    category: string;
-  };
-}
-
-export interface AddressTitleProps {
-  text: string;
-}
-
-export interface CategoryProps {
-  text: string;
-}
-
-export interface SubAddressProps {
-  info: {
-    title: string;
-  };
-}
-
-export interface PlaceSelectButtonProps {
-  onPress: () => void;
-}
-
-export interface PlaceSelectModalProps {
-  isVisible: boolean;
-  onClose: () => void;
-}
 
 // modal
 export interface ModalProps {
@@ -516,9 +372,7 @@ declare module '@rneui/themed' {
 }
 
 // location
-export interface MapRegion {
-  latitude: number;
-  longitude: number;
+export interface MapRegion extends MapLocation {
   latitudeDelta: number;
   longitudeDelta: number;
 }
@@ -535,15 +389,31 @@ export interface LocationObject {
   };
 }
 
+export type PlaceSelectState = 'Add' | 'Modify';
+
+export type Lock = {
+  meetingResourceType: 'MEETING_PLACE_LOCK' | 'MEETING_PLACE_UNLOCK';
+  meetingId: number;
+  meetingPlaceId: number;
+  userId: number;
+};
+
+// Redux state
 export interface PlaceSelect {
   address: string;
-  region: MapLocation | null;
   currentLocation: MapLocation | null;
   marker: MapLocation | null;
-  name: string;
-  placeId: string;
-  category: string;
+  mapRegion: MapRegion | null;
+  placeName: string;
+  googlePlaceId: string;
+  category: CategoryKey | null;
   description: string;
+  meetingId: number;
+  meetingPlaceId: number;
+  meetingPlaceCardMarker: MapRegion | null;
+  state: PlaceSelectState;
+  isChanged: boolean;
+  isLock: boolean;
 }
 
 export type GooglePlacesOnPressHandler = (

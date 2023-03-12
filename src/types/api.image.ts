@@ -13,11 +13,11 @@
  * interface PostMeetingResponse <- 응답 형식
  */
 
-import type { Error } from './api';
+import type { ErrorResponse } from './api';
 
 export type ErrorImageCode = 9000;
 
-export type ErrorMeetingResponse = Error<ErrorImageCode>;
+export type ErrorImageResponse = ErrorResponse<ErrorImageCode>;
 
 interface FormDataBody {
   name: string;
