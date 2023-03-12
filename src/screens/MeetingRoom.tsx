@@ -15,12 +15,9 @@ import { IconProps, MeetingResponse, OverayCalendarProps } from '@type/index';
 import { RootStackScreenProps } from '@type/navigation';
 import TimePicker from '@components/meeting/Timepicker';
 
-import { serverAxios } from '@api/axiosInstance';
-import generateLog from '@utils/log';
 import Label from '../components/input/Label';
-import PlaceCard from '../components/places/PlaceCard';
+import PlaceCardItem from '../components/placeCard/PlaceCardItem';
 import MemberBox from '../components/member/MemberBox';
-import AddPlaceButton from '../components/buttons/AddPlaceButton';
 
 interface DateContainerProps {
   onPressLabel: () => void;
@@ -167,20 +164,6 @@ function MeetingRoom({ navigation }: RootStackScreenProps<'MeetingRoom'>) {
       },
     ],
   };
-  const URL = `/api/v1/meetings/${10}`;
-  const log2 = generateLog('log', { time: true, hidden: false });
-  const [metaData, setMeetingMetaData] = useState({});
-  const getMeetingData = async () => {
-    const res = await serverAxios.get<MeetingResponse>(URL);
-    const { data } = res;
-  };
-
-  getMeetingData();
-  useEffect(() => {
-    navigation.setOptions({
-      title: dummyMeetingData.title,
-    });
-  }, [dummyMeetingData.title, navigation]);
 
   return (
     <>
@@ -198,14 +181,6 @@ function MeetingRoom({ navigation }: RootStackScreenProps<'MeetingRoom'>) {
             <DateContainer
               onPressOut={onPressOut}
               onPressLabel={onPressLabel}
-            />
-            <Label style={styles.coursePlaceLabel}>모임장소</Label>
-            <MapView style={styles.mapStyle} />
-            <PlaceCard data={dummyMeetingData.meetingPlaces} />
-            <AddPlaceButton
-              navigation={navigation}
-              iconName="map"
-              text={guideText}
             />
           </ScrollView>
         </View>

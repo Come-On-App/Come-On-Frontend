@@ -4,11 +4,12 @@ import { Input, SpeedDial, Switch } from '@rneui/themed';
 import { ScrollView, View } from 'react-native';
 
 import useAuth from '@hooks/useAuth';
-import { useUser } from '@hooks/useUser';
-import usePlace from '@hooks/usePlace';
+import useUserQuery from '@hooks/query/useUserQuery';
+import usePlace from '@hooks/redux/usePlace';
 import { usePromiseFlow } from '@utils/promise';
 import {
   requestCreateMeetings,
+  requestGetEntryCode,
   requestGetMeetings,
 } from '@api/meeting/meetings';
 import {
@@ -18,21 +19,14 @@ import {
   PostMeetingResponse,
 } from '@type/api.meeting';
 import { serverAxios } from '@api/axiosInstance';
-import generateLog from '@utils/log';
 import { toast } from '@utils/alert';
-import useMeetings from '@hooks/useMeetings';
+import useMeetingQuery from '@hooks/query/useMeetingQuery';
+import { requestDeleteMeeting } from '@api/meeting/members';
+import { log } from '@utils/log';
 import { setTokens } from '../api';
 import Modal from '../components/Modal';
-import Button from '../components/buttons/Buttons';
+import Button from '../components/button/Buttons';
 import { BoldFont } from '../components/Font';
-
-const log = generateLog('log', {
-  time: true,
-  hidden: false,
-  style: {
-    mode: 'dark',
-  },
-});
 
 /**
  * 여러가지 테스트를 해볼수있는 환경입니다.
@@ -67,17 +61,18 @@ function UserDevScreen({
   isVisible: boolean;
   onClose: Dispatch<SetStateAction<boolean>>;
 }) {
-  const { user, refetch: userRefetch } = useUser();
-  const { refetch: meetingRetch } = useMeetings();
+  const { setLogoin } = useAuth();
+  const { user, refetch: userRefetch } = useUserQuery();
+  const { refetch: meetingRetch } = useMeetingQuery();
   const [openLookUpMeeting, setOpenLookUpMeeting] = useState(true);
   const [state, setState] = useState({
-    userIds: user?.userId,
+    userIds: user?.userId || 0,
   });
   const [userList, setUserList] = useState([]);
   const closeModal = () => onClose(false);
 
   useEffect(() => {
-    setState({ userIds: user?.userId });
+    setState({ userIds: user?.userId || 0 });
   }, [user]);
 
   return (
@@ -140,10 +135,10 @@ function UserDevScreen({
                 ).toLocaleString();
 
                 log('토큰 만료 기한:', payload);
-                await setTokens(payload);
-
                 userRefetch();
                 meetingRetch();
+                await setTokens(payload);
+                await setLogoin();
               }}
             />
             <Button
@@ -207,39 +202,14 @@ function MapDevScreen({
   onClose: Dispatch<SetStateAction<boolean>>;
 }) {
   const closeModal = () => onClose(false);
-  const { placeState } = usePlace();
+  const { placeState, placeResetDispatch } = usePlace();
 
   if (!placeState) return null;
 
   return (
     <DevScreen isVisible={isVisible}>
       <View style={{ minHeight: 900 }}>
-        <BoldFont>address</BoldFont>
-        <Input value={placeState.address} />
-
-        <BoldFont>name</BoldFont>
-        <Input value={placeState.name} />
-
-        <BoldFont>placeId</BoldFont>
-        <Input value={placeState.placeId} />
-
-        <BoldFont>category</BoldFont>
-        <Input value={placeState.category} />
-
-        <BoldFont>description</BoldFont>
-        <Input value={placeState.description} />
-
-        <BoldFont>현재 위치(디바이스)</BoldFont>
-        <Input value={`${placeState.currentLocation?.latitude}`} />
-        <Input value={`${placeState.currentLocation?.longitude}`} />
-
-        <BoldFont>마커 위치</BoldFont>
-        <Input value={`${placeState.marker?.latitude}`} />
-        <Input value={`${placeState.marker?.longitude}`} />
-
-        <BoldFont>지도 위치</BoldFont>
-        <Input value={`${placeState.region?.latitude}`} />
-        <Input value={`${placeState.region?.longitude}`} />
+        <Button text="모임 상태 지우기" onPress={placeResetDispatch} />
 
         <Button text="닫기" onPress={closeModal} />
       </View>
@@ -259,7 +229,7 @@ function MeetingDevScreen({
 }) {
   const [openManualMeeting, setOpenManualMeeting] = useState(true);
   const [openLookUpMeeting, setOpenLookUpMeeting] = useState(true);
-  const { user } = useUser();
+  const { user } = useUserQuery();
   const [state, setState] = useState({
     meetingName: '테스트 모임 #1',
     meetingImageUrl: user?.profileImageUrl || '',
@@ -269,12 +239,12 @@ function MeetingDevScreen({
   const closeModal = () => onClose(false);
   const {
     promiseFlow: pf1,
-    isSucess: isS1,
+    isSuccess: isS1,
     data: postMeetingResponse,
   } = usePromiseFlow<PostMeetingPayload, PostMeetingResponse>();
   const {
     promiseFlow: pf2,
-    isSucess: isS2,
+    isSuccess: isS2,
     data: meetingSliceResponse,
   } = usePromiseFlow<Partial<GetMeetingPayload>, GetMeetingSliceResponse>();
 
@@ -366,8 +336,11 @@ function MeetingDevScreen({
               text="모임 생성"
               onPress={() =>
                 pf1(state, [requestCreateMeetings], {
-                  onSucess: payload => {
+                  onSuccess: payload => {
                     log('테스트게시물 아이디', payload.meetingId);
+                    requestGetEntryCode(payload.meetingId).then(code => {
+                      log('입장 코드', code);
+                    });
                   },
                 })
               }
@@ -406,7 +379,7 @@ function MeetingDevScreen({
               text="모임 리스트 조회"
               onPress={() =>
                 pf2({}, [requestGetMeetings], {
-                  onSucess: payload => {
+                  onSuccess: payload => {
                     log('모임 리스트 조회 응답값', payload);
                   },
                 })
@@ -418,6 +391,19 @@ function MeetingDevScreen({
             />
             {meetingSliceResponse && (
               <View>
+                <Button
+                  buttonStyle={{
+                    backgroundColor: 'red',
+                  }}
+                  text="모임 전체 삭제"
+                  onPress={() => {
+                    meetingSliceResponse.contents.map(contents => {
+                      return requestDeleteMeeting(contents.meetingId).then(
+                        res => log('성공', res),
+                      );
+                    });
+                  }}
+                />
                 <BoldFont>
                   총 게시물 개수: {meetingSliceResponse.contentsCount}
                 </BoldFont>

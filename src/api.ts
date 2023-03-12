@@ -80,8 +80,6 @@ export const apis = {
       .then(async response => {
         if (response.data.accessToken && response) {
           await setTokens(response.data);
-
-          return serverAxios.get(URL);
         }
 
         return response;

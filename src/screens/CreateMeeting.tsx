@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import useMeeting from '@hooks/useMeeting';
+import useMeetings from '@hooks/useMeetings';
 import { usePromiseFlow } from '@utils/promise';
 import { RootStackScreenProps } from '@type/navigation';
 import { InputTextProps } from '@type/index';
@@ -10,10 +10,10 @@ import { convertImageFormData, createImageFormData } from '@utils/image';
 import { AssetState } from '@type/hook.imagePicker';
 import apis from '../api';
 import { setMeetingName } from '../features/meetingSlice';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { useAppDispatch, useAppSelector } from '../hooks/redux/hooks';
 
-import CancelButton from '../components/buttons/CancelButton';
-import ConfirmButton from '../components/buttons/ConfirmButton';
+import CancelButton from '../components/button/CancelButton';
+import ConfirmButton from '../components/button/ConfirmButton';
 import InputForm from '../components/input/InputForm';
 
 type MeetingId = {
@@ -29,7 +29,7 @@ function CreateMeeting(
   const data = useAppSelector(state => state.meeting.meetingData);
   const imgPath = useAppSelector(state => state.meeting.meetingImgPath);
   const { meetingName, calendarStartFrom, calendarEndTo } = data;
-  const { resetMeetingData } = useMeeting();
+  const { resetMeetingData } = useMeetings();
   const cancelHandler = () => {
     navigation.goBack();
   };

@@ -3,7 +3,7 @@ import { View, KeyboardAvoidingView, Pressable, Text } from 'react-native';
 import { makeStyles } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 import Icon from '@components/Icon';
-import useMeeting from '@hooks/useMeeting';
+import useMeetings from '@hooks/useMeetings';
 import InputBox from './InputText';
 import InputImage from './InputImage';
 import { IconProps, InputFormProps } from '../../types';
@@ -12,7 +12,7 @@ import IconInputBox, { isValid } from './IconInputBox';
 
 function InputForm({ inputProps }: InputFormProps) {
   const styles = useStyles();
-  const { meetingData } = useMeeting();
+  const { meetingData } = useMeetings();
   const navigation = useNavigation();
   const placeholder = '날짜 범위를 선택해주세요';
   const value = `${meetingData.calendarStartFrom} ~ ${meetingData.calendarEndTo}`;

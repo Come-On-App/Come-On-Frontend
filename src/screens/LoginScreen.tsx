@@ -8,10 +8,10 @@ import { RootStackScreenProps } from '@type/navigation';
 import Logo from '../components/Logo';
 import KakaoLoginBtn, {
   KakaoLoginWebView,
-} from '../components/buttons/KakaoLoginBtn';
+} from '../components/button/KakaoLoginBtn';
 
 import AppleLogo from '../assets/images/logo/AppleLogo';
-import GoogleLoginBtn from '../components/buttons/GoogleLoginBtn';
+import GoogleLoginBtn from '../components/button/GoogleLoginBtn';
 
 WebBrowser.maybeCompleteAuthSession();
 
