@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { AccessTokenRes, AuthResponse, RefreshTokenRes } from '../types';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { useAppDispatch, useAppSelector } from './redux/hooks';
 import { login, logout } from '../features/authSlice';
 import { deleteValueFor, save, getValueFor } from '../utils/secureStore';
 
