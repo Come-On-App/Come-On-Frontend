@@ -1,11 +1,12 @@
 import React from 'react';
-import { StyleProp, View, ViewStyle } from 'react-native';
+import { View } from 'react-native';
 import { makeStyles } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 
-import { PlaceSelectNavigation } from '@type/navigation';
-import { BoldFont } from '../Font';
-import { SearchBarMock } from '../SearchBar';
+import type { PlaceSelectNavigation } from '@type/navigation';
+import type { SearchTitleProps } from '@type/component.placeselect';
+import { BoldFont } from '@components/Font';
+import { SearchBarMock } from '@components/SearchBar';
 
 export default function PlaceSelectSearchBar() {
   return (
@@ -16,7 +17,7 @@ export default function PlaceSelectSearchBar() {
   );
 }
 
-export function SearchTitle({ style }: { style?: StyleProp<ViewStyle> }) {
+export function SearchTitle({ style }: SearchTitleProps) {
   const SEARCH_TITLE = '장소검색';
   const styles = useStyles();
 
