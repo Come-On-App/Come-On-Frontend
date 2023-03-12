@@ -1,20 +1,26 @@
 import { View } from 'react-native';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { memo, useCallback, useEffect } from 'react';
 
-import fn from '@utils/fn';
-import { mutateStateRefToast } from '@utils/alert';
+import type {
+  ProfileImageProps,
+  ProfileNameProps,
+} from '@type/component.mypage';
+import fn, { emptyString, pickSafelyBy } from '@utils/fn';
+import { errorAlert, successAlert } from '@utils/alert';
 import { promiseFlow } from '@utils/promise';
-import useImagePath from '@hooks/useImagePicker';
+import useImagePicker from '@hooks/useImagePicker';
 import { requestImageUpload } from '@api/image/upload';
 import { makeStyles, Skeleton } from '@rneui/themed';
-import useUser from '@hooks/useUser';
-import useMutateUser from '@hooks/useMutateUser';
+import useUserQuery from '@hooks/query/useUserQuery';
+import useUserMutation from '@hooks/query/useUserMutation';
 import Font, { BoldFont } from '@components/Font';
 import BadgedAvatar from '@components/member/BadgedAvatar';
-import type { ProfileImageProps, ProfileNameProps } from '@type/mypage.profile';
+import { ErrorImageResponse } from '@type/api.image';
+
+const MemoProfileImage = memo(ProfileImage);
 
 export default function Profile() {
-  const { user } = useUser();
+  const { user } = useUserQuery();
   const styles = useStyles();
 
   if (fn.isEmpty(user)) {
@@ -23,11 +29,11 @@ export default function Profile() {
 
   return (
     <View style={styles.container}>
-      <ProfileImage
-        image={user.profileImageUrl || ''}
-        nickname={user.nickname}
+      <MemoProfileImage nickname={user.nickname} image={user.profileImageUrl} />
+      <ProfileName
+        name={user.name}
+        email={pickSafelyBy(user, 'email', emptyString)}
       />
-      <ProfileName name={user.name} email={user.email || ''} />
     </View>
   );
 }
@@ -43,37 +49,39 @@ function ProfileName({ name, email }: ProfileNameProps) {
   );
 }
 
+const Label = {
+  success: '이미지 업데이트 완료 ✏️',
+};
+
 function ProfileImage({ image, nickname }: ProfileImageProps) {
-  const [imagePath, setImagePath] = useState(image);
-  const [assetState, pickImage] = useImagePath();
+  const { mutate } = useUserMutation();
+  const [assetState, pickImage] = useImagePicker();
   const { profileImageIcon, profileAvatarImage, profileBadge } = useStyles();
-  const isImageSubmit = useRef(false);
-  const { mutate } = useMutateUser();
   const mutateFn = useCallback(
     (payalod: string) => mutate({ profileImageUrl: payalod, nickname }),
     [mutate, nickname],
   );
-  const onPressHandler = () => {
-    pickImage();
-    isImageSubmit.current = false;
-  };
 
   useEffect(() => {
-    if (fn.isEmpty(assetState) || isImageSubmit.current) return;
+    if (fn.isEmpty(assetState)) return;
 
-    setImagePath(assetState.uri);
     promiseFlow(assetState, [requestImageUpload, mutateFn], {
       onSuccess: () => {
-        mutateStateRefToast(isImageSubmit, '이미지 업데이트 완료 ✏️');
+        successAlert(Label.success);
+      },
+      onError: (error: ErrorImageResponse) => {
+        errorAlert(error.response.data.errorDescription);
+
+        throw error;
       },
     });
   }, [assetState, mutateFn]);
 
   return (
     <BadgedAvatar
-      onPress={onPressHandler}
+      onPress={pickImage}
       size={profileAvatarImage.size}
-      path={imagePath}
+      path={image}
       badge={{
         icon: {
           iconName: 'photo-camera',
@@ -88,13 +96,35 @@ function ProfileImage({ image, nickname }: ProfileImageProps) {
 
 function ProfileSkeleton() {
   const styles = useStyles();
+  const config = {
+    image: {
+      width: 56,
+      height: 56,
+    },
+    nickname: {
+      width: 49,
+      height: 18,
+    },
+    mail: {
+      width: 115,
+      height: 14,
+    },
+  };
 
   return (
     <View style={styles.container}>
-      <Skeleton circle width={56} height={56} />
+      <Skeleton
+        circle
+        width={config.image.width}
+        height={config.image.height}
+      />
       <View style={styles.profileNameContainer}>
-        <Skeleton width={49} height={24} style={styles.skeleton} />
-        <Skeleton width={115} height={20} />
+        <Skeleton
+          width={config.nickname.width}
+          height={config.nickname.height}
+          style={styles.skeleton}
+        />
+        <Skeleton width={config.mail.width} height={config.mail.height} />
       </View>
     </View>
   );
