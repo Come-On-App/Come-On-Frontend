@@ -16,9 +16,12 @@ import type {
  */
 export async function requestMeetingMembers(
   payload: GetMeetingMembersPayload,
+  signal?: AbortSignal,
 ): Promise<GetMeetingMembersListResponse> {
   const URL = `/api/v1/meetings/${payload}/members`;
-  const { data } = await serverAxios.get(URL);
+  const { data } = await serverAxios.get(URL, {
+    signal: signal || undefined,
+  });
 
   return data;
 }
