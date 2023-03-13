@@ -1,5 +1,4 @@
 import { useCallback } from 'react';
-import { AccessTokenRes } from '../types';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { login, logout, setToken } from '../features/authSlice';
 import { deleteValueFor, getValueFor } from '../utils/secureStore';
@@ -9,17 +8,6 @@ enum StoreKey {
   accessToken = 'accessToken',
 }
 
-const getAccessToken = async () => {
-  const data = await getTokenData('accessToken');
-
-  if (data !== null) {
-    data as AccessTokenRes;
-
-    return data.accessToken.token;
-  }
-
-  return null;
-};
 const getTokenData = async (name: 'accessToken' | 'refreshToken') => {
   const tokenData = await getValueFor(name);
 
@@ -31,13 +19,16 @@ const getTokenData = async (name: 'accessToken' | 'refreshToken') => {
 function useAuth() {
   const dispatch = useAppDispatch();
   const isAuth = useAppSelector(state => state.auth.haveToken);
+  const accessToken = useAppSelector(state => state.auth.accessToken);
+  const refreshToken = useAppSelector(state => state.auth.refreshToken);
+  const myId = useAppSelector(state => state.auth.userId);
   // 토큰이 있는지 없는지 검사하고, 없다면 로그아웃 시킴
   const isValidUser = useCallback(async () => {
-    const accessToken = await getTokenData(StoreKey.accessToken);
-    const refreshToken = await getTokenData(StoreKey.refreshToken);
+    const accessTkn = await getTokenData(StoreKey.accessToken);
+    const refreshTkn = await getTokenData(StoreKey.refreshToken);
 
-    if (accessToken !== null && refreshToken !== null) {
-      const data = { accessToken, refreshToken };
+    if (accessTkn !== null && refreshTkn !== null) {
+      const data = { accessToken: accessTkn, refreshToken: refreshTkn };
 
       // TODO추후 토큰 암호화해서 저장
       dispatch(setToken(data));
@@ -46,6 +37,12 @@ function useAuth() {
       dispatch(logout());
     }
   }, [dispatch]);
+  const getAccessToken = useCallback(() => {
+    return accessToken;
+  }, [accessToken]);
+  const getRefreshToken = useCallback(() => {
+    return refreshToken;
+  }, [refreshToken]);
   const setLogout = useCallback(async () => {
     await deleteValueFor(StoreKey.accessToken);
     await deleteValueFor(StoreKey.refreshToken);
@@ -57,6 +54,8 @@ function useAuth() {
     setLogout,
     isValidUser,
     getAccessToken,
+    getRefreshToken,
+    myId,
   };
 }
 
