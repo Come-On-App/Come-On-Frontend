@@ -3,18 +3,15 @@ import { ActivityIndicator, View } from 'react-native';
 import { makeStyles } from '@rneui/themed';
 
 export default function LoadingComponent({
-  size,
+  size = 'small',
 }: {
-  size?: number | 'small' | 'large' | undefined;
+  size?: number | 'small' | 'large';
 }): JSX.Element {
   const styles = useStyles();
 
   return (
     <View style={styles.loadingContainer}>
-      <ActivityIndicator size={size} color="pink" />
-      {/* <Font>
-          {year}년 {month < 10 ? `0${month}` : month}월
-        </Font> */}
+      <ActivityIndicator size={20} color="styles.loadingColor.color" />
     </View>
   );
 }
@@ -23,6 +20,8 @@ const useStyles = makeStyles(theme => ({
   loadingContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: '100%',
+  },
+  loadingColor: {
+    color: theme.colors.secondary,
   },
 }));

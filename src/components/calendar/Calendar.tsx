@@ -10,8 +10,8 @@ import {
   requestDeleteDateVoting,
 } from '@api/meeting/voting';
 
-import GenerateLog from '@utils/GenerateLog';
-import Font, { BoldFont } from '../Font';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import Font from '../Font';
 import LocaleConfig from './LocaleConfig';
 import CustomCalendarTheme, { DayTheme } from './CustomCalendarTheme';
 import {
@@ -55,11 +55,18 @@ const returnMonthDiff = (startDate: Date, endDate: Date) => {
   return monthDiff;
 };
 const renderMonth = (startDate: string, endDate: string) => {
-  const startDay = new Date(startDate);
   const endDay = new Date(endDate);
+  const startDay = new Date(startDate);
   const dayDiff = Math.floor(returnMonthDiff(startDay, endDay));
 
   return dayDiff;
+};
+const dateToKorString = (date: string) => {
+  const year = date.slice(0, 4);
+  const month = date.slice(5, 7);
+  const day = date.slice(8, 10);
+
+  return `${year}년 ${month}월 ${day}일`;
 };
 const renderSelectedDate = (
   dates: string[],
@@ -76,7 +83,7 @@ const renderSelectedDate = (
           backgroundColor: `rgba(51,127,254, ${userCounts[idx] / totalUsers})`,
         },
         text: {
-          color: 'white',
+          color: 'black',
         },
       },
     });
@@ -139,8 +146,8 @@ function setCalendarStyle(array: Array<string>) {
 
 function PeriodCalendar({ setDate }: CalendarPeriodTypeProps) {
   const styles = useStyles();
-  const [markedDate, setMarkedDate] = useState<MarkedDates>();
   const today = new Date().toISOString().substring(0, 10);
+  const [markedDate, setMarkedDate] = useState<MarkedDates>();
   const [day, setDay] = useState({ startDay: '', endDay: '' });
   const onPressDayHandlerPeriod = useCallback(
     (date: DateData) => {
@@ -164,6 +171,9 @@ function PeriodCalendar({ setDate }: CalendarPeriodTypeProps) {
         setDay({ startDay: '', endDay: '' });
         setMarkedDate({});
 
+        if (setDate)
+          setDate({ startDate: '0000-00-00', endDate: '0000-00-00' });
+
         return;
       }
 
@@ -177,7 +187,7 @@ function PeriodCalendar({ setDate }: CalendarPeriodTypeProps) {
         setMarkedDate(Object.fromEntries(periodMap.entries()));
       }
     },
-    [day],
+    [day, setDate],
   );
 
   useEffect(() => {
@@ -192,7 +202,7 @@ function PeriodCalendar({ setDate }: CalendarPeriodTypeProps) {
       onDayPress={onPressDayHandlerPeriod}
       minDate={today}
       markingType="period"
-      disableAllTouchEventsForDisabledDays
+      scrollToOverflowEnabled
       markedDates={markedDate || {}}
       nestedScrollEnabled
       pastScrollRange={0}
@@ -213,11 +223,11 @@ function DefaultCalendar({
   data,
   startFrom,
   endTo,
+  hostId,
   totalUsers,
 }: CalendarVotingTypeProps) {
   const styles = useStyles();
   const { contents, contentsCount } = data;
-  const log = GenerateLog('log', { time: true, hidden: false });
   const [meetingDates, setMeetingDates] = useState<string[]>([]);
   const [visible, setVisible] = useState<boolean>(false);
   const [meetingMemberCount, setMeetingMemberCount] = useState<number[]>([]);
@@ -229,19 +239,18 @@ function DefaultCalendar({
   const [userSelectedDate, setUserSelectedDate] =
     useState<CalenderClickEventType>();
   let month = renderMonth(startFrom, endTo) - 1;
+  const meetingId = 130;
 
   if (month <= 0) month = 0;
 
   useEffect(() => {
-    if (contentsCount !== 0) {
-      setMeetingDates(contents.map(content => content.date));
-      setMeetingMemberCount(contents.map(content => content.memberCount));
-      setMyVotingDates(
-        contents
-          .filter(content => content.myVoting === true)
-          .map(content => content.date),
-      );
-    }
+    setMeetingDates(contents.map(content => content.date));
+    setMeetingMemberCount(contents.map(content => content.memberCount));
+    setMyVotingDates(
+      contents
+        .filter(content => content.myVoting === true)
+        .map(content => content.date),
+    );
   }, [contents, contentsCount]);
 
   useEffect(() => {
@@ -255,11 +264,22 @@ function DefaultCalendar({
       const date = {
         date: e.dateString,
       };
+      const korStr = dateToKorString(date.date);
 
       if (myVotingDates.includes(date.date)) {
-        await requestDeleteDateVoting({ meetingId: 10, payload: date });
+        requestDeleteDateVoting({ meetingId, payload: date }).then(res => {
+          if (res.success) {
+            Toast.show({
+              text1: `${korStr} 에 투표가 취소되었습니다.`,
+            });
+          }
+        });
       } else {
-        await requestAddDateVoting({ meetingId: 10, payload: date });
+        requestAddDateVoting({ meetingId, payload: date }).then(res => {
+          if (res.success) {
+            Toast.show({ text1: `${korStr} 에 투표 되었습니다.` });
+          }
+        });
       }
 
       // api받아오기
@@ -268,7 +288,6 @@ function DefaultCalendar({
   );
   const onDayLongPressHandler = useCallback(
     (e: CalenderClickEventType) => {
-      // log('log', '꾹 클릭!');
       setVisible(true);
       const isSelected = meetingDates.includes(e.dateString);
 
@@ -290,10 +309,12 @@ function DefaultCalendar({
         pastScrollRange={0}
         scrollEnabled
         onDayLongPress={onDayLongPressHandler}
-        renderPlaceholder={(year, months) => <LoadingComponent />}
+        renderPlaceholder={(_year, _months) => (
+          <LoadingComponent size="large" />
+        )}
         displayLoadingIndicator={false}
         futureScrollRange={month}
-        showScrollIndicator={false}
+        showScrollIndicator
         theme={CustomCalendarTheme}
         renderHeader={date => {
           if (!date) return null;
@@ -308,9 +329,8 @@ function DefaultCalendar({
           style={{ padding: 0 }}
           overlayStyle={{ padding: 0, borderRadius: 100 }}
         >
-          {/* 방장인지 보내기, 오늘 며칠인지 보내기 */}
           {userSelected ? (
-            <DateModal date={userSelectedDate} />
+            <DateModal date={userSelectedDate} hostId={hostId || 0} />
           ) : (
             <NoUserModal date={userSelectedDate} />
           )}
@@ -331,6 +351,7 @@ function Calendar({
   startFrom,
   endTo,
   setDate,
+  hostId,
 }: CalendarProps): JSX.Element {
   const styles = useStyles();
 
@@ -348,6 +369,7 @@ function Calendar({
           totalUsers={totalUsers}
           startFrom={startFrom}
           endTo={endTo}
+          hostId={hostId}
         />
       ) : (
         <MemorizedPeriodCalendar setDate={setDate} />
@@ -363,7 +385,7 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
 
     height: '98%',
-    backgroundColor: 'none',
+    backgroundColor: 'white',
     borderRadius: 12,
   },
   calendarStyle: {
