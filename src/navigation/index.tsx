@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -13,6 +13,7 @@ import type {
 import { useUser } from '@hooks/useUser';
 import { makeStyles } from '@rneui/themed';
 
+import { ActivationState, Client } from '@stomp/stompjs';
 import KakaoLoginWebView from '../screens/KakaoLoginView';
 import MeetingRoomCalendar from '../screens/MeetingRoomCalendar';
 import useAuth from '../hooks/useAuth';
@@ -23,7 +24,7 @@ import TabTwoScreen from '../screens/TabTwoScreen';
 import CreateMeeting from '../screens/CreateMeeting';
 import TabThreeScreen from '../screens/TabThreeScreen';
 import CreateMeetingCalender from '../screens/CreateMeetingCalender';
-import WebSocketProvider from '../WebSocketProvider';
+import WebSocketProvider, { WebSocketContext } from '../WebSocketProvider';
 
 import LogoutButton from '../components/myPage/MyPageLogoutButton';
 import { createTabBarIcon, PressableIcon } from '../components/Icon';

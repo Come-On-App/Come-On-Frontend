@@ -6,6 +6,10 @@ interface ISocket {
     data: object;
   };
   votingUpdate: boolean;
+  meetingUpdate: boolean;
+  memberUpdate: boolean;
+  onlineUserUpdate: boolean;
+  onlineUserList: number[];
 }
 
 const initialState = {
@@ -14,32 +18,71 @@ const initialState = {
     data: {},
   },
   votingUpdate: false,
+  meetingUpdate: false,
+  onlineUserUpdate: false,
+  memberUpdate: false,
+  onlineUserList: [],
 };
 const socketSlice = createSlice({
   name: 'socket',
-  initialState: initialState as ISocket,
+  initialState: initialState as unknown as ISocket,
   reducers: {
     onMessage: (state, action) => {
       const message = action.payload;
-      const { meetingResourceType } = message;
+      const { messageType, data } = message;
 
-      console.log('111111111111');
-      console.log(meetingResourceType);
-      switch (meetingResourceType) {
-        case 'MEETING_VOTING':
-          state.votingUpdate = true;
-          break;
+      console.log(`messageType${messageType}`);
+      console.log(data);
 
-        default:
-          break;
+      if (messageType !== 'RESOURCE_UPDATED_EVENT') {
+        state.onlineUserUpdate = true;
+        state.memberUpdate = true;
+        state.onlineUserList = data.userIds;
+
+        return;
       }
+
+      if (messageType === 'RESOURCE_UPDATED_EVENT')
+        switch (data.meetingResourceType) {
+          case 'MEETING_VOTING':
+            state.votingUpdate = true;
+            break;
+          case 'SUBSCRIBE_MEETING_EVENT':
+            state.meetingUpdate = true;
+            break;
+          case 'UNSUBSCRIBE_MEETING_EVENT':
+            state.meetingUpdate = true;
+            break;
+
+          case 'MEETING_MEMBERS':
+            state.memberUpdate = true;
+            break;
+
+          default:
+            break;
+        }
     },
     setVotingUpdateEnd: state => {
       state.votingUpdate = false;
     },
+    setMeetingUpdateEnd: state => {
+      state.meetingUpdate = false;
+    },
+    setMemberUpdateEnd: state => {
+      state.memberUpdate = false;
+    },
+    setOnlineUserUpdateEnd: state => {
+      state.onlineUserUpdate = false;
+    },
   },
 });
 
-export const { onMessage, setVotingUpdateEnd } = socketSlice.actions;
+export const {
+  onMessage,
+  setVotingUpdateEnd,
+  setMeetingUpdateEnd,
+  setMemberUpdateEnd,
+  setOnlineUserUpdateEnd,
+} = socketSlice.actions;
 
 export default socketSlice.reducer;

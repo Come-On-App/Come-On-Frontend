@@ -15,9 +15,9 @@ function CancelIconButton() {
     const { name } = temp!;
 
     if (
-      (name === 'MeetingRoom' &&
-        client !== undefined &&
-        client!.current?.state) === ActivationState.ACTIVE
+      name === 'MeetingRoom' &&
+      client !== undefined &&
+      client!.current?.state === ActivationState.ACTIVE
     ) {
       client?.current?.deactivate();
     }
@@ -36,7 +36,7 @@ function CancelIconButton() {
 
 export default CancelIconButton;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   cancelIcon: {
     color: 'black',
     fontSize: 24,

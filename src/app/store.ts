@@ -2,12 +2,14 @@ import { configureStore } from '@reduxjs/toolkit';
 import placeSlice from '../features/placeSlice';
 import authReducer from '../features/authSlice';
 import meetingReducer from '../features/meetingSlice';
+import socketReducer from '../features/socketSlice';
 
 export const store = configureStore({
   reducer: {
     placeReducer: placeSlice,
     auth: authReducer,
     meeting: meetingReducer,
+    socket: socketReducer,
   },
 });
 
