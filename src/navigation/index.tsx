@@ -24,7 +24,7 @@ import TabTwoScreen from '../screens/TabTwoScreen';
 import CreateMeeting from '../screens/CreateMeeting';
 import TabThreeScreen from '../screens/TabThreeScreen';
 import CreateMeetingCalender from '../screens/CreateMeetingCalender';
-import WebSocketProvider, { WebSocketContext } from '../WebSocketProvider';
+import WebSocketProvider from '../WebSocketProvider';
 
 import LogoutButton from '../components/myPage/MyPageLogoutButton';
 import { createTabBarIcon, PressableIcon } from '../components/Icon';

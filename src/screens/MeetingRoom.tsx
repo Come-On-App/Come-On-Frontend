@@ -13,15 +13,12 @@ import {
 } from '@api/meeting/meetings';
 import { useNavigation } from '@react-navigation/native';
 import GenerateLog from '@utils/GenerateLog';
-import { useAppDispatch, useAppSelector } from '@app/hooks';
+import { useAppDispatch } from '@app/hooks';
 
-import {
-  onMessage,
-  setMeetingUpdateEnd,
-  setMemberUpdateEnd,
-} from '@features/socketSlice';
+import { setMeetingUpdateEnd, setMemberUpdateEnd } from '@features/socketSlice';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import DateContainer from '@components/meeting/DateContainer';
+import useSocketMeeting from '@hooks/useSockerMeeting';
 import WebSocketProvider, { WebSocketContext } from '../WebSocketProvider';
 import Label from '../components/input/Label';
 import PlaceCard from '../components/places/PlaceCard';
@@ -130,10 +127,9 @@ function MeetingRoom({ navigation }: RootStackScreenProps<'MeetingRoom'>) {
     useContext<React.MutableRefObject<Client>>(WebSocketContext).current;
   const log = GenerateLog('log', { time: true, hidden: false });
   const [meetingData, setMeetingData] = useState<GetMeetingDetailResponse>();
-  const MEETING_UPDATE = useAppSelector(state => state.socket.meetingUpdate);
-  const MEMBER_UPDATE = useAppSelector(state => state.socket.memberUpdate);
+  const { MEETING_UPDATE, MEMBER_UPDATE, onMessage } = useSocketMeeting();
   const onPressLabel = () => {
-    navi.navigate('MeetingRoomCalendar', {});
+    navi.navigate('MeetingRoomCalendar');
   };
   const onPressOut = (
     openTime: boolean,
@@ -179,7 +175,7 @@ function MeetingRoom({ navigation }: RootStackScreenProps<'MeetingRoom'>) {
           log('log', frame);
           const data = await JSON.parse(frame.body);
 
-          dispatch(onMessage(data));
+          onMessage(data);
         },
       );
     };

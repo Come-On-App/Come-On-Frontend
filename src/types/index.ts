@@ -169,7 +169,6 @@ export interface AuthResponse {
   refreshToken: {
     token: string;
     expiry: number;
-    userId: number;
   };
 }
 

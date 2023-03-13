@@ -22,7 +22,6 @@ function useAuth() {
   const accessToken = useAppSelector(state => state.auth.accessToken);
   const refreshToken = useAppSelector(state => state.auth.refreshToken);
   const myId = useAppSelector(state => state.auth.userId);
-  // 토큰이 있는지 없는지 검사하고, 없다면 로그아웃 시킴
   const isValidUser = useCallback(async () => {
     const accessTkn = await getTokenData(StoreKey.accessToken);
     const refreshTkn = await getTokenData(StoreKey.refreshToken);
@@ -34,6 +33,7 @@ function useAuth() {
       dispatch(setToken(data));
       dispatch(login());
     } else {
+      // 토큰이 유효하지 않으면 로그아웃 시켜야함 .
       dispatch(logout());
     }
   }, [dispatch]);

@@ -15,7 +15,7 @@
 
 import type { ErrorResponse } from './api';
 
-export type ErrorUserCode = 2500 | 2501 | 2600 | 2601 | 2602;
+export type ErrorUserCode = 2500 | 2501 | 2600 | 2601 | 2602 | 4002;
 
 export type ErrorMeetingResponse = ErrorResponse<ErrorUserCode>;
 
@@ -40,4 +40,25 @@ export interface PutMyInfoPayload {
 // PUT /api/v1/users/me (response)
 export interface PutMyInfoResponse {
   success: boolean;
+}
+
+// POST /api/v1/auth/reissue (payload)
+export interface PostReissuePayload {
+  refreshToken: {
+    token: string;
+    expiry: number;
+  };
+}
+
+// POST /api/v1/auth/reissue (response)
+export interface PostReissueResponse extends ErrorMeetingResponse {
+  accessToken: {
+    token: string;
+    expiry: number;
+    userId: number;
+  };
+  refreshToken: {
+    token: string;
+    expiry: number;
+  };
 }

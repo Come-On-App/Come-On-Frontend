@@ -1,10 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import {
-  GOOGLE_PLACES_API_KEY,
-  GOOGLE_PLACES_API,
-  COMEON_API,
-  SERVER_ADDRESS,
-} from '@env';
+import { GOOGLE_PLACES_API_KEY, GOOGLE_PLACES_API, COMEON_API } from '@env';
 
 const googleMapConfig: AxiosRequestConfig = {
   baseURL: GOOGLE_PLACES_API,
