@@ -8,12 +8,19 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 import { ThemeProvider } from '@rneui/themed';
 
+import * as encoding from 'text-encoding';
 import { store } from './src/app/store';
 import Navigation from './src/navigation';
 import { queryClient } from './src/api/queryClient';
 import useCachedResources from './src/hooks/useCachedResources';
 import theme from './src/constants/themed';
 
+const TextEncodingPolyfill = encoding;
+
+Object.assign(global, {
+  TextEncoder: TextEncodingPolyfill.TextEncoder,
+  TextDecoder: TextEncodingPolyfill.TextDecoder,
+});
 export default function App() {
   const isLoadingComplete = useCachedResources();
 

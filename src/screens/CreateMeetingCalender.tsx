@@ -30,7 +30,6 @@ function SubLabelDate({ date }: SubDateProps) {
 
 function CreateMeetingCalender({
   navigation,
-  route,
 }: RootStackScreenProps<'CreateMeetingCalender'>) {
   const styles = useStyles();
   const dispatch = useAppDispatch();

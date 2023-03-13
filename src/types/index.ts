@@ -119,6 +119,10 @@ export type AnimationViewType = {
   AnimationView: ({ children, id }: Type<Ids>) => JSX.Element;
 };
 
+export interface ImageAnimationProps extends AnimationViewType {
+  id: Ids;
+}
+
 export interface InputFormAnimProps {
   inputProps: InputTextProps;
   AnimationView: ({ children, id }: Type<Ids>) => JSX.Element;
@@ -269,6 +273,7 @@ export type CalendarProps = {
   totalUsers?: number;
   startFrom?: string;
   endTo?: string;
+  hostId?: number;
   setDate?: React.Dispatch<
     React.SetStateAction<{
       startDate: string;
@@ -290,6 +295,7 @@ export interface CalendarVotingTypeProps {
   startFrom: string;
   endTo: string;
   totalUsers: number;
+  hostId?: number;
   setDate?: React.Dispatch<
     React.SetStateAction<{
       startDate: string;
@@ -429,7 +435,8 @@ export interface BadgedAvatarProps extends AvatarProps {
     icon: Icon;
     backgroundColor: string;
   };
-  onPress: () => void;
+
+  onPress?: () => void;
 }
 
 // TabBar

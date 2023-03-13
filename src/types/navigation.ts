@@ -25,6 +25,10 @@ export type PlaceSelectParamList = {
   Map: undefined;
 };
 
+export type RoomCalendarParamList = {
+  hostId: undefined;
+};
+
 export type PlaceSelectScreen = NativeStackScreenProps<PlaceSelectParamList>;
 
 export type PlaceSelectNavigation = PlaceSelectScreen['navigation'];
@@ -35,7 +39,7 @@ export type RootStackParamList = {
   CreateMeeting: undefined;
   PlaceSelect: NavigatorScreenParams<PlaceSelectParamList> | undefined;
   CreateMeetingCalender: undefined;
-  MeetingRoomCalendar: undefined;
+  MeetingRoomCalendar: NavigatorScreenParams<RoomCalendarParamList> | undefined;
   LoginScreen: undefined;
   KakaoLoginWebView: undefined;
 };
