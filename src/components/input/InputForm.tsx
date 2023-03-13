@@ -1,60 +1,41 @@
 import React, { useState } from 'react';
-import { View, KeyboardAvoidingView, Pressable } from 'react-native';
-import { makeStyles } from '@rneui/themed';
-import { useNavigation } from '@react-navigation/native';
-import useMeeting from '@hooks/useMeeting';
-import { useAppDispatch } from '@app/hooks';
-import { setMeetingName } from '@features/meetingSlice';
 import {
   AnimationViewType,
   IconProps,
-  InputFormAnimProps,
+  ImageAnimationProps,
   InputTextProps,
 } from '@type/index';
-import { InputBoxMain, InputBoxTop } from './InputText';
-import InputImage from './InputImage';
+
+import useMeeting from '@hooks/useMeeting';
+import { makeStyles } from '@rneui/themed';
+import { useNavigation } from '@react-navigation/native';
+import { View, KeyboardAvoidingView, Pressable } from 'react-native';
+
 import Font from '../Font';
+import InputImage from './InputImage';
 import IconInputBox, { isValid } from './IconInputBox';
-
-function AnimationInputBox({ inputProps, AnimationView }: InputFormAnimProps) {
-  const { label, placeholder, maxLength, onChangeText, value, multiline } =
-    inputProps;
-
-  return (
-    <View>
-      <InputBoxTop label={label} maxLength={maxLength} text={value} />
-      <AnimationView id="name">
-        <InputBoxMain
-          value={value}
-          maxLength={maxLength}
-          multiline={multiline}
-          placeholder={placeholder}
-          onChangeText={onChangeText}
-        />
-      </AnimationView>
-    </View>
-  );
-}
+import { AnimationInputBox } from './InputText';
 
 function InputForm({ AnimationView }: AnimationViewType) {
-  const [name, setName] = useState('');
-  const dispatch = useAppDispatch();
   const styles = useStyles();
-  const { meetingData } = useMeeting();
   const navigation = useNavigation();
+  const [name, setName] = useState<string>('');
+  const { meetingData, setMyMeetingName } = useMeeting();
+  const dates = `${meetingData.calendarStartFrom} ~ ${meetingData.calendarEndTo}`;
   const placeholder = '날짜 범위를 선택해주세요';
-  const value = `${meetingData.calendarStartFrom} ~ ${meetingData.calendarEndTo}`;
   const iconConfig: IconProps = {
     name: 'calendar-today',
     size: 24,
     color: styles.iconColor.color,
   };
+
+  function onChangeHandler(text: string) {
+    setName(text);
+    setMyMeetingName(text);
+  }
+
   const onPressLabel = () => {
     navigation.navigate('CreateMeetingCalender');
-  };
-  const onChangeHandler = (text: string) => {
-    setName(text);
-    dispatch(setMeetingName(text));
   };
   const inputProps: InputTextProps = {
     label: '모임이름',
@@ -67,28 +48,33 @@ function InputForm({ AnimationView }: AnimationViewType) {
 
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
-      <AnimationView id="image">
-        <InputImage />
-      </AnimationView>
+      <InputImgaeWithAinm AnimationView={AnimationView} id="image" />
       <AnimationInputBox
         inputProps={inputProps}
         AnimationView={AnimationView}
       />
       <View style={styles.inputContainer}>
         <Font style={styles.title}>모임 캘린더</Font>
-
         <AnimationView id="date">
           <Pressable style={styles.inputContainer} onPress={onPressLabel}>
             <IconInputBox
               iconConfig={iconConfig}
               condition={isValid(meetingData.calendarStartFrom)}
-              value={value}
+              value={dates}
               placeholder={placeholder}
             />
           </Pressable>
         </AnimationView>
       </View>
     </KeyboardAvoidingView>
+  );
+}
+
+export function InputImgaeWithAinm({ AnimationView, id }: ImageAnimationProps) {
+  return (
+    <AnimationView id={id}>
+      <InputImage />
+    </AnimationView>
   );
 }
 
@@ -104,33 +90,7 @@ const useStyles = makeStyles(theme => ({
   inputContainer: {
     marginTop: 12,
   },
-  inputBoxStyle: {
-    textAlignVertical: 'center',
-  },
   iconColor: {
     color: theme.grayscale['500'],
-  },
-  subLabelStyle: {
-    color: theme.grayscale[700],
-    lineHeight: theme.textStyles.body1.lineHeight,
-    fontSize: theme.textStyles.body1.fontSize,
-    fontWeight: 'normal', // TODO 추후 normal Weight로 재설정
-  },
-  labelContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 12,
-    marginTop: 12,
-  },
-  overlayStyle: {
-    width: '90%',
-    margin: 0,
-    padding: 0,
-    backgroundColor: 'rgba(52, 52, 52, 0)',
-  },
-  calendarViewStyle: {
-    width: '100%',
-    height: 700,
   },
 }));

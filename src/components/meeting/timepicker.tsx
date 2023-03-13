@@ -27,10 +27,15 @@ function renderItem(
   ));
 }
 
+function returnTimeMM(mm: number) {
+  return mm < 10 ? `0${mm}` : `${mm}`;
+}
+
 function Item({ children, handler }: ItemProps) {
   const styles = useStyles();
+  const mm = returnTimeMM(children);
   const onPressClick = () => {
-    handler(children < 10 ? `0${children}` : `${children}`);
+    handler(mm);
   };
 
   return (
@@ -41,9 +46,7 @@ function Item({ children, handler }: ItemProps) {
         pressed && styles.datePressed,
       ]}
     >
-      <Text style={styles.fontColor}>
-        {children < 10 ? `0${children}` : children}
-      </Text>
+      <Text style={styles.fontColor}>{mm}</Text>
     </Pressable>
   );
 }
@@ -58,7 +61,7 @@ function TimePickerList({ arrayItem, setItem }: TimePickerListProps) {
   );
 }
 
-function TimePicker({ onPressOut }: TimePickerProps) {
+function TimePicker({ startTime, onPressOut }: TimePickerProps) {
   const [visible, setVisible] = useState(false);
   const [dropBoxTop, setDropBoxTop] = useState<number>(0);
   const [minute, setMinute] = useState('');
@@ -77,8 +80,18 @@ function TimePicker({ onPressOut }: TimePickerProps) {
   };
 
   useEffect(() => {
-    onPressOut(visible, setVisible);
-  }, [onPressOut, visible]);
+    const time = `${hour}:${minute}`;
+
+    onPressOut(visible, setVisible, time);
+  }, [hour, minute, onPressOut, visible]);
+
+  useEffect(() => {
+    const h = startTime.slice(0, 2);
+    const m = startTime.slice(3, 5);
+
+    setHour(h);
+    setMinute(m);
+  }, [startTime]);
 
   return (
     <>
@@ -96,7 +109,7 @@ function TimePicker({ onPressOut }: TimePickerProps) {
         />
       </Pressable>
       {visible && (
-        <View style={[styles.dropdown, { top: dropBoxTop - 2 }]}>
+        <View style={[styles.dropdown, styles.dropdownStyle]}>
           <TimePickerList arrayItem={timeHours} setItem={setHour} />
           <Font>:</Font>
           <TimePickerList arrayItem={timeMinutes} setItem={setMinute} />
@@ -117,6 +130,9 @@ const useStyles = makeStyles((theme, dropBoxTop: number) => ({
   dateBoxContainer: {
     flexDirection: 'row',
     marginTop: 12,
+  },
+  dropdownStyle: {
+    top: dropBoxTop - 2,
   },
   dateBox: { justifyContent: 'center' },
 
@@ -143,7 +159,8 @@ const useStyles = makeStyles((theme, dropBoxTop: number) => ({
     borderRadius: 4,
     borderColor: theme.grayscale['200'],
     padding: 12,
-
+    backgroundColor: 'white',
+    zIndex: 10,
     alignItems: 'center',
   },
 }));

@@ -1,42 +1,55 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@rneui/themed';
 import { TextInput, View } from 'react-native';
 
-import useAnimationBounce from '@hooks/useAnim';
-import { useAppDispatch, useAppSelector } from '@app/hooks';
-import { setMeetingName } from '@features/meetingSlice';
 import { BoldFont, Font } from '../Font';
 import type {
   InputProps,
   InputTopProps,
   InputBoxTopTitleProps,
   InputBoxTopTextLengthProps,
+  InputBoxProps,
+  InputFormAnimProps,
 } from '../../types';
 
-export default function InputBox({
-  AnimView,
-  inputProps,
-}: any & { AnimView: any }) {
+export default function InputBox({ config }: InputBoxProps) {
   const { label, placeholder, maxLength, onChangeText, value, multiline } =
-    inputProps;
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(setMeetingName(value));
-  }, [dispatch, value]);
+    config;
 
   return (
     <View>
       <InputBoxTop label={label} maxLength={maxLength} text={value} />
-      <AnimView id="name">
+      <InputBoxMain
+        value={value}
+        maxLength={maxLength}
+        multiline={multiline}
+        placeholder={placeholder}
+        onChangeText={onChangeText}
+      />
+    </View>
+  );
+}
+
+export function AnimationInputBox({
+  inputProps,
+  AnimationView,
+}: InputFormAnimProps) {
+  const { label, placeholder, maxLength, onChangeText, value, multiline } =
+    inputProps;
+
+  return (
+    <View>
+      <InputBoxTop label={label} maxLength={maxLength} text={value} />
+      <AnimationView id="name">
         <InputBoxMain
           value={value}
           maxLength={maxLength}
           multiline={multiline}
           placeholder={placeholder}
           onChangeText={onChangeText}
+          style={{ textAlignVertical: 'center' }}
         />
-      </AnimView>
+      </AnimationView>
     </View>
   );
 }
@@ -53,7 +66,8 @@ export function InputBoxTop({ label, text, maxLength }: InputTopProps) {
 }
 
 export function InputBoxMain(props: InputProps) {
-  const { value, maxLength, multiline, placeholder, onChangeText } = props;
+  const { value, maxLength, multiline, placeholder, onChangeText, style } =
+    props;
   const styles = useStyles();
 
   return (
@@ -64,6 +78,7 @@ export function InputBoxMain(props: InputProps) {
         multiline={multiline}
         placeholder={placeholder}
         onChangeText={onChangeText}
+        style={style}
       />
     </View>
   );
@@ -94,8 +109,9 @@ export function InputBoxTopTextLength({
   );
 }
 
-function Input(props: InputProps) {
-  const { value, maxLength, onChangeText, placeholder, multiline } = props;
+export function Input(props: InputProps) {
+  const { value, maxLength, onChangeText, placeholder, multiline, style } =
+    props;
   const styles = useStyles();
 
   return (
@@ -105,7 +121,7 @@ function Input(props: InputProps) {
       multiline={multiline}
       placeholder={placeholder}
       onChangeText={onChangeText}
-      style={[styles.meetingNoteInput, multiline && styles.multiline]}
+      style={[styles.meetingNoteInput, multiline && styles.multiline, style]}
       placeholderTextColor={styles.meetingNoteInput.placeholder}
     />
   );
@@ -137,5 +153,13 @@ const useStyles = makeStyles(theme => ({
   multiline: {
     minHeight: 100,
     maxHeight: 100,
+  },
+  dateContainer: {
+    padding: 14,
+    borderWidth: 1,
+    borderRadius: 4,
+    flexDirection: 'row',
+    textAlignVertical: 'center',
+    borderColor: theme.grayscale['200'],
   },
 }));

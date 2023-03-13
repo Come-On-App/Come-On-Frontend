@@ -8,8 +8,6 @@ import { RootStackScreenProps } from '@type/navigation';
 
 import useAnimationBounce from '@hooks/useAnim';
 import { requestCreateMeetings } from '@api/meeting/meetings';
-import GenerateLog from '@utils/GenerateLog';
-import { useAppSelector } from '../app/hooks';
 import imageUpload, { AssetState } from '../utils/imageUpload';
 
 import CancelButton from '../components/buttons/CancelButton';
@@ -19,19 +17,28 @@ import InputForm from '../components/input/InputForm';
 type MeetingId = {
   meetingId: number;
 };
+enum AnimKey {
+  name = 'name',
+  image = 'image',
+  date = 'date',
+}
 
 function CreateMeeting(
   this: typeof CreateMeeting,
   { navigation }: RootStackScreenProps<'CreateMeeting'>,
 ) {
-  const log2 = GenerateLog('log', { time: true, hidden: false });
-  const data = useAppSelector(state => state.meeting.meetingData);
-  const imgPath = useAppSelector(state => state.meeting.meetingImgPath);
-  const { meetingName, calendarStartFrom, calendarEndTo } = data;
+  const { meetingData, meetingImgPath } = useMeeting();
+  const { meetingName, calendarStartFrom, calendarEndTo } = meetingData;
   const { resetMeetingData } = useMeeting();
   const cancelHandler = () => {
     navigation.goBack();
   };
+
+  const { trigger, AnimationBounceView } = useAnimationBounce([
+    'name',
+    'image',
+    'date',
+  ]);
 
   const {
     error,
@@ -51,37 +58,30 @@ function CreateMeeting(
     }
   }, [datas, error, isError, isSuccess, navigation, resetMeetingData]);
 
-  const ids = ['name', 'image', 'date'];
-  const { trigger, AnimationBounceView } = useAnimationBounce([
-    'name',
-    'image',
-    'date',
-  ]);
-
   const onPressConfirm = useCallback(() => {
-    if (imgPath?.uri == null) {
-      trigger('image');
+    if (meetingImgPath?.uri == null) {
+      trigger(AnimKey.image);
     } else if (meetingName === '') {
-      trigger('name');
+      trigger(AnimKey.name);
     } else if (calendarStartFrom === '' && calendarEndTo === '') {
-      trigger('date');
+      trigger(AnimKey.date);
     } else {
       const then2 = (imgUrl: string) => {
-        const meetingData = {
+        const data = {
           meetingName,
           meetingImageUrl: imgUrl,
           calendarStartFrom,
           calendarEndTo,
         };
 
-        return meetingData;
+        return data;
       };
-      promiseFlow(imgPath!, [imageUpload, then2, requestCreateMeetings]);
+      promiseFlow(meetingImgPath!, [imageUpload, then2, requestCreateMeetings]);
     }
   }, [
     calendarEndTo,
     calendarStartFrom,
-    imgPath,
+    meetingImgPath,
     meetingName,
     promiseFlow,
     trigger,
