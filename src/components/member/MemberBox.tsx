@@ -182,7 +182,6 @@ function MemberBox({ hostId }: MemberBoxProps) {
       setMeetingUsers(res.contents);
     });
   }, []);
-
   const renderAvatar = (users: Members[]) => {
     return users.map(item => (
       <MemberAvatar

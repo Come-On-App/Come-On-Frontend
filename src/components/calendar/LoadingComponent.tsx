@@ -11,7 +11,7 @@ export default function LoadingComponent({
 
   return (
     <View style={styles.loadingContainer}>
-      <ActivityIndicator size={20} color="styles.loadingColor.color" />
+      <ActivityIndicator size={20} color={styles.loadingColor.color} />
     </View>
   );
 }

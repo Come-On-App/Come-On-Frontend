@@ -7,13 +7,13 @@ import { GetSocketResponse } from '@type/meeting.socket';
 
 export default function useSocketMeeting() {
   const dispatch = useAppDispatch();
-  const ONLINE_UPDATE = useAppSelector(state => state.socket.onlineUserUpdate);
-  const MEMBER_UPDATE = useAppSelector(state => state.socket.memberUpdate);
-  const onlineUserList = useAppSelector(state => state.socket.onlineUserList);
-  const MEETING_UPDATE = useAppSelector(state => state.socket.meetingUpdate);
-  const totalMemberCounts = useAppSelector(
-    state => state.meeting.totalMeetingMembers,
-  );
+  const socketAppSelector = useAppSelector(state => state.socket);
+  const meetingAppSelector = useAppSelector(state => state.meeting);
+  const ONLINE_UPDATE = socketAppSelector.onlineUserUpdate;
+  const MEMBER_UPDATE = socketAppSelector.memberUpdate;
+  const { onlineUserList } = socketAppSelector;
+  const MEETING_UPDATE = socketAppSelector.meetingUpdate;
+  const totalMemberCounts = meetingAppSelector.totalMeetingMembers;
   const onlineUserUpdateEnd = () => dispatch(setOnlineUserUpdateEnd());
   const onMessage = (data: GetSocketResponse) => {
     dispatch(onMessageRdx(data));

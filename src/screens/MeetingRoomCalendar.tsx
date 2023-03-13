@@ -82,7 +82,7 @@ function MeetingRoomCalendar() {
 
 export default MeetingRoomCalendar;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   container: {
     flex: 1,
     padding: 20,

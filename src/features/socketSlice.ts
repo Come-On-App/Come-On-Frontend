@@ -31,9 +31,6 @@ const socketSlice = createSlice({
       const message = action.payload;
       const { messageType, data } = message;
 
-      console.log(`messageType${messageType}`);
-      console.log(data);
-
       if (messageType !== 'RESOURCE_UPDATED_EVENT') {
         state.onlineUserUpdate = true;
         state.memberUpdate = true;

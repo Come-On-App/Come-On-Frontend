@@ -3,7 +3,6 @@ import type {
   DeleteDateVotingPayload,
   DeleteDateVotingResponse,
   GetDateVotingPayload,
-  GetDateVotingListResponse,
   PostDateVotingPayload,
   PostDateVotingResponse,
   GetDateVotingDetailsPayload,

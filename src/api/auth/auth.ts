@@ -72,7 +72,7 @@ export const setLogin = async (data: SocialLoginProps) => {
   return res;
 };
 
-//  todo 만료 테스트 하기
+//  만료 테스트 하기
 export const postRefreshToken = async () => {
   const refreshTokens = await getValueFor(StoreKey.refreshToken);
   const refreshToken = refreshTokens && JSON.parse(refreshTokens);

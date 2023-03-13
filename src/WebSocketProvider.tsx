@@ -1,7 +1,7 @@
 import { useAppSelector } from '@app/hooks';
 import { REACT_APP_SOCKET_SERVER } from '@env';
-import useAuth from '@hooks/useAuth';
 import { Client } from '@stomp/stompjs';
+import GenerateLog from '@utils/GenerateLog';
 import React, { useRef, useState, useEffect } from 'react';
 
 const WebSocketContext = React.createContext<any>(null);
@@ -9,9 +9,9 @@ const WebSocketContext = React.createContext<any>(null);
 export { WebSocketContext };
 
 export default function ({ children }: { children: React.ReactNode }) {
-  const { getAccessToken } = useAuth();
   const token = useAppSelector(state => state.auth.accessToken?.token);
   const client = useRef<Client>();
+  const log = GenerateLog('log');
 
   useEffect(() => {
     const stompConfig = {
@@ -28,18 +28,18 @@ export default function ({ children }: { children: React.ReactNode }) {
     if (!client.current && token) {
       client.current = new Client(stompConfig);
       client.current.onConnect = () => {
-        console.log(`connected to ${stompConfig.brokerURL}`);
+        log('log', `connected to ${stompConfig.brokerURL}`);
       };
       client.current.onDisconnect = error => {
-        console.log(`disconnected to  ${stompConfig.brokerURL}`);
-        console.log(error);
+        log('log', `disconnected to  ${stompConfig.brokerURL}`);
+        log('log', error);
       };
-      client.current.onDisconnect = error => {
-        console.log(`error to  ${stompConfig.brokerURL}`);
-        console.log(error);
+      client.current.onStompError = error => {
+        log('log', `error to  ${stompConfig.brokerURL}`);
+        log('log', error);
       };
     }
-  }, [token]);
+  }, [log, token]);
 
   return (
     <WebSocketContext.Provider value={client}>

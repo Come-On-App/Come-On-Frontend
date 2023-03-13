@@ -37,7 +37,7 @@ export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList>;
   MeetingRoom: undefined;
   CreateMeeting: undefined;
-  PlaceSelect: NavigatorScreenParams<PlaceSelectParamList> | undefined;
+  PlaceSelect: NavigatorScreenParams<PlaceSelectParamList>;
   CreateMeetingCalender: undefined;
   MeetingRoomCalendar: NavigatorScreenParams<RoomCalendarParamList> | undefined;
   LoginScreen: undefined;
