@@ -8,15 +8,13 @@ import { RootStackScreenProps } from '@type/navigation';
 
 import useAnimationBounce from '@hooks/useAnim';
 import { requestCreateMeetings } from '@api/meeting/meetings';
+import { MeetingId } from '@type/meeting.create';
 import imageUpload, { AssetState } from '../utils/imageUpload';
 
 import CancelButton from '../components/buttons/CancelButton';
 import ConfirmButton from '../components/buttons/ConfirmButton';
 import InputForm from '../components/input/InputForm';
 
-type MeetingId = {
-  meetingId: number;
-};
 enum AnimKey {
   name = 'name',
   image = 'image',

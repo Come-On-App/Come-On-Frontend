@@ -11,7 +11,7 @@ import { requestConfirmMeetingDate } from '@api/meeting/confirm';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 import useAuth from '@hooks/useAuth';
-import useSocketMeeting from '@hooks/useSockerMeeting';
+import useSocketMeeting from '@hooks/useSocketMeeting';
 import LoadingComponent from './LoadingComponent';
 
 function returnDotDate(date: CalenderClickEventType) {

@@ -5,25 +5,25 @@ import { makeStyles, Skeleton } from '@rneui/themed';
 import { Client } from '@stomp/stompjs';
 import MapView from 'react-native-maps';
 
-import { RootStackScreenProps } from '@type/navigation';
-import { GetMeetingDetailResponse } from '@type/api.meeting';
 import {
   requestGetMeetingDetail,
   requestPostMeetingTime,
 } from '@api/meeting/meetings';
-import { useNavigation } from '@react-navigation/native';
 import GenerateLog from '@utils/GenerateLog';
 import { useAppDispatch } from '@app/hooks';
+import { RootStackScreenProps } from '@type/navigation';
+import { GetMeetingDetailResponse } from '@type/api.meeting';
+import { useNavigation } from '@react-navigation/native';
 
 import { setMeetingUpdateEnd, setMemberUpdateEnd } from '@features/socketSlice';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import DateContainer from '@components/meeting/DateContainer';
-import useSocketMeeting from '@hooks/useSockerMeeting';
-import WebSocketProvider, { WebSocketContext } from '../WebSocketProvider';
+import useSocketMeeting from '@hooks/useSocketMeeting';
 import Label from '../components/input/Label';
 import PlaceCard from '../components/places/PlaceCard';
 import MemberBox from '../components/member/MemberBox';
 import AddPlaceButton from '../components/buttons/AddPlaceButton';
+import WebSocketProvider, { WebSocketContext } from '../WebSocketProvider';
 
 function MeetingRoomSkeleton() {
   const styles = useStyles();
