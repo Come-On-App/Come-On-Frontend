@@ -11,9 +11,9 @@ import {
 import CancelButton from '../components/buttons/CancelButton';
 import ConfirmButton from '../components/buttons/ConfirmButton';
 
-import Calendar from '../components/calendar/Calendar';
 import Font from '../components/Font';
 import { useAppDispatch } from '../app/hooks';
+import Calendar from '../components/calendar/Calendar';
 
 function SubLabelDate({ date }: SubDateProps) {
   const { startDate, endDate } = date;

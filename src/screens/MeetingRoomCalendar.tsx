@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { View, TouchableWithoutFeedback } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View } from 'react-native';
 import { makeStyles } from '@rneui/themed';
 import Calendar from '@components/calendar/Calendar';
 
@@ -9,15 +9,11 @@ import {
 } from '@type/api.meeting';
 
 import { requestGetMeetingDetail } from '@api/meeting/meetings';
-import { RouteProp, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { requestGetDateVoting } from '@api/meeting/voting';
 import LoadingComponent from '@components/calendar/LoadingComponent';
-import { Client } from '@stomp/stompjs';
 import { useAppDispatch, useAppSelector } from '@app/hooks';
 import { setVotingUpdateEnd } from '@features/socketSlice';
-import { RootStackParamList } from '@type/navigation';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { WebSocketContext } from '../WebSocketProvider';
 import Label from '../components/input/Label';
 import MemberBox from '../components/member/MemberBox';
 
@@ -27,7 +23,6 @@ function MeetingRoomCalendar() {
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
   const VOTING_UPDATE = useAppSelector(state => state.socket.votingUpdate);
-  const [closeTime, setCloseTime] = useState(false);
   const [meetingData, setMeetingData] = useState<GetMeetingDetailResponse>();
   const [votingData, setVotingData] = useState<GetDateVotingResponse>();
   const getMeetingData = () => {
@@ -39,8 +34,6 @@ function MeetingRoomCalendar() {
   const startFrom = meetingData?.meetingMetaData.calendar.startFrom;
   const endTo = meetingData?.meetingMetaData.calendar.endTo;
   const totalUsers = meetingData?.members.length;
-  const client =
-    useContext<React.MutableRefObject<Client | undefined>>(WebSocketContext);
 
   useEffect(() => {
     getMeetingData();

@@ -1,10 +1,10 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import WebView from 'react-native-webview';
-import { REACT_APP_REST_API_KEY, REACT_APP_REDIRECT_URI } from '@env';
-import { setLogin } from '@api/auth/auth';
 import useAuth from '@hooks/useAuth';
+import { setLogin } from '@api/auth/auth';
+import WebView from 'react-native-webview';
 import { SocialLoginProps } from '@type/index';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { REACT_APP_REST_API_KEY, REACT_APP_REDIRECT_URI } from '@env';
 
 export default function KakaoLoginWebView() {
   const INJECTED_JAVASCRIPT = `window.ReactNativeWebView.postMessage("check")`;

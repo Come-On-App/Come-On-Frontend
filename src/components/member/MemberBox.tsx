@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { View, ScrollView, Pressable, Text } from 'react-native';
-import { makeStyles, Button, Avatar } from '@rneui/themed';
+import { makeStyles, Avatar } from '@rneui/themed';
 import { Members } from '@type/api.meeting';
 import {
   requestMeetingMembers,
   requestMeetingMembersDrop,
 } from '@api/meeting/members';
-import { useAppDispatch } from '@app/hooks';
-import { setOnlineUserUpdateEnd } from '@features/socketSlice';
+import { ButtonGroup } from '@components/buttons/Buttons';
 import useAuth from '@hooks/useAuth';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
-import useSocketMeeting from '@hooks/useSockerMeeting';
+import useSocketMeeting from '@hooks/useSocketMeeting';
+import {
+  BanMemberAvatarProps,
+  LittleMemberBoxProps,
+  OnLineAvatarProps,
+} from '@type/meeting.memberBox';
 import {
   MemberBoxProps,
   MemberBoxSubTitleProps,
@@ -20,11 +24,6 @@ import {
 import Label from '../input/Label';
 import Font from '../Font';
 import BadgedAvatar from './BadgedAvatar';
-
-interface OnLineAvatarProps {
-  item: Members;
-  onPressHandler: () => void;
-}
 
 function OnLineUserAvatar({ item, onPressHandler }: OnLineAvatarProps) {
   const { profileImageUrl } = item;
@@ -61,6 +60,68 @@ function MasterIcon() {
   );
 }
 
+function LittleMemberBox({
+  item,
+  banUserList,
+  children,
+}: LittleMemberBoxProps) {
+  const styles = useStyles();
+
+  return (
+    <View
+      style={[
+        styles.userBoxStyle,
+        banUserList.includes(item.userId)
+          ? styles.selectedBanUser
+          : styles.normalUser,
+      ]}
+    >
+      {children}
+    </View>
+  );
+}
+
+function MemberAvatar({
+  item,
+  banUserList,
+  onlineUserList,
+  hostId,
+  onPressAvatar,
+}: BanMemberAvatarProps) {
+  const styles = useStyles();
+
+  return (
+    <View key={item.memberId}>
+      {item.userId === hostId && <MasterIcon />}
+
+      {onlineUserList.includes(item.userId) ? (
+        <LittleMemberBox item={item} banUserList={banUserList}>
+          <OnLineUserAvatar
+            item={item}
+            onPressHandler={() => onPressAvatar(item)}
+          />
+        </LittleMemberBox>
+      ) : (
+        <LittleMemberBox item={item} banUserList={banUserList}>
+          <Avatar
+            size={40}
+            rounded
+            source={{ uri: item.profileImageUrl! }}
+            containerStyle={
+              (styles.avatar,
+              {
+                padding: 2,
+                backgroundColor: styles.badgeStyle.backgroundColor,
+              })
+            }
+            onPress={() => onPressAvatar(item)}
+          />
+        </LittleMemberBox>
+      )}
+    </View>
+  );
+}
+
 function MemberBox({ hostId }: MemberBoxProps) {
   const meetingId = 130;
   const { myId } = useAuth();
@@ -69,23 +130,6 @@ function MemberBox({ hostId }: MemberBoxProps) {
   const [meetingUsers, setMeetingUsers] = useState<Members[]>([]);
   const { ONLINE_UPDATE, MEMBER_UPDATE, onlineUserList, onlineUserUpdateEnd } =
     useSocketMeeting();
-
-  // 실시간 갱신
-  useEffect(() => {
-    if (ONLINE_UPDATE || MEMBER_UPDATE) {
-      requestMeetingMembers(meetingId).then(res => {
-        setMeetingUsers(res.contents);
-      });
-      onlineUserUpdateEnd();
-    }
-  }, [MEMBER_UPDATE, ONLINE_UPDATE, onlineUserUpdateEnd]);
-
-  // 초기화
-  useEffect(() => {
-    requestMeetingMembers(meetingId).then(res => {
-      setMeetingUsers(res.contents);
-    });
-  }, []);
   // host구분
   const filterStaff = () => {
     const meetingStaff = meetingUsers.filter(
@@ -121,55 +165,33 @@ function MemberBox({ hostId }: MemberBoxProps) {
       setBanUserList(newList);
     }
   };
+
+  // 실시간 갱신
+  useEffect(() => {
+    if (ONLINE_UPDATE || MEMBER_UPDATE) {
+      requestMeetingMembers(meetingId).then(res => {
+        setMeetingUsers(res.contents);
+      });
+      onlineUserUpdateEnd();
+    }
+  }, [MEMBER_UPDATE, ONLINE_UPDATE, onlineUserUpdateEnd]);
+
+  // 초기화
+  useEffect(() => {
+    requestMeetingMembers(meetingId).then(res => {
+      setMeetingUsers(res.contents);
+    });
+  }, []);
+
   const renderAvatar = (users: Members[]) => {
     return users.map(item => (
-      <View key={item.memberId}>
-        {item.userId === hostId && <MasterIcon />}
-
-        {onlineUserList.includes(item.userId) ? (
-          <View
-            style={[
-              styles.userBoxStyle,
-              banUserList.includes(item.userId)
-                ? styles.selectedBanUser
-                : styles.normarUser,
-            ]}
-          >
-            <OnLineUserAvatar
-              item={item}
-              onPressHandler={() => onPressAvatarforBan(item)}
-            />
-          </View>
-        ) : (
-          <View
-            style={[
-              styles.userBoxStyle,
-              banUserList.includes(item.userId)
-                ? styles.selectedBanUser
-                : styles.normarUser,
-            ]}
-          >
-            <Avatar
-              size={40}
-              rounded
-              source={
-                item.profileImageUrl !== null
-                  ? // 추후 디폴트 props 이미지를 넣어야 할 것 같음
-                    { uri: item.profileImageUrl! }
-                  : undefined
-              }
-              containerStyle={
-                (styles.avatar,
-                {
-                  padding: 2,
-                  backgroundColor: styles.badgeStyle.backgroundColor,
-                })
-              }
-              onPress={() => onPressAvatarforBan(item)}
-            />
-          </View>
-        )}
-      </View>
+      <MemberAvatar
+        item={item}
+        banUserList={banUserList}
+        onlineUserList={onlineUserList}
+        hostId={hostId}
+        onPressAvatar={onPressAvatarforBan}
+      />
     ));
   };
   const [banUserList, setBanUserList] = useState<number[]>([]);
@@ -183,6 +205,16 @@ function MemberBox({ hostId }: MemberBoxProps) {
   const onPressBanCancelHandelr = () => {
     setBanUserList([]);
   };
+  const firstButtonConfig = {
+    text: '선택해제',
+    onPress: onPressBanCancelHandelr,
+    style: styles.banCancelBtnStyle,
+  };
+  const secondButtonConfig = {
+    text: '내보내기',
+    onPress: onPressBanUserHandelr,
+    style: styles.banBtnStyle,
+  };
 
   return (
     <View>
@@ -194,28 +226,12 @@ function MemberBox({ hostId }: MemberBoxProps) {
         <UserRow user={[...host, ...members]} renderAvatar={renderAvatar} />
       </View>
       {visible && (
-        <View>
-          {/** todo 추후 그룹 버튼 넣기 */}
-          <View
-            style={{
-              width: '100%',
-              justifyContent: 'center',
-              marginTop: 16,
-              marginBottom: 28,
-              flexDirection: 'row',
-            }}
-          >
-            <Button
-              title="선택해제"
-              buttonStyle={styles.banCancelBtnStyle}
-              onPress={onPressBanCancelHandelr}
-            />
-            <Button
-              title="내보내기"
-              buttonStyle={styles.banBtnStyle}
-              onPress={onPressBanUserHandelr}
-            />
-          </View>
+        <View style={styles.groupButtonStyle}>
+          <ButtonGroup
+            height={40}
+            firstButton={firstButtonConfig}
+            secondButton={secondButtonConfig}
+          />
         </View>
       )}
     </View>
@@ -360,7 +376,14 @@ const useStyles = makeStyles((theme, members: Members[]) => ({
     justifyContent: 'center',
     padding: 3,
   },
-  normarUser: {
+  normalUser: {
     marginRight: 5,
+  },
+  groupButtonStyle: {
+    width: '100%',
+    justifyContent: 'center',
+    marginTop: 16,
+    marginBottom: 28,
+    flexDirection: 'row',
   },
 }));
