@@ -201,6 +201,17 @@ interface GetMeetingMembersResponse {
   memberRole: MemberRole;
 }
 
+// POST /api/v1/meetings/{meeting-id}/members/drop (payalod)
+export type PostMeetingMembersDropPayload = {
+  meetingId: number;
+  targetUserId: number;
+};
+
+// POST /api/v1/meetings/{meeting-id}/meeting-time (response)
+export interface PostMeetingMembersDropResponse {
+  success: boolean;
+}
+
 // GET /api/v1/meetings/{meeting-id}/members (response)
 export type GetMeetingMembersListResponse =
   ListResponse<GetMeetingMembersResponse>;

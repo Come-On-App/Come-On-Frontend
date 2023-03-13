@@ -119,8 +119,10 @@ export async function requestPostEntryCode(
 export async function requestPostMeetingTime(
   payload: PostMeetingTimePayalod,
 ): Promise<PostMeetingTimeResponse> {
-  const URL = `/api/v1/meetings/${payload.meetingId}/entry-code`;
-  const { data } = await serverAxios.post(URL, payload.meetingStartTime);
+  const URL = `/api/v1/meetings/${payload.meetingId}/meeting-time`;
+  const { data } = await serverAxios.post(URL, {
+    meetingStartTime: payload.meetingStartTime,
+  });
 
   return data;
 }
