@@ -44,7 +44,10 @@ export async function requestGetMeetings(
 ): Promise<GetMeetingSliceResponse> {
   const URL = '/api/v1/meetings';
   const { data } = await serverAxios.get(URL, {
-    params: payload,
+    params: {
+      ...payload,
+      size: 100,
+    },
   });
 
   return data;

@@ -9,6 +9,8 @@ export const getSize = _.size;
 
 export const isPromise = _isPromise;
 
+export const emptyString = '' as string;
+
 export function nextIndex(currentIndex: number) {
   const ONE = 1;
 
@@ -28,4 +30,18 @@ export function generateCache<K, V>() {
     set: setCache,
     get: getCache,
   };
+}
+
+export function pickSafelyBy<T extends object, F>(
+  object: T,
+  key: keyof T,
+  fallback: F,
+): F {
+  const target = object[key];
+
+  if (!target) {
+    return fallback;
+  }
+
+  return target as F;
 }

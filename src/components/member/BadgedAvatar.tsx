@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Avatar, makeStyles } from '@rneui/themed';
 
 import type { BadgedAvatarProps } from '@type/index';
 
-export default function BadgedAvatar({
+function BadgedAvatar({
   size,
   path,
   onPress,
@@ -36,3 +36,5 @@ const useStyles = makeStyles((_theme, backgroundColor: string) => ({
     shadowOpacity: 0,
   },
 }));
+
+export default memo(BadgedAvatar);

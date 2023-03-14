@@ -4,7 +4,7 @@ import { promisify as _promisify } from 'es6-promisify';
 import type {
   CallbackFns,
   OnError,
-  OnSucess,
+  OnSuccess,
   Options,
   StartValue,
 } from '@type/util.promise';
@@ -20,10 +20,10 @@ export const createOn = {
       throw error;
     };
   },
-  sucess<T>(onSucess: OnSucess<T> | undefined) {
+  sucess<T>(onSuccess: OnSuccess<T> | undefined) {
     return (received: T) => {
-      if (onSucess) {
-        onSucess(copy(received));
+      if (onSuccess) {
+        onSuccess(copy(received));
       }
 
       return copy(received);
@@ -83,7 +83,7 @@ export function createPromiseRecursiveFn<R>(callbackFns: CallbackFns) {
  * @param option
  * **onError** - rejected 상태가 될 때 해당 함수가 트리거 된다.
  *
- * **onSucess** - resolved 상태가 될 때 해당 함수가 트리거 된다. **매개변수는 마지막 프로미스의 결과값이 전달된다.**
+ * **onSuccess** - resolved 상태가 될 때 해당 함수가 트리거 된다. **매개변수는 마지막 프로미스의 결과값이 전달된다.**
  * @returns Promise 객체
  * @example
  * ```ts
@@ -91,7 +91,7 @@ export function createPromiseRecursiveFn<R>(callbackFns: CallbackFns) {
     onError: () => {
       return mapErrorHandler(location, ErrorType.network);
     },
-    onSucess: data => {
+    onSuccess: data => {
       cache.set(data.place_id, data);
     },
   });
@@ -105,13 +105,13 @@ export async function promiseFlow<SV, R>(
   const firstPromiseFn = promisify(_startValue);
   const promiseRecursiveFn = createPromiseRecursiveFn<R>(_callbackFns);
   const option = copy(_option);
-  const [onErrorFn, onSucessFn] = [
+  const [onErrorFn, onSuccessFn] = [
     createOn.error(option?.onError),
-    createOn.sucess(option?.onSucess),
+    createOn.sucess(option?.onSuccess),
   ];
 
   return promiseRecursiveFn(firstPromiseFn())
-    .then(onSucessFn)
+    .then(onSuccessFn)
     .catch(onErrorFn) as Promise<R>;
 }
 
@@ -119,11 +119,11 @@ export function usePromiseFlow<SV, R>() {
   const [data, setData] = useState<R>();
   const [error, setErrorObject] = useState<Error>();
   const [isError, setError] = useState(false);
-  const [isSucess, setSucess] = useState(false);
+  const [isSuccess, setSuccess] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const fn0 = useCallback((arg0: R) => {
     setData(arg0);
-    setSucess(true);
+    setSuccess(true);
   }, []);
   const fn1 = useCallback((e: Error) => {
     setError(true);
@@ -149,7 +149,7 @@ export function usePromiseFlow<SV, R>() {
     data,
     error,
     isError,
-    isSucess,
+    isSuccess,
     isLoading,
     promiseFlow: promiseFlowFn,
   };
