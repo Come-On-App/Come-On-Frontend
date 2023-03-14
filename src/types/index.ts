@@ -7,14 +7,8 @@ import type {
   GooglePlaceDetail,
 } from 'react-native-google-places-autocomplete';
 import type { MapLocation } from '@type/api.map';
-import type {
-  GetDateVotingResponse,
-  GetMeetingResponse,
-  Members,
-} from '@type/api.meeting';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { GetMeetingResponse, Members } from '@type/api.meeting';
 import { ReactNode } from 'react';
-import type { RootStackParamList } from './navigation';
 
 /**
  * Global Theme
@@ -197,18 +191,6 @@ export interface IconButtonProps {
   icon: Icon;
 }
 
-export type MeetingResponse = {
-  id: number;
-  myMeetingUserId: number;
-  myMeetingRole: 'HOST' | 'EDITOR' | 'PARTICIPANT';
-  title: string;
-  startDate: string;
-  endDate: string;
-  meetingUsers: Members[];
-  meetingDates: MeetingDate[];
-  meetingPlaces: MeetingPlace[];
-};
-
 export type MeetingDate = {
   id: number;
   date: string;
@@ -256,72 +238,6 @@ export interface UserRowProps {
   renderAvatar: (users: Members[]) => JSX.Element[];
 }
 
-// calendar
-export type SubDateProps = {
-  date: date;
-};
-
-export type date = {
-  startDate: string;
-  endDate: string;
-};
-
-export type CalendarProps = {
-  type: 'PERIOD' | 'DEFAULT';
-  data?: GetDateVotingResponse;
-  totalUsers?: number;
-  startFrom?: string;
-  endTo?: string;
-  hostId?: number;
-  setDate?: React.Dispatch<
-    React.SetStateAction<{
-      startDate: string;
-      endDate: string;
-    }>
-  >;
-};
-
-export type CalenderClickEventType = {
-  dateString: string;
-  day: number;
-  month: number;
-  timestamp: number;
-  year: number;
-};
-
-export interface CalendarVotingTypeProps {
-  data: GetDateVotingResponse;
-  startFrom: string;
-  endTo: string;
-  totalUsers: number;
-  hostId?: number;
-  setDate?: React.Dispatch<
-    React.SetStateAction<{
-      startDate: string;
-      endDate: string;
-    }>
-  >;
-}
-
-export interface CalendarPeriodTypeProps {
-  data?: GetDateVotingResponse;
-  setDate?: React.Dispatch<
-    React.SetStateAction<{
-      startDate: string;
-      endDate: string;
-    }>
-  >;
-}
-
-export interface OverayCalendarProps {
-  visible: boolean;
-  onPressLabel: () => void;
-}
-
-export interface MeetingTitleProps {
-  onPressLabel: () => void;
-}
-
 // api
 export type MeetingInfo = {
   meetingName: string;
@@ -338,10 +254,6 @@ export interface IconProps {
   color?: string;
   size: number;
   onPress?: () => void;
-}
-
-export interface CalendarBoxProps {
-  data: MeetingResponse;
 }
 
 export interface Icon {
@@ -527,30 +439,6 @@ export interface ModalProps {
   isVisible: boolean;
   style?: StyleProp<ViewStyle>;
   children: React.ReactNode;
-}
-
-declare module '@rneui/themed' {
-  export interface Theme {
-    DayTheme: {
-      colors: {
-        dayFilteredColor: string;
-        dayStartColor: string;
-        dayEndColor: string;
-      };
-      startDayStyle: {
-        container: object;
-        textColor: object;
-      };
-      endDayStyle: {
-        container: object;
-        textColor: object;
-      };
-      dayStyle: {
-        container: object;
-        oneDaySelectedStyle: object;
-      };
-    };
-  }
 }
 
 // location

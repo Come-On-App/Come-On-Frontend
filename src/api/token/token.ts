@@ -1,3 +1,4 @@
+import useAuth from '@hooks/useAuth';
 import { AuthResponse } from '@type/index';
 import { getValueFor, save } from '@utils/secureStore';
 
@@ -6,7 +7,7 @@ export enum StoreKey {
   accessToken = 'accessToken',
 }
 
-export const setTokens = async (data: AuthResponse) => {
+export const SetTokensToDB = async (data: AuthResponse) => {
   await save(StoreKey.accessToken, JSON.stringify(data.accessToken));
   await save(StoreKey.refreshToken, JSON.stringify(data.refreshToken));
 

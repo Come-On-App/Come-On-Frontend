@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext, useLayoutEffect } from 'react';
 import { View, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import { makeStyles, Skeleton } from '@rneui/themed';
 import { Client } from '@stomp/stompjs';
@@ -175,6 +175,7 @@ function MeetingRoom({ navigation }: RootStackScreenProps<'MeetingRoom'>) {
           log('log', frame);
           const data = await JSON.parse(frame.body);
 
+          console.log(data);
           onMessage(data);
         },
       );
@@ -185,24 +186,28 @@ function MeetingRoom({ navigation }: RootStackScreenProps<'MeetingRoom'>) {
 
   // 초반데이터로드
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     connect();
+
+    return () => {
+      client.unsubscribe(`/sub/meetings/${meetingId}`);
+      client.deactivate();
+    };
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     getMeetingData();
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (MEETING_UPDATE) {
       getMeetingData();
       dispatch(setMeetingUpdateEnd());
     }
   }, [MEETING_UPDATE]);
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (MEMBER_UPDATE) {
       getMeetingData();
-      Toast.show({ text1: '새로운 멤버가 추가되었습니다.' });
 
       dispatch(setMemberUpdateEnd());
     }

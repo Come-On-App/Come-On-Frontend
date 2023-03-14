@@ -1,4 +1,6 @@
+import { AuthResponse } from '@type/index';
 import { useCallback } from 'react';
+import { SetTokensToDB } from '@api/token/token';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { login, logout, setToken } from '../features/authSlice';
 import { deleteValueFor, getValueFor } from '../utils/secureStore';
@@ -31,6 +33,7 @@ function useAuth() {
 
       // TODO추후 토큰 암호화해서 저장
       dispatch(setToken(data));
+      // dispatch(setToken(data));
       dispatch(login());
     } else {
       // 토큰이 유효하지 않으면 로그아웃 시켜야함 .
@@ -48,10 +51,15 @@ function useAuth() {
     await deleteValueFor(StoreKey.refreshToken);
     dispatch(logout());
   }, [dispatch]);
+  const setTokens = async (token: AuthResponse) => {
+    await SetTokensToDB(token);
+    dispatch(setToken(token));
+  };
 
   return {
     isAuth,
     setLogout,
+    setTokens,
     isValidUser,
     getAccessToken,
     getRefreshToken,

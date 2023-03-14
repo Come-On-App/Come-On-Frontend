@@ -2,8 +2,9 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { SpeedDial } from '@rneui/themed';
 import { View, ScrollView } from 'react-native';
+import { serverAxios } from '@api/axiosInstance';
 import useAuth from '@hooks/useAuth';
-import { api } from './api';
+import { SetTokensToDB } from '@api/token/token';
 import Modal from './components/Modal';
 import Button from './components/buttons/Buttons';
 import { BoldFont } from './components/Font';
@@ -41,13 +42,11 @@ function UserDevScreen({
   isVisible: boolean;
   onClose: Dispatch<SetStateAction<boolean>>;
 }) {
-  const { setTokens } = useAuth();
   // TODO: 토큰정보 가져오기
   const closeModal = () => onClose(false);
-
   return (
     <DevScreen isVisible={isVisible}>
-      <view style={{ minHeight: 1000 }}>
+      <View style={{ minHeight: 1000 }}>
         <View
           style={{
             marginVertical: 10,
@@ -67,7 +66,7 @@ function UserDevScreen({
           <Button
             text="token 수동 발급"
             onPress={async () => {
-              const { data } = await api.post(
+              const { data } = await serverAxios.post(
                 'http://211.204.19.184:8088/test-api/v1/tokens',
                 {
                   userIds: [11],
@@ -76,21 +75,18 @@ function UserDevScreen({
               );
 
               const payload = data.result[0];
-              await setTokens(payload);
               const DateFormat = new Date(
                 payload.accessToken.expiry,
               ).toLocaleString();
 
-              console.log('토큰 만료 기한:', DateFormat);
-              console.log('token', payload);
-
-              api.defaults.headers.common.Authorization = `Bearer ${payload.token}`;
+              await SetTokensToDB(payload);
+              serverAxios.defaults.headers.common.Authorization = `Bearer ${payload.token}`;
             }}
           />
         </View>
 
         <Button text="닫기" onPress={closeModal} />
-      </view>
+      </View>
       <View style={{ alignItems: 'center' }}>
         <BoldFont>:carrot:</BoldFont>
       </View>

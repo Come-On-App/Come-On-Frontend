@@ -2,10 +2,11 @@ import { SERVER_ADDRESS } from '@env';
 import { serverAxios } from '@api/axiosInstance';
 import { SocialLoginProps } from '@type/index';
 import { deleteValueFor, getValueFor } from '@utils/secureStore';
-import { getToken, setTokens, StoreKey } from '@api/token/token';
+import { getToken, SetTokensToDB, StoreKey } from '@api/token/token';
 import { copy } from '@utils/fn';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { requestPostRefreshToken } from '@api/user/user';
+import useAuth from '@hooks/useAuth';
 
 serverAxios.interceptors.request.use(
   async config => {
@@ -42,7 +43,7 @@ serverAxios.interceptors.response.use(
 
     // 액세스 토큰이 만료된 경우 => 리프레쉬 토큰 발급
     if (data.errorCode === 1103) {
-      await postRefreshToken();
+      await PostRefreshToken();
 
       return config;
     }
@@ -50,6 +51,9 @@ serverAxios.interceptors.response.use(
     // 리프레쉬 토큰이 만료된 경우
 
     if (data.errorCode === 4002) {
+      await deleteValueFor(StoreKey.accessToken);
+      await deleteValueFor(StoreKey.refreshToken);
+
       return Promise.reject(err);
     }
 
@@ -66,17 +70,18 @@ export const setLogin = async (data: SocialLoginProps) => {
 
     serverAxios.defaults.headers.common.Authorization = `Bearer ${tokenDatas.accessToken.token}`;
 
-    await setTokens(tokenDatas);
+    await SetTokensToDB(tokenDatas);
   }
 
   return res;
 };
 
 //  만료 테스트 하기
-export const postRefreshToken = async () => {
+export const PostRefreshToken = async () => {
   const refreshTokens = await getValueFor(StoreKey.refreshToken);
   const refreshToken = refreshTokens && JSON.parse(refreshTokens);
   const data = await requestPostRefreshToken({ refreshToken });
+  const { setTokens } = useAuth();
 
   if (data.errorCode === 4002) {
     await deleteValueFor(StoreKey.accessToken);

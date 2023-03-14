@@ -12,7 +12,7 @@ const initialState = {
 interface IAuth {
   haveToken: boolean;
   accessToken: { token: string; expiry: number; userId: number } | null;
-  refreshToken: { token: string; expiry: number; userId: number } | null;
+  refreshToken: { token: string; expiry: number } | null;
   userId: number;
 }
 
