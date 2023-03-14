@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export type OnError = (error: Error) => void;
+export type OnError = (error: any) => void;
 
-export type OnSucess<T> = (received: T) => void;
+export type OnSuccess<T> = (received: T) => void;
 
 export interface Option<T> {
   onError: OnError;
-  onSucess: OnSucess<T>;
+  onSuccess: OnSuccess<T>;
 }
 
 export type StartValue<SV> = Exclude<SV, () => any> | (() => Promise<SV>);

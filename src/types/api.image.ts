@@ -17,7 +17,7 @@ import type { ErrorResponse } from './api';
 
 export type ErrorImageCode = 9000;
 
-export type ErrorMeetingResponse = ErrorResponse<ErrorImageCode>;
+export type ErrorImageResponse = ErrorResponse<ErrorImageCode>;
 
 interface FormDataBody {
   name: string;

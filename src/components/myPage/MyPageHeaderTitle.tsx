@@ -2,9 +2,9 @@ import React from 'react';
 import { View } from 'react-native';
 import { makeStyles } from '@rneui/base';
 
-import { BoldFont } from '../Font';
+import { BoldFont } from '@components/Font';
 
-export default function MyPageHeaderTitle() {
+export default function HeaderTitle() {
   const styles = useStyles();
   const TITLE = '마이페이지';
 

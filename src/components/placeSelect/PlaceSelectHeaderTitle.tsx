@@ -1,12 +1,12 @@
 import React from 'react';
 import { View } from 'react-native';
-import { makeStyles } from '@rneui/base';
+import { makeStyles } from '@rneui/themed';
 
-import { BoldFont } from '../Font';
+import { BoldFont } from '@components/Font';
 
 export default function PlaceSelectHeaderTitle() {
-  const styles = useStyles();
   const TITLE = '장소선택';
+  const styles = useStyles();
 
   return (
     <View>

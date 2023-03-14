@@ -22,16 +22,26 @@ export type ErrorMeetingCode =
   | 3003
   | 3004
   | 3005
+  | 3006
+  | 3007
+  | 3008
   | 3100
+  | 3101
+  | 3102
+  | 3103
   | 3200
   | 3201
   | 3202
   | 3203
-  | 3204;
+  | 3204
+  | 3205;
 
 export type ErrorMeetingResponse = ErrorResponse<ErrorMeetingCode>;
 
-export type Category =
+export type ErrorResponseMeetingCode =
+  ErrorMeetingResponse['response']['data']['errorCode'];
+
+export type CategoryKey =
   | 'ACCOMMODATION'
   | 'ACTIVITY'
   | 'ATTRACTION'
@@ -44,12 +54,30 @@ export type Category =
   | 'SHOPPING'
   | 'SPORT';
 
+export type CategoryValue =
+  | '학교'
+  | '카페'
+  | '술집'
+  | '스포츠'
+  | '쇼핑'
+  | '관광명소'
+  | '음식점'
+  | '숙박'
+  | '문화시설'
+  | '액티비티'
+  | '기타';
+
+export type CategoryData = {
+  key: CategoryKey;
+  value: CategoryValue;
+};
+
 export type MemberRole = 'HOST' | 'PARTICIPANT';
 
 interface HostUser {
   userId: number;
   nickname: string;
-  profileImageUrl?: string | null;
+  profileImageUrl: string | null;
 }
 
 interface FixedDate {
@@ -67,14 +95,14 @@ interface MeetingMetaData {
     startFrom: string;
     endTo: string;
   };
-  fixedDate?: FixedDate | null;
+  fixedDate: FixedDate | null;
 }
 
 export interface Members {
   memberId?: number;
   userId: number;
   nickname: string;
-  profileImageUrl?: string | null;
+  profileImageUrl: string | null;
   memberRole: MemberRole;
 }
 
@@ -87,13 +115,13 @@ interface VotingDates {
 export interface Places {
   meetingPlaceId: number;
   placeName: string;
-  memo?: string | null;
-  lat?: number | null;
-  lng?: number | null;
-  address?: string | null;
+  memo: string | null;
+  lat: number;
+  lng: number;
+  address: string;
   order: number;
-  category: Category;
-  googlePlaceId?: string | null;
+  category: CategoryKey;
+  googlePlaceId: string;
 }
 
 // POST /api/v1/meetings (payalod)
@@ -128,7 +156,7 @@ export interface GetMeetingResponse {
   calendarEndTo: string;
   meetingStartTime: string;
   meetingImageUrl: string;
-  fixedDate?: FixedDate | null;
+  fixedDate: FixedDate | null;
 }
 
 // GET /api/v1/meetings (response)
@@ -193,11 +221,11 @@ export interface PostMeetingTimeResponse {
 // GET /api/v1/meetings/{meeting-id}/members (payalod)
 export type GetMeetingMembersPayload = number;
 
-interface GetMeetingMembersResponse {
+export interface GetMeetingMembersResponse {
   memberId: number;
   userId: number;
   nickname: string;
-  profileImageUrl?: string | null;
+  profileImageUrl: string | null;
   memberRole: MemberRole;
 }
 
@@ -222,20 +250,20 @@ export type GetMeetingPlacesPayalod = number;
 // GET /api/v1/meetings/{meeting-id}/places (response)
 export type GetMeetingPlacesListResponse = ListResponse<Places>;
 
-type MeetingPlaces = {
-  name: string;
-  memo?: string | null;
-  address?: string | null;
-  lat?: number | null;
-  lng?: number | null;
-  category: Category;
-  googlePlaceId?: string | null;
+export type MeetingPlaces = {
+  placeName: string;
+  memo: string | null;
+  address: string;
+  lat: number;
+  lng: number;
+  category: CategoryKey;
+  googlePlaceId: string;
 };
 
 // POST /api/v1/meetings/{meeting-id}/places (payload)
 export interface PostAddMeetingPlacesPayload {
   meetingId: number;
-  payalod: MeetingPlaces;
+  payload: MeetingPlaces;
 }
 
 // POST /api/v1/meetings/{meeting-id}/places (response)
@@ -255,7 +283,7 @@ export interface PutUpdateMeetingPlacesResponse {
   success: boolean;
 }
 
-// DELETE /api/v1/meetings/{meeting-id}/places/{place-id} (payalod)
+// DELETE /api/v1/meetings/{meeting-id}/places/{place-id} (payload)
 export interface DeleteMeetingPlacePayload {
   meetingId: number;
   placeId: number;
@@ -279,7 +307,7 @@ export interface PostDateVotingResponse {
   success: boolean;
 }
 
-// DELETE /api/v1/meetings/{meeting-id}/date/voting 모임일 투표 삭제 (payload)
+// DELETE /api/v1/meetings/{meeting-id}/date/voting (payload)
 export interface DeleteDateVotingPayload {
   meetingId: number;
   payload: {
@@ -287,7 +315,7 @@ export interface DeleteDateVotingPayload {
   };
 }
 
-// DELETE /api/v1/meetings/{meeting-id}/date/voting 모임일 투표 삭제 (response)
+// DELETE /api/v1/meetings/{meeting-id}/date/voting (response)
 export interface DeleteDateVotingResponse {
   success: boolean;
 }
@@ -329,7 +357,7 @@ export interface GetDateVotingDetailsResponse {
 export type VotingUsers = {
   userId: number;
   nickname: string;
-  profileImageUrl?: string | null;
+  profileImageUrl: string | null;
   memberRole: MemberRole;
 };
 
@@ -353,5 +381,47 @@ export type GetConfirmMeetingDatePayload = number;
 // GET /api/v1/meetings/{meeting-id}/date/confirm (response)
 export interface GetConfirmMeetingDateResponse {
   meetingId: number;
-  fixedDate?: FixedDate | null;
+  fixedDate: FixedDate | null;
+}
+
+// DELETE /api/v1/meetings/{meeting-id}/members/me (payload)
+export type DeleteMeetingPayload = number;
+
+// DELETE /api/v1/meetings/{meeting-id}/members/me (response)
+export interface DeleteMeetingResponse {
+  success: boolean;
+}
+
+// PUT /api/v2/meetings/{meeting-id}/places/{place-id} (payload)
+export interface PutUpdateMeetingPlacesPayload2 {
+  meetingId: number;
+  placeId: number;
+  payload: MeetingPlaces;
+}
+
+// PUT /api/v2/meetings/{meeting-id}/places/{place-id} (response)
+export interface PutUpdateMeetingPlacesResponse2 {
+  success: boolean;
+}
+
+// POST /api/v2/meetings/{meeting-id}/places/{place-id}/lock (payload)
+export interface PostMeetingPlacesLockPayload {
+  meetingId: number;
+  placeId: number;
+}
+
+// POST /api/v2/meetings/{meeting-id}/places/{place-id}/lock (response)
+export interface PostMeetingPlacesLockResponse {
+  success: boolean;
+}
+
+// POST /api/v2/meetings/{meeting-id}/places/{place-id}/unlock (payload)
+export interface PostMeetingPlacesUnLockPayload {
+  meetingId: number;
+  placeId: number;
+}
+
+// POST /api/v2/meetings/{meeting-id}/places/{place-id}/unlock (response)
+export interface PostMeetingPlacesUnLockResponse {
+  success: boolean;
 }

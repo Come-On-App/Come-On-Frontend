@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Image, Pressable, View } from 'react-native';
 
-import useImagePath from '@hooks/useImagePicker';
+import useImagePicker from '@hooks/useImagePicker';
 import useMeeting from '@hooks/useMeeting';
 
 import { makeStyles } from '@rneui/themed';
@@ -11,7 +11,7 @@ import Icon from '../Icon';
 function InputImage() {
   const styles = useStyles();
   const { setMyMeetingImgPath } = useMeeting();
-  const [path, pickImage2] = useImagePath();
+  const [path, pickImage2] = useImagePicker();
 
   useEffect(() => {
     if (path) {

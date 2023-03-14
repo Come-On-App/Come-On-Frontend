@@ -2,7 +2,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import useMeeting from '@hooks/useMeeting';
+import useMeetings from '@hooks/useMeetings';
 import { usePromiseFlow } from '@utils/promise';
 import { RootStackScreenProps } from '@type/navigation';
 
@@ -11,8 +11,8 @@ import { requestCreateMeetings } from '@api/meeting/meetings';
 import { MeetingId } from '@type/meeting.create';
 import imageUpload, { AssetState } from '../utils/imageUpload';
 
-import CancelButton from '../components/buttons/CancelButton';
-import ConfirmButton from '../components/buttons/ConfirmButton';
+import CancelButton from '../components/button/CancelButton';
+import ConfirmButton from '../components/button/ConfirmButton';
 import InputForm from '../components/input/InputForm';
 
 enum AnimKey {

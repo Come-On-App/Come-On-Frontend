@@ -5,7 +5,10 @@ import type {
   CompositeScreenProps,
   NavigatorScreenParams,
 } from '@react-navigation/native';
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import type {
+  NativeStackScreenProps,
+  NativeStackNavigationProp,
+} from '@react-navigation/native-stack';
 import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
 declare global {
@@ -29,15 +32,31 @@ export type RoomCalendarParamList = {
   hostId: undefined;
 };
 
-export type PlaceSelectScreen = NativeStackScreenProps<PlaceSelectParamList>;
+export type PlaceSelectScreenProps =
+  NativeStackScreenProps<PlaceSelectParamList>;
 
-export type PlaceSelectNavigation = PlaceSelectScreen['navigation'];
+export type PlaceSelectScreenParams =
+  NavigatorScreenParams<PlaceSelectParamList>;
+
+export type PlaceSelectNavigation = PlaceSelectScreenProps['navigation'];
+
+export type RootScreenParams = NavigatorScreenParams<RootTabParamList>;
+
+export type BottomTabScreenNavigation =
+  BottomTabScreenProps<RootTabParamList>['navigation'];
+
+export type MeetingDetailNavigation = NativeStackNavigationProp<
+  RootStackParamList,
+  'MeetingDetail',
+  undefined
+>;
 
 export type RootStackParamList = {
-  Root: NavigatorScreenParams<RootTabParamList>;
+  Root: RootScreenParams;
   MeetingRoom: undefined;
   CreateMeeting: undefined;
-  PlaceSelect: NavigatorScreenParams<PlaceSelectParamList>;
+  PlaceSelect: PlaceSelectScreenParams;
+  MeetingDetail: { meetingId: number };
   CreateMeetingCalender: undefined;
   MeetingRoomCalendar: NavigatorScreenParams<RoomCalendarParamList> | undefined;
   LoginScreen: undefined;

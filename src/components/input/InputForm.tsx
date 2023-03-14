@@ -9,9 +9,9 @@ import {
 import useMeeting from '@hooks/useMeeting';
 import { makeStyles } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
-import { View, KeyboardAvoidingView, Pressable } from 'react-native';
-
-import Font from '../Font';
+import Icon from '@components/Icon';
+import useMeetings from '@hooks/useMeetings';
+import InputBox from './InputText';
 import InputImage from './InputImage';
 import IconInputBox, { isValid } from './IconInputBox';
 import { AnimationInputBox } from './InputText';

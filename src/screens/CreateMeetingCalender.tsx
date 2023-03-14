@@ -8,11 +8,11 @@ import {
   setCalendarEndTo,
   setCalendarStartFrom,
 } from '../features/meetingSlice';
-import CancelButton from '../components/buttons/CancelButton';
-import ConfirmButton from '../components/buttons/ConfirmButton';
+import CancelButton from '../components/button/CancelButton';
+import ConfirmButton from '../components/button/ConfirmButton';
 
 import Font from '../components/Font';
-import { useAppDispatch } from '../app/hooks';
+import { useAppDispatch } from '../hooks/redux/hooks';
 import Calendar from '../components/calendar/Calendar';
 
 function SubLabelDate({ date }: SubDateProps) {

@@ -2,6 +2,8 @@
 
 import { serverAxios } from '@api/axiosInstance';
 import type {
+  DeleteMeetingPayload,
+  DeleteMeetingResponse,
   GetMeetingMembersListResponse,
   GetMeetingMembersPayload,
   PostMeetingMembersDropPayload,
@@ -16,16 +18,34 @@ import type {
  */
 export async function requestMeetingMembers(
   payload: GetMeetingMembersPayload,
+  signal?: AbortSignal,
 ): Promise<GetMeetingMembersListResponse> {
   const URL = `/api/v1/meetings/${payload}/members`;
-  const { data } = await serverAxios.get(URL);
+  const { data } = await serverAxios.get(URL, {
+    signal: signal || undefined,
+  });
 
   return data;
 }
 
 // TODO: GET /api/v1/meetings/{meeting-id}/members/me 특정 모임에서 내 모임원 정보 조회
 
-// TODO: DELETE /api/v1/meetings/{meeting-id}/members/me 모임 탈퇴
+/**
+ * DELETE /api/v1/meetings/{meeting-id}/members/me 모임 탈퇴
+ * @requires Authorization Bearer {access-token}
+ * @param payload 탈퇴할 모임의 식별값
+ * @returns 요청 처리 성공 여부
+ */
+export async function requestDeleteMeeting(
+  payload: DeleteMeetingPayload,
+): Promise<DeleteMeetingResponse> {
+  const URL = `/api/v1/meetings/${payload}/members/me`;
+  const { data } = await serverAxios.delete(URL);
+
+  return data;
+}
+
+// POST /api/v1/meetings/{meeting-id}/members/drop 모임 강퇴
 export async function requestMeetingMembersDrop(
   payload: PostMeetingMembersDropPayload,
 ): Promise<PostMeetingMembersDropResponse> {

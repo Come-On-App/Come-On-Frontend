@@ -12,18 +12,11 @@ import {
 import GenerateLog from '@utils/GenerateLog';
 import { useAppDispatch } from '@app/hooks';
 import { RootStackScreenProps } from '@type/navigation';
-import { GetMeetingDetailResponse } from '@type/api.meeting';
-import { useNavigation } from '@react-navigation/native';
-
-import { setMeetingUpdateEnd, setMemberUpdateEnd } from '@features/socketSlice';
-import { Toast } from 'react-native-toast-message/lib/src/Toast';
-import DateContainer from '@components/meeting/DateContainer';
-import useSocketMeeting from '@hooks/useSocketMeeting';
+import GenerateLog from '@utils/GenerateLog';
+import { api } from '../api';
 import Label from '../components/input/Label';
-import PlaceCard from '../components/places/PlaceCard';
 import MemberBox from '../components/member/MemberBox';
 import AddPlaceButton from '../components/buttons/AddPlaceButton';
-import WebSocketProvider, { WebSocketContext } from '../WebSocketProvider';
 
 function MeetingRoomSkeleton() {
   const styles = useStyles();
@@ -123,8 +116,6 @@ function MeetingRoom({ navigation }: RootStackScreenProps<'MeetingRoom'>) {
   const dispatch = useAppDispatch();
   const guideText = '새로운 코스를 추가해보세요!';
   const [closeTime, setCloseTime] = useState(false);
-  const client =
-    useContext<React.MutableRefObject<Client>>(WebSocketContext).current;
   const log = GenerateLog('log', { time: true, hidden: false });
   const [meetingData, setMeetingData] = useState<GetMeetingDetailResponse>();
   const { MEETING_UPDATE, MEMBER_UPDATE, onMessage } = useSocketMeeting();
@@ -214,7 +205,6 @@ function MeetingRoom({ navigation }: RootStackScreenProps<'MeetingRoom'>) {
   }, [MEMBER_UPDATE]);
 
   return meetingData ? (
-    <WebSocketProvider>
       <TouchableWithoutFeedback onPress={() => setCloseTime(!closeTime)}>
         <View style={styles.container}>
           <View>
@@ -240,7 +230,6 @@ function MeetingRoom({ navigation }: RootStackScreenProps<'MeetingRoom'>) {
           </ScrollView>
         </View>
       </TouchableWithoutFeedback>
-    </WebSocketProvider>
   ) : (
     <MeetingRoomSkeleton />
   );

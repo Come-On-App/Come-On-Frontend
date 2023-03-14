@@ -5,10 +5,10 @@ import { View, Text, Pressable } from 'react-native';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 import Logo from '../components/Logo';
-import KakaoLoginBtn from '../components/buttons/KakaoLoginBtn';
+import KakaoLoginBtn from '../components/button/KakaoLoginBtn';
 
 import AppleLogo from '../assets/images/logo/AppleLogo';
-import GoogleLoginBtn from '../components/buttons/GoogleLoginBtn';
+import GoogleLoginBtn from '../components/button/GoogleLoginBtn';
 
 WebBrowser.maybeCompleteAuthSession();
 

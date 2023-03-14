@@ -1,7 +1,7 @@
 import { AuthResponse } from '@type/index';
 import { useCallback } from 'react';
 import { SetTokensToDB } from '@api/token/token';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { useAppDispatch, useAppSelector } from './redux/hooks';
 import { login, logout, setToken } from '../features/authSlice';
 import { deleteValueFor, getValueFor } from '../utils/secureStore';
 
