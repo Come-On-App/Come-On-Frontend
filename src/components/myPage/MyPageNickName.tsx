@@ -1,71 +1,63 @@
-import React, { createRef, useState } from 'react';
-import { Keyboard, TextInput, View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Keyboard, View } from 'react-native';
 import { Input, makeStyles } from '@rneui/themed';
-import { Input as BaseInput } from '@rneui/base';
 
-import {
-  InputBoxTopTextLength,
-  InputBoxTopTitle,
-} from '@components/input/InputText';
-import useUserQuery from '@hooks/query/useUserQuery';
-import useUserMutation from '@hooks/query/useUserMutation';
-import { successAlert } from '@utils/alert';
-import type { NickNameIconButtonProps } from '@type/component.mypage';
-import { IconButton } from '@components/button/Buttons';
-import fn, { emptyString } from '@utils/fn';
-import { promiseFlow } from '@utils/promise';
-
-const Label = {
-  name: '닉네임',
-  length: 20,
-  success: '닉네임 업데이트 완료 ✏️',
-};
+import { useUser, useMutateUser } from '@hooks/useUser';
+import type { NickNameIconButtonProps } from '@type/mypage.nickname';
+import { mutateStateRefToast } from '@utils/alert';
+import { IconButton } from '../buttons/Buttons';
+import { InputBoxTopTextLength, InputBoxTopTitle } from '../input/InputText';
 
 export default function Nickname() {
+  const [NICK_NAME_LABLE, NICK_NAME_LENGHT] = ['닉네임', 20];
+  const isNicknameSubmit = useRef(false);
   const styles = useStyles();
-  const { user } = useUserQuery();
-  const { mutate } = useUserMutation();
-  const [nickname, setNickname] = useState(user?.nickname || emptyString);
-  const testRef = createRef<TextInput & BaseInput>();
+  const { user } = useUser();
+  const { mutate, isSuccess } = useMutateUser();
+  const [nickName, setNickName] = useState('');
   const onPressHandler = () => {
-    if (fn.isEmpty(user)) return;
-
-    const payload = {
-      nickname,
-      profileImageUrl: user.profileImageUrl,
-    };
-
-    promiseFlow(payload, [mutate], {
-      onSuccess: () => {
-        Keyboard.dismiss();
-        successAlert(Label.success);
-      },
+    mutate({
+      nickname: nickName,
+      profileImageUrl: user?.profileImageUrl,
     });
+    Keyboard.dismiss();
+    isNicknameSubmit.current = false;
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      mutateStateRefToast(isNicknameSubmit, '닉네임 업데이트 완료 ✏️');
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if (!user) return;
+
+    setNickName(user.nickname);
+  }, [user]);
 
   return (
     <View style={styles.container}>
       <Input
-        ref={testRef}
-        value={nickname}
-        onChangeText={setNickname}
+        value={nickName}
+        onChangeText={setNickName}
         inputStyle={styles.nickNameText}
         rightIcon={<NickNameIconButton onPress={onPressHandler} />}
         containerStyle={styles.nickNameWrap}
         inputContainerStyle={styles.nickNameContainer}
         onSubmitEditing={onPressHandler}
-        maxLength={Label.length}
+        maxLength={NICK_NAME_LENGHT}
         label={
           <View style={styles.nickNameLable}>
             <InputBoxTopTitle
               style={styles.lableRightText}
-              label={Label.name}
+              label={NICK_NAME_LABLE}
               bold
             />
             <InputBoxTopTextLength
               style={styles.labelLeftText}
-              text={nickname}
-              maxLength={Label.length}
+              text={nickName}
+              maxLength={NICK_NAME_LENGHT}
             />
           </View>
         }
@@ -94,7 +86,7 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
   },
   nickNameIcon: {
-    size: 23,
+    size: 20,
     color: theme.grayscale['500'],
   },
   nickNameWrap: {

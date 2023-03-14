@@ -34,7 +34,7 @@ function emitImageErrorAlert() {
   nativeAlert(text);
 }
 
-const useImagePicker = (): [AssetState | null, PickImage] => {
+const useImagePath = (): [AssetState | null, PickImage] => {
   const [assetState, setAsset] = useState<AssetState | null>(null);
   const [libraryPermisson, requestPermission] = useMediaLibraryPermissions();
   const permissionStatus = libraryPermisson?.status;
@@ -71,16 +71,11 @@ const useImagePicker = (): [AssetState | null, PickImage] => {
     }
   }, []);
   const pickImage = useCallback(
-    () =>
-      promiseFlow(verifyPermissions, [getImagePickerResult], {
-        onSuccess: () => {
-          setAsset(null);
-        },
-      }),
+    () => promiseFlow(verifyPermissions, [getImagePickerResult]),
     [verifyPermissions, getImagePickerResult],
   );
 
   return [assetState, pickImage];
 };
 
-export default useImagePicker;
+export default useImagePath;

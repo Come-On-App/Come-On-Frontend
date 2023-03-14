@@ -1,27 +1,24 @@
+import _ from 'lodash/fp';
 import React, { Fragment, useEffect, useState } from 'react';
 import { Input, makeStyles } from '@rneui/themed';
 import { Dimensions, Keyboard, ScrollView, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 
-import type { InputTextProps } from '@type/index';
-import type {
-  CategoryDropdownItem,
-  PlaceSelectModalBottomProps,
-  PlaceSelectModalContentProps,
-  PlaceSelectModalProps,
-} from '@type/component.placeselect';
-import Modal from '@components/Modal';
-import usePlace from '@hooks/redux/usePlace';
-import Icon from '@components/Icon';
-import Font from '@components/Font';
-import Button from '@components/button/Buttons';
-import InputBox from '@components/input/InputText';
-import { CATEGORY_DATA, convertKeyToValue } from './data';
+import Icon from '../Icon';
+import Modal from '../Modal';
+import Button from '../buttons/Buttons';
+import Font from '../Font';
+import InputBox from '../input/InputText';
+import usePlace from '../../hooks/usePlace';
+import type { InputTextProps, PlaceSelectModalProps } from '../../types';
 
 function PlaceSelectModalContent({
   children,
   width,
-}: PlaceSelectModalContentProps) {
+}: {
+  children: React.ReactNode;
+  width: number;
+}) {
   const Wrap = width < 375 ? ScrollView : Fragment;
 
   return <Wrap>{children}</Wrap>;
@@ -55,7 +52,7 @@ export default function PlaceSelectModal({
       style={[
         styles.modalContainer,
         {
-          width: width < 375 ? '85%' : '75%',
+          width: width < 375 ? '80%' : '70%',
           transform: [{ translateY: modalBottom }],
         },
       ]}
@@ -71,12 +68,11 @@ export default function PlaceSelectModal({
 
 function PlaceSelectModalTop() {
   const styles = useStyles();
-  const { placeState, placeDispatch } = usePlace();
+  const { placeState, setPlaceSelectDispatch } = usePlace();
   const onChnageHandler = (text: string) => {
-    placeDispatch({
+    setPlaceSelectDispatch({
       ...placeState,
-      placeName: text,
-      isChanged: true,
+      name: text,
     });
   };
 
@@ -84,7 +80,7 @@ function PlaceSelectModalTop() {
     <View style={styles.topContainer}>
       <Input
         onChangeText={onChnageHandler}
-        value={placeState.placeName}
+        value={placeState.name}
         style={styles.topInput}
         errorStyle={styles.topInputError}
       />
@@ -94,7 +90,9 @@ function PlaceSelectModalTop() {
           color={styles.subAddressIcon.color}
           size={styles.subAddressIcon.size}
         />
-        <Font style={styles.subAddressText}>{placeState.address}</Font>
+        <Font style={styles.subAddressText}>
+          {_.truncate({ length: 25 }, placeState.address)}
+        </Font>
       </View>
     </View>
   );
@@ -109,10 +107,8 @@ function PlaceSelectModalMain() {
   );
 }
 
-function PlaceSelectModalBottom({ onClose }: PlaceSelectModalBottomProps) {
-  const BUTTON_TEXT = '완료';
-
-  return <Button text={BUTTON_TEXT} onPress={onClose} />;
+function PlaceSelectModalBottom({ onClose }: { onClose: () => void }) {
+  return <Button text="완료" onPress={onClose} />;
 }
 
 function PlaceSelectModalCategory() {
@@ -137,33 +133,45 @@ function CategoryTitle() {
   );
 }
 
+const DROPDOWN_DATA = [
+  { key: 'SCHOOL', value: '학교' },
+  { key: 'CAFE', value: '카페' },
+  { key: 'BAR', value: '술집' },
+  { key: 'SPORT', value: '스포츠' },
+  { key: 'SHOPPING', value: '쇼핑' },
+  { key: 'ATTRACTION', value: '관광명소' },
+  { key: 'RESTAURANT', value: '음식점' },
+  { key: 'ACCOMMODATION', value: '숙박' },
+  { key: 'CULTURE', value: '문화시설' },
+  { key: 'ACTIVITY', value: '액티비티' },
+  { key: 'ETC', value: '기타' },
+];
+
 function CategoryDropdown() {
   const styles = useStyles();
-  const { placeDispatch, placeState } = usePlace();
-  const [dropdownState, setDropdownState] = useState<string>();
-  const onPressHandler = ({ key }: CategoryDropdownItem) => {
-    setDropdownState(key);
-    placeDispatch({
-      ...placeState,
-      category: key,
-      isChanged: true,
-    });
+  const { setPlaceSelectDispatch, placeState } = usePlace();
+  const [value, setValue] = useState(placeState.category);
+  const onPressHandler = (item: { key: string; value: string }) => {
+    const category = item.value;
+
+    setValue(category);
+    setPlaceSelectDispatch({ ...placeState, category });
   };
 
   return (
     <View style={styles.dropdownWrap}>
       <Dropdown
         style={styles.dropdown}
-        placeholder={convertKeyToValue(placeState.category, '카테고리')}
+        placeholder="카테고리"
         selectedTextStyle={styles.dropdownSelectedText}
         placeholderStyle={styles.dropdownPlaceholder}
         containerStyle={styles.dropdownContainer}
         itemTextStyle={styles.dropdownItemText}
-        data={CATEGORY_DATA}
+        data={DROPDOWN_DATA}
         maxHeight={300}
         labelField="value"
-        valueField="key"
-        value={dropdownState}
+        valueField="value"
+        value={value}
         onChange={onPressHandler}
         renderRightIcon={() => (
           <Icon
@@ -179,15 +187,11 @@ function CategoryDropdown() {
 
 function MeetingNote() {
   const styles = useStyles();
-  const { placeDispatch, placeState } = usePlace();
-  const [description, setDescription] = useState(placeState.description);
+  const { setPlaceSelectDispatch, placeState: placeSelectState } = usePlace();
+  const [description, setDescription] = useState(placeSelectState.description);
   const onChangeHandler = (text: string) => {
     setDescription(text);
-    placeDispatch({
-      ...placeState,
-      description: text,
-      isChanged: true,
-    });
+    setPlaceSelectDispatch({ ...placeSelectState, description: text });
   };
   const config: InputTextProps = {
     label: '모임메모',

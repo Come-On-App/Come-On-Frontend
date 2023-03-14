@@ -6,8 +6,6 @@ import {
   returnToken,
   SocialLoginProps,
 } from '@type/index';
-import { serverAxios } from '@api/axiosInstance';
-import { SERVER_ADDRESS } from '@env';
 import { copy } from './utils/fn';
 import { getValueFor, save } from './utils/secureStore';
 
@@ -20,7 +18,7 @@ type MeetingId = {
 };
 
 function setAuthorizationHeader(token: string) {
-  serverAxios.defaults.headers.common.Authorization = `Bearer ${token}`;
+  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 }
 
 export const getToken = async () => {
@@ -32,13 +30,16 @@ export const getToken = async () => {
 
   return null;
 };
-
-export const setTokens = async (data: AuthResponse) => {
+const setTokens = async (data: AuthResponse) => {
   await save(StoreKey.accessToken, JSON.stringify(data.accessToken));
   await save(StoreKey.refreshToken, JSON.stringify(data.refreshToken));
 };
 
-serverAxios.interceptors.request.use(
+export const api = axios.create({
+  baseURL: SERVER_ADDRESS,
+});
+
+api.interceptors.request.use(
   async config => {
     const accessToken = await getToken();
     const configCopy = copy(config);
@@ -57,7 +58,7 @@ export const apis = {
   getUser: async () => {
     const URL = '/api/v1/users/me';
 
-    return serverAxios
+    return api
       .get(URL)
       .catch(async err => {
         const error: ErrorType = err?.response?.data;
@@ -80,6 +81,8 @@ export const apis = {
       .then(async response => {
         if (response.data.accessToken && response) {
           await setTokens(response.data);
+
+          return api.get(URL);
         }
 
         return response;
@@ -87,14 +90,11 @@ export const apis = {
   },
   setLogin: async (data: SocialLoginProps) => {
     let tokenDatas: AuthResponse | null = null;
-    const res = await serverAxios.post(
-      `${SERVER_ADDRESS}${data.url}`,
-      data.data,
-    );
+    const res = await api.post(`${SERVER_ADDRESS}${data.url}`, data.data);
 
     if (res.status === 200) {
       tokenDatas = res.data;
-      serverAxios.defaults.headers.common.Authorization =
+      api.defaults.headers.common.Authorization =
         tokenDatas && `Bearer ${tokenDatas.accessToken.token}`;
     }
 
@@ -110,7 +110,7 @@ export const apis = {
       calendarStartFrom,
       calendarEndTo,
     };
-    const { data: datas } = await serverAxios.post<MeetingId>(URL, meetingData);
+    const { data: datas } = await api.post<MeetingId>(URL, meetingData);
 
     return datas;
   },
@@ -119,7 +119,7 @@ export const apis = {
     const URL = '/api/v1/auth/reissue';
     const refreshTokens = await getValueFor(StoreKey.refreshToken);
     const refreshToken = refreshTokens && JSON.parse(refreshTokens);
-    const res = await serverAxios.post(URL, {
+    const res = await api.post(URL, {
       refreshToken: refreshToken.token,
       reissueRefreshTokenAlways: true,
     });

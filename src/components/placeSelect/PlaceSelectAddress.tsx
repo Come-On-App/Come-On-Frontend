@@ -2,27 +2,25 @@ import React from 'react';
 import { View } from 'react-native';
 import { makeStyles } from '@rneui/themed';
 
+import Font, { BoldFont } from '../Font';
 import type {
   AddressProps,
   CategoryProps,
   SubAddressProps,
   AddressTitleProps,
-  DescriptionProps,
-} from '@type/component.placeselect';
-import usePlace from '@hooks/redux/usePlace';
-import Font, { BoldFont } from '@components/Font';
-import { convertKeyToValue } from './data';
+} from '../../types';
+import usePlace from '../../hooks/usePlace';
 
 export default function AddressInfo() {
+  const { placeState: locationState } = usePlace();
   const styles = useStyles();
-  const { placeState } = usePlace();
   const data = {
     address: {
-      title: placeState.placeName,
-      category: placeState.category,
+      title: locationState.name,
+      category: locationState.category,
     },
     subAddress: {
-      title: placeState.address,
+      title: locationState.address,
     },
   };
 
@@ -34,13 +32,13 @@ export default function AddressInfo() {
   );
 }
 
-export function Address({ info }: AddressProps) {
+function Address({ info }: AddressProps) {
   const styles = useStyles();
 
   return (
     <View style={styles.addressContainer}>
       <AddressTitle text={info.title} />
-      <Category category={info.category} />
+      <Category text={info.category} />
     </View>
   );
 }
@@ -51,33 +49,22 @@ function AddressTitle({ text }: AddressTitleProps) {
   return <BoldFont style={styles.addressText}>{text}</BoldFont>;
 }
 
-function Category({ category }: CategoryProps) {
+function Category({ text }: CategoryProps) {
   const styles = useStyles();
-  const value = convertKeyToValue(category);
 
   return (
     <View style={styles.categoryContainer}>
-      <Font style={styles.categoryText}>{value}</Font>
+      <Font style={styles.categoryText}>{text}</Font>
     </View>
   );
 }
 
-export function SubAddress({ info }: SubAddressProps) {
+function SubAddress({ info }: SubAddressProps) {
   const styles = useStyles();
 
   return (
     <View>
       <Font style={styles.subAddressText}>{info.title}</Font>
-    </View>
-  );
-}
-
-export function Description({ info }: DescriptionProps) {
-  const styles = useStyles();
-
-  return (
-    <View>
-      <Font style={styles.descriptionText}>{info.text}</Font>
     </View>
   );
 }
@@ -108,11 +95,6 @@ const useStyles = makeStyles(theme => ({
     paddingHorizontal: 3,
   },
   subAddressText: {
-    color: theme.grayscale['500'],
-    fontSize: 12,
-    lineHeight: 20,
-  },
-  descriptionText: {
     color: theme.grayscale['700'],
     fontSize: 14,
     lineHeight: 20,

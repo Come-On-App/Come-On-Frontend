@@ -8,113 +8,70 @@ import {
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
 
-import { emptyString, getSize } from '@utils/fn';
-import { requestMeetingJoin } from '@api/meeting/meetings';
-import { usePromiseFlow } from '@utils/promise';
-import {
-  ErrorMeetingResponse,
-  PostJoinPayload,
-  PostJoinResponse,
-} from '@type/api.meeting';
-import { errorAlert, successAlert } from '@utils/alert';
-import { useNavigation } from '@react-navigation/native';
-import type { BottomTabScreenNavigation } from '@type/navigation';
-import type { CodeButtonProps, CodeInputProps, SetState } from '@type/index';
+import { getSize } from '@utils/fn';
 import { Font } from './Font';
-import Button from './button/Buttons';
-
-const config = {
-  successText: '가입 성공',
-  instructionText: '전달받은 코드를 입력해주세요',
-  cursorSymbol: '🍕',
-  cellCount: 6,
-  entryText: '입장하기',
-};
+import Button from './buttons/Buttons';
+import type { CodeInputProps } from '../types';
 
 export default function InviteCode() {
-  const { isLoading, promiseFlow } = usePromiseFlow<
-    PostJoinPayload,
-    PostJoinResponse
-  >();
-  const navigation = useNavigation<BottomTabScreenNavigation>();
-  const [codeText, setCodeText] = useState(emptyString);
-  const onPressHandler = () => {
-    promiseFlow({ entryCode: codeText }, [requestMeetingJoin], {
-      onSuccess: () => {
-        setCodeText(emptyString);
-        successAlert(config.successText);
-        navigation.navigate('TabOne');
-      },
-      onError: (error: ErrorMeetingResponse) => {
-        errorAlert(error.response.data.errorDescription);
-      },
-    });
-  };
+  const [codeText, setCodeText] = useState('');
 
   return (
     <View>
       <CodeTitle />
       <CodeInput codeText={codeText} setCodeText={setCodeText} showKeyboard />
-      <CodeButton
-        codeText={codeText}
-        onPress={onPressHandler}
-        isLoading={isLoading}
-      />
+      <CodeButton codeText={codeText} />
     </View>
   );
 }
 
 function CodeTitle() {
   const styles = useStyles();
+  const INSTRUCTION_TEXT = '전달받은 코드를 입력해주세요';
 
   return (
     <View style={styles.titleContainer}>
-      <Font style={styles.instructionText}>{config.instructionText}</Font>
+      <Font style={styles.instructionText}>{INSTRUCTION_TEXT}</Font>
     </View>
   );
 }
 
-const codeValidation = (stateAction: SetState<string>) => {
-  return (text: string) => {
-    const isEnglish = /^[a-zA-Z0-9]+$/.test(text);
-
-    // 마지막 텍스트 제거
-    if (getSize(text) === 0) {
-      stateAction(emptyString);
-    }
-
-    stateAction(prevCode => (isEnglish ? text.toUpperCase() : prevCode));
-  };
-};
-
-export function CodeInput(props: CodeInputProps) {
-  const { style, codeText, setCodeText, showKeyboard } = props;
+export function CodeInput({
+  style,
+  codeText,
+  setCodeText,
+  showKeyboard,
+}: CodeInputProps) {
+  const CELL_COUNT = 6;
   const styles = useStyles();
-  const ref = useBlurOnFulfill({
-    value: codeText,
-    cellCount: config.cellCount,
-  });
-  const [{ onPressOut }, getCellOnLayoutHandler] = useClearByFocusCell({
+  const ref = useBlurOnFulfill({ value: codeText, cellCount: CELL_COUNT });
+  const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value: codeText,
     setValue: setCodeText,
   });
+  const onChangeHandler = (text: string) => {
+    const isEnglish = /^[a-zA-Z0-9]+$/.test(text);
+
+    // 마지막 텍스트 제거
+    if (text.length === 0) {
+      setCodeText('');
+    }
+
+    setCodeText(prevCode => (isEnglish ? text.toUpperCase() : prevCode));
+  };
 
   return (
     <View>
       <CodeField
         ref={ref}
-        onPressOut={onPressOut}
+        onPressOut={props.onPressOut}
         showSoftInputOnFocus={showKeyboard}
         onSubmitEditing={Keyboard.dismiss}
         value={codeText}
-        onChangeText={codeValidation(setCodeText)}
-        cellCount={config.cellCount}
+        onChangeText={onChangeHandler}
+        cellCount={CELL_COUNT}
         textContentType="oneTimeCode"
         renderCell={({ index, symbol, isFocused }) => {
-          const cursor = isFocused ? (
-            <Cursor cursorSymbol={config.cursorSymbol} />
-          ) : null;
-
           return (
             <Text
               key={index}
@@ -126,7 +83,7 @@ export function CodeInput(props: CodeInputProps) {
                 style,
               ]}
             >
-              {symbol || cursor}
+              {symbol || (isFocused ? <Cursor cursorSymbol="🍕" /> : null)}
             </Text>
           );
         }}
@@ -135,18 +92,19 @@ export function CodeInput(props: CodeInputProps) {
   );
 }
 
-function CodeButton({ codeText, onPress, isLoading }: CodeButtonProps) {
+function CodeButton({ codeText }: { codeText: string }) {
   const styles = useStyles();
-  const isDisabled = getSize(codeText) !== config.cellCount;
+  const ENTER_TEXT = '입장하기';
+  const MAX_NUM = 6;
+  const isDisabled = getSize(codeText) !== MAX_NUM;
 
   return (
     <View style={styles.buttonContainer}>
       <Button
         bold
-        loading={isLoading}
         disabled={isDisabled}
-        text={config.entryText}
-        onPress={onPress}
+        text={ENTER_TEXT}
+        onPress={() => console.log('click CodeButton')}
         buttonStyle={styles.button}
       />
     </View>

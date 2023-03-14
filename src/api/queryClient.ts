@@ -1,41 +1,25 @@
 import { QueryClient } from 'react-query';
 
-type QueryKeyType = QueryKeys | string | number;
-
 export enum QueryKeys {
   user = 'user',
-  meetings = 'meetings',
-  place = 'place',
+  meeting = 'meeting',
 }
 
-export const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      notifyOnChangeProps: 'tracked',
-    },
-  },
-});
+export const queryClient = new QueryClient({});
 
-export const updateCache = <Payload>(
-  queryKey: QueryKeyType[],
-  payalod: Payload,
-) => {
+export const updateCache = <Payload>(queryKey: QueryKeys, payalod: Payload) => {
   queryClient.setQueryData(queryKey, payalod);
 };
 
-export const getCache = <Payload>(queryKey: QueryKeyType[]) => {
+export const getCache = <Payload>(queryKey: QueryKeys) => {
   return queryClient.getQueryData<Payload>(queryKey);
 };
 
-export const cancelQueries = (queryKey: QueryKeyType[]) => {
+export const cancelQueries = (queryKey: QueryKeys) => {
   queryClient.cancelQueries(queryKey);
 };
 
-export const invalidateQueries = (queryKey: QueryKeyType[]) => {
-  queryClient.invalidateQueries(queryKey);
-};
-
-export const useQueryCache = <Payalod>(queryKey: QueryKeyType[]) => {
+export const useQueryCache = <Payalod>(queryKey: QueryKeys) => {
   const updateQueryCache = (payload: Partial<Payalod>) => {
     updateCache(queryKey, payload);
   };

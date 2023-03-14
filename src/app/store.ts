@@ -1,16 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
-
-import placeSlice from '@features/placeSlice';
-import placeLockSlice from '@features/placeLockSlice';
-import authSlice from '@features/authSlice';
-import meetingSlice from '@features/meetingSlice';
+import placeSlice from '../features/placeSlice';
+import authReducer from '../features/authSlice';
+import meetingReducer from '../features/meetingSlice';
 
 export const store = configureStore({
   reducer: {
-    place: placeSlice,
-    placeLock: placeLockSlice,
-    auth: authSlice,
-    meeting: meetingSlice,
+    placeReducer: placeSlice,
+    auth: authReducer,
+    meeting: meetingReducer,
   },
 });
 

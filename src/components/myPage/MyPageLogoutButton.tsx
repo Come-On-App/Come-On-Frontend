@@ -1,8 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Button, makeStyles } from '@rneui/themed';
-
-import useAuth from '@hooks/useAuth';
+import useAuth from '../../hooks/useAuth';
 
 export default function LogoutButton() {
   const { setLogout } = useAuth();

@@ -1,36 +1,27 @@
 import React from 'react';
 import { makeStyles } from '@rneui/themed';
 
-import { View } from 'react-native';
-import type { PlaceSelectButtonProps } from '@type/component.placeselect';
-import Button from '@components/button/Buttons';
+import Button from '../buttons/Buttons';
+import type { PlaceSelectButtonProps } from '../../types';
+import usePlace from '../../hooks/usePlace';
 
-export default function PlaceSelectButton({
-  text,
-  onPress,
-  isDisabled,
-  buttonStyle,
-}: PlaceSelectButtonProps) {
+export default function PlaceSelectButton({ onPress }: PlaceSelectButtonProps) {
   const styles = useStyles();
+  const { placeState } = usePlace();
+  const isDisabled = !placeState.marker;
 
   return (
-    <View style={styles.container}>
-      <Button
-        bold
-        buttonStyle={buttonStyle}
-        text={text}
-        onPress={onPress}
-        disabled={isDisabled}
-        textStyle={styles.buttonText}
-      />
-    </View>
+    <Button
+      bold
+      text="장소선택"
+      onPress={onPress}
+      disabled={isDisabled}
+      textStyle={styles.buttonText}
+    />
   );
 }
 
 const useStyles = makeStyles(theme => ({
-  container: {
-    marginVertical: 5,
-  },
   buttonText: {
     fontSize: theme.textStyles.body1.fontSize,
   },

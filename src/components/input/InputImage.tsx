@@ -2,17 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Image, Pressable, View, Alert } from 'react-native';
 
 import { setMeetingImgPath } from '../../features/meetingSlice';
-import useImagePicker from '../../hooks/useImagePicker';
+import useImagePath from '../../hooks/useImagePicker';
 
 import theme from '../../constants/themed';
 import { Font } from '../Font';
 import Icon from '../Icon';
 
-import { useAppDispatch } from '../../hooks/redux/hooks';
+import { useAppDispatch } from '../../app/hooks';
 
 function InputImage() {
   const dispatch = useAppDispatch();
-  const [path, pickImage2] = useImagePicker();
+  const [path, pickImage2] = useImagePath();
   const picture = path ? (
     <Image source={path} style={styles.image} />
   ) : (

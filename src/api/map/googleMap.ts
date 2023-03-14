@@ -112,7 +112,7 @@ export async function requestGetAddress(
     onError: () => {
       return mapErrorHandler(location, ErrorType.network);
     },
-    onSuccess: data => {
+    onSucess: data => {
       cache.set(data.place_id, data);
     },
   });

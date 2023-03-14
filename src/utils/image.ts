@@ -22,7 +22,7 @@ export function inferTypeImage(fileName: string) {
   return imageType;
 }
 
-// 수동으로 blob 변환이 필요할떄 true로 할당한다. (React Native Debugger Only)
+// 수동으로 blob 변환이 필요할떄 true로 할당한다.
 const MANUAL_CONVERSION = true;
 const config = {
   responseType: 'blob',
@@ -37,26 +37,29 @@ export async function convertImageFormData(
   // 디버거 모드 활성 시에는 직접 blob 형태로 변환후 전달해 줘야 한다.
   // @see https://github.com/jhen0409/react-native-debugger/blob/master/docs/network-inspect-of-chrome-devtools.md#limitations
   const { data } = await axios.get(asset.uri, config).catch(() => {
-    // 첫 번째 시도가 실패한다면 두 번째 방법으로 시도한다.
-    return axios.get(`data:${asset.type};base64,${asset.base64}`, config);
+    return {
+      data: null,
+    };
   });
+
+  // 첫 번째 시도가 실패한다면 두 번째 방법으로 시도한다.
+  if (fn.isNull(data)) {
+    const { data: blob } = await axios.get(
+      `data:${asset.type};base64,${asset.base64}`,
+      config,
+    );
+
+    return blob;
+  }
 
   return data;
 }
 
-export function createImageFormData(imageFormData: string | Blob): FormData {
+export function createImageFormData(imageFormData: string | Blob) {
   const KEY = 'image';
-  const formData = createFormData(KEY);
+  const body = new FormData();
 
-  return formData(imageFormData);
-}
+  body.append(KEY, imageFormData);
 
-export function createFormData(key: string) {
-  return (value: string | Blob) => {
-    const fromData = new FormData();
-
-    fromData.append(key, value);
-
-    return fromData;
-  };
+  return body;
 }
