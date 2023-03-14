@@ -1,50 +1,42 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@rneui/themed';
 import * as WebBrowser from 'expo-web-browser';
 import { View, Text, Pressable } from 'react-native';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
-import { RootStackScreenProps } from '@type/navigation';
 import Logo from '../components/Logo';
-import KakaoLoginBtn, {
-  KakaoLoginWebView,
-} from '../components/button/KakaoLoginBtn';
+import KakaoLoginBtn from '../components/button/KakaoLoginBtn';
 
 import AppleLogo from '../assets/images/logo/AppleLogo';
 import GoogleLoginBtn from '../components/button/GoogleLoginBtn';
 
 WebBrowser.maybeCompleteAuthSession();
 
-function LoginScreen({ navigation }: RootStackScreenProps<'LoginScreen'>) {
+function LoginScreen() {
   const styles = useStyles();
-  const [visible, setVisible] = useState(false);
 
   return (
     <View style={styles.container}>
-      {visible ? (
-        <KakaoLoginWebView />
-      ) : (
-        <>
-          <Toast />
-          <Logo />
-          <View style={styles.labels}>
-            <Text style={styles.label}>소셜 로그인</Text>
-            <View style={styles.line} />
-          </View>
-          <View style={styles.buttons}>
-            <KakaoLoginBtn setVisible={setVisible} />
-            <Pressable
-              style={({ pressed }) => [
-                pressed && styles.pressed,
-                styles.btnStyle,
-              ]}
-            >
-              <AppleLogo />
-            </Pressable>
-            <GoogleLoginBtn />
-          </View>
-        </>
-      )}
+      <>
+        <Toast />
+        <Logo />
+        <View style={styles.labels}>
+          <Text style={styles.label}>소셜 로그인</Text>
+          <View style={styles.line} />
+        </View>
+        <View style={styles.buttons}>
+          <KakaoLoginBtn />
+          <Pressable
+            style={({ pressed }) => [
+              pressed && styles.pressed,
+              styles.btnStyle,
+            ]}
+          >
+            <AppleLogo />
+          </Pressable>
+          <GoogleLoginBtn />
+        </View>
+      </>
     </View>
   );
 }

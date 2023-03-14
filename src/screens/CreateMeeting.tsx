@@ -1,56 +1,43 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable padding-line-between-statements */
+import React, { useCallback, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import useMeetings from '@hooks/useMeetings';
 import { usePromiseFlow } from '@utils/promise';
 import { RootStackScreenProps } from '@type/navigation';
-import { InputTextProps } from '@type/index';
-import { requestUploadImage } from '@api/image/upload';
-import { convertImageFormData, createImageFormData } from '@utils/image';
-import { AssetState } from '@type/hook.imagePicker';
-import apis from '../api';
-import { setMeetingName } from '../features/meetingSlice';
-import { useAppDispatch, useAppSelector } from '../hooks/redux/hooks';
+
+import useAnimationBounce from '@hooks/useAnim';
+import { requestCreateMeetings } from '@api/meeting/meetings';
+import { MeetingId } from '@type/meeting.create';
+import imageUpload, { AssetState } from '../utils/imageUpload';
 
 import CancelButton from '../components/button/CancelButton';
 import ConfirmButton from '../components/button/ConfirmButton';
 import InputForm from '../components/input/InputForm';
 
-type MeetingId = {
-  meetingId: number;
-};
+enum AnimKey {
+  name = 'name',
+  image = 'image',
+  date = 'date',
+}
 
 function CreateMeeting(
   this: typeof CreateMeeting,
   { navigation }: RootStackScreenProps<'CreateMeeting'>,
 ) {
-  const [name, setName] = useState('');
-  const dispatch = useAppDispatch();
-  const data = useAppSelector(state => state.meeting.meetingData);
-  const imgPath = useAppSelector(state => state.meeting.meetingImgPath);
-  const { meetingName, calendarStartFrom, calendarEndTo } = data;
-  const { resetMeetingData } = useMeetings();
+  const { meetingData, meetingImgPath } = useMeeting();
+  const { meetingName, calendarStartFrom, calendarEndTo } = meetingData;
+  const { resetMeetingData } = useMeeting();
   const cancelHandler = () => {
     navigation.goBack();
   };
-  const inputProps: InputTextProps = {
-    label: '모임이름',
-    placeholder: '모임이름을 입력해주세요!',
-    maxLength: 30,
-    value: name,
-    onChangeText: setName,
-    multiline: false,
-  };
-  const then2 = (imgUrl: string) => {
-    const meetingData = {
-      meetingName,
-      meetingImageUrl: imgUrl,
-      calendarStartFrom,
-      calendarEndTo,
-    };
 
-    return meetingData;
-  };
+  const { trigger, AnimationBounceView } = useAnimationBounce([
+    'name',
+    'image',
+    'date',
+  ]);
+
   const {
     error,
     isSuccess,
@@ -60,20 +47,49 @@ function CreateMeeting(
   } = usePromiseFlow<AssetState, MeetingId>();
 
   useEffect(() => {
-    dispatch(setMeetingName(name));
-  }, [dispatch, name]);
-
-  useEffect(() => {
     if (isSuccess && datas) {
       resetMeetingData();
-      navigation.navigate('MeetingRoom');
+      navigation.reset({
+        index: 1,
+        routes: [{ name: 'Root' }, { name: 'MeetingRoom' }],
+      });
     }
   }, [datas, error, isError, isSuccess, navigation, resetMeetingData]);
 
+  const onPressConfirm = useCallback(() => {
+    if (meetingImgPath?.uri == null) {
+      trigger(AnimKey.image);
+    } else if (meetingName === '') {
+      trigger(AnimKey.name);
+    } else if (calendarStartFrom === '' && calendarEndTo === '') {
+      trigger(AnimKey.date);
+    } else {
+      const then2 = (imgUrl: string) => {
+        const data = {
+          meetingName,
+          meetingImageUrl: imgUrl,
+          calendarStartFrom,
+          calendarEndTo,
+        };
+
+        return data;
+      };
+      promiseFlow(meetingImgPath!, [imageUpload, then2, requestCreateMeetings]);
+    }
+  }, [
+    calendarEndTo,
+    calendarStartFrom,
+    meetingImgPath,
+    meetingName,
+    promiseFlow,
+    trigger,
+  ]);
+  // 이름
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container]}>
       <View>
-        <InputForm inputProps={inputProps} />
+        <InputForm AnimationView={AnimationBounceView} />
       </View>
       <View style={styles.buttons}>
         <CancelButton
@@ -81,20 +97,7 @@ function CreateMeeting(
           onPressHandler={cancelHandler}
           style={styles.buttonStyle}
         />
-        <ConfirmButton
-          title="확인"
-          onPressHandler={() => {
-            if (!imgPath) return;
-
-            promiseFlow(imgPath, [
-              convertImageFormData,
-              createImageFormData,
-              requestUploadImage,
-              then2,
-              apis.createMeeting,
-            ]);
-          }}
-        />
+        <ConfirmButton title="확인" onPressHandler={onPressConfirm} />
       </View>
     </View>
   );

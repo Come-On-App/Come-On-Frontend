@@ -1,31 +1,15 @@
+import { AuthResponse } from '@type/index';
 import { useCallback } from 'react';
-import { AccessTokenRes, AuthResponse, RefreshTokenRes } from '../types';
+import { SetTokensToDB } from '@api/token/token';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
-import { login, logout } from '../features/authSlice';
-import { deleteValueFor, save, getValueFor } from '../utils/secureStore';
+import { login, logout, setToken } from '../features/authSlice';
+import { deleteValueFor, getValueFor } from '../utils/secureStore';
 
 enum StoreKey {
   refreshToken = 'refreshToken',
   accessToken = 'accessToken',
 }
 
-const saveAccessToken = async (accessTokenData: AccessTokenRes) => {
-  await save('accessToken', JSON.stringify(accessTokenData.accessToken));
-};
-const saveRefreshToken = async (refreshTokennData: RefreshTokenRes) => {
-  await save('refreshToken', JSON.stringify(refreshTokennData.refreshToken));
-};
-const getAccessToken = async () => {
-  const data = await getTokenData('accessToken');
-
-  if (data != null) {
-    data as AccessTokenRes;
-
-    return data.accessToken.token;
-  }
-
-  return null;
-};
 const getTokenData = async (name: 'accessToken' | 'refreshToken') => {
   const tokenData = await getValueFor(name);
 
@@ -37,45 +21,49 @@ const getTokenData = async (name: 'accessToken' | 'refreshToken') => {
 function useAuth() {
   const dispatch = useAppDispatch();
   const isAuth = useAppSelector(state => state.auth.haveToken);
-  const isValidToken = () => {
-    getTokenData(StoreKey.accessToken).then(value => {
-      if (value === null) {
-        return false;
-      }
+  const accessToken = useAppSelector(state => state.auth.accessToken);
+  const refreshToken = useAppSelector(state => state.auth.refreshToken);
+  const myId = useAppSelector(state => state.auth.userId);
+  const isValidUser = useCallback(async () => {
+    const accessTkn = await getTokenData(StoreKey.accessToken);
+    const refreshTkn = await getTokenData(StoreKey.refreshToken);
 
-      return true;
-    });
-  };
-  const setLogoin = useCallback(async () => {
-    const accessToken = await getTokenData(StoreKey.accessToken);
-    const refreshToken = await getTokenData(StoreKey.refreshToken);
+    if (accessTkn !== null && refreshTkn !== null) {
+      const data = { accessToken: accessTkn, refreshToken: refreshTkn };
 
-    if (accessToken !== null && refreshToken !== null) {
+      // TODO추후 토큰 암호화해서 저장
+      dispatch(setToken(data));
+      // dispatch(setToken(data));
       dispatch(login());
+    } else {
+      // 토큰이 유효하지 않으면 로그아웃 시켜야함 .
+      dispatch(logout());
     }
   }, [dispatch]);
-  const setTokens = useCallback(
-    async (data: AuthResponse) => {
-      await saveAccessToken(data);
-      await saveRefreshToken(data);
-
-      dispatch(login());
-    },
-    [dispatch],
-  );
+  const getAccessToken = useCallback(() => {
+    return accessToken;
+  }, [accessToken]);
+  const getRefreshToken = useCallback(() => {
+    return refreshToken;
+  }, [refreshToken]);
   const setLogout = useCallback(async () => {
     await deleteValueFor(StoreKey.accessToken);
     await deleteValueFor(StoreKey.refreshToken);
     dispatch(logout());
   }, [dispatch]);
+  const setTokens = async (token: AuthResponse) => {
+    await SetTokensToDB(token);
+    dispatch(setToken(token));
+  };
 
   return {
     isAuth,
-    setTokens,
     setLogout,
-    setLogoin,
-    isValidToken,
+    setTokens,
+    isValidUser,
     getAccessToken,
+    getRefreshToken,
+    myId,
   };
 }
 

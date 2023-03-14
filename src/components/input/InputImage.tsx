@@ -1,39 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Image, Pressable, View, Alert } from 'react-native';
+import React, { useEffect } from 'react';
+import { Image, Pressable, View } from 'react-native';
 
-import { setMeetingImgPath } from '../../features/meetingSlice';
-import useImagePicker from '../../hooks/useImagePicker';
+import useImagePicker from '@hooks/useImagePicker';
+import useMeeting from '@hooks/useMeeting';
 
-import theme from '../../constants/themed';
+import { makeStyles } from '@rneui/themed';
 import { Font } from '../Font';
 import Icon from '../Icon';
 
-import { useAppDispatch } from '../../hooks/redux/hooks';
-
 function InputImage() {
-  const dispatch = useAppDispatch();
+  const styles = useStyles();
+  const { setMyMeetingImgPath } = useMeeting();
   const [path, pickImage2] = useImagePicker();
-  const picture = path ? (
-    <Image source={path} style={styles.image} />
-  ) : (
-    <View style={styles.imageBox}>
-      <Icon name="camera-alt" size={28} color={theme.grayscale?.[500]} />
-      <Font style={styles.fontColor}>사진을 등록해 주세요</Font>
-    </View>
-  );
 
   useEffect(() => {
     if (path) {
-      dispatch(setMeetingImgPath(path));
+      setMyMeetingImgPath(path);
     }
-  }, [dispatch, path]);
+  }, [path, setMyMeetingImgPath]);
 
   // 추후 이미지 권한 얻어오기
   return (
     <View style={styles.container}>
       <Font style={styles.label}>사진등록</Font>
       <Pressable onPress={pickImage2} style={[styles.imageContainer]}>
-        {picture}
+        {path ? <Image source={path} style={styles.image} /> : <ImageContent />}
       </Pressable>
     </View>
   );
@@ -41,7 +32,22 @@ function InputImage() {
 
 export default InputImage;
 
-const styles = StyleSheet.create({
+function ImageContent() {
+  const styles = useStyles();
+
+  return (
+    <View style={styles.imageBox}>
+      <Icon
+        name="camera-alt"
+        size={28}
+        color={styles.imageContentColor.color}
+      />
+      <Font style={styles.fontColor}>사진을 등록해 주세요</Font>
+    </View>
+  );
+}
+
+const useStyles = makeStyles(theme => ({
   container: {
     marginTop: 28,
     marginBottom: 28,
@@ -78,4 +84,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-});
+  imageContentColor: {
+    color: theme.grayscale?.[500],
+  },
+}));

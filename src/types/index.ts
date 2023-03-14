@@ -7,7 +7,8 @@ import type {
   GooglePlaceDetail,
 } from 'react-native-google-places-autocomplete';
 import type { MapLocation } from '@type/api.map';
-import type { CategoryKey } from '@type/api.meeting';
+import { ReactNode } from 'react';
+import type { CategoryKey, GetMeetingResponse, Members } from '@type/api.meeting';
 import { Dispatch, SetStateAction } from 'react';
 
 export type SetState<T> = Dispatch<SetStateAction<T>>;
@@ -107,7 +108,27 @@ export interface InputProps {
 }
 
 export interface InputFormProps {
+  inputProps?: InputTextProps;
+}
+
+export type Type<T> = {
+  children: ReactNode;
+  id: T;
+};
+
+export type Ids = 'image' | 'name' | 'date';
+
+export type AnimationViewType = {
+  AnimationView: ({ children, id }: Type<Ids>) => JSX.Element;
+};
+
+export interface ImageAnimationProps extends AnimationViewType {
+  id: Ids;
+}
+
+export interface InputFormAnimProps {
   inputProps: InputTextProps;
+  AnimationView: ({ children, id }: Type<Ids>) => JSX.Element;
 }
 
 export interface InputTextProps extends InputProps {
@@ -151,7 +172,6 @@ export interface AuthResponse {
   refreshToken: {
     token: string;
     expiry: number;
-    userId: number;
   };
 }
 
@@ -169,24 +189,16 @@ export interface Token {
   userId: number;
 }
 
-export type MeetingResponse = {
-  id: number;
-  myMeetingUserId: number;
-  myMeetingRole: 'HOST' | 'EDITOR' | 'PARTICIPANT';
-  title: string;
-  startDate: string;
-  endDate: string;
-  meetingUsers: MeetingUser[];
-  meetingDates: MeetingDate[];
-  meetingPlaces: MeetingPlace[];
+export type AddPlaceButtonProps = {
+  iconName: IconName;
+  text: string;
 };
 
-export type MeetingUser = {
-  id: number;
-  nickname: string;
-  imageLink: string;
-  meetingRole: 'HOST' | 'EDITOR' | 'PARTICIPANT';
-};
+export interface IconButtonProps {
+  style?: StyleProp<ViewStyle>;
+  onPress: () => void;
+  icon: Icon;
+}
 
 export type MeetingDate = {
   id: number;
@@ -218,9 +230,8 @@ export type PlaceCardBodyProps = {
 
 /// memberBox
 export type MemberBoxProps = {
-  myId: number;
-  myRole: 'HOST' | 'EDITOR' | 'PARTICIPANT';
-  meetingUsers: MeetingUser[];
+  hostId: number | undefined;
+  meetingUsers: Members[];
 };
 
 export interface MemberBoxTitleProps {
@@ -232,48 +243,8 @@ export interface MemberBoxSubTitleProps {
 }
 
 export interface UserRowProps {
-  user: MeetingUser[];
-  renderAvatar: (users: MeetingUser[]) => JSX.Element[];
-}
-
-// calendar
-export type SubDateProps = {
-  date: date;
-};
-
-export type date = {
-  startDate: string;
-  endDate: string;
-};
-
-export type CalendarProps = {
-  type: 'PERIOD' | 'DEFAULT';
-  data: MeetingResponse | undefined; // TODO: 추후 undefined 수정
-  setDate?: React.Dispatch<
-    React.SetStateAction<{
-      startDate: string;
-      endDate: string;
-    }>
-  >;
-};
-
-export interface CalendarTypeProps {
-  data: MeetingResponse | undefined; // TODO: 추후 undefined 수정
-  setDate?: React.Dispatch<
-    React.SetStateAction<{
-      startDate: string;
-      endDate: string;
-    }>
-  >;
-}
-
-export interface OverayCalendarProps {
-  visible: boolean;
-  onPressLabel: () => void;
-}
-
-export interface MeetingTitleProps {
-  onPressLabel: () => void;
+  user: Members[];
+  renderAvatar: (users: Members[]) => JSX.Element[];
 }
 
 // api
@@ -292,10 +263,6 @@ export interface IconProps {
   color?: string;
   size: number;
   onPress?: () => void;
-}
-
-export interface CalendarBoxProps {
-  data: MeetingResponse;
 }
 
 export interface Icon {
@@ -324,7 +291,8 @@ export interface BadgedAvatarProps extends AvatarProps {
     icon: Icon;
     backgroundColor: string;
   };
-  onPress: () => void;
+
+  onPress?: () => void;
 }
 
 // TabBar
@@ -345,30 +313,6 @@ export interface ModalProps {
   isVisible: boolean;
   style?: StyleProp<ViewStyle>;
   children: React.ReactNode;
-}
-
-declare module '@rneui/themed' {
-  export interface Theme {
-    DayTheme: {
-      colors: {
-        dayFilteredColor: string;
-        dayStartColor: string;
-        dayEndColor: string;
-      };
-      startDayStyle: {
-        container: object;
-        textColor: object;
-      };
-      endDayStyle: {
-        container: object;
-        textColor: object;
-      };
-      dayStyle: {
-        container: object;
-        oneDaySelectedStyle: object;
-      };
-    };
-  }
 }
 
 // location

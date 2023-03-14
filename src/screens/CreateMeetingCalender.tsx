@@ -11,9 +11,9 @@ import {
 import CancelButton from '../components/button/CancelButton';
 import ConfirmButton from '../components/button/ConfirmButton';
 
-import Calendar from '../components/calendar/Calendar';
 import Font from '../components/Font';
 import { useAppDispatch } from '../hooks/redux/hooks';
+import Calendar from '../components/calendar/Calendar';
 
 function SubLabelDate({ date }: SubDateProps) {
   const { startDate, endDate } = date;
@@ -30,7 +30,6 @@ function SubLabelDate({ date }: SubDateProps) {
 
 function CreateMeetingCalender({
   navigation,
-  route,
 }: RootStackScreenProps<'CreateMeetingCalender'>) {
   const styles = useStyles();
   const dispatch = useAppDispatch();

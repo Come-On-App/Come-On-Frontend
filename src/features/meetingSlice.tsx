@@ -26,16 +26,17 @@ interface IMeeting {
     calendarEndTo: string;
   };
   meetingImgPath: AssetState | null;
+  totalMeetingMembers: number;
 }
 
 const meetingSlice = createSlice({
   name: 'meeting',
   initialState: initialState as IMeeting,
+
   reducers: {
     setMeetingName: (state, action) => {
       state.meetingData.meetingName = action.payload;
     },
-
     setMeetingImgPath: (state, action) => {
       state.meetingImgPath = action.payload;
     },
@@ -47,6 +48,9 @@ const meetingSlice = createSlice({
     },
     setMeetingId: (state, action) => {
       state.meetingId = action.payload;
+    },
+    setTotalMeetingMembers: (state, action) => {
+      state.totalMeetingMembers = action.payload;
     },
     resetMeetingData: state => {
       const newData = {
@@ -74,6 +78,7 @@ export const {
   setCalendarEndTo,
   setMeetingImgPath,
   setMeetingId,
+  setTotalMeetingMembers,
   resetMeetingData,
 } = meetingSlice.actions;
 

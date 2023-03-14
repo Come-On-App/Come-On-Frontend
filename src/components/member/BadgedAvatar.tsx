@@ -8,6 +8,7 @@ function BadgedAvatar({
   path,
   onPress,
   badge: { icon, backgroundColor },
+  containerStyle,
 }: BadgedAvatarProps) {
   const styles = useStyles(backgroundColor);
 
@@ -17,6 +18,7 @@ function BadgedAvatar({
       rounded
       source={path ? { uri: path } : undefined}
       onPress={onPress}
+      containerStyle={containerStyle}
     >
       <Avatar.Accessory
         style={styles.avatarAccessory}

@@ -6,6 +6,8 @@ import type {
   DeleteMeetingResponse,
   GetMeetingMembersListResponse,
   GetMeetingMembersPayload,
+  PostMeetingMembersDropPayload,
+  PostMeetingMembersDropResponse,
 } from '@type/api.meeting';
 
 /**
@@ -39,6 +41,18 @@ export async function requestDeleteMeeting(
 ): Promise<DeleteMeetingResponse> {
   const URL = `/api/v1/meetings/${payload}/members/me`;
   const { data } = await serverAxios.delete(URL);
+
+  return data;
+}
+
+// POST /api/v1/meetings/{meeting-id}/members/drop 모임 강퇴
+export async function requestMeetingMembersDrop(
+  payload: PostMeetingMembersDropPayload,
+): Promise<PostMeetingMembersDropResponse> {
+  const URL = `/api/v1/meetings/${payload.meetingId}/members/drop`;
+  const { data } = await serverAxios.post(URL, {
+    targetUserId: payload.targetUserId,
+  });
 
   return data;
 }

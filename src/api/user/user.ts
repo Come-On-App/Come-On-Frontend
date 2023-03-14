@@ -1,6 +1,8 @@
 import { serverAxios } from '@api/axiosInstance';
 import type {
   GetMyInfoResponse,
+  PostReissuePayload,
+  PostReissueResponse,
   PutMyInfoPayload,
   PutMyInfoResponse,
 } from '@type/api.user';
@@ -32,6 +34,18 @@ export async function requestUpdateMyInfo(
 ): Promise<PutMyInfoResponse> {
   const URL = `/api/v1/users/me`;
   const { data } = await serverAxios.put(URL, payload);
+
+  return data;
+}
+
+export async function requestPostRefreshToken(
+  payload: PostReissuePayload,
+): Promise<PostReissueResponse> {
+  const URL = '/api/v1/auth/reissue';
+  const { data } = await serverAxios.post(URL, {
+    refreshToken: payload.refreshToken.token,
+    reissueRefreshTokenAlways: true,
+  });
 
   return data;
 }

@@ -1,46 +1,80 @@
-import React from 'react';
-import { View, KeyboardAvoidingView, Pressable, Text } from 'react-native';
+import React, { useState } from 'react';
+import {
+  AnimationViewType,
+  IconProps,
+  ImageAnimationProps,
+  InputTextProps,
+} from '@type/index';
+
+import useMeeting from '@hooks/useMeeting';
 import { makeStyles } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 import Icon from '@components/Icon';
 import useMeetings from '@hooks/useMeetings';
 import InputBox from './InputText';
 import InputImage from './InputImage';
-import { IconProps, InputFormProps } from '../../types';
-import Font from '../Font';
 import IconInputBox, { isValid } from './IconInputBox';
+import { AnimationInputBox } from './InputText';
 
-function InputForm({ inputProps }: InputFormProps) {
+function InputForm({ AnimationView }: AnimationViewType) {
   const styles = useStyles();
-  const { meetingData } = useMeetings();
   const navigation = useNavigation();
+  const [name, setName] = useState<string>('');
+  const { meetingData, setMyMeetingName } = useMeeting();
+  const dates = `${meetingData.calendarStartFrom} ~ ${meetingData.calendarEndTo}`;
   const placeholder = '날짜 범위를 선택해주세요';
-  const value = `${meetingData.calendarStartFrom} ~ ${meetingData.calendarEndTo}`;
   const iconConfig: IconProps = {
     name: 'calendar-today',
     size: 24,
     color: styles.iconColor.color,
   };
+
+  function onChangeHandler(text: string) {
+    setName(text);
+    setMyMeetingName(text);
+  }
+
   const onPressLabel = () => {
     navigation.navigate('CreateMeetingCalender');
+  };
+  const inputProps: InputTextProps = {
+    label: '모임이름',
+    placeholder: '모임이름을 입력해주세요!',
+    maxLength: 30,
+    value: name,
+    onChangeText: onChangeHandler,
+    multiline: false,
   };
 
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
-      <InputImage />
-      <InputBox config={inputProps} style={styles.inputBoxStyle} />
+      <InputImgaeWithAinm AnimationView={AnimationView} id="image" />
+      <AnimationInputBox
+        inputProps={inputProps}
+        AnimationView={AnimationView}
+      />
       <View style={styles.inputContainer}>
         <Font style={styles.title}>모임 캘린더</Font>
-        <Pressable style={styles.inputContainer} onPress={onPressLabel}>
-          <IconInputBox
-            iconConfig={iconConfig}
-            condition={isValid(meetingData.calendarStartFrom)}
-            value={value}
-            placeholder={placeholder}
-          />
-        </Pressable>
+        <AnimationView id="date">
+          <Pressable style={styles.inputContainer} onPress={onPressLabel}>
+            <IconInputBox
+              iconConfig={iconConfig}
+              condition={isValid(meetingData.calendarStartFrom)}
+              value={dates}
+              placeholder={placeholder}
+            />
+          </Pressable>
+        </AnimationView>
       </View>
     </KeyboardAvoidingView>
+  );
+}
+
+export function InputImgaeWithAinm({ AnimationView, id }: ImageAnimationProps) {
+  return (
+    <AnimationView id={id}>
+      <InputImage />
+    </AnimationView>
   );
 }
 
@@ -56,33 +90,7 @@ const useStyles = makeStyles(theme => ({
   inputContainer: {
     marginTop: 12,
   },
-  inputBoxStyle: {
-    textAlignVertical: 'center',
-  },
   iconColor: {
     color: theme.grayscale['500'],
-  },
-  subLabelStyle: {
-    color: theme.grayscale[700],
-    lineHeight: theme.textStyles.body1.lineHeight,
-    fontSize: theme.textStyles.body1.fontSize,
-    fontWeight: 'normal', // TODO 추후 normal Weight로 재설정
-  },
-  labelContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 12,
-    marginTop: 12,
-  },
-  overlayStyle: {
-    width: '90%',
-    margin: 0,
-    padding: 0,
-    backgroundColor: 'rgba(52, 52, 52, 0)',
-  },
-  calendarViewStyle: {
-    width: '100%',
-    height: 700,
   },
 }));

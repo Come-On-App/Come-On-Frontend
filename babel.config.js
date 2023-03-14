@@ -30,6 +30,7 @@ module.exports = function (api) {
             '@screens': './src/screens',
             '@type': './src/types',
             '@utils': './src/utils',
+            '@serverAxios': './src/api',
           },
         },
       ],

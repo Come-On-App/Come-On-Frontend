@@ -119,7 +119,7 @@ export function usePromiseFlow<SV, R>() {
   const [data, setData] = useState<R>();
   const [error, setErrorObject] = useState<Error>();
   const [isError, setError] = useState(false);
-  const [isSuccess, setSuccess] = useState(false);
+  const [isSucccess, setSuccess] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const fn0 = useCallback((arg0: R) => {
     setData(arg0);

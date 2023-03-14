@@ -4,6 +4,7 @@ import placeSlice from '@features/placeSlice';
 import placeLockSlice from '@features/placeLockSlice';
 import authSlice from '@features/authSlice';
 import meetingSlice from '@features/meetingSlice';
+import socketReducer from '../features/socketSlice';
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     placeLock: placeLockSlice,
     auth: authSlice,
     meeting: meetingSlice,
+    socket: socketReducer,
   },
 });
 

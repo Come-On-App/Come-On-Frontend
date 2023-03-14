@@ -1,3 +1,88 @@
+diff --git a/node_modules/react-native-calendars/src/calendar-list/index.d.ts b/node_modules/react-native-calendars/src/calendar-list/index.d.ts
+index ab7a6e9..1812d55 100644
+--- a/node_modules/react-native-calendars/src/calendar-list/index.d.ts
++++ b/node_modules/react-native-calendars/src/calendar-list/index.d.ts
+@@ -20,6 +20,7 @@ export interface CalendarListProps extends CalendarProps, Omit<FlatListProps<any
+     showScrollIndicator?: boolean;
+     /** Whether to animate the auto month scroll */
+     animateScroll?: boolean;
++    renderPlaceholder?:(year: number, month: number) => React.ReactElement;
+ }
+ export interface CalendarListImperativeMethods {
+     scrollToDay: (date: XDate | string, offset: number, animated: boolean) => void;
+diff --git a/node_modules/react-native-calendars/src/calendar-list/index.js b/node_modules/react-native-calendars/src/calendar-list/index.js
+index f8943de..86ad94d 100644
+--- a/node_modules/react-native-calendars/src/calendar-list/index.js
++++ b/node_modules/react-native-calendars/src/calendar-list/index.js
+@@ -40,7 +40,7 @@ const CalendarList = (props, ref) => {
+     /** View props */
+     testID, style: propsStyle, onLayout, removeClippedSubviews, 
+     /** ScrollView props */
+-    horizontal = false, pagingEnabled, scrollEnabled = true, nestedScrollEnabled = true, scrollsToTop = false, keyExtractor = (_, index) => String(index), keyboardShouldPersistTaps, onScrollBeginDrag, onScrollEndDrag, onMomentumScrollBegin, onMomentumScrollEnd, 
++    horizontal = false, pagingEnabled, scrollEnabled = true, nestedScrollEnabled = true, scrollsToTop = false, keyExtractor = (_, index) => String(index), keyboardShouldPersistTaps, onScrollBeginDrag, onScrollEndDrag, onMomentumScrollBegin, onMomentumScrollEnd, renderPlaceholder,
+     /** FlatList props */
+     onEndReachedThreshold, onEndReached } = props;
+     const calendarProps = extractCalendarProps(props);
+@@ -152,7 +152,7 @@ const CalendarList = (props, ref) => {
+         const testId = `${testID}.item_${year}-${month}`;
+         return (<CalendarListItem {...calendarProps} testID={testId} markedDates={getMarkedDatesForItem(item)} item={item} style={calendarStyle} 
+         // @ts-expect-error - type mismatch - ScrollView's 'horizontal' is nullable
+-        horizontal={horizontal} calendarWidth={calendarWidth} calendarHeight={calendarHeight} scrollToMonth={scrollToMonth} visible={isDateInRange(item)}/>);
++        horizontal={horizontal} calendarWidth={calendarWidth} calendarHeight={calendarHeight} scrollToMonth={scrollToMonth} visible={isDateInRange(item)} renderPlaceholder={renderPlaceholder}/>);
+     }, [horizontal, calendarStyle, calendarWidth, testID, getMarkedDatesForItem, isDateInRange, calendarProps]);
+     const renderStaticHeader = () => {
+         if (staticHeader && horizontal) {
+diff --git a/node_modules/react-native-calendars/src/calendar-list/item.d.ts b/node_modules/react-native-calendars/src/calendar-list/item.d.ts
+index 1a8aca0..c642a79 100644
+--- a/node_modules/react-native-calendars/src/calendar-list/item.d.ts
++++ b/node_modules/react-native-calendars/src/calendar-list/item.d.ts
+@@ -3,13 +3,14 @@ import React from 'react';
+ import { Theme } from '../types';
+ import { CalendarProps } from '../calendar';
+ export type CalendarListItemProps = CalendarProps & {
+-    item: any;
++    item: XDate;
+     calendarWidth?: number;
+     calendarHeight?: number;
+     horizontal?: boolean;
+     theme?: Theme;
+     scrollToMonth?: (date: XDate) => void;
+     visible?: boolean;
++    renderPlaceholder?:(year: number, month: number) => React.ReactElement;
+ };
+ declare const CalendarListItem: React.MemoExoticComponent<(props: CalendarListItemProps) => JSX.Element>;
+ export default CalendarListItem;
+diff --git a/node_modules/react-native-calendars/src/calendar-list/item.js b/node_modules/react-native-calendars/src/calendar-list/item.js
+index 0e5be76..a00eeb2 100644
+--- a/node_modules/react-native-calendars/src/calendar-list/item.js
++++ b/node_modules/react-native-calendars/src/calendar-list/item.js
+@@ -1,11 +1,11 @@
+ import React, { useRef, useMemo, useCallback } from 'react';
+-import { Text } from 'react-native';
++import { Text,View } from 'react-native';
+ import { toMarkingFormat } from '../interface';
+ import { extractCalendarProps } from '../componentUpdater';
+ import styleConstructor from './style';
+ import Calendar from '../calendar';
+ const CalendarListItem = React.memo((props) => {
+-    const { item, theme, scrollToMonth, horizontal, calendarHeight, calendarWidth, style: propsStyle, headerStyle, onPressArrowLeft, onPressArrowRight, visible } = props;
++    const { item, theme, scrollToMonth, horizontal, calendarHeight, calendarWidth, style: propsStyle, headerStyle, onPressArrowLeft, onPressArrowRight, visible,renderPlaceholder } = props;
+     const style = useRef(styleConstructor(theme));
+     const calendarProps = extractCalendarProps(props);
+     const dateString = toMarkingFormat(item);
+@@ -52,6 +52,12 @@ const CalendarListItem = React.memo((props) => {
+         }
+     }, [onPressArrowRight, scrollToMonth]);
+     if (!visible) {
++        if(renderPlaceholder){
++            const year = item.getFullYear();
++            const month = item.getMonth();
++            return <View style={calendarStyle}>{renderPlaceholder(year,month)}</View>;
++            
++        }
+         return (<Text style={textStyle}>{dateString}</Text>);
+     }
+     return (<Calendar hideArrows={true} hideExtraDays={true} {...calendarProps} current={dateString} style={calendarStyle} headerStyle={horizontal ? headerStyle : undefined} disableMonthChange onPressArrowLeft={horizontal ? _onPressArrowLeft : onPressArrowLeft} onPressArrowRight={horizontal ? _onPressArrowRight : onPressArrowRight}/>);
 diff --git a/node_modules/react-native-calendars/src/calendar/day/period/index.js b/node_modules/react-native-calendars/src/calendar/day/period/index.js
 index f27db0e..79c8afa 100644
 --- a/node_modules/react-native-calendars/src/calendar/day/period/index.js

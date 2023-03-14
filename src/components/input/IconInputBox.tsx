@@ -4,13 +4,14 @@ import { View, Text, StyleProp, ViewStyle } from 'react-native';
 import Icon from '@components/Icon';
 import { IconProps } from '../../types';
 
-interface IconInputBoxProps {
+export interface IconInputBoxProps {
   iconConfig: IconProps;
   condition: boolean;
   value: string;
   placeholder: string;
   style?: StyleProp<ViewStyle>;
 }
+
 export const isValid = <T extends string | object>(data: T): boolean => {
   if (!data) return false;
 
@@ -44,12 +45,12 @@ const useStyles = makeStyles(theme => ({
     marginLeft: 10,
   },
   dateContainer: {
-    flexDirection: 'row',
+    padding: 14,
     borderWidth: 1,
     borderRadius: 4,
+    flexDirection: 'row',
+    textAlignVertical: 'center',
     borderColor: theme.grayscale['200'],
-    padding: 12,
-    alignItems: 'center',
   },
 }));
 

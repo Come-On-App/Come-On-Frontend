@@ -1,19 +1,27 @@
 /* eslint-disable react/destructuring-assignment */
 import React, { useCallback, useState, useEffect } from 'react';
-import { makeStyles } from '@rneui/themed';
-import { CalendarList, DateData } from 'react-native-calendars';
+import { makeStyles, Overlay } from '@rneui/themed';
 import { View } from 'react-native';
+import { CalendarList, DateData } from 'react-native-calendars';
 import { MarkedDates } from 'react-native-calendars/src/types';
 
+import {
+  requestAddDateVoting,
+  requestDeleteDateVoting,
+} from '@api/meeting/voting';
+
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import Font from '../Font';
 import LocaleConfig from './LocaleConfig';
 import CustomCalendarTheme, { DayTheme } from './CustomCalendarTheme';
 import {
+  CalendarPeriodTypeProps,
   CalendarProps,
-  CalendarTypeProps,
-  MeetingDate,
-  MeetingUser,
+  CalendarVotingTypeProps,
+  CalenderClickEventType,
 } from '../../types';
+import LoadingComponent from './LoadingComponent';
+import DateModal, { NoUserModal } from './DateModal';
 
 const STARTSTYLE = {
   selected: true,
@@ -47,28 +55,35 @@ const returnMonthDiff = (startDate: Date, endDate: Date) => {
   return monthDiff;
 };
 const renderMonth = (startDate: string, endDate: string) => {
-  const startDay = new Date(startDate);
   const endDay = new Date(endDate);
+  const startDay = new Date(startDate);
   const dayDiff = Math.floor(returnMonthDiff(startDay, endDay));
 
   return dayDiff;
 };
+const dateToKorString = (date: string) => {
+  const year = date.slice(0, 4);
+  const month = date.slice(5, 7);
+  const day = date.slice(8, 10);
+
+  return `${year}년 ${month}월 ${day}일`;
+};
 const renderSelectedDate = (
-  dates: MeetingDate[],
-  meetingUsers: MeetingUser[],
+  dates: string[],
+  userCounts: number[],
+  totalUsers: number,
 ) => {
   const markedDates = new Map<string, object>();
-  const userCount = meetingUsers.length;
 
-  dates.forEach(item => {
-    markedDates.set(item.date, {
+  dates.forEach((date, idx) => {
+    markedDates.set(date, {
       customStyles: {
         container: {
           borderRadius: 0,
-          backgroundColor: `rgba(51,127,254, ${item.userCount / userCount})`,
+          backgroundColor: `rgba(51,127,254, ${userCounts[idx] / totalUsers})`,
         },
         text: {
-          color: 'white',
+          color: 'black',
         },
       },
     });
@@ -129,10 +144,10 @@ function setCalendarStyle(array: Array<string>) {
   return dataMap;
 }
 
-function PeriodCalendar({ data, setDate }: CalendarTypeProps) {
+function PeriodCalendar({ setDate }: CalendarPeriodTypeProps) {
   const styles = useStyles();
-  const [markedDate, setMarkedDate] = useState<MarkedDates>();
   const today = new Date().toISOString().substring(0, 10);
+  const [markedDate, setMarkedDate] = useState<MarkedDates>();
   const [day, setDay] = useState({ startDay: '', endDay: '' });
   const onPressDayHandlerPeriod = useCallback(
     (date: DateData) => {
@@ -156,6 +171,9 @@ function PeriodCalendar({ data, setDate }: CalendarTypeProps) {
         setDay({ startDay: '', endDay: '' });
         setMarkedDate({});
 
+        if (setDate)
+          setDate({ startDate: '0000-00-00', endDate: '0000-00-00' });
+
         return;
       }
 
@@ -169,7 +187,7 @@ function PeriodCalendar({ data, setDate }: CalendarTypeProps) {
         setMarkedDate(Object.fromEntries(periodMap.entries()));
       }
     },
-    [day],
+    [day, setDate],
   );
 
   useEffect(() => {
@@ -184,7 +202,7 @@ function PeriodCalendar({ data, setDate }: CalendarTypeProps) {
       onDayPress={onPressDayHandlerPeriod}
       minDate={today}
       markingType="period"
-      disableAllTouchEventsForDisabledDays
+      scrollToOverflowEnabled
       markedDates={markedDate || {}}
       nestedScrollEnabled
       pastScrollRange={0}
@@ -201,40 +219,124 @@ function PeriodCalendar({ data, setDate }: CalendarTypeProps) {
   );
 }
 
-function DefaultCalendar({ data }: CalendarTypeProps) {
+function DefaultCalendar({
+  data,
+  startFrom,
+  endTo,
+  hostId,
+  totalUsers,
+}: CalendarVotingTypeProps) {
   const styles = useStyles();
-  let selectedDate; // 임시
-  let month;
-  const onPressHandler = useCallback(() => {
-    console.log('날짜 클릭!');
-  }, []);
+  const { contents, contentsCount } = data;
+  const [meetingDates, setMeetingDates] = useState<string[]>([]);
+  const [visible, setVisible] = useState<boolean>(false);
+  const [meetingMemberCount, setMeetingMemberCount] = useState<number[]>([]);
+  const [myVotingDates, setMyVotingDates] = useState<string[]>([]);
+  const [selectedDates, setSelectedDates] = useState<{
+    [k: string]: object;
+  }>({});
+  const [userSelected, setUserSelected] = useState<boolean>();
+  const [userSelectedDate, setUserSelectedDate] =
+    useState<CalenderClickEventType>();
+  let month = renderMonth(startFrom, endTo) - 1;
+  const meetingId = 130;
 
-  if (data?.meetingDates) {
-    selectedDate = renderSelectedDate(data.meetingDates, data.meetingUsers);
-    month = renderMonth(data?.startDate, data?.endDate) - 1;
-  }
+  if (month <= 0) month = 0;
+
+  useEffect(() => {
+    setMeetingDates(contents.map(content => content.date));
+    setMeetingMemberCount(contents.map(content => content.memberCount));
+    setMyVotingDates(
+      contents
+        .filter(content => content.myVoting === true)
+        .map(content => content.date),
+    );
+  }, [contents, contentsCount]);
+
+  useEffect(() => {
+    setSelectedDates(
+      renderSelectedDate(meetingDates, meetingMemberCount, totalUsers),
+    );
+  }, [meetingDates, meetingMemberCount, totalUsers]);
+
+  const onPressHandler = useCallback(
+    async (e: CalenderClickEventType) => {
+      const date = {
+        date: e.dateString,
+      };
+      const korStr = dateToKorString(date.date);
+
+      if (myVotingDates.includes(date.date)) {
+        requestDeleteDateVoting({ meetingId, payload: date }).then(res => {
+          if (res.success) {
+            Toast.show({
+              text1: `${korStr} 에 투표가 취소되었습니다.`,
+            });
+          }
+        });
+      } else {
+        requestAddDateVoting({ meetingId, payload: date }).then(res => {
+          if (res.success) {
+            Toast.show({ text1: `${korStr} 에 투표 되었습니다.` });
+          }
+        });
+      }
+
+      // api받아오기
+    },
+    [myVotingDates],
+  );
+  const onDayLongPressHandler = useCallback(
+    (e: CalenderClickEventType) => {
+      setVisible(true);
+      const isSelected = meetingDates.includes(e.dateString);
+
+      setUserSelected(isSelected);
+      setUserSelectedDate(e);
+    },
+    [meetingDates],
+  );
 
   return (
-    <CalendarList
-      calendarStyle={styles.calendarStyle}
-      onDayPress={onPressHandler}
-      minDate={data?.startDate}
-      maxDate={data?.endDate}
-      markingType="custom"
-      disableAllTouchEventsForDisabledDays
-      markedDates={selectedDate}
-      nestedScrollEnabled
-      pastScrollRange={0}
-      displayLoadingIndicator={false}
-      futureScrollRange={month}
-      showScrollIndicator={false}
-      theme={CustomCalendarTheme}
-      renderHeader={date => {
-        if (!date) return null;
+    <>
+      <CalendarList
+        calendarStyle={styles.calendarStyle}
+        onDayPress={onPressHandler}
+        minDate={startFrom}
+        maxDate={endTo}
+        markingType="custom"
+        markedDates={selectedDates}
+        pastScrollRange={0}
+        scrollEnabled
+        onDayLongPress={onDayLongPressHandler}
+        renderPlaceholder={(_year, _months) => (
+          <LoadingComponent size="large" />
+        )}
+        displayLoadingIndicator={false}
+        futureScrollRange={month}
+        showScrollIndicator
+        theme={CustomCalendarTheme}
+        renderHeader={date => {
+          if (!date) return null;
 
-        return CalendarHeader(date);
-      }}
-    />
+          return CalendarHeader(date);
+        }}
+      />
+      {userSelectedDate ? (
+        <Overlay
+          isVisible={visible}
+          onBackdropPress={() => setVisible(!visible)}
+          style={{ padding: 0 }}
+          overlayStyle={{ padding: 0, borderRadius: 100 }}
+        >
+          {userSelected ? (
+            <DateModal date={userSelectedDate} hostId={hostId || 0} />
+          ) : (
+            <NoUserModal date={userSelectedDate} />
+          )}
+        </Overlay>
+      ) : null}
+    </>
   );
 }
 
@@ -242,17 +344,35 @@ export const MemorizedPeriodCalendar = React.memo(PeriodCalendar);
 
 export const MemorizedDefaultCalendar = React.memo(DefaultCalendar);
 
-function Calendar({ type, data, setDate }: CalendarProps): JSX.Element {
+function Calendar({
+  type,
+  data,
+  totalUsers,
+  startFrom,
+  endTo,
+  setDate,
+  hostId,
+}: CalendarProps): JSX.Element {
   const styles = useStyles();
 
   LocaleConfig.defaultLocale = 'kr';
 
   return (
     <View style={styles.calendarContainer}>
-      {data && type === 'DEFAULT' ? (
-        <MemorizedDefaultCalendar data={data} />
+      {type === 'DEFAULT' &&
+      data &&
+      totalUsers !== undefined &&
+      startFrom &&
+      endTo ? (
+        <MemorizedDefaultCalendar
+          data={data}
+          totalUsers={totalUsers}
+          startFrom={startFrom}
+          endTo={endTo}
+          hostId={hostId}
+        />
       ) : (
-        <MemorizedPeriodCalendar data={data} setDate={setDate} />
+        <MemorizedPeriodCalendar setDate={setDate} />
       )}
     </View>
   );
@@ -263,9 +383,9 @@ export default Calendar;
 const useStyles = makeStyles(theme => ({
   calendarContainer: {
     width: '100%',
-    justifyContent: 'center',
+
     height: '98%',
-    backgroundColor: 'none',
+    backgroundColor: 'white',
     borderRadius: 12,
   },
   calendarStyle: {
@@ -281,5 +401,10 @@ const useStyles = makeStyles(theme => ({
     marginBottom: 10,
 
     width: '100%',
+  },
+  loadingContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
   },
 }));

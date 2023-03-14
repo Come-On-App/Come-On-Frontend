@@ -98,8 +98,8 @@ interface MeetingMetaData {
   fixedDate: FixedDate | null;
 }
 
-interface Members {
-  memberId: number;
+export interface Members {
+  memberId?: number;
   userId: number;
   nickname: string;
   profileImageUrl: string | null;
@@ -170,7 +170,7 @@ export interface GetMeetingDetailResponse {
   meetingMetaData: MeetingMetaData;
   members: Members[];
   votingDates: VotingDates[];
-  places: Places | null;
+  places?: Places[] | null;
 }
 
 // POST /api/v1/meetings/join (payalod)
@@ -227,6 +227,17 @@ export interface GetMeetingMembersResponse {
   nickname: string;
   profileImageUrl: string | null;
   memberRole: MemberRole;
+}
+
+// POST /api/v1/meetings/{meeting-id}/members/drop (payalod)
+export type PostMeetingMembersDropPayload = {
+  meetingId: number;
+  targetUserId: number;
+};
+
+// POST /api/v1/meetings/{meeting-id}/meeting-time (response)
+export interface PostMeetingMembersDropResponse {
+  success: boolean;
 }
 
 // GET /api/v1/meetings/{meeting-id}/members (response)
@@ -312,14 +323,20 @@ export interface DeleteDateVotingResponse {
 // GET /api/v1/meetings/{meeting-id}/date/voting (payload)
 export type GetDateVotingPayload = number;
 
-interface GetDateVotingResponse {
+export interface GetDateVotingResponse {
+  contentsCount: number;
+  contents: GetDateVotingResponseContents[];
+}
+interface GetDateVotingResponseContents {
   date: string;
   memberCount: number;
   myVoting: boolean;
 }
 
 // GET /api/v1/meetings/{meeting-id}/date/voting (response)
-export type GetDateVotingListResponse = ListResponse<GetDateVotingResponse>;
+export type GetDateVotingListResponse =
+  | ListResponse<GetDateVotingResponse>
+  | undefined;
 
 // GET /api/v1/meetings/{meeting-id}/date/voting/details (payload)
 export interface GetDateVotingDetailsPayload {
@@ -334,13 +351,15 @@ export interface GetDateVotingDetailsResponse {
   date: string;
   memberCount: number;
   myVoting: boolean;
-  votingUsers: {
-    userId: number;
-    nickname: string;
-    profileImageUrl: string | null;
-    memberRole: MemberRole;
-  };
+  votingUsers: VotingUsers[];
 }
+
+export type VotingUsers = {
+  userId: number;
+  nickname: string;
+  profileImageUrl: string | null;
+  memberRole: MemberRole;
+};
 
 // POST /api/v1/meetings/{meeting-id}/date/confirm (payload)
 export interface PostConfirmMeetingDatePayload {
