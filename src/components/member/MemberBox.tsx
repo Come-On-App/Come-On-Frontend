@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, ScrollView, Pressable, Text } from 'react-native';
 import { makeStyles, Avatar } from '@rneui/themed';
 import { Members } from '@type/api.meeting';
@@ -167,7 +167,7 @@ function MemberBox({ hostId }: MemberBoxProps) {
   };
 
   // 실시간 갱신
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (ONLINE_UPDATE || MEMBER_UPDATE) {
       requestMeetingMembers(meetingId).then(res => {
         setMeetingUsers(res.contents);
@@ -177,7 +177,7 @@ function MemberBox({ hostId }: MemberBoxProps) {
   }, [MEMBER_UPDATE, ONLINE_UPDATE, onlineUserUpdateEnd]);
 
   // 초기화
-  useLayoutEffect(() => {
+  useEffect(() => {
     requestMeetingMembers(meetingId).then(res => {
       setMeetingUsers(res.contents);
     });

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useContext, useLayoutEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { View, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import { makeStyles, Skeleton } from '@rneui/themed';
 import { Client } from '@stomp/stompjs';
@@ -186,7 +186,7 @@ function MeetingRoom({ navigation }: RootStackScreenProps<'MeetingRoom'>) {
 
   // 초반데이터로드
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     connect();
 
     return () => {
@@ -195,17 +195,17 @@ function MeetingRoom({ navigation }: RootStackScreenProps<'MeetingRoom'>) {
     };
   }, []);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     getMeetingData();
   }, []);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (MEETING_UPDATE) {
       getMeetingData();
       dispatch(setMeetingUpdateEnd());
     }
   }, [MEETING_UPDATE]);
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (MEMBER_UPDATE) {
       getMeetingData();
 
