@@ -6,7 +6,7 @@ import {
   setMeetingImgPath,
   resetMeetingData as reset,
 } from '../features/meetingSlice';
-import { useAppSelector, useAppDispatch } from '../app/hooks';
+import { useAppDispatch, useAppSelector } from './redux/hooks';
 
 function useMeeting() {
   const dispatch = useAppDispatch();

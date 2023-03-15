@@ -30,6 +30,7 @@ export type CalendarProps = {
   totalUsers?: number;
   startFrom?: string;
   endTo?: string;
+  meetingId?: number;
   hostId?: number;
   setDate?: React.Dispatch<
     React.SetStateAction<{
@@ -53,6 +54,7 @@ export interface CalendarVotingTypeProps {
   endTo: string;
   totalUsers: number;
   hostId?: number;
+  meetingId: number;
   setDate?: React.Dispatch<
     React.SetStateAction<{
       startDate: string;

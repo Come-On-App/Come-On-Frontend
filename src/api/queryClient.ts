@@ -6,6 +6,8 @@ export enum QueryKeys {
   user = 'user',
   meetings = 'meetings',
   place = 'place',
+  members = 'members',
+  voting = 'voting',
 }
 
 export const queryClient = new QueryClient({

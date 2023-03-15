@@ -11,10 +11,11 @@ import { makeStyles } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 import Icon from '@components/Icon';
 import useMeetings from '@hooks/useMeetings';
-import InputBox from './InputText';
+import { KeyboardAvoidingView, Pressable, View } from 'react-native';
+import Font from '@components/Font';
+import InputBox, { AnimationInputBox } from './InputText';
 import InputImage from './InputImage';
 import IconInputBox, { isValid } from './IconInputBox';
-import { AnimationInputBox } from './InputText';
 
 function InputForm({ AnimationView }: AnimationViewType) {
   const styles = useStyles();

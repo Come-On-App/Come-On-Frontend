@@ -7,9 +7,8 @@ import type {
   GooglePlaceDetail,
 } from 'react-native-google-places-autocomplete';
 import type { MapLocation } from '@type/api.map';
-import { ReactNode } from 'react';
-import type { CategoryKey, GetMeetingResponse, Members } from '@type/api.meeting';
-import { Dispatch, SetStateAction } from 'react';
+import { ReactNode, Dispatch, SetStateAction } from 'react';
+import type { CategoryKey, Members } from '@type/api.meeting';
 
 export type SetState<T> = Dispatch<SetStateAction<T>>;
 
@@ -231,6 +230,7 @@ export type PlaceCardBodyProps = {
 /// memberBox
 export type MemberBoxProps = {
   hostId: number | undefined;
+  meetingId: number;
   meetingUsers: Members[];
 };
 

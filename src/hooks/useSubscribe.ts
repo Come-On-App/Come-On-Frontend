@@ -7,7 +7,12 @@ import {
   GetMeetingMembersListResponse,
   GetMeetingMembersResponse,
 } from '@type/api.meeting';
-import { Individual, IMeeting, IMeetingPlaceLock } from '@type/hook.webSocket';
+import {
+  Individual,
+  IMeeting,
+  IMeetingPlaceLock,
+  ISubscribeList,
+} from '@type/hook.webSocket';
 import { successAlert } from '@utils/alert';
 import fn, { pickSafelyBy } from '@utils/fn';
 import { log } from '@utils/log';
@@ -22,6 +27,7 @@ import usePlaceLock, {
   PlaceUnLockDispatch,
 } from './redux/usePlaceLock';
 import useWebSocket from './useWebSocket';
+import useSocketMeeting, { OnlineUserListDispatch } from './useSocketMeeting';
 
 export default function useSubscribe(meetingId: number) {
   const { placeResetDispatch } = usePlace();
@@ -61,11 +67,17 @@ function useSubscribeIndividual(meetingId: number) {
 // 모임 구독
 function useSubscribePlace(meetingId: number) {
   const { placeLockDispatch, placeUnLockDispatch } = usePlaceLock();
+  const { onlineUserListDispatch } = useSocketMeeting();
   const { placeResetDispatch } = usePlace();
   const { subscribePlace } = useWebSocket();
   const onMessage = useMemo(
-    () => onPlaceMessageFn(meetingId, [placeLockDispatch, placeUnLockDispatch]),
-    [meetingId, placeLockDispatch, placeUnLockDispatch],
+    () =>
+      onPlaceMessageFn(meetingId, [
+        placeLockDispatch,
+        placeUnLockDispatch,
+        onlineUserListDispatch,
+      ]),
+    [meetingId, placeLockDispatch, placeUnLockDispatch, onlineUserListDispatch],
   );
 
   useEffect(() => {
@@ -122,14 +134,23 @@ function onIndividualMessageFn(
 
 function onPlaceMessageFn(
   meetingId: number,
-  dispatchs: [PlaceLockDispatch, PlaceUnLockDispatch],
+  dispatchs: [PlaceLockDispatch, PlaceUnLockDispatch, OnlineUserListDispatch],
 ) {
-  const [placeLockDispatch, placeUnLockDispatch] = dispatchs;
+  const [placeLockDispatch, placeUnLockDispatch, onlineUserListDispatch] =
+    dispatchs;
 
   return (message: IMessage) => {
     const messageBody: IMeeting = JSON.parse(message.body);
 
     log(`[/sub/meetings/${meetingId} - message.body]`, messageBody);
+    log('log', messageBody.data);
+
+    if (messageBody.messageType === 'MEETING_SUBSCRIBE_USER_LIST') {
+      const { data } = messageBody as ISubscribeList;
+
+      console.log(`${data.userIds}asa`);
+      onlineUserListDispatch(data.userIds);
+    }
 
     if (messageBody.messageType === 'RESOURCE_UPDATED_EVENT') {
       switch (messageBody.data.meetingResourceType) {
@@ -148,6 +169,16 @@ function onPlaceMessageFn(
         // 모임 장소 락 해제 메시지
         case 'MEETING_PLACE_UNLOCK':
           placeUnLockDispatch();
+          break;
+        // 모임 투표
+        case 'MEETING_VOTING':
+          invalidateQueries(['voting', meetingId]);
+          console.log('aa');
+          break;
+        // 미팅 멤버 업데이트
+        case 'MEETING_MEMBERS':
+          console.log('aa');
+
           break;
         default:
           break;

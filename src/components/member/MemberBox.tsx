@@ -6,7 +6,7 @@ import {
   requestMeetingMembers,
   requestMeetingMembersDrop,
 } from '@api/meeting/members';
-import { ButtonGroup } from '@components/buttons/Buttons';
+import { ButtonGroup } from '@components/button/Buttons';
 import useAuth from '@hooks/useAuth';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import useSocketMeeting from '@hooks/useSocketMeeting';
@@ -122,14 +122,12 @@ function MemberAvatar({
   );
 }
 
-function MemberBox({ hostId }: MemberBoxProps) {
-  const meetingId = 130;
+function MemberBox({ hostId, meetingId }: MemberBoxProps) {
   const { myId } = useAuth();
   const styles = useStyles();
   const [visible, setVisible] = useState(false);
   const [meetingUsers, setMeetingUsers] = useState<Members[]>([]);
-  const { ONLINE_UPDATE, MEMBER_UPDATE, onlineUserList, onlineUserUpdateEnd } =
-    useSocketMeeting();
+  const { onlineUserList } = useSocketMeeting();
   // host구분
   const filterStaff = () => {
     const meetingStaff = meetingUsers.filter(
@@ -168,20 +166,11 @@ function MemberBox({ hostId }: MemberBoxProps) {
 
   // 실시간 갱신
   useEffect(() => {
-    if (ONLINE_UPDATE || MEMBER_UPDATE) {
-      requestMeetingMembers(meetingId).then(res => {
-        setMeetingUsers(res.contents);
-      });
-      onlineUserUpdateEnd();
-    }
-  }, [MEMBER_UPDATE, ONLINE_UPDATE, onlineUserUpdateEnd]);
-
-  // 초기화
-  useEffect(() => {
     requestMeetingMembers(meetingId).then(res => {
       setMeetingUsers(res.contents);
     });
-  }, []);
+  }, [meetingId]);
+
   const renderAvatar = (users: Members[]) => {
     return users.map(item => (
       <MemberAvatar
@@ -278,7 +267,7 @@ function MemberBoxSubTitle({ onClickManage }: MemberBoxSubTitleProps) {
 
 export default MemberBox;
 
-const useStyles = makeStyles((theme, members: Members[]) => ({
+const useStyles = makeStyles(theme => ({
   meetingMemberLabelStyle: {
     flexDirection: 'row',
   },

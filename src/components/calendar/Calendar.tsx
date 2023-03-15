@@ -11,15 +11,16 @@ import {
 } from '@api/meeting/voting';
 
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import {
+  CalendarPeriodTypeProps,
+  CalendarVotingTypeProps,
+  CalenderClickEventType,
+  CalendarProps,
+} from '@type/meeting.calendar';
 import Font from '../Font';
 import LocaleConfig from './LocaleConfig';
 import CustomCalendarTheme, { DayTheme } from './CustomCalendarTheme';
-import {
-  CalendarPeriodTypeProps,
-  CalendarProps,
-  CalendarVotingTypeProps,
-  CalenderClickEventType,
-} from '../../types';
+
 import LoadingComponent from './LoadingComponent';
 import DateModal, { NoUserModal } from './DateModal';
 
@@ -225,6 +226,7 @@ function DefaultCalendar({
   endTo,
   hostId,
   totalUsers,
+  meetingId,
 }: CalendarVotingTypeProps) {
   const styles = useStyles();
   const { contents, contentsCount } = data;
@@ -239,7 +241,6 @@ function DefaultCalendar({
   const [userSelectedDate, setUserSelectedDate] =
     useState<CalenderClickEventType>();
   let month = renderMonth(startFrom, endTo) - 1;
-  const meetingId = 130;
 
   if (month <= 0) month = 0;
 
@@ -284,7 +285,7 @@ function DefaultCalendar({
 
       // api받아오기
     },
-    [myVotingDates],
+    [meetingId, myVotingDates],
   );
   const onDayLongPressHandler = useCallback(
     (e: CalenderClickEventType) => {
@@ -330,7 +331,11 @@ function DefaultCalendar({
           overlayStyle={{ padding: 0, borderRadius: 100 }}
         >
           {userSelected ? (
-            <DateModal date={userSelectedDate} hostId={hostId || 0} />
+            <DateModal
+              date={userSelectedDate}
+              meetingId={meetingId}
+              hostId={hostId || 0}
+            />
           ) : (
             <NoUserModal date={userSelectedDate} />
           )}
@@ -351,6 +356,7 @@ function Calendar({
   startFrom,
   endTo,
   setDate,
+  meetingId,
   hostId,
 }: CalendarProps): JSX.Element {
   const styles = useStyles();
@@ -363,6 +369,7 @@ function Calendar({
       data &&
       totalUsers !== undefined &&
       startFrom &&
+      meetingId &&
       endTo ? (
         <MemorizedDefaultCalendar
           data={data}
@@ -370,6 +377,7 @@ function Calendar({
           startFrom={startFrom}
           endTo={endTo}
           hostId={hostId}
+          meetingId={meetingId}
         />
       ) : (
         <MemorizedPeriodCalendar setDate={setDate} />
