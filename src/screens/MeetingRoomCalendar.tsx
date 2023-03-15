@@ -12,67 +12,77 @@ import { requestGetMeetingDetail } from '@api/meeting/meetings';
 import { useNavigation } from '@react-navigation/native';
 import { requestGetDateVoting } from '@api/meeting/voting';
 import LoadingComponent from '@components/calendar/LoadingComponent';
-import { useAppDispatch, useAppSelector } from '@app/hooks';
-import { setVotingUpdateEnd } from '@features/socketSlice';
+
+import { useAppDispatch, useAppSelector } from '@hooks/redux/hooks';
+import { useQuery } from 'react-query';
+import { RootStackScreenProps } from '@type/navigation';
 import Label from '../components/input/Label';
 import MemberBox from '../components/member/MemberBox';
 
-function MeetingRoomCalendar() {
+function MeetingRoomCalendar({
+  route: {
+    params: { meetingId },
+  },
+}: RootStackScreenProps<'MeetingRoomCalendar'>) {
   const styles = useStyles();
-  const meetingId = 130;
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
-  const VOTING_UPDATE = useAppSelector(state => state.socket.votingUpdate);
-  const [meetingData, setMeetingData] = useState<GetMeetingDetailResponse>();
+  // const [meetingDetail, setMeetingData] = useState<GetMeetingDetailResponse>();
   const [votingData, setVotingData] = useState<GetDateVotingResponse>();
-  const getMeetingData = () => {
-    requestGetMeetingDetail(meetingId).then(data => setMeetingData(data));
-  };
-  const getVotingData = () => {
-    requestGetDateVoting(meetingId).then(data => setVotingData(data));
-  };
-  const startFrom = meetingData?.meetingMetaData.calendar.startFrom;
-  const endTo = meetingData?.meetingMetaData.calendar.endTo;
-  const totalUsers = meetingData?.members.length;
+  const { data: meetingDetail } = useQuery(['meetingDetail'], () =>
+    requestGetMeetingDetail(meetingId),
+  );
+  const { data: votingDetail } = useQuery(['voting', meetingId], () =>
+    requestGetDateVoting(meetingId),
+  );
+  // useEffect(() => {
+  //   setMeetingData(MeetingDetail.data);
+  // }, [MeetingDetail]);
+  // const getMeetingData = () => {
+  //   requestGetMeetingDetail(meetingId).then(data => setMeetingData(data));
+  // };
+  // const getVotingData = () => {
+  //   requestGetDateVoting(meetingId).then(data => setVotingData(data));
+  // };
+  const startFrom = meetingDetail?.meetingMetaData.calendar.startFrom;
+  const endTo = meetingDetail?.meetingMetaData.calendar.endTo;
+  const totalUsers = meetingDetail?.members.length;
+
+  // useEffect(() => {
+  //   setVotingData(VotingDetail.data);
+  // }, [VotingDetail.data]);
 
   useEffect(() => {
-    getMeetingData();
-    getVotingData();
-  }, []);
-
-  useEffect(() => {
-    if (VOTING_UPDATE) {
-      getMeetingData();
-      getVotingData();
-      dispatch(setVotingUpdateEnd());
-    }
-  }, [VOTING_UPDATE, dispatch]);
-
-  useEffect(() => {
-    if (meetingData) {
+    if (meetingDetail) {
       navigation.setOptions({
-        title: meetingData.meetingMetaData.meetingName,
+        title: meetingDetail.meetingMetaData.meetingName,
       });
     }
-  }, [meetingData, navigation]);
+  }, [meetingDetail, navigation]);
 
-  return meetingData ? (
+  if (!votingDetail) {
+    return null;
+  }
+
+  return meetingDetail ? (
     <View style={styles.container}>
       <View>
         <MemberBox
-          hostId={meetingData.meetingMetaData.hostUser.userId}
-          meetingUsers={meetingData.members}
+          hostId={meetingDetail.meetingMetaData.hostUser.userId}
+          meetingUsers={meetingDetail.members}
+          meetingId={meetingId}
         />
       </View>
 
       <Label>모임기간</Label>
       <Calendar
         type="DEFAULT"
-        data={votingData}
+        data={votingDetail}
         totalUsers={totalUsers}
         startFrom={startFrom}
         endTo={endTo}
-        hostId={meetingData.meetingMetaData.hostUser.userId}
+        hostId={meetingDetail.meetingMetaData.hostUser.userId}
+        meetingId={meetingId}
       />
     </View>
   ) : (

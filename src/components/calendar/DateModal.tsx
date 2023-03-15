@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Font, { BoldFont } from '@components/Font';
 import { View } from 'react-native';
 import { makeStyles } from '@rneui/themed';
-import Button from '@components/buttons/Buttons';
-import { CalenderClickEventType } from '@type/index';
+import Button from '@components/button/Buttons';
 import { requestGetDateVotingDetails } from '@api/meeting/voting';
 import { GetDateVotingDetailsResponse, VotingUsers } from '@type/api.meeting';
 import Avatar from '@components/member/Avatar';
@@ -12,6 +11,7 @@ import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 import useAuth from '@hooks/useAuth';
 import useSocketMeeting from '@hooks/useSocketMeeting';
+import { CalenderClickEventType } from '@type/meeting.calendar';
 import LoadingComponent from './LoadingComponent';
 
 function returnDotDate(date: CalenderClickEventType) {
@@ -32,11 +32,12 @@ function returnDayStr(timeStamp: number) {
 export default function DateModal({
   date,
   hostId,
+  meetingId,
 }: {
   date: CalenderClickEventType;
   hostId: number;
+  meetingId: number;
 }) {
-  const meetingId = 130;
   const styles = useStyles();
   const userId = useAuth().myId;
   const title = returnDotDate(date);
@@ -69,7 +70,9 @@ export default function DateModal({
     }
 
     fetchDateVotingDetails();
-  }, [date.dateString]);
+  }, [date.dateString, meetingId]);
+
+  // 추후 스켈레톤으로
 
   return (
     <View style={styles.overlayView}>

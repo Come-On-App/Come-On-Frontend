@@ -2,15 +2,16 @@
 import React, { useCallback, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import useMeetings from '@hooks/useMeetings';
 import { usePromiseFlow } from '@utils/promise';
 import { RootStackScreenProps } from '@type/navigation';
 
 import useAnimationBounce from '@hooks/useAnim';
 import { requestCreateMeetings } from '@api/meeting/meetings';
 import { MeetingId } from '@type/meeting.create';
-import imageUpload, { AssetState } from '../utils/imageUpload';
 
+import useMeeting from '@hooks/useMeeting';
+import { AssetState } from '@type/hook.imagePicker';
+import { requestUploadImage } from '@api/image/upload';
 import CancelButton from '../components/button/CancelButton';
 import ConfirmButton from '../components/button/ConfirmButton';
 import InputForm from '../components/input/InputForm';
@@ -74,7 +75,11 @@ function CreateMeeting(
 
         return data;
       };
-      promiseFlow(meetingImgPath!, [imageUpload, then2, requestCreateMeetings]);
+      promiseFlow(meetingImgPath!, [
+        requestUploadImage,
+        then2,
+        requestCreateMeetings,
+      ]);
     }
   }, [
     calendarEndTo,

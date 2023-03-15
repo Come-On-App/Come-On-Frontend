@@ -17,18 +17,16 @@ import { getValueFor } from '@utils/secureStore';
 import { useWebSocketConnect } from '@hooks/useWebSocket';
 import useUserQuery from '@hooks/query/useUserQuery';
 import fn from '@utils/fn';
-import { Skeleton } from '@rneui/themed';
+import { Skeleton, makeStyles } from '@rneui/themed';
 import theme from '../constants/themed';
-import { makeStyles } from '@rneui/themed';
 import useAuth from '../hooks/useAuth';
-import MeetingRoom from '../screens/MeetingRoom';
+// import MeetingRoom from '../screens/MeetingRoom';
 import LoginScreen from '../screens/LoginScreen';
 import TabOneScreen from '../screens/bottomTap/TabOneScreen';
 import TabTwoScreen from '../screens/bottomTap/TabTwoScreen';
 import CreateMeeting from '../screens/CreateMeeting';
 import TabThreeScreen from '../screens/bottomTap/TabThreeScreen';
 import CreateMeetingCalender from '../screens/CreateMeetingCalender';
-import WebSocketProvider from '../WebSocketProvider';
 import KakaoLoginWebView from '../screens/KakaoLoginView';
 import MeetingRoomCalendar from '../screens/MeetingRoomCalendar';
 import LogoutButton from '../components/myPage/MyPageLogoutButton';
@@ -90,7 +88,7 @@ function RootNavigator() {
   const styles = useStyles();
   const [tk, stk] = useState<string>();
 
-    // FIXME: 로직 수정 (임시 토큰 조회 로직)
+  // FIXME: 로직 수정 (임시 토큰 조회 로직)
   useEffect(() => {
     isValidUser(); // 토큰이 있는지 없는지 검사
   }, [isValidUser, isLogin]);
@@ -112,18 +110,18 @@ function RootNavigator() {
   useWebSocketConnect(tk);
 
   return (
-      <Stack.Navigator>
-        {isLogin ? (
-          <>
-            <Stack.Screen
-              name="Root"
-              component={BottomTabNavigator}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="PlaceSelect"
-              component={PlaceSelectNavigator}
-              options={{
+    <Stack.Navigator>
+      {isLogin ? (
+        <>
+          <Stack.Screen
+            name="Root"
+            component={BottomTabNavigator}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="PlaceSelect"
+            component={PlaceSelectNavigator}
+            options={{
               headerShown: false,
               gestureEnabled: false,
             }}
@@ -136,72 +134,72 @@ function RootNavigator() {
               headerShown: true,
               contentStyle: { backgroundColor: '#ffffff' },
             }}
-            />
-            <Stack.Screen
-              name="CreateMeeting"
-              component={CreateMeeting}
-              options={({ navigation, route }) => ({
-                title: '모임등록',
-                headerTitleAlign: 'center',
-                headerTitleStyle: styles.headerStyle,
-                headerRight: CancelIconButton,
-                headerBackVisible: false,
-              })}
-            />
-            <Stack.Screen
-              name="CreateMeetingCalender"
-              component={CreateMeetingCalender}
-              options={({ navigation, route }) => ({
-                title: '모임등록',
-                headerTitleAlign: 'center',
-                headerTitleStyle: styles.headerStyle,
-                headerRight: CancelIconButton,
-                headerBackVisible: false,
-              })}
-            />
-            <Stack.Screen
-              name="MeetingRoom"
-              component={MeetingRoom}
-              options={({ navigation, route }) => ({
-                title: '임시타이틀Room1',
-                headerTitleAlign: 'center',
-                headerTitleStyle: styles.headerStyle,
-                headerRight: CancelIconButton,
-                headerBackVisible: false,
-              })}
-            />
-            <Stack.Screen
-              name="MeetingRoomCalendar"
-              component={MeetingRoomCalendar}
-              options={({ navigation, route }) => ({
-                headerTitleAlign: 'center',
-                headerTitleStyle: styles.headerStyle,
-                headerRight: CancelIconButton,
-                headerBackVisible: false,
-                animationTypeForReplace: 'push',
-                animation: 'slide_from_right',
-              })}
-            />
-          </>
-        ) : (
-          <>
-            <Stack.Screen
-              name="LoginScreen"
-              component={LoginScreen}
-              options={navigation => ({
-                title: '로그인',
-                headerTitleAlign: 'center',
-                headerTitleStyle: styles.headerStyle,
-                headerBackVisible: false,
-              })}
-            />
-            <Stack.Screen
-              name="KakaoLoginWebView"
-              component={KakaoLoginWebView}
-            />
-          </>
-        )}
-      </Stack.Navigator>
+          />
+          <Stack.Screen
+            name="CreateMeeting"
+            component={CreateMeeting}
+            options={({ navigation, route }) => ({
+              title: '모임등록',
+              headerTitleAlign: 'center',
+              headerTitleStyle: styles.headerStyle,
+              headerRight: CancelIconButton,
+              headerBackVisible: false,
+            })}
+          />
+          <Stack.Screen
+            name="CreateMeetingCalender"
+            component={CreateMeetingCalender}
+            options={({ navigation, route }) => ({
+              title: '모임등록',
+              headerTitleAlign: 'center',
+              headerTitleStyle: styles.headerStyle,
+              headerRight: CancelIconButton,
+              headerBackVisible: false,
+            })}
+          />
+          {/* <Stack.Screen
+            name="MeetingRoom"
+            component={MeetingRoom}
+            options={({ navigation, route }) => ({
+              title: '임시타이틀Room1',
+              headerTitleAlign: 'center',
+              headerTitleStyle: styles.headerStyle,
+              headerRight: CancelIconButton,
+              headerBackVisible: false,
+            })}
+          /> */}
+          <Stack.Screen
+            name="MeetingRoomCalendar"
+            component={MeetingRoomCalendar}
+            options={({ navigation, route }) => ({
+              headerTitleAlign: 'center',
+              headerTitleStyle: styles.headerStyle,
+              headerRight: CancelIconButton,
+              headerBackVisible: false,
+              animationTypeForReplace: 'push',
+              animation: 'slide_from_right',
+            })}
+          />
+        </>
+      ) : (
+        <>
+          <Stack.Screen
+            name="LoginScreen"
+            component={LoginScreen}
+            options={navigation => ({
+              title: '로그인',
+              headerTitleAlign: 'center',
+              headerTitleStyle: styles.headerStyle,
+              headerBackVisible: false,
+            })}
+          />
+          <Stack.Screen
+            name="KakaoLoginWebView"
+            component={KakaoLoginWebView}
+          />
+        </>
+      )}
+    </Stack.Navigator>
   );
 }
 
@@ -254,7 +252,7 @@ function BottomTabNavigator() {
   );
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   headerStyle: {
     fontFamily: 'pretendard',
     fontWeight: 'bold',

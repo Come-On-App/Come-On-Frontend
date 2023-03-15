@@ -29,7 +29,7 @@ export type PlaceSelectParamList = {
 };
 
 export type RoomCalendarParamList = {
-  hostId: undefined;
+  meetingId: undefined;
 };
 
 export type PlaceSelectScreenProps =
@@ -58,7 +58,7 @@ export type RootStackParamList = {
   PlaceSelect: PlaceSelectScreenParams;
   MeetingDetail: { meetingId: number };
   CreateMeetingCalender: undefined;
-  MeetingRoomCalendar: NavigatorScreenParams<RoomCalendarParamList> | undefined;
+  MeetingRoomCalendar: { meetingId: number };
   LoginScreen: undefined;
   KakaoLoginWebView: undefined;
 };
