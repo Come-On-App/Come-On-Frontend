@@ -1,32 +1,38 @@
-import React from 'react';
+import React, { memo } from 'react';
 import Layout from '@components/Layout';
 import MemberBox from '@components/member/MemberBox';
 import { requestMeetingMembers } from '@api/meeting/members';
 import { useQuery } from 'react-query';
 import { QueryKeys } from '@api/queryClient';
-import { View } from 'react-native';
-// 모임 멤버
-export default function Member({ meetingId }: { meetingId: number }) {
-  const meetingData = useQuery([QueryKeys.members], () =>
-    requestMeetingMembers(meetingId),
-  );
-  // 셀렉터
-  const host = meetingData.data?.contents.filter(
-    data => data.memberRole === 'HOST',
-  )[0];
 
-  // 스켈레톤 추가
-  if (!meetingData.data || !host) {
+// 모임 멤버
+function Member({ meetingId }: { meetingId: number }) {
+  const { data: meetingMembers } = useQuery(
+    [QueryKeys.members, meetingId],
+    ({ signal }) => requestMeetingMembers(meetingId, signal),
+    {
+      enabled: Boolean(meetingId),
+    },
+  );
+
+  if (!meetingMembers) {
     return null;
   }
 
+  // find host user
+  const [{ userId: hostId }] = meetingMembers.contents.filter(
+    content => content.memberRole === 'HOST',
+  );
+
   return (
-    <View>
+    <Layout>
       <MemberBox
         meetingId={meetingId}
-        hostId={host.userId}
-        meetingUsers={meetingData.data?.contents}
+        hostId={hostId}
+        meetingUsers={meetingMembers.contents}
       />
-    </View>
+    </Layout>
   );
 }
+
+export default memo(Member);
