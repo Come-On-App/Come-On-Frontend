@@ -1,13 +1,12 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { Input, makeStyles } from '@rneui/themed';
-import { Dimensions, Keyboard, ScrollView, View } from 'react-native';
+import { Dimensions, Keyboard, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 
 import type { InputTextProps } from '@type/index';
 import type {
   CategoryDropdownItem,
   PlaceSelectModalBottomProps,
-  PlaceSelectModalContentProps,
   PlaceSelectModalProps,
 } from '@type/component.placeselect';
 import Modal from '@components/Modal';
@@ -16,16 +15,8 @@ import Icon from '@components/Icon';
 import Font from '@components/Font';
 import Button from '@components/button/Buttons';
 import InputBox from '@components/input/InputText';
+import PlaceSelectModalContent from '@components/RelativeHeight';
 import { CATEGORY_DATA, convertKeyToValue } from './data';
-
-function PlaceSelectModalContent({
-  children,
-  width,
-}: PlaceSelectModalContentProps) {
-  const Wrap = width < 375 ? ScrollView : Fragment;
-
-  return <Wrap>{children}</Wrap>;
-}
 
 export default function PlaceSelectModal({
   onClose,
@@ -60,7 +51,7 @@ export default function PlaceSelectModal({
         },
       ]}
     >
-      <PlaceSelectModalContent width={width}>
+      <PlaceSelectModalContent>
         <PlaceSelectModalTop />
         <PlaceSelectModalMain />
         <PlaceSelectModalBottom onClose={onClose} />

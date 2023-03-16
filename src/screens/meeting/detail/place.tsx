@@ -49,7 +49,7 @@ function PlaceTop({ color }: PlaceTopProps) {
 
   return (
     <View style={styles.placeTopContainer}>
-      <BoldFont>모임 장소</BoldFont>
+      <BoldFont style={{ fontSize: 18 }}>모임 장소</BoldFont>
       {placeLockState.lockUserImage && (
         <Avatar
           size={styles.commonHeight.height}

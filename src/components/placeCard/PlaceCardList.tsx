@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
 import type { PlaceCardListProps } from '@type/component.placecard';
 import usePlaceQuery from '@hooks/query/usePlaceQuery';
@@ -14,15 +14,26 @@ function PlaceCardList({ meetingId }: PlaceCardListProps) {
     return <PlaceCardItemSkeleton />;
   }
 
+  // return (
+  //   <ScrollView nestedScrollEnabled style={container}>
+  //     {places.contents.map(item => (
+  //       <PlaceCardItem
+  //         content={{ ...item, meetingId }}
+  //         key={item.meetingPlaceId}
+  //       />
+  //     ))}
+  //   </ScrollView>
+  // );
+
   return (
-    <ScrollView nestedScrollEnabled style={container}>
+    <View>
       {places.contents.map(item => (
         <PlaceCardItem
           content={{ ...item, meetingId }}
           key={item.meetingPlaceId}
         />
       ))}
-    </ScrollView>
+    </View>
   );
 }
 

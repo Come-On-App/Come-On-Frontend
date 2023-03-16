@@ -143,12 +143,10 @@ function onPlaceMessageFn(
     const messageBody: IMeeting = JSON.parse(message.body);
 
     log(`[/sub/meetings/${meetingId} - message.body]`, messageBody);
-    log('log', messageBody.data);
 
     if (messageBody.messageType === 'MEETING_SUBSCRIBE_USER_LIST') {
       const { data } = messageBody as ISubscribeList;
 
-      console.log(`${data.userIds}asa`);
       onlineUserListDispatch(data.userIds);
     }
 
