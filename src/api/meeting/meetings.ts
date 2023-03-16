@@ -61,9 +61,10 @@ export async function requestGetMeetings(
  */
 export async function requestGetMeetingDetail(
   payload: GetMeetingDetailPayload,
+  signal?: AbortSignal,
 ): Promise<GetMeetingDetailResponse> {
   const URL = `/api/v1/meetings/${payload}`;
-  const { data } = await serverAxios.get(URL);
+  const { data } = await serverAxios.get(URL, { signal });
 
   return data;
 }

@@ -5,6 +5,7 @@ type QueryKeyType = QueryKeys | string | number;
 export enum QueryKeys {
   user = 'user',
   meetings = 'meetings',
+  meetingDetail = 'meetingDetail',
   place = 'place',
   members = 'members',
   voting = 'voting',
