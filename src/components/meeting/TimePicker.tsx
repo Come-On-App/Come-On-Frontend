@@ -1,58 +1,43 @@
 import React, { useState } from 'react';
 
-import { Platform, View } from 'react-native';
+import { Platform, TouchableWithoutFeedback, View } from 'react-native';
 import Button from '@components/button/Buttons';
 import DateTimePicker, {
   DateTimePickerAndroid,
 } from '@react-native-community/datetimepicker';
 import type { TimePickerProps } from '@type/meeting.date';
-import { promiseFlow } from '@utils/promise';
-import { requestPostMeetingTime } from '@api/meeting/meetings';
-import type {
-  PostMeetingTimePayalod,
-  PostMeetingTimeResponse,
-} from '@type/api.meeting';
-import { successAlert } from '@utils/alert';
+
 import { createTimeFormat } from '@utils/fn';
 import { makeStyles } from '@rneui/themed';
 
-const requestAPI = (meetingId: number) => (meetingStartTime: string) => {
-  promiseFlow<PostMeetingTimePayalod, PostMeetingTimeResponse>(
-    { meetingId, meetingStartTime },
-    [requestPostMeetingTime],
-    {
-      onSuccess: () => {
-        successAlert(`장소 시간이 변경되었습니다!`);
-      },
-    },
-  );
-};
-
-export default function TimePicker({ meetingId }: { meetingId: number }) {
-  const platform = Platform.OS;
-  const onSubmitHandler = requestAPI(meetingId);
-
-  if (platform === 'android') {
-    return <TimePickerAndroid onSubmit={onSubmitHandler} />;
+export default function TimePicker({
+  meetingTime,
+  onSubmit,
+}: {
+  meetingTime: Date;
+  onSubmit: (meetingStartTime: string) => void;
+}) {
+  if (Platform.OS === 'android') {
+    return <TimePickerAndroid onSubmit={onSubmit} time={meetingTime} />;
   }
 
-  return <TimePickerIos onSubmit={onSubmitHandler} />;
+  return (
+    <TouchableWithoutFeedback onPress={() => undefined}>
+      <TimePickerIos onSubmit={onSubmit} time={meetingTime} />
+    </TouchableWithoutFeedback>
+  );
 }
 
-function TimePickerIos({ onSubmit }: TimePickerProps) {
-  const [date, setDate] = useState(new Date());
-
+function TimePickerIos({ onSubmit, time }: TimePickerProps) {
   return (
     <DateTimePicker
-      testID="dateTimePicker"
-      value={date}
+      value={time}
       mode="time"
       onChange={(event, selectedDate) => {
         if (selectedDate && event.type === 'set') {
-          const time = createTimeFormat(selectedDate);
+          const timeFormat = createTimeFormat(selectedDate);
 
-          setDate(selectedDate);
-          onSubmit(time.payload);
+          onSubmit(timeFormat.payload);
         }
       }}
     />
