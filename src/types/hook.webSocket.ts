@@ -12,7 +12,8 @@ type MeetingResourceType =
   | 'MEETING_FIXED_DATE'
   | 'MEETING_PLACE_LOCK'
   | 'MEETING_PLACE_UNLOCK'
-  | 'LOCKED_MEETING_PLACE_LIST';
+  | 'LOCKED_MEETING_PLACE_LIST'
+  | 'MEETING_TIME';
 
 type Data = {
   meetingId: number;
@@ -32,6 +33,7 @@ interface IMessageBody {
   messageType: MessageType;
 }
 
+// 모임 시작 시간 갱신 메시지
 // 모임 회원 리스트 갱신 메시지
 // 모임 장소 리스트 갱신 메시지
 // 모임 확정일 정보 갱신 메시지

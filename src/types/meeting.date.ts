@@ -1,3 +1,4 @@
+import { GetMeetingTimeResponse } from '@type/api.meeting';
 import { MeetingDetailNavigation } from './navigation';
 
 export type Calendar = {
@@ -27,4 +28,5 @@ export interface DateBottomProps {
 
 export interface TimePickerProps {
   onSubmit: (meetingStartTime: string) => void;
+  time: Date;
 }
