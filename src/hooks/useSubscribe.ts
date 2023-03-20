@@ -171,12 +171,19 @@ function onPlaceMessageFn(
         // 모임 투표
         case 'MEETING_VOTING':
           invalidateQueries(['voting', meetingId]);
-          console.log('aa');
           break;
         // 미팅 멤버 업데이트
         case 'MEETING_MEMBERS':
-          console.log('aa');
-
+          break;
+        // 모임 시간 업데이트
+        case 'MEETING_TIME':
+          invalidateQueries([
+            QueryKeys.meetings,
+            QueryKeys.meetingDetail,
+            QueryKeys.time,
+            meetingId,
+          ]);
+          successAlert('장소 시간이 변경되었습니다!');
           break;
         default:
           break;
