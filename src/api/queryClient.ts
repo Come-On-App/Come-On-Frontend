@@ -8,6 +8,7 @@ export enum QueryKeys {
   meetingDetail = 'meetingDetail',
   place = 'place',
   members = 'members',
+  time = 'time',
   voting = 'voting',
 }
 
