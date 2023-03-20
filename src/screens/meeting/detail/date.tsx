@@ -1,8 +1,8 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { View } from 'react-native';
 
 import Layout from '@components/Layout';
-import Font, { BoldFont } from '@components/Font';
+import Font from '@components/Font';
 import Button from '@components/button/Buttons';
 import Icon from '@components/Icon';
 import { makeStyles } from '@rneui/themed';
@@ -13,9 +13,12 @@ import type {
   DateBottomProps,
 } from '@type/meeting.date';
 import TimePicker from '@components/meeting/TimePicker';
+import useMeetingTimeQuery from '@hooks/query/useMeetingTimeQuery';
+import useMeetingTimeMutation from '@hooks/query/useMeetingTimeMutation';
+import { TitleName, Title, text } from './common';
 
 // 모임 기간
-function DateComponent({ calendar, meetingId, navigation }: DateProps) {
+function MeetingDate({ calendar, meetingId, navigation }: DateProps) {
   return (
     <Layout>
       <DateTop />
@@ -26,9 +29,7 @@ function DateComponent({ calendar, meetingId, navigation }: DateProps) {
 }
 
 function DateTop() {
-  const styles = useStyles();
-
-  return <BoldFont style={styles.dateTopTitle}>모임 기간</BoldFont>;
+  return <Title title={TitleName.date} />;
 }
 
 function DateMain({ calendar, meetingId }: DateMainProps) {
@@ -45,25 +46,59 @@ function DateMain({ calendar, meetingId }: DateMainProps) {
 function DateMainLeft({ calendar }: DateMainLeftProps) {
   const styles = useStyles();
   const { color, size } = styles.dateMainLeftIcon;
-  const calendarText = `${calendar.startFrom} ~ ${calendar.endTo}`;
 
   return (
     <View style={styles.dateMainLeftLayout}>
       <View style={styles.dateMainLeftContainer}>
         <Icon name="calendar-today" size={size} color={color} />
-        <Font style={styles.dateMainLeftCalendar}>{calendarText}</Font>
+        <Font style={styles.dateMainLeftCalendar}>
+          {text.calendar(calendar)}
+        </Font>
       </View>
     </View>
   );
 }
 
+const requestAPI =
+  (
+    request: (test: { meetingId: number; meetingStartTime: string }) => void,
+    meetingId: number,
+  ) =>
+  (payload: string) => {
+    request({ meetingId, meetingStartTime: payload });
+  };
+
 function DateMainRight({ meetingId }: { meetingId: number }) {
   const styles = useStyles();
+  const { meetingTime } = useMeetingTimeQuery(meetingId);
+  const { postMeetingTime } = useMeetingTimeMutation(meetingId);
+  const onSubmitHandler = requestAPI(postMeetingTime, meetingId);
+  const [date, setDate] = useState(new Date());
+
+  useEffect(() => {
+    if (meetingTime) {
+      setDate(new Date(meetingTime));
+    }
+  }, [meetingTime]);
 
   return (
     <View style={styles.dateMainRightLayout}>
       <View style={styles.dateMainRightContainer}>
-        <TimePicker meetingId={meetingId} />
+        <TimePicker meetingTime={date} onSubmit={onSubmitHandler} />
+        {/* <View
+          style={{
+            width: 90,
+            height: 35,
+            backgroundColor: '#DEDEE0',
+            borderRadius: 8,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Font style={{ color: 'white' }}>
+            {createTimeFormat(date).formatted}
+          </Font>
+        </View> */}
       </View>
     </View>
   );
@@ -79,7 +114,7 @@ function DateBottom({ meetingId, navigation }: DateBottomProps) {
     <View style={styles.dateBottomLayout}>
       <Button
         bold
-        text="날짜 투표하기"
+        text={text.voteBtn}
         onPress={onPressHandler}
         buttonStyle={styles.dateBottomButton}
       />
@@ -131,4 +166,4 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default memo(DateComponent);
+export default memo(MeetingDate);
