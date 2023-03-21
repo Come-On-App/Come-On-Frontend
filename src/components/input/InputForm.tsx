@@ -104,8 +104,6 @@ export function AnimationInputDate({
   const dates = `${date.startDate} ~ ${date.endDate}`;
   const placeholder = '날짜 범위를 선택해주세요';
 
-  console.log(dateConfig);
-
   return (
     <View style={styles.inputContainer}>
       <Font style={styles.title}>모임 캘린더</Font>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -20,7 +20,7 @@ import { Skeleton, makeStyles } from '@rneui/themed';
 import { MeetingMode } from '@features/meetingSlice';
 
 import theme from '../constants/themed';
-import useAuth, { tokenDataisValid } from '../hooks/useAuth';
+import useAuth from '../hooks/useAuth';
 // import MeetingRoom from '../screens/MeetingRoom';
 import LoginScreen from '../screens/LoginScreen';
 import TabOneScreen from '../screens/bottomTap/TabOneScreen';
@@ -177,11 +177,7 @@ function RootNavigator() {
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
-  const [isLogin, setIsLogin] = useState(false);
-  const { isAuth, setLogout, setLogin } = useAuth();
-  const navigate = useNavigation();
-
-  console.log('hit');
+  const { isAuth } = useAuth();
 
   return isAuth ? (
     <BottomTab.Navigator

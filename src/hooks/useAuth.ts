@@ -38,21 +38,6 @@ function useAuth() {
   const accessToken = useAppSelector(state => state.auth.accessToken);
   const refreshToken = useAppSelector(state => state.auth.refreshToken);
   const myId = useAppSelector(state => state.auth.userId);
-  const isValidUser = useCallback(async () => {
-    const accessTkn = await getTokenData(StoreKey.accessToken);
-    const refreshTkn = await getTokenData(StoreKey.refreshToken);
-    const data = { accessToken: accessTkn, refreshToken: refreshTkn };
-
-    console.log(data);
-
-    if (accessTkn !== null && refreshTkn !== null) {
-      // TODO추후 토큰 암호화해서 저장
-      dispatch(login(data));
-    } else {
-      // 토큰이 유효하지 않으면 로그아웃 시켜야함 .
-      dispatch(logout());
-    }
-  }, [dispatch]);
   const getAccessToken = useCallback(() => {
     return accessToken;
   }, [accessToken]);
@@ -79,7 +64,6 @@ function useAuth() {
     isAuth,
     setLogout,
     setTokens,
-    isValidUser,
     getAccessToken,
     getRefreshToken,
     setLogin,

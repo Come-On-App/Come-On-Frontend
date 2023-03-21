@@ -1,13 +1,14 @@
+import { copy } from '@utils/fn';
+import { store } from '@app/store';
 import { SERVER_ADDRESS } from '@env';
-import { serverAxios } from '@api/axiosInstance';
+import { errorAlert } from '@utils/alert';
+import { logout } from '@features/authSlice';
 import { SocialLoginProps } from '@type/index';
+import { serverAxios } from '@api/axiosInstance';
+import { requestPostRefreshToken } from '@api/user/user';
 import { deleteValueFor, getValueFor } from '@utils/secureStore';
 import { getToken, setTokensToDB, StoreKey } from '@api/token/token';
-import { copy } from '@utils/fn';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
-import { requestPostRefreshToken } from '@api/user/user';
-import { store } from '@app/store';
-import { logout } from '@features/authSlice';
 
 serverAxios.interceptors.request.use(
   async config => {
@@ -31,8 +32,6 @@ serverAxios.interceptors.response.use(
     } = err;
     const URL = `${SERVER_ADDRESS}/api/v1/auth/reissue`;
 
-    console.log(err.response);
-
     if (config.url === URL || config.sent) {
       return Promise.reject(err);
     }
@@ -51,12 +50,13 @@ serverAxios.interceptors.response.use(
 
       const result = await postRefreshToken();
 
-      if (!result) dispatch(logout());
+      if (!result) {
+        dispatch(logout());
+        errorAlert('로그인 해주세요');
+      }
 
       return config;
     }
-
-    // 리프레쉬 토큰이 만료된 경우
 
     return Promise.reject(err);
   },
@@ -73,7 +73,6 @@ export const setLogin = async (data: SocialLoginProps) => {
   if (res.status === 200) {
     const tokenDatas = await res.data;
 
-    console.log(tokenDatas);
     serverAxios.defaults.headers.common.Authorization = `Bearer ${tokenDatas.accessToken.token}`;
 
     await setTokensToDB(tokenDatas);
@@ -84,16 +83,13 @@ export const setLogin = async (data: SocialLoginProps) => {
   return res;
 };
 
-//  만료 테스트 하기
 export const postRefreshToken = async () => {
   const refreshTokens = await getValueFor(StoreKey.refreshToken);
   const refreshToken = refreshTokens && (await JSON.parse(refreshTokens));
-  // invalidateQueries([QueryKeys.user]);
   const data = requestPostRefreshToken({ refreshToken })
     .then(async tokenData => {
       if (tokenData) {
         await setTokensToDB(tokenData);
-        console.log('tokenData is true');
       }
 
       return true;

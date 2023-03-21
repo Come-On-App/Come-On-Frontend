@@ -7,7 +7,6 @@ export type OnlineUserListDispatch = (payload: OnlineUserListType) => void;
 
 export default function useSocketMeeting() {
   const dispatch = useAppDispatch();
-  const meetingAppSelector = useAppSelector(state => state.meeting);
   const onlineUserList = useAppSelector(state => state.socket.onlineUserList);
   const onlineUserListDispatch = useCallback(
     (userList: OnlineUserListType) => {

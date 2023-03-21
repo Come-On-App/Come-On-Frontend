@@ -1,4 +1,3 @@
-import useAuth from '@hooks/useAuth';
 import { AuthResponse } from '@type/index';
 import { deleteValueFor, getValueFor, save } from '@utils/secureStore';
 
@@ -16,11 +15,8 @@ export const getTokenData = async (name: 'accessToken' | 'refreshToken') => {
 };
 
 export const setTokensToDB = async (data: AuthResponse) => {
-  console.log(data);
   await save(StoreKey.accessToken, JSON.stringify(data.accessToken));
   await save(StoreKey.refreshToken, JSON.stringify(data.refreshToken));
-
-  console.log('ghiasd');
 
   if (data.accessToken !== null && data.refreshToken !== null) return true;
 
@@ -28,8 +24,6 @@ export const setTokensToDB = async (data: AuthResponse) => {
 };
 
 export const deleteTokensfromDB = async () => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-
   await deleteValueFor(StoreKey.accessToken);
   await deleteValueFor(StoreKey.refreshToken);
 };
