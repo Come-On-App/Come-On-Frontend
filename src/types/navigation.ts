@@ -70,7 +70,7 @@ export type RootStackParamList = {
   MeetingDetail: { meetingId: number };
   CreateMeetingCalender: undefined;
   MeetingRoomCalendar: { meetingId: number };
-  LoginScreen: { setIsLogin: React.Dispatch<React.SetStateAction<boolean>> };
+  LoginScreen: undefined;
   KakaoLoginWebView: undefined;
 };
 
