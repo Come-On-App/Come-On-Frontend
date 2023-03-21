@@ -2,8 +2,10 @@ import React from 'react';
 import { Dimensions } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 
+const { width, height } = Dimensions.get('window');
+
 function Logo() {
-  const { width } = Dimensions.get('screen');
+  console.log(height);
   const size = width > 385 ? '70%' : '65%';
 
   return (

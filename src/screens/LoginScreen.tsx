@@ -11,10 +11,12 @@ import AppleLogo from '../assets/images/logo/AppleLogo';
 import GoogleLoginBtn from '../components/button/GoogleLoginBtn';
 
 WebBrowser.maybeCompleteAuthSession();
-const { width } = Dimensions.get('screen');
+const { width, height } = Dimensions.get('screen');
 
 function LoginScreen() {
   const styles = useStyles();
+
+  console.log(width, height);
 
   return (
     <View style={styles.container}>
