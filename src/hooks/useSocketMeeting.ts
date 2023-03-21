@@ -9,7 +9,6 @@ export default function useSocketMeeting() {
   const dispatch = useAppDispatch();
   const meetingAppSelector = useAppSelector(state => state.meeting);
   const onlineUserList = useAppSelector(state => state.socket.onlineUserList);
-  const totalMemberCounts = meetingAppSelector.totalMeetingMembers;
   const onlineUserListDispatch = useCallback(
     (userList: OnlineUserListType) => {
       dispatch(setOnlineUserList(userList));
@@ -18,7 +17,6 @@ export default function useSocketMeeting() {
   );
 
   return {
-    totalMemberCounts,
     onlineUserList,
     onlineUserListDispatch,
   };

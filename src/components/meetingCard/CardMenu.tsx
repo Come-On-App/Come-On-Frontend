@@ -13,6 +13,8 @@ import type {
 } from '@type/component.card';
 import { IconButton } from '@components/button/Buttons';
 import Font from '@components/Font';
+import { useNavigation } from '@react-navigation/native';
+import { MeetingMode } from '@features/meetingSlice';
 import CardModal from './CardModal';
 
 const MemoMenu = memo(Menu);
@@ -57,7 +59,12 @@ function CardMenuIcon({ showMenu }: CardMenuDisplayProps) {
 function CardMenuItems({ role, meetingId }: CardMenuItemsProps) {
   const { deleteMeeting } = useMeetingMutation();
   const [codeModal, setCodeModal] = useState(false);
-  const onPressHandler = () => Alert.alert('Click!');
+  const navigation = useNavigation();
+  const onPressHandler = () =>
+    navigation.navigate('CreateMeeting', {
+      mode: MeetingMode.edit,
+      meetingId,
+    });
   const toggleCodeModal = useCallback(() => setCodeModal(prev => !prev), []);
   const menuConfig: MenuConfig[] = [
     { onPress: toggleCodeModal, text: '초대코드 관리', permission: true },

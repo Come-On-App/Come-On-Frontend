@@ -2,11 +2,12 @@ import { SERVER_ADDRESS } from '@env';
 import { serverAxios } from '@api/axiosInstance';
 import { SocialLoginProps } from '@type/index';
 import { deleteValueFor, getValueFor } from '@utils/secureStore';
-import { getToken, SetTokensToDB, StoreKey } from '@api/token/token';
+import { getToken, setTokensToDB, StoreKey } from '@api/token/token';
 import { copy } from '@utils/fn';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { requestPostRefreshToken } from '@api/user/user';
-import useAuth from '@hooks/useAuth';
+import { store } from '@app/store';
+import { logout } from '@features/authSlice';
 
 serverAxios.interceptors.request.use(
   async config => {
@@ -19,17 +20,20 @@ serverAxios.interceptors.request.use(
   },
   error => error,
 );
+const { dispatch } = store; // direct access to redux store.
 
 serverAxios.interceptors.response.use(
   res => res,
   async err => {
     const {
       config,
-      response: { status, data },
+      response: { data },
     } = err;
     const URL = `${SERVER_ADDRESS}/api/v1/auth/reissue`;
 
-    if (config.url === URL || status !== 401 || config.sent) {
+    console.log(err.response);
+
+    if (config.url === URL || config.sent) {
       return Promise.reject(err);
     }
 
@@ -43,19 +47,16 @@ serverAxios.interceptors.response.use(
 
     // 액세스 토큰이 만료된 경우 => 리프레쉬 토큰 발급
     if (data.errorCode === 1103) {
-      await PostRefreshToken();
+      await deleteValueFor(StoreKey.accessToken);
+
+      const result = await postRefreshToken();
+
+      if (!result) dispatch(logout());
 
       return config;
     }
 
     // 리프레쉬 토큰이 만료된 경우
-
-    if (data.errorCode === 4002) {
-      await deleteValueFor(StoreKey.accessToken);
-      await deleteValueFor(StoreKey.refreshToken);
-
-      return Promise.reject(err);
-    }
 
     return Promise.reject(err);
   },
@@ -63,34 +64,47 @@ serverAxios.interceptors.response.use(
 
 // 소셜로그인
 export const setLogin = async (data: SocialLoginProps) => {
-  const res = await serverAxios.post(`${SERVER_ADDRESS}${data.url}`, data.data);
+  const res = await serverAxios.post(
+    `${SERVER_ADDRESS}${data.url}`,
+    data.data,
+    { headers: { 'Cache-Control': 'no-store' } },
+  );
 
   if (res.status === 200) {
-    const tokenDatas = res.data;
+    const tokenDatas = await res.data;
 
+    console.log(tokenDatas);
     serverAxios.defaults.headers.common.Authorization = `Bearer ${tokenDatas.accessToken.token}`;
 
-    await SetTokensToDB(tokenDatas);
+    await setTokensToDB(tokenDatas);
+
+    return tokenDatas;
   }
 
   return res;
 };
 
 //  만료 테스트 하기
-export const PostRefreshToken = async () => {
+export const postRefreshToken = async () => {
   const refreshTokens = await getValueFor(StoreKey.refreshToken);
-  const refreshToken = refreshTokens && JSON.parse(refreshTokens);
-  const data = await requestPostRefreshToken({ refreshToken });
-  const { setTokens } = useAuth();
+  const refreshToken = refreshTokens && (await JSON.parse(refreshTokens));
+  // invalidateQueries([QueryKeys.user]);
+  const data = requestPostRefreshToken({ refreshToken })
+    .then(async tokenData => {
+      if (tokenData) {
+        await setTokensToDB(tokenData);
+        console.log('tokenData is true');
+      }
 
-  if (data.errorCode === 4002) {
-    await deleteValueFor(StoreKey.accessToken);
-    await deleteValueFor(StoreKey.refreshToken);
-  }
+      return true;
+    })
+    .catch(async err => {
+      if (err.errorCode === 4002) {
+        await deleteValueFor(StoreKey.refreshToken);
+      }
 
-  if (data.accessToken && data) {
-    await setTokens(data);
-  }
+      return false;
+    });
 
   return data;
 };

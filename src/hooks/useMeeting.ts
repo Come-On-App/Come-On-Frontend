@@ -1,18 +1,53 @@
 import { useCallback } from 'react';
-import { setMeetingName } from '@features/meetingSlice';
+import {
+  setMeetingMode as setMyMeetingMode,
+  MeetingMode,
+  setCalendarEndTo,
+  setCalendarStartFrom,
+  setMeetingName,
+  setTotalMeetingMembers,
+} from '@features/meetingSlice';
 import { AssetState } from '@type/hook.imagePicker';
+import { PatchMeetingPayload } from '@type/api.meeting';
 import {
   setMeetingId,
   setMeetingImgPath,
   resetMeetingData as reset,
+  setImgUri as setImgURI,
 } from '../features/meetingSlice';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
 
+export const useCreatePayload = (): {
+  createMeetingPayload: AssetState | null;
+  editMeetingPayload: PatchMeetingPayload;
+} => {
+  const { meetingSelector } = useMeeting();
+  const { meetingId, meetingImgPath, meetingData, imgUri } = meetingSelector;
+  const { meetingName, calendarStartFrom, calendarEndTo } = meetingData;
+  const createMeetingPayload = meetingImgPath;
+  const editMeetingPayload = {
+    meetingId,
+    meetingData: {
+      meetingName,
+      meetingImageUrl: imgUri,
+      calendarStartFrom,
+      calendarEndTo,
+    },
+  };
+
+  return { createMeetingPayload, editMeetingPayload };
+};
+
+export const getPayloadByMeetingMode = ({ mode }: { mode: MeetingMode }) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const payload = useCreatePayload();
+
+  return { payload };
+};
+
 function useMeeting() {
   const dispatch = useAppDispatch();
-  const meetingId = useAppSelector(state => state.meeting.meetingId);
-  const meetingImgPath = useAppSelector(state => state.meeting.meetingImgPath);
-  const meetingData = useAppSelector(state => state.meeting.meetingData);
+  const meetingSelector = useAppSelector(state => state.meeting);
   const setCurrentMeetingId = (meetId: number) => {
     dispatch(setMeetingId(meetId));
   };
@@ -22,15 +57,45 @@ function useMeeting() {
   const setMyMeetingName = (text: string) => {
     dispatch(setMeetingName(text));
   };
-  const setMyMeetingImgPath = (path: AssetState) => {
-    dispatch(setMeetingImgPath(path));
-  };
+  const setMeetingMode = useCallback(
+    (mode: MeetingMode) => {
+      dispatch(setMyMeetingMode(mode));
+    },
+    [dispatch],
+  );
+  const setMyMeetingImgPath = useCallback(
+    (path: AssetState) => {
+      dispatch(setMeetingImgPath(path));
+    },
+    [dispatch],
+  );
+  const setTotalMemberCounts = useCallback(
+    (memberCount: number) => {
+      dispatch(setTotalMeetingMembers(memberCount));
+    },
+    [dispatch],
+  );
+  const setImgUri = useCallback(
+    (uri: string) => {
+      dispatch(setImgURI(uri));
+    },
+    [dispatch],
+  );
+  const setCalendarDate = useCallback(
+    (date: { startDate: string; endDate: string }) => {
+      dispatch(setCalendarStartFrom(date.startDate));
+      dispatch(setCalendarEndTo(date.endDate));
+    },
+    [dispatch],
+  );
 
   return {
-    meetingId,
-    meetingData,
-    meetingImgPath,
+    meetingSelector,
     setCurrentMeetingId,
+    setImgUri,
+    setMeetingMode,
+    setCalendarDate,
+    setTotalMemberCounts,
     setMyMeetingImgPath,
     setMyMeetingName,
     resetMeetingData,

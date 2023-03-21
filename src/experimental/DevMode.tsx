@@ -23,7 +23,7 @@ import { toast } from '@utils/alert';
 import useMeetingQuery from '@hooks/query/useMeetingQuery';
 import { requestDeleteMeeting } from '@api/meeting/members';
 import { log } from '@utils/log';
-import { setTokens } from '../api';
+import { setTokensToDB } from '@api/token/token';
 import Modal from '../components/Modal';
 import Button from '../components/button/Buttons';
 import { BoldFont } from '../components/Font';
@@ -61,7 +61,7 @@ function UserDevScreen({
   isVisible: boolean;
   onClose: Dispatch<SetStateAction<boolean>>;
 }) {
-  const { setLogoin } = useAuth();
+  const { setLogin, setTokens } = useAuth();
   const { user, refetch: userRefetch } = useUserQuery();
   const { refetch: meetingRetch } = useMeetingQuery();
   const [openLookUpMeeting, setOpenLookUpMeeting] = useState(true);
@@ -124,7 +124,8 @@ function UserDevScreen({
                   'http://211.204.19.184:8088/test-api/v1/tokens',
                   {
                     userIds: [state.userIds],
-                    atkExpirationSec: 999999,
+                    atkExpirationSec: 5,
+                    rtkExpirationSec: 5,
                   },
                 );
 
@@ -138,7 +139,7 @@ function UserDevScreen({
                 userRefetch();
                 meetingRetch();
                 await setTokens(payload);
-                await setLogoin();
+                await setLogin();
               }}
             />
             <Button

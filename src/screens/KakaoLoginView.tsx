@@ -8,7 +8,7 @@ import { REACT_APP_REST_API_KEY, REACT_APP_REDIRECT_URI } from '@env';
 
 export default function KakaoLoginWebView() {
   const INJECTED_JAVASCRIPT = `window.ReactNativeWebView.postMessage("check")`;
-  const { isValidUser } = useAuth();
+  const { setLogin: login } = useAuth();
 
   function LogInProgress(data: string) {
     const exp = 'code=';
@@ -28,9 +28,7 @@ export default function KakaoLoginWebView() {
       data: { code: requestCode },
     };
 
-    await setLogin(data).then(res => {
-      if (res.status === 200) isValidUser();
-    });
+    setLogin(data).then(res => login(res));
   };
 
   return (

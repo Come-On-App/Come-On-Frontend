@@ -148,7 +148,6 @@ function onPlaceMessageFn(
     if (messageBody.messageType === 'MEETING_SUBSCRIBE_USER_LIST') {
       const { data } = messageBody as ISubscribeList;
 
-      console.log(`${data.userIds}asa`);
       onlineUserListDispatch(data.userIds);
     }
 
@@ -173,12 +172,10 @@ function onPlaceMessageFn(
         // 모임 투표
         case 'MEETING_VOTING':
           invalidateQueries(['voting', meetingId]);
-          console.log('aa');
           break;
         // 미팅 멤버 업데이트
         case 'MEETING_MEMBERS':
-          console.log('aa');
-
+          invalidateQueries([QueryKeys.members]);
           break;
         default:
           break;

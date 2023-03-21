@@ -1,12 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+export enum MeetingMode {
+  edit = 'edit',
+  create = 'create',
+}
 const initialState = {
+  meetingId: 0,
   meetingData: {
     meetingName: '',
     calendarStartFrom: '',
     calendarEndTo: '',
   },
-  meetingImgPath: {},
+  meetingImgPath: null,
+  totalMeetingMembers: 0,
+  imgUri: '',
 };
 
 interface FormDataBody {
@@ -27,6 +34,8 @@ interface IMeeting {
   };
   meetingImgPath: AssetState | null;
   totalMeetingMembers: number;
+  imgUri: string;
+  mode: MeetingMode;
 }
 
 const meetingSlice = createSlice({
@@ -36,6 +45,9 @@ const meetingSlice = createSlice({
   reducers: {
     setMeetingName: (state, action) => {
       state.meetingData.meetingName = action.payload;
+    },
+    setImgUri: (state, action) => {
+      state.imgUri = action.payload;
     },
     setMeetingImgPath: (state, action) => {
       state.meetingImgPath = action.payload;
@@ -51,6 +63,9 @@ const meetingSlice = createSlice({
     },
     setTotalMeetingMembers: (state, action) => {
       state.totalMeetingMembers = action.payload;
+    },
+    setMeetingMode: (state, action) => {
+      state.mode = action.payload;
     },
     resetMeetingData: state => {
       const newData = {
@@ -68,15 +83,18 @@ const meetingSlice = createSlice({
       }
 
       state.meetingImgPath = null;
+      state.imgUri = '';
     },
   },
 });
 
 export const {
+  setImgUri,
   setMeetingName,
   setCalendarStartFrom,
   setCalendarEndTo,
   setMeetingImgPath,
+  setMeetingMode,
   setMeetingId,
   setTotalMeetingMembers,
   resetMeetingData,

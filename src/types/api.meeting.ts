@@ -102,7 +102,7 @@ export interface Members {
   memberId?: number;
   userId: number;
   nickname: string;
-  profileImageUrl: string | null;
+  profileImageUrl: string;
   memberRole: MemberRole;
 }
 
@@ -146,6 +146,25 @@ export interface GetMeetingPayload {
   dateTo: string;
 }
 
+// GET /api/v1/meetings/{meetingId} (payalod)
+// 같이 사용하니까 Post 타입 사용
+export interface PatchMeetingPayload {
+  meetingId: number;
+  meetingData: PatchMeetingDetailPayload;
+}
+
+export interface PatchMeetingDetailPayload {
+  meetingName?: string;
+  meetingImageUrl?: string;
+  calendarStartFrom?: string;
+  calendarEndTo?: string;
+}
+
+// PATCH /api/v1/meetings/{meeting-id} (response)
+export interface PatchMeetingResponse {
+  success: boolean;
+}
+
 export interface GetMeetingResponse {
   meetingId: number;
   hostUser: HostUser;
@@ -167,6 +186,14 @@ export type GetMeetingDetailPayload = number;
 
 // GET /api/v1/meetings/{meeting-id} (response)
 export interface GetMeetingDetailResponse {
+  meetingMetaData: MeetingMetaData;
+  members: Members[];
+  votingDates: VotingDates[];
+  places?: Places[] | null;
+}
+
+// GET /api/v2/meetings/{meeting-id} (response)
+export interface GetMeetingDetailResponse2 {
   meetingMetaData: MeetingMetaData;
   members: Members[];
   votingDates: VotingDates[];
@@ -225,7 +252,7 @@ export interface GetMeetingMembersResponse {
   memberId: number;
   userId: number;
   nickname: string;
-  profileImageUrl: string | null;
+  profileImageUrl: string;
   memberRole: MemberRole;
 }
 

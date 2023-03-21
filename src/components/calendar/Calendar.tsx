@@ -303,6 +303,9 @@ function DefaultCalendar({
       <CalendarList
         calendarStyle={styles.calendarStyle}
         onDayPress={onPressHandler}
+        onTouchEnd={() => {
+          console.log('end');
+        }}
         minDate={startFrom}
         maxDate={endTo}
         markingType="custom"

@@ -16,6 +16,7 @@ import {
 } from '@api/meeting/meetings';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { useQuery } from 'react-query';
+import useMeeting from '@hooks/useMeeting';
 import Place from './place';
 import Member from './Member';
 import Date from './date';
@@ -36,8 +37,6 @@ export default function MeetingDetail({
   },
   navigation,
 }: RootStackScreenProps<'MeetingDetail'>) {
-  // useSubscribe(meetingId);
-
   const [closeTime, setCloseTime] = useState(false);
   const navi = useNavigation();
   const onPressLabel = () => {
@@ -69,7 +68,9 @@ export default function MeetingDetail({
       setCloseTime(false);
     }
   };
-  const { data } = useQuery(['test'], () => requestGetMeetingDetail(meetingId));
+  const { data } = useQuery(['meetingDetail'], () =>
+    requestGetMeetingDetail(meetingId),
+  );
 
   useEffect(() => {
     if (!data) return;
