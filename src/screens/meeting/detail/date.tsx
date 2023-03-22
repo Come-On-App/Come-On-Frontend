@@ -11,11 +11,14 @@ import type {
   DateMainProps,
   DateMainLeftProps,
   DateBottomProps,
+  DateMainRightProps,
 } from '@type/meeting.date';
 import TimePicker from '@components/meeting/TimePicker';
 import useMeetingTimeQuery from '@hooks/query/useMeetingTimeQuery';
 import useMeetingTimeMutation from '@hooks/query/useMeetingTimeMutation';
-import { TitleName, Title, text } from './common';
+import useMemberQuery, { isHostUser } from '@hooks/query/useMemberQuery';
+import useUserQuery from '@hooks/query/useUserQuery';
+import { TitleName, Title, text, Time, requestAPI } from './common';
 
 // 모임 기간
 function MeetingDate({ calendar, meetingId, navigation }: DateProps) {
@@ -59,21 +62,15 @@ function DateMainLeft({ calendar }: DateMainLeftProps) {
   );
 }
 
-const requestAPI =
-  (
-    request: (test: { meetingId: number; meetingStartTime: string }) => void,
-    meetingId: number,
-  ) =>
-  (payload: string) => {
-    request({ meetingId, meetingStartTime: payload });
-  };
-
-function DateMainRight({ meetingId }: { meetingId: number }) {
+function DateMainRight({ meetingId }: DateMainRightProps) {
   const styles = useStyles();
+  const [date, setDate] = useState(new Date());
+  const [isHost, setIsHost] = useState(false);
+  const { user } = useUserQuery();
+  const { members } = useMemberQuery(meetingId);
   const { meetingTime } = useMeetingTimeQuery(meetingId);
   const { postMeetingTime } = useMeetingTimeMutation(meetingId);
   const onSubmitHandler = requestAPI(postMeetingTime, meetingId);
-  const [date, setDate] = useState(new Date());
 
   useEffect(() => {
     if (meetingTime) {
@@ -81,24 +78,20 @@ function DateMainRight({ meetingId }: { meetingId: number }) {
     }
   }, [meetingTime]);
 
+  useEffect(() => {
+    if (members && user) {
+      setIsHost(isHostUser(members.contents, user.userId));
+    }
+  }, [members, user]);
+
   return (
     <View style={styles.dateMainRightLayout}>
       <View style={styles.dateMainRightContainer}>
-        <TimePicker meetingTime={date} onSubmit={onSubmitHandler} />
-        {/* <View
-          style={{
-            width: 90,
-            height: 35,
-            backgroundColor: '#DEDEE0',
-            borderRadius: 8,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <Font style={{ color: 'white' }}>
-            {createTimeFormat(date).formatted}
-          </Font>
-        </View> */}
+        {isHost ? (
+          <TimePicker meetingTime={date} onSubmit={onSubmitHandler} />
+        ) : (
+          <Time date={date} />
+        )}
       </View>
     </View>
   );
