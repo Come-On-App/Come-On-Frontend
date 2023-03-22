@@ -48,9 +48,8 @@ export interface SearchTitleProps {
 
 export type Dispatch = (payload: PlaceSelect) => void;
 
-export interface PlaceSelectModalContentProps {
+export interface RelativeHeightProps {
   children: React.ReactNode;
-  width: number;
 }
 
 export interface PlaceSelectModalBottomProps {

@@ -1,8 +1,6 @@
 import React, { memo, useState } from 'react';
 import { View } from 'react-native';
 
-import fn from '@utils/fn';
-import { BoldFont } from '@components/Font';
 import MeetingDetailPlaceCard from '@components/placeCard/PlaceCard';
 import usePlaceLock from '@hooks/redux/usePlaceLock';
 import Avatar from '@components/member/Avatar';
@@ -13,23 +11,12 @@ import type {
   PlaceTopProps,
 } from '@type/screen.meeting';
 import { makeStyles } from '@rneui/themed';
-import { renderingLog } from '@utils/log';
 import MeetingDetailMap from './Map';
-
-const colors = [
-  '#fc5c65',
-  '#fd9644',
-  '#fed330',
-  '#2bcbba',
-  '#45aaf2',
-  '#a55eea',
-];
+import { getRandomColor, Title, TitleName } from './common';
 
 // 모임 장소
 function Place({ meetingId, navigation }: PlaceProps) {
-  const [color] = useState(colors[fn.random(0, 5)]);
-
-  renderingLog('Place');
+  const [color] = useState(getRandomColor());
 
   return (
     <Layout>
@@ -48,8 +35,8 @@ function PlaceTop({ color }: PlaceTopProps) {
   };
 
   return (
-    <View style={styles.placeTopContainer}>
-      <BoldFont>모임 장소</BoldFont>
+    <View style={[styles.placeTopContainer, styles.commonHeight]}>
+      <Title title={TitleName.place} />
       {placeLockState.lockUserImage && (
         <Avatar
           size={styles.commonHeight.height}
@@ -70,9 +57,7 @@ function PlaceMain({ color, meetingId, navigation }: PlaceMainProps) {
   const styles = useStyles();
   const { placeLockState } = usePlaceLock();
   const borderColor = {
-    borderColor: placeLockState.lockUserImage
-      ? color
-      : styles.defaultColor.color,
+    borderColor: placeLockState.lockUserImage ? color : styles.default.color,
   };
 
   return (
@@ -100,7 +85,7 @@ const useStyles = makeStyles(theme => ({
     borderWidth: 2,
     overflow: 'hidden',
   },
-  defaultColor: {
+  default: {
     color: theme.grayscale['0'],
   },
 }));

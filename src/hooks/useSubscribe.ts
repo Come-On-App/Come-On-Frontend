@@ -143,12 +143,10 @@ function onPlaceMessageFn(
     const messageBody: IMeeting = JSON.parse(message.body);
 
     log(`[/sub/meetings/${meetingId} - message.body]`, messageBody);
-    log('log', messageBody.data);
 
     if (messageBody.messageType === 'MEETING_SUBSCRIBE_USER_LIST') {
       const { data } = messageBody as ISubscribeList;
 
-      console.log(`${data.userIds}asa`);
       onlineUserListDispatch(data.userIds);
     }
 
@@ -173,12 +171,19 @@ function onPlaceMessageFn(
         // 모임 투표
         case 'MEETING_VOTING':
           invalidateQueries(['voting', meetingId]);
-          console.log('aa');
           break;
         // 미팅 멤버 업데이트
         case 'MEETING_MEMBERS':
-          console.log('aa');
-
+          break;
+        // 모임 시간 업데이트
+        case 'MEETING_TIME':
+          invalidateQueries([
+            QueryKeys.meetings,
+            QueryKeys.meetingDetail,
+            QueryKeys.time,
+            meetingId,
+          ]);
+          successAlert('모임 시간이 변경되었습니다!');
           break;
         default:
           break;

@@ -1,7 +1,7 @@
 import React from 'react';
 import IconInputBox from '@components/input/IconInputBox';
 import { IconProps } from '@type/index';
-import TimePicker from '@components/meeting/Timepicker';
+import TimePicker from '@components/meeting/_timepicker';
 import { View, Pressable } from 'react-native';
 import { makeStyles } from '@rneui/themed';
 import { DateContainerProps } from '@type/meeting.dateContainer';

@@ -6,6 +6,8 @@ import type {
   GetMeetingDetailResponse,
   GetMeetingPayload,
   GetMeetingSliceResponse,
+  GetMeetingTimePayalod,
+  GetMeetingTimeResponse,
   PostEntryCodePayalod,
   PostEntryCodeResponse,
   PostJoinPayload,
@@ -61,9 +63,10 @@ export async function requestGetMeetings(
  */
 export async function requestGetMeetingDetail(
   payload: GetMeetingDetailPayload,
+  signal?: AbortSignal,
 ): Promise<GetMeetingDetailResponse> {
   const URL = `/api/v1/meetings/${payload}`;
-  const { data } = await serverAxios.get(URL);
+  const { data } = await serverAxios.get(URL, { signal });
 
   return data;
 }
@@ -109,6 +112,22 @@ export async function requestPostEntryCode(
 ): Promise<PostEntryCodeResponse> {
   const URL = `/api/v1/meetings/${payload}/entry-code`;
   const { data } = await serverAxios.post(URL);
+
+  return data;
+}
+
+/**
+ * GET /api/v1/meetings/{meeting-id}/meeting-time 모임 시간 조회
+ * @requires Authorization Bearer {access-token}
+ * @param payload 모임 시작 시간을 조회할 모임의 식별값
+ * @returns 모임 시작 시간 (HH:mm:ss 형식)
+ */
+export async function requestGetMeetingTime(
+  payload: GetMeetingTimePayalod,
+  signal?: AbortSignal,
+): Promise<GetMeetingTimeResponse> {
+  const URL = `/api/v1/meetings/${payload.meetingId}/meeting-time`;
+  const { data } = await serverAxios.get(URL, { signal });
 
   return data;
 }

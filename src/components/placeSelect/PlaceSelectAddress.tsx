@@ -91,7 +91,7 @@ const useStyles = makeStyles(theme => ({
     marginBottom: 4,
   },
   addressText: {
-    fontSize: 18,
+    fontSize: 16,
     lineHeight: 24,
   },
   categoryContainer: {
