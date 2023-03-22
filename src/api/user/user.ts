@@ -1,10 +1,12 @@
 import { serverAxios } from '@api/axiosInstance';
 import type {
   GetMyInfoResponse,
+  PostAppleResponse,
   PostReissuePayload,
   PostReissueResponse,
   PutMyInfoPayload,
   PutMyInfoResponse,
+  PostApplePayload,
 } from '@type/api.user';
 
 /**
@@ -46,6 +48,21 @@ export async function requestPostRefreshToken(
     refreshToken: payload.refreshToken.token,
     reissueRefreshTokenAlways: true,
   });
+
+  return data;
+}
+
+/**
+ * POST /api/v1/oauth/apple 애플 로그인
+ * @requires Authorization Bearer {access-token}
+ * @param payload 애플 로그인 성공시 응답 객체
+ * @returns accessToken, refreshToken 객체
+ */
+export async function requestPostApple(
+  payload: PostApplePayload,
+): Promise<PostAppleResponse> {
+  const URL = `/api/v1/oauth/apple`;
+  const { data } = await serverAxios.post(URL, payload);
 
   return data;
 }
