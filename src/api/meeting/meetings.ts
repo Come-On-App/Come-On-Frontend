@@ -104,21 +104,6 @@ export async function requestGetMeetingDetail2(
 }
 
 /**
- * GET /api/v2/meetings/{meeting-id} 모임 상세 조회
- * @requires Authorization Bearer {access-token}
- * @param payload 조회할 모임의 식별값
- * @returns 모임 상세 정보
- */
-export async function requestGetMeetingDetail2(
-  payload: GetMeetingDetailPayload,
-): Promise<GetMeetingDetailResponse2> {
-  const URL = `/api/v1/meetings/${payload}`;
-  const { data } = await serverAxios.get(URL);
-
-  return data;
-}
-
-/**
  * POST /api/v1/meetings/join 모임 가입
  * @requires Authorization Bearer {access-token}
  * @param payload 모임 입장 코드
