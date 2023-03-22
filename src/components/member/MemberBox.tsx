@@ -93,7 +93,7 @@ function MemberAvatar({
 
   const isOnline = onlineUserList.includes(item.userId);
 
-  invalidateQueries([QueryKeys.members, meetingId]);
+  invalidateQueries([QueryKeys.meetingDetail, QueryKeys.members, meetingId]);
 
   return (
     <View key={item.memberId}>

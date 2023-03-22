@@ -183,7 +183,6 @@ function onPlaceMessageFn(
         // 모임 시간 업데이트
         case 'MEETING_TIME':
           invalidateQueries([
-            QueryKeys.meetings,
             QueryKeys.meetingDetail,
             QueryKeys.time,
             meetingId,
