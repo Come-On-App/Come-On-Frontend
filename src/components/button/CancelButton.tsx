@@ -9,8 +9,6 @@ interface ButtonProps {
   style?: StyleProp<TextStyle>;
 }
 
-// useNavigation();
-
 function CancelButton({ title, onPressHandler, style }: ButtonProps) {
   return (
     <View style={style}>

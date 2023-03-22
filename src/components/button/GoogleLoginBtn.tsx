@@ -12,13 +12,13 @@ import {
 } from '@env';
 
 import { setLogin } from '@api/auth/auth';
-import useAuth from '../../hooks/useAuth';
+import useAuth from '@hooks/useAuth';
 import { SocialLoginProps } from '../../types';
 import GoogleLogo from '../../assets/images/logo/GoogleLogo';
 
 function GoogleLoginBtn() {
   const styles = useStyles();
-  const { isValidUser } = useAuth();
+  const { setLogin: setLoginAuth } = useAuth();
   const requestTokenUrl = '/api/v1/oauth/google';
   const [request, response, promptAsync] = Google.useAuthRequest({
     expoClientId: REACT_APP_EXPO_CLIENT_ID,
@@ -35,18 +35,20 @@ function GoogleLoginBtn() {
       };
 
       setLogin(data).then(res => {
-        if (res.status === 200) isValidUser();
+        setLoginAuth(res);
       });
     },
-    [isValidUser],
+    [setLoginAuth],
   );
 
   useEffect(() => {
-    if (response && response.type === 'success') {
-      const { params } = response;
+    (async () => {
+      if (response && response.type === 'success') {
+        const { params } = response;
 
-      requestTokenGoogle(params.id_token);
-    }
+        await requestTokenGoogle(params.id_token);
+      }
+    })();
   }, [response, requestTokenGoogle]);
 
   return (

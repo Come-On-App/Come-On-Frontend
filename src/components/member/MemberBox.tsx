@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { View, ScrollView, Pressable, Text } from 'react-native';
 import { makeStyles, Avatar } from '@rneui/themed';
 import { Members } from '@type/api.meeting';
-import {
-  requestMeetingMembers,
-  requestMeetingMembersDrop,
-} from '@api/meeting/members';
+import { requestMeetingMembersDrop } from '@api/meeting/members';
 import { ButtonGroup } from '@components/button/Buttons';
 import useAuth from '@hooks/useAuth';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
@@ -15,6 +12,7 @@ import {
   LittleMemberBoxProps,
   OnLineAvatarProps,
 } from '@type/meeting.memberBox';
+import { invalidateQueries, QueryKeys } from '@api/queryClient';
 import {
   MemberBoxProps,
   MemberBoxSubTitleProps,
@@ -86,15 +84,22 @@ function MemberAvatar({
   banUserList,
   onlineUserList,
   hostId,
+  meetingId,
   onPressAvatar,
 }: BanMemberAvatarProps) {
   const styles = useStyles();
+
+  if (!onlineUserList) return null;
+
+  const isOnline = onlineUserList.includes(item.userId);
+
+  invalidateQueries([QueryKeys.members, meetingId]);
 
   return (
     <View key={item.memberId}>
       {item.userId === hostId && <MasterIcon />}
 
-      {onlineUserList && onlineUserList.includes(item.userId) ? (
+      {isOnline ? (
         <LittleMemberBox item={item} banUserList={banUserList}>
           <OnLineUserAvatar
             item={item}
@@ -106,7 +111,7 @@ function MemberAvatar({
           <Avatar
             size={40}
             rounded
-            source={{ uri: item.profileImageUrl! }}
+            source={{ uri: item.profileImageUrl }}
             containerStyle={
               (styles.avatar,
               {
@@ -122,13 +127,11 @@ function MemberAvatar({
   );
 }
 
-function MemberBox({ hostId, meetingId }: MemberBoxProps) {
+function MemberBox({ hostId, meetingId, meetingUsers }: MemberBoxProps) {
   const { myId } = useAuth();
   const styles = useStyles();
   const [visible, setVisible] = useState(false);
-  const [meetingUsers, setMeetingUsers] = useState<Members[]>([]);
   const { onlineUserList } = useSocketMeeting();
-  // host구분
   const filterStaff = () => {
     const meetingStaff = meetingUsers.filter(
       item => item.memberRole === 'HOST',
@@ -140,7 +143,6 @@ function MemberBox({ hostId, meetingId }: MemberBoxProps) {
     return [meetingStaff, meetingMembers];
   };
   const [host, members] = filterStaff();
-  // 모달창 설정
   const onClickManage = () => {
     setVisible(!visible);
   };
@@ -163,14 +165,6 @@ function MemberBox({ hostId, meetingId }: MemberBoxProps) {
       setBanUserList(newList);
     }
   };
-
-  // 실시간 갱신
-  useEffect(() => {
-    requestMeetingMembers(meetingId).then(res => {
-      setMeetingUsers(res.contents);
-    });
-  }, [meetingId]);
-
   const renderAvatar = (users: Members[]) => {
     return users.map(item => (
       <MemberAvatar
@@ -180,15 +174,23 @@ function MemberBox({ hostId, meetingId }: MemberBoxProps) {
         onlineUserList={onlineUserList}
         hostId={hostId}
         onPressAvatar={onPressAvatarforBan}
+        meetingId={meetingId}
       />
     ));
   };
   const [banUserList, setBanUserList] = useState<number[]>([]);
   const onPressBanUserHandelr = () => {
     banUserList.forEach(user => {
-      requestMeetingMembersDrop({ meetingId, targetUserId: user }).then(res => {
-        if (res.success) banUserList.shift();
-      });
+      requestMeetingMembersDrop({ meetingId, targetUserId: user })
+        .then(res => {
+          if (res.success) {
+            banUserList.shift();
+          }
+        })
+        .catch(err => {
+          if (err) console.log('에러가 발생했습니다.');
+        });
+      Toast.show({ text1: '유저가 강퇴되었습니다.' });
     });
   };
   const onPressBanCancelHandelr = () => {

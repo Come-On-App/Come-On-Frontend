@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, Pressable, View } from 'react-native';
 
 import useImagePicker from '@hooks/useImagePicker';
@@ -10,21 +10,46 @@ import Icon from '../Icon';
 
 function InputImage() {
   const styles = useStyles();
-  const { setMyMeetingImgPath } = useMeeting();
+  const { setMyMeetingImgPath, setImgUri: setMyImgUri } = useMeeting();
+  const {
+    meetingSelector: { meetingImgPath, imgUri },
+  } = useMeeting();
   const [path, pickImage2] = useImagePicker();
+  const [imageUri, setImageUri] = useState<string>();
+
+  useEffect(() => {
+    if (path) setImageUri(path.uri);
+  }, [imageUri, path]);
 
   useEffect(() => {
     if (path) {
       setMyMeetingImgPath(path);
-    }
-  }, [path, setMyMeetingImgPath]);
+      setMyImgUri(path.uri);
 
-  // 추후 이미지 권한 얻어오기
+      setImageUri(imgUri);
+
+      return;
+    }
+
+    if (imgUri) {
+      setImageUri(imgUri);
+    }
+  }, [imgUri, meetingImgPath, path, setMyImgUri, setMyMeetingImgPath]);
+
   return (
     <View style={styles.container}>
       <Font style={styles.label}>사진등록</Font>
       <Pressable onPress={pickImage2} style={[styles.imageContainer]}>
-        {path ? <Image source={path} style={styles.image} /> : <ImageContent />}
+        {imageUri ? (
+          <Image
+            style={[styles.image]}
+            source={{
+              uri: imageUri,
+            }}
+          />
+        ) : (
+          <ImageContent />
+        )}
       </Pressable>
     </View>
   );

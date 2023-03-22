@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
+  AnimationInputDateProps,
   AnimationViewType,
   IconProps,
   ImageAnimationProps,
@@ -9,35 +10,26 @@ import {
 import useMeeting from '@hooks/useMeeting';
 import { makeStyles } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
-import Icon from '@components/Icon';
-import useMeetings from '@hooks/useMeetings';
+
 import { KeyboardAvoidingView, Pressable, View } from 'react-native';
 import Font from '@components/Font';
-import InputBox, { AnimationInputBox } from './InputText';
+import { AnimationInputBox } from './InputText';
 import InputImage from './InputImage';
 import IconInputBox, { isValid } from './IconInputBox';
 
 function InputForm({ AnimationView }: AnimationViewType) {
   const styles = useStyles();
-  const navigation = useNavigation();
   const [name, setName] = useState<string>('');
-  const { meetingData, setMyMeetingName } = useMeeting();
-  const dates = `${meetingData.calendarStartFrom} ~ ${meetingData.calendarEndTo}`;
-  const placeholder = '날짜 범위를 선택해주세요';
-  const iconConfig: IconProps = {
-    name: 'calendar-today',
-    size: 24,
-    color: styles.iconColor.color,
-  };
+  const { setMyMeetingName } = useMeeting();
+  const {
+    meetingSelector: { meetingData },
+  } = useMeeting();
 
   function onChangeHandler(text: string) {
     setName(text);
     setMyMeetingName(text);
   }
 
-  const onPressLabel = () => {
-    navigation.navigate('CreateMeetingCalender');
-  };
   const inputProps: InputTextProps = {
     label: '모임이름',
     placeholder: '모임이름을 입력해주세요!',
@@ -46,32 +38,90 @@ function InputForm({ AnimationView }: AnimationViewType) {
     onChangeText: onChangeHandler,
     multiline: false,
   };
+  const [date, setDate] = useState({
+    condition: '',
+    startDate: '',
+    endDate: '',
+  });
+
+  useEffect(() => {
+    if (meetingData.calendarStartFrom !== '')
+      setDate({
+        condition: meetingData.calendarStartFrom,
+        startDate: meetingData.calendarStartFrom,
+        endDate: meetingData.calendarEndTo,
+      });
+  }, [meetingData.calendarEndTo, meetingData.calendarStartFrom]);
+
+  const dates = `${date.startDate} ~ ${date.endDate}`;
+  const placeholder = '날짜 범위를 선택해주세요';
+  const dateConfig = {
+    value: dates,
+    placeholder,
+  };
 
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
-      <InputImgaeWithAinm AnimationView={AnimationView} id="image" />
+      <InputImageWithAinm AnimationView={AnimationView} id="image" />
       <AnimationInputBox
         inputProps={inputProps}
         AnimationView={AnimationView}
       />
-      <View style={styles.inputContainer}>
-        <Font style={styles.title}>모임 캘린더</Font>
-        <AnimationView id="date">
-          <Pressable style={styles.inputContainer} onPress={onPressLabel}>
-            <IconInputBox
-              iconConfig={iconConfig}
-              condition={isValid(meetingData.calendarStartFrom)}
-              value={dates}
-              placeholder={placeholder}
-            />
-          </Pressable>
-        </AnimationView>
-      </View>
+      <AnimationInputDate
+        AnimationView={AnimationView}
+        dateConfig={dateConfig}
+      />
     </KeyboardAvoidingView>
   );
 }
 
-export function InputImgaeWithAinm({ AnimationView, id }: ImageAnimationProps) {
+export function AnimationInputDate({
+  AnimationView,
+  dateConfig,
+}: AnimationInputDateProps) {
+  const styles = useStyles();
+  const navigation = useNavigation();
+  const onPressLabel = () => {
+    navigation.navigate('CreateMeetingCalender');
+  };
+  const [date, setDate] = useState({ startDate: '', endDate: '' });
+  const {
+    meetingSelector: { meetingData },
+  } = useMeeting();
+  const iconConfig: IconProps = {
+    name: 'calendar-today',
+    size: 24,
+    color: styles.iconColor.color,
+  };
+
+  useEffect(() => {
+    setDate({
+      startDate: meetingData.calendarStartFrom,
+      endDate: meetingData.calendarEndTo,
+    });
+  }, [meetingData.calendarEndTo, meetingData.calendarStartFrom]);
+
+  const dates = `${date.startDate} ~ ${date.endDate}`;
+  const placeholder = '날짜 범위를 선택해주세요';
+
+  return (
+    <View style={styles.inputContainer}>
+      <Font style={styles.title}>모임 캘린더</Font>
+      <AnimationView id="date">
+        <Pressable style={styles.inputContainer} onPress={onPressLabel}>
+          <IconInputBox
+            iconConfig={iconConfig}
+            condition={isValid(meetingData.calendarStartFrom)}
+            value={dateConfig.value}
+            placeholder={dateConfig.placeholder}
+          />
+        </Pressable>
+      </AnimationView>
+    </View>
+  );
+}
+
+export function InputImageWithAinm({ AnimationView, id }: ImageAnimationProps) {
   return (
     <AnimationView id={id}>
       <InputImage />

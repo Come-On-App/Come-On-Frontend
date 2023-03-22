@@ -19,6 +19,7 @@ export type BanMemberAvatarProps = {
   item: Members;
   banUserList: BanUserList;
   onlineUserList: OnLineUserList;
+  meetingId: number;
   hostId?: number;
   onPressAvatar: (item: Members) => void;
 };

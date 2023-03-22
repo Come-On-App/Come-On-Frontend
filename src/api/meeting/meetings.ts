@@ -4,10 +4,13 @@ import type {
   GetEntryCodeResponse,
   GetMeetingDetailPayload,
   GetMeetingDetailResponse,
+  GetMeetingDetailResponse2,
   GetMeetingPayload,
   GetMeetingSliceResponse,
   GetMeetingTimePayalod,
   GetMeetingTimeResponse,
+  PatchMeetingPayload,
+  PatchMeetingResponse,
   PostEntryCodePayalod,
   PostEntryCodeResponse,
   PostJoinPayload,
@@ -33,7 +36,20 @@ export async function requestCreateMeetings(
   return data;
 }
 
-// TODO: PATCH /api/v1/meetings/{meeting-id} 모임 수정
+/**
+ * PATCH  /api/v1/meetings/{meeting-id} 모임 수정
+ * @requires Authorization Bearer {access-token}
+ * @param payload 수정할 모임정보
+ * @returns slice Response 형식 응답값
+ */
+export async function requestPatchMeetings(
+  payload: PatchMeetingPayload,
+): Promise<PatchMeetingResponse> {
+  const URL = `/api/v1/meetings/${payload.meetingId}`;
+  const { data } = await serverAxios.patch(URL, payload.meetingData);
+
+  return data;
+}
 
 /**
  * GET /api/v1/meetings 모임 리스트 조회
@@ -67,6 +83,37 @@ export async function requestGetMeetingDetail(
 ): Promise<GetMeetingDetailResponse> {
   const URL = `/api/v1/meetings/${payload}`;
   const { data } = await serverAxios.get(URL, { signal });
+
+  return data;
+}
+
+/**
+ * GET /api/v2/meetings/{meeting-id} 모임 상세 조회
+ * @requires Authorization Bearer {access-token}
+ * @param payload 조회할 모임의 식별값
+ * @returns 모임 상세 정보
+ */
+export async function requestGetMeetingDetail2(
+  payload: GetMeetingDetailPayload,
+  signal?: AbortSignal,
+): Promise<GetMeetingDetailResponse2> {
+  const URL = `/api/v2/meetings/${payload}`;
+  const { data } = await serverAxios.get(URL, { signal });
+
+  return data;
+}
+
+/**
+ * GET /api/v2/meetings/{meeting-id} 모임 상세 조회
+ * @requires Authorization Bearer {access-token}
+ * @param payload 조회할 모임의 식별값
+ * @returns 모임 상세 정보
+ */
+export async function requestGetMeetingDetail2(
+  payload: GetMeetingDetailPayload,
+): Promise<GetMeetingDetailResponse2> {
+  const URL = `/api/v1/meetings/${payload}`;
+  const { data } = await serverAxios.get(URL);
 
   return data;
 }

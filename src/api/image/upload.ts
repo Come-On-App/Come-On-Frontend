@@ -22,11 +22,7 @@ export async function requestUploadImage(
   payload: PostUploadImagePayload,
 ): Promise<PostUploadImageResponse> {
   const URL = '/api/v1/image';
-  const { data } = await serverAxios.post(URL, payload, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  });
+  const { data } = await serverAxios.post(URL, payload);
 
   return data;
 }

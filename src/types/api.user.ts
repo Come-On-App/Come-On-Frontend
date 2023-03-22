@@ -51,7 +51,7 @@ export interface PostReissuePayload {
 }
 
 // POST /api/v1/auth/reissue (response)
-export interface PostReissueResponse extends ErrorMeetingResponse {
+export interface PostReissueResponse extends ErrorUserResponse {
   accessToken: {
     token: string;
     expiry: number;

@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Font, { BoldFont } from '@components/Font';
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { makeStyles } from '@rneui/themed';
 import Button from '@components/button/Buttons';
 import { requestGetDateVotingDetails } from '@api/meeting/voting';
-import { GetDateVotingDetailsResponse, VotingUsers } from '@type/api.meeting';
+import { VotingUsers } from '@type/api.meeting';
 import Avatar from '@components/member/Avatar';
 import { requestConfirmMeetingDate } from '@api/meeting/confirm';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 import useAuth from '@hooks/useAuth';
-import useSocketMeeting from '@hooks/useSocketMeeting';
 import { CalenderClickEventType } from '@type/meeting.calendar';
+import useMeeting from '@hooks/useMeeting';
+import { useQuery } from 'react-query';
 import LoadingComponent from './LoadingComponent';
 
 function returnDotDate(date: CalenderClickEventType) {
@@ -43,9 +44,7 @@ export default function DateModal({
   const title = returnDotDate(date);
   const dayStr = returnDayStr(date.timestamp);
   const isHost = userId === hostId;
-  const { totalMemberCounts } = useSocketMeeting();
-  const [dateDetails, setDateDetails] =
-    useState<GetDateVotingDetailsResponse>();
+  const { totalMemberCounts } = useMeeting();
   const onClickHandler = () => {
     const payload = {
       meetingDateStartFrom: date.dateString,
@@ -56,30 +55,21 @@ export default function DateModal({
       if (res.success) Toast.show({ text1: '모임일이 확정되었습니다.' });
     });
   };
-
-  // 해당 요일을 누른 유저의 정보 받아오기
-  useEffect(() => {
-    async function fetchDateVotingDetails() {
-      const payload = { date: date.dateString };
-      const data = await requestGetDateVotingDetails({
-        meetingId,
-        payload,
-      });
-
-      setDateDetails(data);
-    }
-
-    fetchDateVotingDetails();
-  }, [date.dateString, meetingId]);
-
   // 추후 스켈레톤으로
+  const payload = { date: date.dateString };
+  const { data: dateDetails } = useQuery(['votingDetails'], () =>
+    requestGetDateVotingDetails({
+      meetingId,
+      payload,
+    }),
+  );
 
   return (
     <View style={styles.overlayView}>
       <ModalTop title={title} date={dayStr} />
       <View style={styles.overlayViewMiddle}>
         {dateDetails ? (
-          <ModalMiddleWithAvata votingUsers={dateDetails.votingUsers} />
+          <ModalMiddleWithAvatar votingUsers={dateDetails.votingUsers} />
         ) : (
           <LoadingComponent />
         )}
@@ -110,15 +100,19 @@ function ModalTop({ title, date }: { title: string; date: string }) {
   );
 }
 
-function ModalMiddleWithAvata({ votingUsers }: { votingUsers: VotingUsers[] }) {
+function ModalMiddleWithAvatar({
+  votingUsers,
+}: {
+  votingUsers: VotingUsers[];
+}) {
   const styles = useStyles();
 
   return (
-    <View style={styles.middleAvatarAndNameView}>
+    <ScrollView contentContainerStyle={styles.middleAvatarAndNameView}>
       {votingUsers.map(user => (
         <AvatarAndName key={user.userId} user={user} />
       ))}
-    </View>
+    </ScrollView>
   );
 }
 
@@ -152,14 +146,18 @@ function AvatarAndName({ user }: { user: VotingUsers }) {
   const styles = useStyles();
 
   return (
-    <>
-      <Avatar
-        size={28}
-        path={profileImageUrl}
-        containerStyle={styles.AvatarAndName}
-      />
-      <Font>{nickname}</Font>
-    </>
+    <View style={styles.AvatarAndNameViewStyle}>
+      <View style={styles.AvatarAndNameViewStyle}>
+        <Avatar
+          size={28}
+          path={profileImageUrl}
+          containerStyle={styles.AvatarAndName}
+        />
+        <Font style={{ textAlign: 'center' }}>
+          {nickname.length > 5 ? `${nickname.slice(0, 5)} ..` : nickname}
+        </Font>
+      </View>
+    </View>
   );
 }
 
@@ -208,6 +206,8 @@ const useStyles = makeStyles(theme => ({
     paddingHorizontal: 10,
   },
   middleAvatarAndNameView: {
+    height: 100,
+    width: '100%',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -244,4 +244,10 @@ const useStyles = makeStyles(theme => ({
     fontSize: theme.textStyles.body1.fontSize,
   },
   AvatarAndName: { marginRight: 4 },
+  AvatarAndNameViewStyle: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 }));

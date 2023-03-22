@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Text, View } from 'react-native';
 import { makeStyles } from '@rneui/themed';
 
+import { SubDateProps } from '@type/meeting.calendar';
 import { RootStackScreenProps } from '@type/navigation';
-import { SubDateProps } from '@type/index';
 import {
   setCalendarEndTo,
   setCalendarStartFrom,

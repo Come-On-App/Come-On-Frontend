@@ -10,6 +10,7 @@ import type {
   NativeStackNavigationProp,
 } from '@react-navigation/native-stack';
 import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import { MeetingMode } from '@features/meetingSlice';
 
 declare global {
   namespace ReactNavigation {
@@ -26,6 +27,10 @@ export type RootTabParamList = {
 export type PlaceSelectParamList = {
   Main: undefined;
   Map: undefined;
+};
+
+export type LoginParamList = {
+  setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export type RoomCalendarParamList = {
@@ -51,10 +56,16 @@ export type MeetingDetailNavigation = NativeStackNavigationProp<
   undefined
 >;
 
+export type CreateMeetingNavigation = NativeStackNavigationProp<
+  RootStackParamList,
+  'CreateMeeting',
+  undefined
+>;
+
 export type RootStackParamList = {
   Root: RootScreenParams;
   MeetingRoom: undefined;
-  CreateMeeting: undefined;
+  CreateMeeting: { mode: MeetingMode; meetingId?: number };
   PlaceSelect: PlaceSelectScreenParams;
   MeetingDetail: { meetingId: number };
   CreateMeetingCalender: undefined;

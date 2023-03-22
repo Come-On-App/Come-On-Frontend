@@ -1,12 +1,13 @@
-import { SERVER_ADDRESS } from '@env';
-import { serverAxios } from '@api/axiosInstance';
-import { SocialLoginProps } from '@type/index';
-import { deleteValueFor, getValueFor } from '@utils/secureStore';
-import { getToken, SetTokensToDB, StoreKey } from '@api/token/token';
 import { copy } from '@utils/fn';
-import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { store } from '@app/store';
+import { SERVER_ADDRESS } from '@env';
+import { errorAlert } from '@utils/alert';
+import { logout } from '@features/authSlice';
+import { SocialLoginProps } from '@type/index';
+import { serverAxios } from '@api/axiosInstance';
 import { requestPostRefreshToken } from '@api/user/user';
-import useAuth from '@hooks/useAuth';
+import { deleteValueFor, getValueFor } from '@utils/secureStore';
+import { getToken, setTokensToDB, StoreKey } from '@api/token/token';
 
 serverAxios.interceptors.request.use(
   async config => {
@@ -19,13 +20,14 @@ serverAxios.interceptors.request.use(
   },
   error => error,
 );
+const { dispatch } = store;
 
 serverAxios.interceptors.response.use(
   res => res,
   async err => {
     const {
       config,
-      response: { status, data },
+      response: { data, status },
     } = err;
     const URL = `${SERVER_ADDRESS}/api/v1/auth/reissue`;
 
@@ -35,26 +37,23 @@ serverAxios.interceptors.response.use(
 
     // 헤더가 없는 경우 => 로그인 요청
     if (data.errorCode === 1102) {
-      Toast.show({
-        type: 'error',
-        text1: '로그인 해주세요',
-      });
-    }
-
-    // 액세스 토큰이 만료된 경우 => 리프레쉬 토큰 발급
-    if (data.errorCode === 1103) {
-      await PostRefreshToken();
+      errorAlert('인증헤더를 찾을 수 없습니다. 다시 로그인해 주세요');
 
       return config;
     }
 
-    // 리프레쉬 토큰이 만료된 경우
-
-    if (data.errorCode === 4002) {
+    // 액세스 토큰이 만료된 경우 => 리프레쉬 토큰 발급
+    if (data.errorCode === 1103) {
       await deleteValueFor(StoreKey.accessToken);
-      await deleteValueFor(StoreKey.refreshToken);
 
-      return Promise.reject(err);
+      const result = await postRefreshToken();
+
+      if (!result) {
+        dispatch(logout());
+        errorAlert('로그인 해주세요');
+      }
+
+      return config;
     }
 
     return Promise.reject(err);
@@ -66,31 +65,36 @@ export const setLogin = async (data: SocialLoginProps) => {
   const res = await serverAxios.post(`${SERVER_ADDRESS}${data.url}`, data.data);
 
   if (res.status === 200) {
-    const tokenDatas = res.data;
+    const tokenDatas = await res.data;
 
     serverAxios.defaults.headers.common.Authorization = `Bearer ${tokenDatas.accessToken.token}`;
 
-    await SetTokensToDB(tokenDatas);
+    await setTokensToDB(tokenDatas);
+
+    return tokenDatas;
   }
 
   return res;
 };
 
-//  만료 테스트 하기
-export const PostRefreshToken = async () => {
+export const postRefreshToken = async () => {
   const refreshTokens = await getValueFor(StoreKey.refreshToken);
-  const refreshToken = refreshTokens && JSON.parse(refreshTokens);
-  const data = await requestPostRefreshToken({ refreshToken });
-  const { setTokens } = useAuth();
+  const refreshToken = refreshTokens && (await JSON.parse(refreshTokens));
+  const data = requestPostRefreshToken({ refreshToken })
+    .then(async tokenData => {
+      if (tokenData) {
+        await setTokensToDB(tokenData);
+      }
 
-  if (data.errorCode === 4002) {
-    await deleteValueFor(StoreKey.accessToken);
-    await deleteValueFor(StoreKey.refreshToken);
-  }
+      return true;
+    })
+    .catch(async err => {
+      if (err.errorCode === 4002) {
+        await deleteValueFor(StoreKey.refreshToken);
+      }
 
-  if (data.accessToken && data) {
-    await setTokens(data);
-  }
+      return false;
+    });
 
   return data;
 };

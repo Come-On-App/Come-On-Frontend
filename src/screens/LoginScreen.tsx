@@ -23,8 +23,8 @@ function LoginScreen() {
         <Logo />
         <View style={styles.labels}>
           <Text style={styles.label}>소셜 로그인</Text>
-          <View style={styles.line} />
         </View>
+        <View style={styles.line} />
         <View style={styles.buttons}>
           <KakaoLoginBtn />
           <AppleLoginBtn />

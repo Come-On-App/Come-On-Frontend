@@ -125,6 +125,18 @@ export interface ImageAnimationProps extends AnimationViewType {
   id: Ids;
 }
 
+type DateConfig = {
+  value: string;
+  placeholder: string;
+};
+export interface AnimationInputDateProps extends AnimationViewType {
+  dateConfig: DateConfig;
+}
+
+export interface EditInpurFormProps extends AnimationViewType {
+  meetingId?: number;
+}
+
 export interface InputFormAnimProps {
   inputProps: InputTextProps;
   AnimationView: ({ children, id }: Type<Ids>) => JSX.Element;

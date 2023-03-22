@@ -1,51 +1,92 @@
 /* eslint-disable padding-line-between-statements */
-import React, { useCallback, useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { View, KeyboardAvoidingView } from 'react-native';
 
-import { usePromiseFlow } from '@utils/promise';
-import { RootStackScreenProps } from '@type/navigation';
-
+import { promiseFlow, usePromiseFlow } from '@utils/promise';
+import {
+  CreateMeetingNavigation,
+  RootStackScreenProps,
+} from '@type/navigation';
+import { Ids, EditInpurFormProps, InputTextProps } from '@type/index';
 import useAnimationBounce from '@hooks/useAnim';
-import { requestCreateMeetings } from '@api/meeting/meetings';
+import {
+  requestCreateMeetings,
+  requestGetMeetingDetail2,
+  requestPatchMeetings,
+} from '@api/meeting/meetings';
 import { MeetingId } from '@type/meeting.create';
 
-import useMeeting from '@hooks/useMeeting';
+import useMeeting, { getPayloadByMeetingMode } from '@hooks/useMeeting';
 import { AssetState } from '@type/hook.imagePicker';
-import { requestUploadImage } from '@api/image/upload';
+import { requestImageUpload } from '@api/image/upload';
+import { useQuery } from 'react-query';
+import { invalidateQueries, QueryKeys } from '@api/queryClient';
+import { AnimationInputBox } from '@components/input/InputText';
+import { makeStyles } from '@rneui/themed';
+import { MeetingMode } from '@features/meetingSlice';
+import { errorAlert, successAlert } from '@utils/alert';
 import CancelButton from '../components/button/CancelButton';
 import ConfirmButton from '../components/button/ConfirmButton';
-import InputForm from '../components/input/InputForm';
+import {
+  AnimationInputDate,
+  InputImageWithAinm,
+} from '../components/input/InputForm';
 
-enum AnimKey {
-  name = 'name',
-  image = 'image',
-  date = 'date',
+type ValuesType = {
+  [key in Ids]: string;
+};
+
+function AnimTrigger({
+  trigger,
+  values,
+}: {
+  trigger: (key: 'name' | 'image' | 'date') => void;
+  values: ValuesType;
+}) {
+  const keys = Object.keys(values) as Ids[];
+  const len = keys.length;
+  let i = 0;
+  let isValid = false;
+
+  while (i < len) {
+    const key = keys[i];
+    isValid = !!values[key];
+    if (!isValid) {
+      trigger(key);
+      break;
+    }
+    isValid = true;
+    i += 1;
+  }
+  return isValid;
 }
 
-function CreateMeeting(
-  this: typeof CreateMeeting,
-  { navigation }: RootStackScreenProps<'CreateMeeting'>,
-) {
-  const { meetingData, meetingImgPath } = useMeeting();
-  const { meetingName, calendarStartFrom, calendarEndTo } = meetingData;
+const num = 0;
+function CreateMeeting({
+  navigation,
+  route: {
+    params: { mode, meetingId },
+  },
+}: RootStackScreenProps<'CreateMeeting'>) {
+  const { setMeetingMode, setCurrentMeetingId } = useMeeting();
   const { resetMeetingData } = useMeeting();
-  const cancelHandler = () => {
-    navigation.goBack();
-  };
+  const styles = useStyles();
+
+  useEffect(() => {
+    setMeetingMode(mode);
+  }, [mode, setMeetingMode]);
+  const {
+    error,
+    isSuccess,
+    isError,
+    data: datas,
+  } = usePromiseFlow<AssetState, MeetingId>();
 
   const { trigger, AnimationBounceView } = useAnimationBounce([
     'name',
     'image',
     'date',
   ]);
-
-  const {
-    error,
-    isSuccess,
-    promiseFlow,
-    isError,
-    data: datas,
-  } = usePromiseFlow<AssetState, MeetingId>();
 
   useEffect(() => {
     if (isSuccess && datas) {
@@ -57,60 +98,244 @@ function CreateMeeting(
     }
   }, [datas, error, isError, isSuccess, navigation, resetMeetingData]);
 
-  const onPressConfirm = useCallback(() => {
-    if (meetingImgPath?.uri == null) {
-      trigger(AnimKey.image);
-    } else if (meetingName === '') {
-      trigger(AnimKey.name);
-    } else if (calendarStartFrom === '' && calendarEndTo === '') {
-      trigger(AnimKey.date);
-    } else {
-      const then2 = (imgUrl: string) => {
-        const data = {
-          meetingName,
-          meetingImageUrl: imgUrl,
-          calendarStartFrom,
-          calendarEndTo,
-        };
-
-        return data;
-      };
-      promiseFlow(meetingImgPath!, [
-        requestUploadImage,
-        then2,
-        requestCreateMeetings,
-      ]);
+  useEffect(() => {
+    if (meetingId) {
+      setCurrentMeetingId(meetingId);
     }
-  }, [
-    calendarEndTo,
-    calendarStartFrom,
-    meetingImgPath,
-    meetingName,
-    promiseFlow,
-    trigger,
-  ]);
-  // 이름
+  }, [meetingId, setCurrentMeetingId]);
 
   return (
     <View style={[styles.container]}>
-      <View>
-        <InputForm AnimationView={AnimationBounceView} />
-      </View>
-      <View style={styles.buttons}>
-        <CancelButton
-          title="취소"
-          onPressHandler={cancelHandler}
-          style={styles.buttonStyle}
-        />
-        <ConfirmButton title="확인" onPressHandler={onPressConfirm} />
-      </View>
+      <EditInputForm
+        AnimationView={AnimationBounceView}
+        meetingId={meetingId}
+      />
+      <Buttons navigation={navigation} trigger={trigger} />
     </View>
   );
 }
 
 export default CreateMeeting;
 
-const styles = StyleSheet.create({
+function EditInputForm({ AnimationView, meetingId }: EditInpurFormProps) {
+  const [name, setName] = useState<string>('');
+  const {
+    setMyMeetingName,
+    setCalendarDate,
+    setMyMeetingImgPath,
+    setImgUri,
+    meetingSelector,
+  } = useMeeting();
+  const { meetingData, mode } = meetingSelector;
+  const styles = useStyles();
+  function onChangeHandler(text: string) {
+    setName(text);
+    setMyMeetingName(text);
+  }
+  const [dateConfig, setDateConfig] = useState({
+    value: '',
+    placeholder: '날짜 범위를 선택해주세요',
+  });
+
+  const inputProps: InputTextProps = {
+    label: '모임이름',
+    placeholder: '모임이름을 입력해주세요!',
+    maxLength: 30,
+    value: name,
+    onChangeText: onChangeHandler,
+    multiline: false,
+  };
+
+  const { data: editData } = useQuery(
+    [QueryKeys.meetingDetail, meetingId],
+    () => requestGetMeetingDetail2(meetingId!),
+    { enabled: !!meetingId },
+  );
+  useEffect(() => {
+    if (!editData) return;
+    const date = {
+      startDate: editData.meetingMetaData.calendar.startFrom,
+      endDate: editData.meetingMetaData.calendar.endTo,
+    };
+
+    setDateConfig({
+      value: `${date.startDate} ~ ${date.endDate}`,
+      placeholder: '날짜 범위를 선택해주세요',
+    });
+    setCalendarDate(date);
+    setName(editData.meetingMetaData.meetingName);
+  }, [editData, setCalendarDate]);
+
+  useEffect(() => {
+    if (meetingData && meetingData.calendarStartFrom !== '0000-00-00')
+      setDateConfig({
+        value: `${meetingData.calendarStartFrom} ~ ${meetingData.calendarEndTo}`,
+        placeholder: '날짜 범위를 선택해주세요',
+      });
+  }, [
+    meetingData,
+    meetingData.calendarEndTo,
+    meetingData.calendarStartFrom,
+    name,
+    setCalendarDate,
+    setMyMeetingImgPath,
+  ]);
+
+  useEffect(() => {
+    if (!editData) return;
+    if (name === '') {
+      setName(editData.meetingMetaData.meetingName);
+    }
+    setMyMeetingName(name);
+  }, [editData, name, setMyMeetingName]);
+
+  useEffect(() => {
+    if (!editData) return;
+    setImgUri(editData.meetingMetaData.thumbnailImageUrl);
+  }, [editData, setImgUri, setMyMeetingImgPath]);
+
+  if (!editData && mode === MeetingMode.edit) return null;
+
+  return (
+    <KeyboardAvoidingView behavior="padding" style={styles.InputFormontainer}>
+      <InputImageWithAinm AnimationView={AnimationView} id="image" />
+      <AnimationInputBox
+        inputProps={inputProps}
+        AnimationView={AnimationView}
+      />
+      <AnimationInputDate
+        AnimationView={AnimationView}
+        dateConfig={dateConfig}
+      />
+    </KeyboardAvoidingView>
+  );
+}
+
+function Buttons({
+  navigation,
+  trigger,
+}: {
+  navigation: CreateMeetingNavigation;
+  trigger: (key: 'name' | 'image' | 'date') => void;
+}) {
+  // #Data
+  const { resetMeetingData, meetingSelector } = useMeeting();
+  const {
+    meetingData,
+    mode: meetingMode,
+    imgUri: meetingImgUri,
+  } = meetingSelector;
+  const styles = useStyles();
+  const { payload } = getPayloadByMeetingMode();
+  const { meetingName, calendarStartFrom, calendarEndTo } = meetingData;
+
+  // AnimationView 컨트롤
+  const animValues = useMemo(
+    () => ({
+      name: meetingName,
+      image: meetingImgUri,
+      date: calendarStartFrom,
+    }),
+    [calendarStartFrom, meetingImgUri, meetingName],
+  );
+
+  // # function
+  const cancelHandler = () => {
+    resetMeetingData();
+    navigation.goBack();
+  };
+
+  const convertURItoData = useCallback(
+    (imgUrl: string) => {
+      const data = {
+        meetingName,
+        meetingImageUrl: imgUrl,
+        calendarStartFrom,
+        calendarEndTo,
+      };
+
+      return data;
+    },
+    [calendarEndTo, calendarStartFrom, meetingName],
+  );
+
+  const onSuccessCreateMode = useCallback(
+    (newMeetingId: MeetingId) => {
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Root' }],
+      });
+      resetMeetingData();
+      navigation.navigate('MeetingDetail', {
+        meetingId: newMeetingId.meetingId,
+      });
+    },
+    [navigation, resetMeetingData],
+  );
+
+  const onSuccessEditMode = useCallback(() => {
+    invalidateQueries([QueryKeys.meetings]);
+    successAlert('모임정보가 변경되었습니다!');
+    navigation.navigate('Root', { screen: 'TabOne' });
+    resetMeetingData();
+  }, [navigation, resetMeetingData]);
+
+  const onErrorCreateMode = useCallback(() => {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Root' }],
+    });
+    resetMeetingData();
+    errorAlert('모임 생성에 실패했습니다...');
+    navigation.goBack();
+  }, [navigation, resetMeetingData]);
+
+  // Mode : (create/edit)
+  const requestHandler = useCallback(
+    ({ mode }: { mode: MeetingMode }) => {
+      return mode === MeetingMode.create
+        ? promiseFlow<AssetState | null, MeetingId>(
+            payload.createMeetingPayload,
+            [requestImageUpload, convertURItoData, requestCreateMeetings],
+            {
+              onSuccess: newMeetingId => {
+                onSuccessCreateMode(newMeetingId);
+              },
+              onError: onErrorCreateMode,
+            },
+          )
+        : promiseFlow(payload.editMeetingPayload, [requestPatchMeetings], {
+            onSuccess: onSuccessEditMode,
+          });
+    },
+    [
+      payload.createMeetingPayload,
+      payload.editMeetingPayload,
+      convertURItoData,
+      onErrorCreateMode,
+      onSuccessEditMode,
+      onSuccessCreateMode,
+    ],
+  );
+
+  const onPressConfirm = useCallback(() => {
+    const isValid = AnimTrigger({ trigger, values: animValues });
+    if (!isValid || !meetingMode) return;
+    requestHandler({ mode: meetingMode });
+  }, [trigger, animValues, meetingMode, requestHandler]);
+
+  return (
+    <View style={styles.buttons}>
+      <CancelButton
+        title="취소"
+        onPressHandler={cancelHandler}
+        style={styles.buttonStyle}
+      />
+      <ConfirmButton title="확인" onPressHandler={onPressConfirm} />
+    </View>
+  );
+}
+const useStyles = makeStyles(theme => ({
   container: {
     flex: 1,
     paddingHorizontal: 20,
@@ -126,4 +351,17 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
   },
-});
+
+  InputFormontainer: {
+    width: '100%',
+  },
+  title: {
+    fontSize: 16,
+  },
+  inputContainer: {
+    marginTop: 12,
+  },
+  iconColor: {
+    color: theme.grayscale['500'],
+  },
+}));

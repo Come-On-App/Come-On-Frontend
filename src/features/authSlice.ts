@@ -1,3 +1,4 @@
+import { deleteTokensfromDB, setTokensToDB } from '@api/token/token';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 /* eslint-disable no-param-reassign */
 import { AuthResponse } from '@type/index';
@@ -25,10 +26,17 @@ const authSlice = createSlice({
       state.refreshToken = action.payload.refreshToken;
       state.userId = action.payload.accessToken.userId;
     },
-    login: state => {
+    login: (state, action: PayloadAction<AuthResponse>) => {
+      setTokensToDB(action.payload).then();
+
       state.haveToken = true;
+      state.accessToken = action.payload.accessToken;
+      state.refreshToken = action.payload.refreshToken;
+      state.userId = action.payload.accessToken.userId;
     },
     logout: state => {
+      deleteTokensfromDB().then();
+
       state.haveToken = false;
       state.accessToken = null;
       state.refreshToken = null;
