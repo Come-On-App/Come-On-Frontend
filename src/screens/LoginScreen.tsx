@@ -9,6 +9,7 @@ import KakaoLoginBtn from '../components/button/KakaoLoginBtn';
 
 import AppleLogo from '../assets/images/logo/AppleLogo';
 import GoogleLoginBtn from '../components/button/GoogleLoginBtn';
+import AppleLoginBtn from './login/Apple';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -26,14 +27,7 @@ function LoginScreen() {
         </View>
         <View style={styles.buttons}>
           <KakaoLoginBtn />
-          <Pressable
-            style={({ pressed }) => [
-              pressed && styles.pressed,
-              styles.btnStyle,
-            ]}
-          >
-            <AppleLogo />
-          </Pressable>
+          <AppleLoginBtn />
           <GoogleLoginBtn />
         </View>
       </>
