@@ -226,7 +226,7 @@ function Buttons({
     imgUri: meetingImgUri,
   } = meetingSelector;
   const styles = useStyles();
-  const { payload } = getPayloadByMeetingMode({ mode: meetingMode });
+  const { payload } = getPayloadByMeetingMode();
   const { meetingName, calendarStartFrom, calendarEndTo } = meetingData;
 
   // AnimationView 컨트롤

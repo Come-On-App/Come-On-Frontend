@@ -4,6 +4,7 @@ import Label from '@components/input/Label';
 import DateContainer from '@components/meeting/DateContainer';
 import { useQuery } from 'react-query';
 import { requestGetMeetingDetail } from '@api/meeting/meetings';
+import { QueryKeys } from '@api/queryClient';
 // 모임 기간
 export default function Date({
   meetingId,
@@ -18,7 +19,7 @@ export default function Date({
     time: string,
   ) => void;
 }) {
-  const { data } = useQuery(['meetingDetail'], () =>
+  const { data } = useQuery([QueryKeys.meetingDetail, meetingId], () =>
     requestGetMeetingDetail(meetingId),
   );
 

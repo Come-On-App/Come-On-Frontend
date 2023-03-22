@@ -38,7 +38,7 @@ export const useCreatePayload = (): {
   return { createMeetingPayload, editMeetingPayload };
 };
 
-export const getPayloadByMeetingMode = ({ mode }: { mode: MeetingMode }) => {
+export const getPayloadByMeetingMode = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const payload = useCreatePayload();
 

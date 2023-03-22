@@ -171,11 +171,11 @@ function onPlaceMessageFn(
           break;
         // 모임 투표
         case 'MEETING_VOTING':
-          invalidateQueries(['voting', meetingId]);
+          invalidateQueries([QueryKeys.voting, meetingId]);
           break;
         // 미팅 멤버 업데이트
         case 'MEETING_MEMBERS':
-          invalidateQueries([QueryKeys.members]);
+          invalidateQueries([QueryKeys.members, meetingId]);
           break;
         default:
           break;

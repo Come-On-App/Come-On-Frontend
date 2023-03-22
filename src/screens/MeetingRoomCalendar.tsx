@@ -10,6 +10,7 @@ import LoadingComponent from '@components/calendar/LoadingComponent';
 
 import { useQuery } from 'react-query';
 import { RootStackScreenProps } from '@type/navigation';
+import { QueryKeys } from '@api/queryClient';
 import Label from '../components/input/Label';
 import MemberBox from '../components/member/MemberBox';
 
@@ -20,10 +21,11 @@ function MeetingRoomCalendar({
 }: RootStackScreenProps<'MeetingRoomCalendar'>) {
   const styles = useStyles();
   const navigation = useNavigation();
-  const { data: meetingDetail } = useQuery(['meetingDetail'], () =>
-    requestGetMeetingDetail(meetingId),
+  const { data: meetingDetail } = useQuery(
+    [QueryKeys.meetingDetail, meetingId],
+    () => requestGetMeetingDetail(meetingId),
   );
-  const { data: votingDetail } = useQuery(['voting', meetingId], () =>
+  const { data: votingDetail } = useQuery([QueryKeys.voting, meetingId], () =>
     requestGetDateVoting(meetingId),
   );
   const startFrom = meetingDetail?.meetingMetaData.calendar.startFrom;

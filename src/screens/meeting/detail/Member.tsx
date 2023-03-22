@@ -8,8 +8,9 @@ import useMeeting from '@hooks/useMeeting';
 // 모임 멤버
 export default function Member({ meetingId }: { meetingId: number }) {
   const { setTotalMemberCounts } = useMeeting();
-  const meetingData = useQuery([QueryKeys.members], () =>
-    requestMeetingMembers(meetingId),
+  const meetingData = useQuery(
+    [QueryKeys.meetingDetail, QueryKeys.members, meetingId],
+    () => requestMeetingMembers(meetingId),
   );
   // 셀렉터
   const host = meetingData.data?.contents.filter(

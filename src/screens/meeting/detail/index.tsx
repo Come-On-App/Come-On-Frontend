@@ -11,6 +11,7 @@ import {
 } from '@api/meeting/meetings';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { useQuery } from 'react-query';
+import { QueryKeys } from '@api/queryClient';
 import Place from './place';
 import Member from './Member';
 import Date from './date';
@@ -61,7 +62,7 @@ export default function MeetingDetail({
       setCloseTime(false);
     }
   };
-  const { data } = useQuery(['meetingDetail'], () =>
+  const { data } = useQuery([QueryKeys.meetingDetail, meetingId], () =>
     requestGetMeetingDetail(meetingId),
   );
 
