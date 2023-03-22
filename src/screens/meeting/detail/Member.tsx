@@ -22,7 +22,6 @@ export default function Member({ meetingId }: { meetingId: number }) {
     setTotalMemberCounts(meetingData.data?.contentsCount);
   }, [meetingData.data, meetingData.data?.contentsCount, setTotalMemberCounts]);
 
-  // 스켈레톤 추가
   if (!meetingData.data || !host) {
     return null;
   }

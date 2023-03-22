@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@rneui/themed';
 import * as WebBrowser from 'expo-web-browser';
-import { View, Text, Pressable, Dimensions } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 import Logo from '../components/Logo';
@@ -11,12 +11,9 @@ import AppleLogo from '../assets/images/logo/AppleLogo';
 import GoogleLoginBtn from '../components/button/GoogleLoginBtn';
 
 WebBrowser.maybeCompleteAuthSession();
-const { width, height } = Dimensions.get('screen');
 
 function LoginScreen() {
   const styles = useStyles();
-
-  console.log(width, height);
 
   return (
     <View style={styles.container}>

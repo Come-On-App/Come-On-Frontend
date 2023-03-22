@@ -5,7 +5,6 @@ import Svg, { Path } from 'react-native-svg';
 const { width, height } = Dimensions.get('window');
 
 function Logo() {
-  console.log(height);
   const size = width > 385 ? '70%' : '65%';
 
   return (

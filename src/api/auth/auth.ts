@@ -8,7 +8,6 @@ import { serverAxios } from '@api/axiosInstance';
 import { requestPostRefreshToken } from '@api/user/user';
 import { deleteValueFor, getValueFor } from '@utils/secureStore';
 import { getToken, setTokensToDB, StoreKey } from '@api/token/token';
-import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 serverAxios.interceptors.request.use(
   async config => {
@@ -21,27 +20,26 @@ serverAxios.interceptors.request.use(
   },
   error => error,
 );
-const { dispatch } = store; // direct access to redux store.
+const { dispatch } = store;
 
 serverAxios.interceptors.response.use(
   res => res,
   async err => {
     const {
       config,
-      response: { data },
+      response: { data, status },
     } = err;
     const URL = `${SERVER_ADDRESS}/api/v1/auth/reissue`;
 
-    if (config.url === URL || config.sent) {
+    if (config.url === URL || status !== 401 || config.sent) {
       return Promise.reject(err);
     }
 
     // 헤더가 없는 경우 => 로그인 요청
     if (data.errorCode === 1102) {
-      Toast.show({
-        type: 'error',
-        text1: '로그인 해주세요',
-      });
+      errorAlert('인증헤더를 찾을 수 없습니다. 다시 로그인해 주세요');
+
+      return config;
     }
 
     // 액세스 토큰이 만료된 경우 => 리프레쉬 토큰 발급
@@ -64,11 +62,7 @@ serverAxios.interceptors.response.use(
 
 // 소셜로그인
 export const setLogin = async (data: SocialLoginProps) => {
-  const res = await serverAxios.post(
-    `${SERVER_ADDRESS}${data.url}`,
-    data.data,
-    { headers: { 'Cache-Control': 'no-store' } },
-  );
+  const res = await serverAxios.post(`${SERVER_ADDRESS}${data.url}`, data.data);
 
   if (res.status === 200) {
     const tokenDatas = await res.data;

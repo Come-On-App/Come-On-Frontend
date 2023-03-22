@@ -34,9 +34,8 @@ export async function requestCreateMeetings(
   return data;
 }
 
-// TODO: PATCH /api/v1/meetings/{meeting-id} 모임 수정
 /**
- * PATCH  /api/v1/meetings/{meeting-id} 모임 리스트 조회
+ * PATCH  /api/v1/meetings/{meeting-id} 모임 수정
  * @requires Authorization Bearer {access-token}
  * @param payload 수정할 모임정보
  * @returns slice Response 형식 응답값

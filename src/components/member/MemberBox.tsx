@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { View, ScrollView, Pressable, Text } from 'react-native';
 import { makeStyles, Avatar } from '@rneui/themed';
 import { Members } from '@type/api.meeting';
-import {
-  requestMeetingMembers,
-  requestMeetingMembersDrop,
-} from '@api/meeting/members';
+import { requestMeetingMembersDrop } from '@api/meeting/members';
 import { ButtonGroup } from '@components/button/Buttons';
 import useAuth from '@hooks/useAuth';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
@@ -15,7 +12,6 @@ import {
   LittleMemberBoxProps,
   OnLineAvatarProps,
 } from '@type/meeting.memberBox';
-import { useQuery } from 'react-query';
 import { invalidateQueries, QueryKeys } from '@api/queryClient';
 import {
   MemberBoxProps,
@@ -136,9 +132,6 @@ function MemberBox({ hostId, meetingId, meetingUsers }: MemberBoxProps) {
   const styles = useStyles();
   const [visible, setVisible] = useState(false);
   const { onlineUserList } = useSocketMeeting();
-  // // host구분
-  // const [host, setHost] = setState('');
-  // const [members, setMembers] = setMembers('');
   const filterStaff = () => {
     const meetingStaff = meetingUsers.filter(
       item => item.memberRole === 'HOST',
@@ -150,7 +143,6 @@ function MemberBox({ hostId, meetingId, meetingUsers }: MemberBoxProps) {
     return [meetingStaff, meetingMembers];
   };
   const [host, members] = filterStaff();
-  // 모달창 설정
   const onClickManage = () => {
     setVisible(!visible);
   };

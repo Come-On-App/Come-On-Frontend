@@ -36,7 +36,6 @@ function InputImage() {
     }
   }, [imgUri, meetingImgPath, path, setMyImgUri, setMyMeetingImgPath]);
 
-  // 추후 이미지 권한 얻어오기
   return (
     <View style={styles.container}>
       <Font style={styles.label}>사진등록</Font>

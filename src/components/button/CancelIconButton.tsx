@@ -3,7 +3,6 @@ import { StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { CancelIconButtonWithActionProps } from '@type/component.button';
-import { log } from '@utils/log';
 import { requestPostMeetingPlacesUnLock } from '@api/meeting/places';
 import { promiseFlow } from '@utils/promise';
 import usePlace from '@hooks/redux/usePlace';

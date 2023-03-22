@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Pressable,
-  ScrollView,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
+import { Pressable, ScrollView, View } from 'react-native';
 
 import type { RootStackScreenProps } from '@type/navigation';
 import useSubscribe from '@hooks/useSubscribe';
@@ -16,7 +11,6 @@ import {
 } from '@api/meeting/meetings';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { useQuery } from 'react-query';
-import useMeeting from '@hooks/useMeeting';
 import Place from './place';
 import Member from './Member';
 import Date from './date';
@@ -50,7 +44,6 @@ export default function MeetingDetail({
     if (openTime && closeTime) {
       setOpenTime(!openTime);
 
-      // Host에 따라 다르게 ? 또는 rock?
       if (time)
         requestPostMeetingTime({
           meetingId,

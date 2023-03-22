@@ -107,65 +107,81 @@ function RootNavigator() {
 
   return (
     <Stack.Navigator>
-      <>
-        <Stack.Screen
-          name="Root"
-          component={BottomTabNavigator}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="PlaceSelect"
-          component={PlaceSelectNavigator}
-          options={{
-            headerShown: false,
-            gestureEnabled: false,
-          }}
-        />
-        {/* FIXME: 개발용 */}
-        <Stack.Screen
-          name="MeetingDetail"
-          component={MeetingDetail}
-          options={{
-            headerShown: true,
-            contentStyle: { backgroundColor: '#ffffff' },
-          }}
-        />
-        <Stack.Screen
-          name="CreateMeeting"
-          component={CreateMeeting}
-          initialParams={{ mode: MeetingMode.create }}
-          options={({ navigation, route }) => ({
-            title: '모임등록',
-            headerTitleAlign: 'center',
-            headerTitleStyle: styles.headerStyle,
-            headerRight: CancelIconButton,
-            headerBackVisible: false,
-          })}
-        />
-        <Stack.Screen
-          name="CreateMeetingCalender"
-          component={CreateMeetingCalender}
-          options={({ navigation, route }) => ({
-            title: '모임등록',
-            headerTitleAlign: 'center',
-            headerTitleStyle: styles.headerStyle,
-            headerRight: CancelIconButton,
-            headerBackVisible: false,
-          })}
-        />
-        <Stack.Screen
-          name="MeetingRoomCalendar"
-          component={MeetingRoomCalendar}
-          options={({ navigation, route }) => ({
-            headerTitleAlign: 'center',
-            headerTitleStyle: styles.headerStyle,
-            headerRight: CancelIconButton,
-            headerBackVisible: false,
-            animationTypeForReplace: 'push',
-            animation: 'slide_from_right',
-          })}
-        />
-      </>
+      {isLogin ? (
+        <>
+          <Stack.Screen
+            name="Root"
+            component={BottomTabNavigator}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="PlaceSelect"
+            component={PlaceSelectNavigator}
+            options={{
+              headerShown: false,
+              gestureEnabled: false,
+            }}
+          />
+          {/* FIXME: 개발용 */}
+          <Stack.Screen
+            name="MeetingDetail"
+            component={MeetingDetail}
+            options={{
+              headerShown: true,
+              contentStyle: { backgroundColor: '#ffffff' },
+            }}
+          />
+          <Stack.Screen
+            name="CreateMeeting"
+            component={CreateMeeting}
+            initialParams={{ mode: MeetingMode.create }}
+            options={({ navigation, route }) => ({
+              title: '모임등록',
+              headerTitleAlign: 'center',
+              headerTitleStyle: styles.headerStyle,
+              headerRight: CancelIconButton,
+              headerBackVisible: false,
+            })}
+          />
+          <Stack.Screen
+            name="CreateMeetingCalender"
+            component={CreateMeetingCalender}
+            options={({ navigation, route }) => ({
+              title: '모임등록',
+              headerTitleAlign: 'center',
+              headerTitleStyle: styles.headerStyle,
+              headerRight: CancelIconButton,
+              headerBackVisible: false,
+            })}
+          />
+          <Stack.Screen
+            name="MeetingRoomCalendar"
+            component={MeetingRoomCalendar}
+            options={({ navigation, route }) => ({
+              headerTitleAlign: 'center',
+              headerTitleStyle: styles.headerStyle,
+              headerRight: CancelIconButton,
+              headerBackVisible: false,
+              animationTypeForReplace: 'push',
+              animation: 'slide_from_right',
+            })}
+          />
+        </>
+      ) : (
+        <>
+          <Stack.Screen
+            name="LoginScreen"
+            component={LoginScreen}
+            options={({ navigation, route }) => ({
+              headerShown: false,
+            })}
+          />
+          <Stack.Screen
+            name="KakaoLoginWebView"
+            component={KakaoLoginWebView}
+          />
+        </>
+      )}
     </Stack.Navigator>
   );
 }
@@ -177,9 +193,7 @@ function RootNavigator() {
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
-  const { isAuth } = useAuth();
-
-  return isAuth ? (
+  return (
     <BottomTab.Navigator
       initialRouteName="TabOne"
       sceneContainerStyle={{
@@ -216,17 +230,6 @@ function BottomTabNavigator() {
         }}
       />
     </BottomTab.Navigator>
-  ) : (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="LoginScreen"
-        component={LoginScreen}
-        options={({ navigation, route }) => ({
-          headerShown: false,
-        })}
-      />
-      <Stack.Screen name="KakaoLoginWebView" component={KakaoLoginWebView} />
-    </Stack.Navigator>
   );
 }
 

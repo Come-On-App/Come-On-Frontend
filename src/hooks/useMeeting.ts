@@ -48,6 +48,7 @@ export const getPayloadByMeetingMode = ({ mode }: { mode: MeetingMode }) => {
 function useMeeting() {
   const dispatch = useAppDispatch();
   const meetingSelector = useAppSelector(state => state.meeting);
+  const totalMemberCounts = meetingSelector.totalMeetingMembers;
   const setCurrentMeetingId = (meetId: number) => {
     dispatch(setMeetingId(meetId));
   };
@@ -91,6 +92,7 @@ function useMeeting() {
 
   return {
     meetingSelector,
+    totalMemberCounts,
     setCurrentMeetingId,
     setImgUri,
     setMeetingMode,

@@ -16,7 +16,6 @@ export const tokenDataisValid = async () => {
   }
 
   return false;
-  // 토큰이 유효하지 않으면 로그아웃 시켜야함 .
 };
 
 enum StoreKey {
