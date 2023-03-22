@@ -183,7 +183,7 @@ function onPlaceMessageFn(
             QueryKeys.time,
             meetingId,
           ]);
-          successAlert('장소 시간이 변경되었습니다!');
+          successAlert('모임 시간이 변경되었습니다!');
           break;
         default:
           break;
