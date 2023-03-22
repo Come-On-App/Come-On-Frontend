@@ -75,7 +75,7 @@ export interface Token {
   };
 }
 
-// POST /api/v1/auth/reissue (payload)
+// POST /api/v1/oauth/apple (payload)
 export interface PostApplePayload {
   identityToken: string;
   user: string;
