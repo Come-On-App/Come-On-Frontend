@@ -1,7 +1,7 @@
 import React, { Dispatch, RefObject, SetStateAction, useEffect } from 'react';
 
-import fn from '@utils/fn';
-import { BoldFont } from '@components/Font';
+import fn, { createTimeFormat } from '@utils/fn';
+import Font, { BoldFont } from '@components/Font';
 import { makeStyles } from '@rneui/themed';
 import { Calendar } from '@type/meeting.date';
 import type { Places } from '@type/screen.meeting';
@@ -10,7 +10,7 @@ import usePlace from '@hooks/redux/usePlace';
 import { MapRegion } from '@type/index';
 import { RootStackScreenProps } from '@type/navigation';
 import { GetMeetingDetailResponse } from '@type/api.meeting';
-import { ScrollView, View } from 'react-native';
+import { Pressable, ScrollView, View } from 'react-native';
 
 interface Title {
   title: TitleName;
@@ -19,6 +19,12 @@ interface Title {
 interface Container {
   children: React.ReactNode;
   FixedItem: JSX.Element;
+}
+
+interface TimeProps {
+  date: Date;
+  type?: 'View' | 'Pressable';
+  onPress?: () => void;
 }
 
 export function Title({ title }: Title) {
@@ -40,6 +46,17 @@ export function Container({ children, FixedItem }: Container) {
   );
 }
 
+export function Time({ date, type = 'View', onPress }: TimeProps) {
+  const styles = useStyles();
+  const Component = type === 'View' ? View : Pressable;
+
+  return (
+    <Component onPress={onPress} style={styles.timeContainer}>
+      <Font style={styles.timeText}>{createTimeFormat(date).formatted}</Font>
+    </Component>
+  );
+}
+
 const useStyles = makeStyles(() => ({
   titleText: {
     fontSize: 18,
@@ -52,6 +69,17 @@ const useStyles = makeStyles(() => ({
   },
   content: {
     alignItems: 'center',
+  },
+  timeContainer: {
+    width: 90,
+    height: 35,
+    backgroundColor: '#DEDEE0',
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  timeText: {
+    color: 'white',
   },
 }));
 
@@ -118,3 +146,12 @@ export function useSetTitle(
     });
   }, [meetingDetail, navigation]);
 }
+
+export const requestAPI =
+  (
+    request: (fn: { meetingId: number; meetingStartTime: string }) => void,
+    meetingId: number,
+  ) =>
+  (payload: string) => {
+    request({ meetingId, meetingStartTime: payload });
+  };
