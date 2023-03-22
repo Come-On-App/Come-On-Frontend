@@ -45,3 +45,15 @@ export function pickSafelyBy<T extends object, F>(
 
   return target as F;
 }
+
+export function createTimeFormat(date: Date) {
+  const hours = date.getHours(); // 시간 정보를 추출합니다.
+  const minutes = date.getMinutes(); // 분 정보를 추출합니다.
+  const meridiem = hours >= 12 ? 'PM' : 'AM'; // 오전/오후 정보를 추출합니다.
+  const hoursFormatted = hours.toString().padStart(2, '0');
+  const minutesFormatted = minutes.toString().padStart(2, '0');
+  const formatted = `${hoursFormatted}:${minutesFormatted} ${meridiem}`;
+  const payload = `${hoursFormatted}:${minutesFormatted}:00`;
+
+  return { formatted, payload };
+}

@@ -2,6 +2,8 @@ node_modules/
 .expo/
 .husky/
 dist/
+ios/
+android/
 npm-debug.*
 *.jks
 *.p8

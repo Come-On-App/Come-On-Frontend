@@ -62,3 +62,26 @@ export interface PostReissueResponse extends ErrorUserResponse {
     expiry: number;
   };
 }
+
+export interface Token {
+  accessToken: {
+    token: string;
+    expiry: number;
+    userId: number;
+  };
+  refreshToken: {
+    token: string;
+    expiry: number;
+  };
+}
+
+// POST /api/v1/oauth/apple (payload)
+export interface PostApplePayload {
+  identityToken: string;
+  user: string;
+  email: string | null;
+  name: string | null;
+}
+
+// POST /api/v1/oauth/apple (response)
+export type PostAppleResponse = Token;

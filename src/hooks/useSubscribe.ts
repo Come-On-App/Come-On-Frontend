@@ -143,7 +143,6 @@ function onPlaceMessageFn(
     const messageBody: IMeeting = JSON.parse(message.body);
 
     log(`[/sub/meetings/${meetingId} - message.body]`, messageBody);
-    log('log', messageBody.data);
 
     if (messageBody.messageType === 'MEETING_SUBSCRIBE_USER_LIST') {
       const { data } = messageBody as ISubscribeList;
@@ -180,6 +179,16 @@ function onPlaceMessageFn(
             QueryKeys.members,
             meetingId,
           ]);
+          break;
+        // 모임 시간 업데이트
+        case 'MEETING_TIME':
+          invalidateQueries([
+            QueryKeys.meetings,
+            QueryKeys.meetingDetail,
+            QueryKeys.time,
+            meetingId,
+          ]);
+          successAlert('모임 시간이 변경되었습니다!');
           break;
         default:
           break;

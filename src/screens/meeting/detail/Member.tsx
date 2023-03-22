@@ -1,21 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { memo, useEffect } from 'react';
 import MemberBox from '@components/member/MemberBox';
+
+import useMemberQuery, { findHostUser } from '@hooks/query/useMemberQuery';
+
 import { requestMeetingMembers } from '@api/meeting/members';
 import { useQuery } from 'react-query';
 import { QueryKeys } from '@api/queryClient';
 import { View } from 'react-native';
 import useMeeting from '@hooks/useMeeting';
 // 모임 멤버
-export default function Member({ meetingId }: { meetingId: number }) {
+function Member({ meetingId }: { meetingId: number }) {
   const { setTotalMemberCounts } = useMeeting();
-  const meetingData = useQuery(
-    [QueryKeys.meetingDetail, QueryKeys.members, meetingId],
-    () => requestMeetingMembers(meetingId),
-  );
-  // 셀렉터
-  const host = meetingData.data?.contents.filter(
-    data => data.memberRole === 'HOST',
-  )[0];
+  const { members } = useMemberQuery(meetingId);
 
   useEffect(() => {
     if (!meetingData.data) return;
@@ -28,12 +24,14 @@ export default function Member({ meetingId }: { meetingId: number }) {
   }
 
   return (
-    <View>
+    <Layout>
       <MemberBox
         meetingId={meetingId}
-        hostId={host.userId}
-        meetingUsers={meetingData.data?.contents}
+        hostId={findHostUser(members.contents).userId}
+        meetingUsers={members.contents}
       />
-    </View>
+    </Layout>
   );
 }
+
+export default memo(Member);

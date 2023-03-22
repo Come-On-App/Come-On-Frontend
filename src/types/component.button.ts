@@ -27,7 +27,7 @@ export interface ButtonProps {
   disabled?: boolean;
   loading?: boolean;
   textStyle?: Partial<ButtonTextStyle>;
-  buttonStyle?: Partial<ButtonStyle> | Partial<ButtonStyle>[];
+  buttonStyle?: StyleProp<ViewStyle> | StyleProp<ViewStyle>[];
 }
 
 type ButtonGroupStyle = {

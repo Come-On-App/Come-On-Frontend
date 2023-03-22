@@ -234,6 +234,16 @@ export interface PostEntryCodeResponse {
   expiredAt: string;
 }
 
+// GET /api/v1/meetings/{meeting-id}/meeting-time (payalod)
+export interface GetMeetingTimePayalod {
+  meetingId: number;
+}
+
+// GET /api/v1/meetings/{meeting-id}/meeting-time (response)
+export interface GetMeetingTimeResponse {
+  meetingStartTime: string;
+}
+
 // POST /api/v1/meetings/{meeting-id}/meeting-time (payalod)
 export interface PostMeetingTimePayalod {
   meetingId: number;

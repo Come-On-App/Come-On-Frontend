@@ -1,15 +1,13 @@
 import { View } from 'react-native';
-import React, { memo, useEffect, useRef, useState } from 'react';
-import type { Dispatch, SetStateAction, RefObject } from 'react';
+import React, { memo, useRef, useState } from 'react';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { makeStyles } from '@rneui/themed';
 
 import { defaultLocation } from '@components/placeSelect/data';
 import usePlaceQuery from '@hooks/query/usePlaceQuery';
-import usePlace from '@hooks/redux/usePlace';
-import { MapRegion } from '@type/index';
 import { emptyString, pickSafelyBy } from '@utils/fn';
-import type { MarkerListProps, Places } from '@type/screen.meeting';
+import type { MarkerListProps } from '@type/screen.meeting';
+import { useFirstRegion, useMapAnimateToRegion } from './common';
 
 const MemoMarkerList = memo(MarkerList);
 
@@ -35,36 +33,6 @@ export default function MeetingDetailMap({ meetingId }: { meetingId: number }) {
       </MapView>
     </View>
   );
-}
-
-function useFirstRegion(
-  places: Places,
-  setRegion: Dispatch<SetStateAction<MapRegion>>,
-) {
-  const ZERO = 0;
-
-  useEffect(() => {
-    if (places && places.contentsCount !== ZERO) {
-      const firstPlace = places.contents[ZERO];
-
-      setRegion({
-        latitude: firstPlace.lat,
-        longitude: firstPlace.lng,
-        latitudeDelta: 0.01,
-        longitudeDelta: 0.01,
-      });
-    }
-  }, [places, setRegion]);
-}
-
-function useMapAnimateToRegion(mapRef: RefObject<MapView>) {
-  const { placeState } = usePlace();
-
-  useEffect(() => {
-    if (!placeState.meetingPlaceCardMarker || !mapRef.current) return;
-
-    mapRef.current.animateToRegion(placeState.meetingPlaceCardMarker);
-  }, [mapRef, placeState.meetingPlaceCardMarker]);
 }
 
 function MarkerList({ places }: MarkerListProps) {

@@ -17,6 +17,7 @@ import { getPlaceSelectState } from '@components/placeSelect/data';
 import { PlaceSelectBottomProps } from '@type/component.placeselect';
 import { ErrorMeetingResponse } from '@type/api.meeting';
 import { errorAlert } from '@utils/alert';
+import RelativeHeightContent from '@components/RelativeHeight';
 
 export default function PlaceSelect() {
   const styles = useStyles();
@@ -91,14 +92,16 @@ function PlaceSelectBottom({ onOpen }: PlaceSelectBottomProps) {
 
   return (
     <View style={styles.footerContainer}>
-      <AddressInfo />
-      <PlaceSelectButton text="장소상세" onPress={onOpen} />
-      <PlaceSelectButton
-        text={buttonText}
-        onPress={onPressHandler}
-        isDisabled={!isRequestReady}
-        buttonStyle={styles.submitButton}
-      />
+      <RelativeHeightContent>
+        <AddressInfo />
+        <PlaceSelectButton text="장소상세" onPress={onOpen} />
+        <PlaceSelectButton
+          text={buttonText}
+          onPress={onPressHandler}
+          isDisabled={!isRequestReady}
+          buttonStyle={styles.submitButton}
+        />
+      </RelativeHeightContent>
     </View>
   );
 }
