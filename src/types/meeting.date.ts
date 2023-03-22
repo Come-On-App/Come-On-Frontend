@@ -1,4 +1,3 @@
-import { GetMeetingTimeResponse } from '@type/api.meeting';
 import { MeetingDetailNavigation } from './navigation';
 
 export type Calendar = {
@@ -19,6 +18,10 @@ export interface DateMainProps {
 
 export interface DateMainLeftProps {
   calendar: Calendar;
+}
+
+export interface DateMainRightProps {
+  meetingId: number;
 }
 
 export interface DateBottomProps {
