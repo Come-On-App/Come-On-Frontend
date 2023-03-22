@@ -175,7 +175,11 @@ function onPlaceMessageFn(
           break;
         // 미팅 멤버 업데이트
         case 'MEETING_MEMBERS':
-          invalidateQueries([QueryKeys.members, meetingId]);
+          invalidateQueries([
+            QueryKeys.meetingDetail,
+            QueryKeys.members,
+            meetingId,
+          ]);
           break;
         default:
           break;
