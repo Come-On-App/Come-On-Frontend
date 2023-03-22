@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 
-import { Platform, TouchableWithoutFeedback, View } from 'react-native';
-import Button from '@components/button/Buttons';
+import { Platform } from 'react-native';
 import DateTimePicker, {
   DateTimePickerAndroid,
 } from '@react-native-community/datetimepicker';
 import type { TimePickerProps } from '@type/meeting.date';
 
 import { createTimeFormat } from '@utils/fn';
-import { makeStyles } from '@rneui/themed';
+import { Time } from '@screens/meeting/detail/common';
 
 export default function TimePicker({
   meetingTime,
@@ -21,11 +20,7 @@ export default function TimePicker({
     return <TimePickerAndroid onSubmit={onSubmit} time={meetingTime} />;
   }
 
-  return (
-    <TouchableWithoutFeedback onPress={() => undefined}>
-      <TimePickerIos onSubmit={onSubmit} time={meetingTime} />
-    </TouchableWithoutFeedback>
-  );
+  return <TimePickerIos onSubmit={onSubmit} time={meetingTime} />;
 }
 
 function TimePickerIos({ onSubmit, time }: TimePickerProps) {
@@ -45,11 +40,7 @@ function TimePickerIos({ onSubmit, time }: TimePickerProps) {
 }
 
 function TimePickerAndroid({ onSubmit }: TimePickerProps) {
-  const styles = useStyles();
   const [date, setDate] = useState(new Date());
-  const [timeFormat, setTimeFormat] = useState(
-    createTimeFormat(date).formatted,
-  );
   const onPressHandler = () => {
     DateTimePickerAndroid.open({
       value: date,
@@ -59,7 +50,6 @@ function TimePickerAndroid({ onSubmit }: TimePickerProps) {
 
           setDate(selectedDate);
           onSubmit(time.payload);
-          setTimeFormat(time.formatted);
         }
       },
       mode: 'time',
@@ -67,24 +57,5 @@ function TimePickerAndroid({ onSubmit }: TimePickerProps) {
     });
   };
 
-  return (
-    <View>
-      <Button
-        onPress={onPressHandler}
-        text={timeFormat}
-        buttonStyle={styles.timePickerAndroidButton}
-        textStyle={styles.timePickerAndroidButtonText}
-      />
-    </View>
-  );
+  return <Time type="Pressable" onPress={onPressHandler} date={date} />;
 }
-
-const useStyles = makeStyles(theme => ({
-  timePickerAndroidButton: {
-    height: 38,
-    backgroundColor: theme.colors.primary,
-  },
-  timePickerAndroidButtonText: {
-    fontSize: 14,
-  },
-}));
