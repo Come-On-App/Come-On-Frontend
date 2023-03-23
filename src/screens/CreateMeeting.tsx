@@ -2,10 +2,12 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   View,
-  KeyboardAvoidingView,
   Dimensions,
   ViewStyle,
   StyleProp,
+  ScrollView,
+  Keyboard,
+  Pressable,
 } from 'react-native';
 
 import { promiseFlow, usePromiseFlow } from '@utils/promise';
@@ -31,8 +33,8 @@ import { AnimationInputBox } from '@components/input/InputText';
 import { makeStyles } from '@rneui/themed';
 import { MeetingMode } from '@features/meetingSlice';
 import { errorAlert, successAlert } from '@utils/alert';
-import { ButtonGroup } from '@components/button/Buttons';
-
+import CancelButton from '../components/button/CancelButton';
+import ConfirmButton from '../components/button/ConfirmButton';
 import {
   AnimationInputDate,
   InputImageWithAinm,
@@ -71,8 +73,7 @@ interface LayoutProps {
   children: React.ReactNode;
   containerStyle: StyleProp<ViewStyle>;
 }
-const { width, height } = Dimensions.get('window');
-console.log(width, height);
+const { width } = Dimensions.get('window');
 
 function LayoutHeight({ children, containerStyle }: LayoutProps) {
   const styles = useStyles();
@@ -216,17 +217,19 @@ function EditInputForm({ AnimationView, meetingId }: EditInpurFormProps) {
   if (!editData && mode === MeetingMode.edit) return null;
 
   return (
-    <KeyboardAvoidingView behavior="padding" style={styles.InputFormontainer}>
-      <InputImageWithAinm AnimationView={AnimationView} id="image" />
-      <AnimationInputBox
-        inputProps={inputProps}
-        AnimationView={AnimationView}
-      />
-      <AnimationInputDate
-        AnimationView={AnimationView}
-        dateConfig={dateConfig}
-      />
-    </KeyboardAvoidingView>
+    <Pressable onPress={Keyboard.dismiss}>
+      <ScrollView style={styles.InputFormontainer}>
+        <InputImageWithAinm AnimationView={AnimationView} id="image" />
+        <AnimationInputBox
+          inputProps={inputProps}
+          AnimationView={AnimationView}
+        />
+        <AnimationInputDate
+          AnimationView={AnimationView}
+          dateConfig={dateConfig}
+        />
+      </ScrollView>
+    </Pressable>
   );
 }
 
@@ -343,27 +346,18 @@ function Buttons({
     requestHandler({ mode: meetingMode });
   }, [trigger, animValues, meetingMode, requestHandler]);
 
-  const buttonProps = {
-    spacing: 12,
-    firstButton: {
-      text: '취소',
-      onPress: cancelHandler,
-      style: { width: 130 },
-    },
-
-    secondButton: {
-      text: '확인',
-      onPress: onPressConfirm,
-      style: { width: 202 },
-    },
-  };
-
   return (
     <View style={styles.buttons}>
-      <ButtonGroup
-        spacing={12}
-        firstButton={buttonProps.firstButton}
-        secondButton={buttonProps.secondButton}
+      <CancelButton
+        title="취소"
+        onPressHandler={cancelHandler}
+        style={styles.buttonStyle}
+        width={width < 385 ? 120 : 130}
+      />
+      <ConfirmButton
+        title="확인"
+        onPressHandler={onPressConfirm}
+        width={width < 385 ? 192 : 202}
       />
     </View>
   );
@@ -379,6 +373,7 @@ const useStyles = makeStyles(theme => ({
     marginRight: 12,
   },
   buttons: {
+    width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 20,

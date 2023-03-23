@@ -6,7 +6,6 @@ import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 import Logo from '../components/Logo';
 import KakaoLoginBtn from '../components/button/KakaoLoginBtn';
-
 import GoogleLoginBtn from '../components/button/GoogleLoginBtn';
 import AppleLoginBtn from './login/Apple';
 

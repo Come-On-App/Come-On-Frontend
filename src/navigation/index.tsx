@@ -85,9 +85,13 @@ function PlaceSelectNavigator() {
 }
 
 function RootNavigator() {
-  const { isAuth: isLogin } = useAuth();
+  const { isAuth: isLogin, autoLogin } = useAuth();
   const styles = useStyles();
   const [tk, stk] = useState<string>();
+
+  useEffect(() => {
+    autoLogin();
+  }, [autoLogin]);
 
   useEffect(() => {
     if (!isLogin) return;

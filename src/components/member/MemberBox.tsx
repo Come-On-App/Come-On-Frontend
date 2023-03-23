@@ -4,15 +4,14 @@ import { makeStyles, Avatar } from '@rneui/themed';
 import { Members } from '@type/api.meeting';
 import { requestMeetingMembersDrop } from '@api/meeting/members';
 import { ButtonGroup } from '@components/button/Buttons';
-import useAuth from '@hooks/useAuth';
-import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { successAlert, errorAlert } from '@utils/alert';
 import useSocketMeeting from '@hooks/useSocketMeeting';
 import {
   BanMemberAvatarProps,
   LittleMemberBoxProps,
   OnLineAvatarProps,
 } from '@type/meeting.memberBox';
-import { invalidateQueries, QueryKeys } from '@api/queryClient';
+import useAuth from '@hooks/useAuth';
 import {
   MemberBoxProps,
   MemberBoxSubTitleProps,
@@ -93,8 +92,6 @@ function MemberAvatar({
 
   const isOnline = onlineUserList.includes(item.userId);
 
-  invalidateQueries([QueryKeys.members, meetingId]);
-
   return (
     <View key={item.memberId}>
       {item.userId === hostId && <MasterIcon />}
@@ -150,7 +147,7 @@ function MemberBox({ hostId, meetingId, meetingUsers }: MemberBoxProps) {
     if (!visible) return;
 
     if (item.userId === hostId) {
-      Toast.show({ text1: '방장은 선택할 수 없습니다.' });
+      errorAlert('방장은 선택할 수 없습니다.');
 
       return;
     }
@@ -190,7 +187,7 @@ function MemberBox({ hostId, meetingId, meetingUsers }: MemberBoxProps) {
         .catch(err => {
           if (err) console.log('에러가 발생했습니다.');
         });
-      Toast.show({ text1: '유저가 강퇴되었습니다.' });
+      successAlert('유저가 강퇴되었습니다.');
     });
   };
   const onPressBanCancelHandelr = () => {

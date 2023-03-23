@@ -19,11 +19,9 @@ import {
   PostMeetingResponse,
 } from '@type/api.meeting';
 import { serverAxios } from '@api/axiosInstance';
-import { toast } from '@utils/alert';
 import useMeetingQuery from '@hooks/query/useMeetingQuery';
 import { requestDeleteMeeting } from '@api/meeting/members';
 import { log } from '@utils/log';
-import { setTokensToDB } from '@api/token/token';
 import Modal from '../components/Modal';
 import Button from '../components/button/Buttons';
 import { BoldFont } from '../components/Font';
@@ -139,7 +137,7 @@ function UserDevScreen({
                 userRefetch();
                 meetingRetch();
                 await setTokens(payload);
-                await setLogin();
+                await setLogin(data);
               }}
             />
             <Button
