@@ -46,7 +46,7 @@ export function ButtonGroup(props: ButtonGroupProps) {
         text={firstButton.text}
         textStyle={styles.buttonText}
         onPress={firstButton.onPress}
-        buttonStyle={[styles.buttonLeft, { ...firstButton.style }]}
+        buttonStyle={[styles.buttonRight, { ...firstButton.style }]}
       />
       <Button
         bold
@@ -54,7 +54,7 @@ export function ButtonGroup(props: ButtonGroupProps) {
         text={secondButton.text}
         textStyle={styles.buttonText}
         onPress={secondButton.onPress}
-        buttonStyle={[styles.buttonRight, { ...secondButton.style }]}
+        buttonStyle={[styles.buttonLeft, { ...secondButton.style }]}
       />
     </View>
   );
@@ -96,11 +96,11 @@ const useStyles = makeStyles(
       flexDirection: 'row',
       justifyContent: 'center',
     },
-    buttonRight: {
-      backgroundColor: theme.colors.primary,
-      borderRadius: 4,
-    },
     buttonLeft: {
+      backgroundColor: theme.colors.primary,
+      marginRight: props.spacing ? -props.spacing : -3,
+    },
+    buttonRight: {
       width: 100,
       backgroundColor: theme.grayscale['300'],
       marginRight: props.spacing ? props.spacing : 3,
