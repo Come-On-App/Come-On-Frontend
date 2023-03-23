@@ -6,16 +6,17 @@ import theme from '../../constants/themed';
 interface ButtonProps {
   title: string;
   onPressHandler: () => void;
+  width?: number;
   style?: StyleProp<TextStyle>;
 }
 
-function CancelButton({ title, onPressHandler, style }: ButtonProps) {
+function CancelButton({ title, onPressHandler, style, width }: ButtonProps) {
   return (
     <View style={style}>
       <Button
         title={title}
         onPress={onPressHandler}
-        buttonStyle={[styles.cancelBtnStyle]}
+        buttonStyle={[styles.cancelBtnStyle, { width }]}
       />
     </View>
   );
