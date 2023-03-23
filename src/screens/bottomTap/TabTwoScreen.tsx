@@ -9,7 +9,7 @@ import {
 import { makeStyles } from '@rneui/themed';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import Logo from '@components/Logo';
+import Logo from '@assets/images/logo/Logo';
 import InviteCode from '@components/InviteCode';
 
 // 모임 입장 스크린

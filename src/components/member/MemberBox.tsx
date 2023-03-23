@@ -12,7 +12,8 @@ import {
   LittleMemberBoxProps,
   OnLineAvatarProps,
 } from '@type/meeting.memberBox';
-import { invalidateQueries, QueryKeys } from '@api/queryClient';
+import { Title, TitleName } from '@screens/meeting/detail/common';
+import { errorAlert, successAlert } from '@utils/alert';
 import {
   MemberBoxProps,
   MemberBoxSubTitleProps,
@@ -84,7 +85,6 @@ function MemberAvatar({
   banUserList,
   onlineUserList,
   hostId,
-  meetingId,
   onPressAvatar,
 }: BanMemberAvatarProps) {
   const styles = useStyles();
@@ -92,8 +92,6 @@ function MemberAvatar({
   if (!onlineUserList) return null;
 
   const isOnline = onlineUserList.includes(item.userId);
-
-  invalidateQueries([QueryKeys.meetingDetail, QueryKeys.members, meetingId]);
 
   return (
     <View key={item.memberId}>
@@ -188,9 +186,11 @@ function MemberBox({ hostId, meetingId, meetingUsers }: MemberBoxProps) {
           }
         })
         .catch(err => {
-          if (err) console.log('에러가 발생했습니다.');
+          if (err) {
+            errorAlert('에러가 발생했습니다.');
+          }
         });
-      Toast.show({ text1: '유저가 강퇴되었습니다.' });
+      successAlert('유저가 강퇴되었습니다.');
     });
   };
   const onPressBanCancelHandelr = () => {
@@ -234,7 +234,7 @@ function MemberBoxTitle({ userCount }: MemberBoxTitleProps) {
 
   return (
     <View style={styles.meetingMemberLabelStyle}>
-      <Label>모임멤버 </Label>
+      <Title title={TitleName.member} />
       <Label style={styles.colorText}>{userCount}</Label>
     </View>
   );
@@ -278,6 +278,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'space-between',
   },
   colorText: {
+    alignSelf: 'center',
     color: theme.colors.primary,
   },
   memberBox: {

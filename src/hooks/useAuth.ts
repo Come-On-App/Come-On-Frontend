@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from './redux/hooks';
 import { login, logout, setToken } from '../features/authSlice';
 import { getValueFor } from '../utils/secureStore';
 
-export const tokenDataisValid = async () => {
+export const tokenDataIsValid = async () => {
   const accessTkn = await getTokenData(StoreKey.accessToken);
   const refreshTkn = await getTokenData(StoreKey.refreshToken);
 
@@ -37,9 +37,6 @@ function useAuth() {
   const accessToken = useAppSelector(state => state.auth.accessToken);
   const refreshToken = useAppSelector(state => state.auth.refreshToken);
   const myId = useAppSelector(state => state.auth.userId);
-  const getAccessToken = useCallback(() => {
-    return accessToken;
-  }, [accessToken]);
   const getRefreshToken = useCallback(() => {
     return refreshToken;
   }, [refreshToken]);
@@ -52,6 +49,13 @@ function useAuth() {
     },
     [dispatch],
   );
+  const autoLogin = useCallback(async () => {
+    const myToken = await tokenDataIsValid();
+
+    if (myToken) {
+      setLogin(myToken);
+    }
+  }, [setLogin]);
   const setTokens = async (token: AuthResponse | null) => {
     if (token) {
       await setTokensToDB(token);
@@ -63,8 +67,9 @@ function useAuth() {
     isAuth,
     setLogout,
     setTokens,
-    getAccessToken,
+    accessToken,
     getRefreshToken,
+    autoLogin,
     setLogin,
     myId,
   };

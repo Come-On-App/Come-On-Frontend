@@ -1,45 +1,11 @@
 {
   "expo": {
-    "name": "come-mobile",
-    "slug": "come-mobile",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./src/assets/images/icon.png",
-    "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./src/assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": ["**/*"],
-    "ios": {
-      "bundleIdentifier": "com.example.socialloginexpoapp",
-      "buildNumber": "1.0.0",
-      "supportsTablet": true
-    },
-    "android": {
-      "package": "com.example.socialloginexpoapp",
-      "versionCode": 1,
-      "adaptiveIcon": {
-        "foregroundImage": "./src/assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+    "name": "Come On!",
+    "slug": "come-on",
+    "extra": {
+      "eas": {
+        "projectId": "f7044c0a-2efb-4e36-8189-d3f827a0e89e"
       }
-    },
-    "web": {
-      "favicon": "./src/assets/images/favicon.png"
-    },
-    "plugins": [
-      [
-        "expo-image-picker",
-        {
-          "photosPermission": "이 앱을 사용하기 위해선 사진첩에 대한 권한이 필요합니다."
-        }
-      ],
-      "expo-apple-authentication"
-    ]
+    }
   }
 }
