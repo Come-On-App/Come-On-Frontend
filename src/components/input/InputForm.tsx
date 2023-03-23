@@ -12,7 +12,7 @@ import { makeStyles } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 
 import { KeyboardAvoidingView, Pressable, View } from 'react-native';
-import Font from '@components/Font';
+import Font, { BoldFont } from '@components/Font';
 import { AnimationInputBox } from './InputText';
 import InputImage from './InputImage';
 import IconInputBox, { isValid } from './IconInputBox';
@@ -101,12 +101,9 @@ export function AnimationInputDate({
     });
   }, [meetingData.calendarEndTo, meetingData.calendarStartFrom]);
 
-  const dates = `${date.startDate} ~ ${date.endDate}`;
-  const placeholder = '날짜 범위를 선택해주세요';
-
   return (
     <View style={styles.inputContainer}>
-      <Font style={styles.title}>모임 캘린더</Font>
+      <BoldFont style={styles.title}>투표 기간</BoldFont>
       <AnimationView id="date">
         <Pressable style={styles.inputContainer} onPress={onPressLabel}>
           <IconInputBox

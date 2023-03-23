@@ -1,13 +1,12 @@
 import React from 'react';
 import { makeStyles } from '@rneui/themed';
 import * as WebBrowser from 'expo-web-browser';
-import { View, Text, Pressable } from 'react-native';
+import { View, Text, Platform } from 'react-native';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 import Logo from '../components/Logo';
 import KakaoLoginBtn from '../components/button/KakaoLoginBtn';
 
-import AppleLogo from '../assets/images/logo/AppleLogo';
 import GoogleLoginBtn from '../components/button/GoogleLoginBtn';
 import AppleLoginBtn from './login/Apple';
 
@@ -15,6 +14,7 @@ WebBrowser.maybeCompleteAuthSession();
 
 function LoginScreen() {
   const styles = useStyles();
+  const platform = Platform.OS;
 
   return (
     <View style={styles.container}>
@@ -27,7 +27,7 @@ function LoginScreen() {
         <View style={styles.line} />
         <View style={styles.buttons}>
           <KakaoLoginBtn />
-          <AppleLoginBtn />
+          {platform === 'ios' ? <AppleLoginBtn /> : null}
           <GoogleLoginBtn />
         </View>
       </>
@@ -73,7 +73,7 @@ const useStyles = makeStyles(theme => ({
     height: '30%',
     alignItems: 'center',
     position: 'relative',
-    top: -30,
+    top: Platform.OS === 'ios' ? -30 : 0,
     marginBottom: 30,
   },
   labels: { width: '100%', height: 30, alignItems: 'center' },

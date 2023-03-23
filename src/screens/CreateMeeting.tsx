@@ -1,6 +1,12 @@
 /* eslint-disable padding-line-between-statements */
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { View, KeyboardAvoidingView } from 'react-native';
+import {
+  View,
+  KeyboardAvoidingView,
+  Dimensions,
+  ViewStyle,
+  StyleProp,
+} from 'react-native';
 
 import { promiseFlow, usePromiseFlow } from '@utils/promise';
 import {
@@ -25,8 +31,8 @@ import { AnimationInputBox } from '@components/input/InputText';
 import { makeStyles } from '@rneui/themed';
 import { MeetingMode } from '@features/meetingSlice';
 import { errorAlert, successAlert } from '@utils/alert';
-import CancelButton from '../components/button/CancelButton';
-import ConfirmButton from '../components/button/ConfirmButton';
+import { ButtonGroup } from '@components/button/Buttons';
+
 import {
   AnimationInputDate,
   InputImageWithAinm,
@@ -61,7 +67,20 @@ function AnimTrigger({
   return isValid;
 }
 
-const num = 0;
+interface LayoutProps {
+  children: React.ReactNode;
+  containerStyle: StyleProp<ViewStyle>;
+}
+const { width, height } = Dimensions.get('window');
+console.log(width, height);
+
+function LayoutHeight({ children, containerStyle }: LayoutProps) {
+  const styles = useStyles();
+
+  const sizeStyle = width < 385 ? styles.smallContainerStyle : {};
+  return <View style={[containerStyle, sizeStyle]}>{children}</View>;
+}
+
 function CreateMeeting({
   navigation,
   route: {
@@ -105,13 +124,13 @@ function CreateMeeting({
   }, [meetingId, setCurrentMeetingId]);
 
   return (
-    <View style={[styles.container]}>
+    <LayoutHeight containerStyle={styles.container}>
       <EditInputForm
         AnimationView={AnimationBounceView}
         meetingId={meetingId}
       />
       <Buttons navigation={navigation} trigger={trigger} />
-    </View>
+    </LayoutHeight>
   );
 }
 
@@ -324,14 +343,28 @@ function Buttons({
     requestHandler({ mode: meetingMode });
   }, [trigger, animValues, meetingMode, requestHandler]);
 
+  const buttonProps = {
+    spacing: 12,
+    firstButton: {
+      text: '취소',
+      onPress: cancelHandler,
+      style: { width: 130 },
+    },
+
+    secondButton: {
+      text: '확인',
+      onPress: onPressConfirm,
+      style: { width: 202 },
+    },
+  };
+
   return (
     <View style={styles.buttons}>
-      <CancelButton
-        title="취소"
-        onPressHandler={cancelHandler}
-        style={styles.buttonStyle}
+      <ButtonGroup
+        spacing={12}
+        firstButton={buttonProps.firstButton}
+        secondButton={buttonProps.secondButton}
       />
-      <ConfirmButton title="확인" onPressHandler={onPressConfirm} />
     </View>
   );
 }
@@ -364,4 +397,5 @@ const useStyles = makeStyles(theme => ({
   iconColor: {
     color: theme.grayscale['500'],
   },
+  smallContainerStyle: {},
 }));

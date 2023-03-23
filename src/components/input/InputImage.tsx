@@ -5,7 +5,7 @@ import useImagePicker from '@hooks/useImagePicker';
 import useMeeting from '@hooks/useMeeting';
 
 import { makeStyles } from '@rneui/themed';
-import { Font } from '../Font';
+import { BoldFont, Font } from '../Font';
 import Icon from '../Icon';
 
 function InputImage() {
@@ -38,7 +38,7 @@ function InputImage() {
 
   return (
     <View style={styles.container}>
-      <Font style={styles.label}>사진등록</Font>
+      <BoldFont style={styles.label}>사진등록</BoldFont>
       <Pressable onPress={pickImage2} style={[styles.imageContainer]}>
         {imageUri ? (
           <Image
@@ -75,7 +75,7 @@ function ImageContent() {
 const useStyles = makeStyles(theme => ({
   container: {
     marginTop: 28,
-    marginBottom: 28,
+    marginBottom: 12,
   },
   imageContainer: {
     overflow: 'hidden',
@@ -99,7 +99,6 @@ const useStyles = makeStyles(theme => ({
     color: theme.grayscale?.[900],
     fontSize: theme.textStyles?.title4?.fontSize,
     lineHeight: theme.textStyles?.title4?.lineHeight,
-    fontWeight: 'bold',
   },
   fontColor: {
     color: theme.grayscale?.[500],

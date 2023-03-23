@@ -83,6 +83,7 @@ export interface InputTopProps {
   label: string;
   text: string;
   maxLength: number;
+  bold?: boolean;
 }
 
 export interface InputBoxTopTextLengthProps {
