@@ -13,6 +13,7 @@ import { makeStyles } from '@rneui/themed';
 import { promiseFlow } from '@utils/promise';
 import { requestPostApple } from '@api/user/user';
 import { PostApplePayload, PostAppleResponse } from '@type/api.user';
+import useAuth from '@hooks/useAuth';
 
 type AppleLoginErrorCodes =
   | 'ERR_INVALID_OPERATION'
@@ -49,35 +50,35 @@ function createPaylaod(credential: AppleAuthenticationCredential) {
   return payload;
 }
 
-function onPressHandlr() {
-  promiseFlow<AppleAuthenticationSignInOptions, PostAppleResponse>(
-    {
-      requestedScopes: [
-        AppleAuthenticationScope.FULL_NAME,
-        AppleAuthenticationScope.EMAIL,
-      ],
-    },
-    [signInAsync, createPaylaod, requestPostApple],
-    {
-      onSuccess: response => {
-        // 로그인 성공
-        log('response', response);
-      },
-      onError: (e: AppleError) => {
-        if (e.code === 'ERR_REQUEST_CANCELED') {
-          // handle that the user canceled the sign-in flow
-          log('ERR_REQUEST_CANCELED', e);
-        } else {
-          // handle other errors
-          log('error outer', e);
-        }
-      },
-    },
-  );
-}
-
 function AppleLoginBtn() {
   const styles = useStyles();
+  const { setLogin } = useAuth();
+  const onPressHandlr = () => {
+    promiseFlow<AppleAuthenticationSignInOptions, PostAppleResponse>(
+      {
+        requestedScopes: [
+          AppleAuthenticationScope.FULL_NAME,
+          AppleAuthenticationScope.EMAIL,
+        ],
+      },
+      [signInAsync, createPaylaod, requestPostApple],
+      {
+        onSuccess: response => {
+          // 로그인 성공
+          setLogin(response);
+        },
+        onError: (e: AppleError) => {
+          if (e.code === 'ERR_REQUEST_CANCELED') {
+            // handle that the user canceled the sign-in flow
+            log('ERR_REQUEST_CANCELED', e);
+          } else {
+            // handle other errors
+            log('error outer', e);
+          }
+        },
+      },
+    );
+  };
 
   return (
     <Pressable

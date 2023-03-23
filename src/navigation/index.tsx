@@ -3,44 +3,40 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import Avatar from '@components/member/Avatar';
-
 import type {
   PlaceSelectParamList,
   RootStackParamList,
   RootTabParamList,
 } from '@type/navigation';
 
-import MeetingDetail from '@screens/meeting/detail';
-import { getValueFor } from '@utils/secureStore';
-import { useWebSocketConnect } from '@hooks/useWebSocket';
-import useUserQuery from '@hooks/query/useUserQuery';
 import fn from '@utils/fn';
 import { Skeleton, makeStyles } from '@rneui/themed';
 import { MeetingMode } from '@features/meetingSlice';
 
-import theme from '../constants/themed';
-import useAuth from '../hooks/useAuth';
-// import MeetingRoom from '../screens/MeetingRoom';
-import LoginScreen from '../screens/LoginScreen';
-import TabOneScreen from '../screens/bottomTap/TabOneScreen';
-import TabTwoScreen from '../screens/bottomTap/TabTwoScreen';
-import CreateMeeting from '../screens/CreateMeeting';
-import TabThreeScreen from '../screens/bottomTap/TabThreeScreen';
-import CreateMeetingCalender from '../screens/CreateMeetingCalender';
-import KakaoLoginWebView from '../screens/KakaoLoginView';
-import MeetingRoomCalendar from '../screens/MeetingRoomCalendar';
-import LogoutButton from '../components/myPage/MyPageLogoutButton';
-import { createTabBarIcon } from '../components/Icon';
+import useAuth from '@hooks/useAuth';
+import useUserQuery from '@hooks/query/useUserQuery';
+import { useWebSocketConnect } from '@hooks/useWebSocket';
+
+import MeetingDetail from '@screens/meeting/detail';
+import PlaceSelect from '@screens/place/Select';
+import PlaceSearch from '@screens/place/Search';
+import CreateMeeting from '@screens/CreateMeeting';
+import CreateMeetingCalender from '@screens/CreateMeetingCalender';
+import MeetingRoomCalendar from '@screens/MeetingRoomCalendar';
+import LoginScreen from '@screens/LoginScreen';
+import KakaoLoginWebView from '@screens/KakaoLoginView';
+import TabOneScreen from '@screens/bottomTap/TabOneScreen';
+import TabThreeScreen from '@screens/bottomTap/TabThreeScreen';
+import TabTwoScreen from '@screens/bottomTap/TabTwoScreen';
 
 import CancelIconButton, {
   CancelPlaceSelectIconButton,
-} from '../components/button/CancelIconButton';
-import MyPageHeaderTitle from '../components/myPage/MyPageHeaderTitle';
-import PlaceSelectHeaderTitle from '../components/placeSelect/PlaceSelectHeaderTitle';
-
-import PlaceSelect from '../screens/place/Select';
-import PlaceSearch from '../screens/place/Search';
+} from '@components/button/CancelIconButton';
+import Avatar from '@components/member/Avatar';
+import { createTabBarIcon } from '@components/Icon';
+import LogoutButton from '@components/myPage/MyPageLogoutButton';
+import MyPageHeaderTitle from '@components/myPage/MyPageHeaderTitle';
+import PlaceSelectHeaderTitle from '@components/placeSelect/PlaceSelectHeaderTitle';
 
 function TabThreeIcon() {
   const size = 32;
@@ -85,25 +81,21 @@ function PlaceSelectNavigator() {
 }
 
 function RootNavigator() {
-  const { isAuth: isLogin } = useAuth();
+  const { isAuth: isLogin, autoLogin, accessToken } = useAuth();
   const styles = useStyles();
-  const [tk, stk] = useState<string>();
+  const [token, setToken] = useState<string>();
 
   useEffect(() => {
-    if (!isLogin) return;
+    autoLogin();
+  }, [autoLogin]);
 
-    (async () => {
-      const info = await getValueFor('accessToken');
+  useEffect(() => {
+    if (!accessToken) return;
 
-      if (info) {
-        const { token } = JSON.parse(info);
+    setToken(accessToken.token);
+  }, [accessToken]);
 
-        stk(token);
-      }
-    })();
-  }, [isLogin]);
-
-  useWebSocketConnect(tk);
+  useWebSocketConnect(token);
 
   return (
     <Stack.Navigator>
@@ -128,14 +120,14 @@ function RootNavigator() {
             component={MeetingDetail}
             options={{
               headerShown: true,
-              contentStyle: { backgroundColor: '#ffffff' },
+              contentStyle: styles.background,
             }}
           />
           <Stack.Screen
             name="CreateMeeting"
             component={CreateMeeting}
             initialParams={{ mode: MeetingMode.create }}
-            options={({ navigation, route }) => ({
+            options={() => ({
               title: '모임등록',
               headerTitleAlign: 'center',
               headerTitleStyle: styles.headerStyle,
@@ -146,7 +138,7 @@ function RootNavigator() {
           <Stack.Screen
             name="CreateMeetingCalender"
             component={CreateMeetingCalender}
-            options={({ navigation, route }) => ({
+            options={() => ({
               title: '모임등록',
               headerTitleAlign: 'center',
               headerTitleStyle: styles.headerStyle,
@@ -157,7 +149,7 @@ function RootNavigator() {
           <Stack.Screen
             name="MeetingRoomCalendar"
             component={MeetingRoomCalendar}
-            options={({ navigation, route }) => ({
+            options={() => ({
               headerTitleAlign: 'center',
               headerTitleStyle: styles.headerStyle,
               headerRight: CancelIconButton,
@@ -172,13 +164,18 @@ function RootNavigator() {
           <Stack.Screen
             name="LoginScreen"
             component={LoginScreen}
-            options={({ navigation, route }) => ({
+            options={() => ({
               headerShown: false,
+              contentStyle: styles.background,
             })}
           />
           <Stack.Screen
             name="KakaoLoginWebView"
             component={KakaoLoginWebView}
+            options={() => ({
+              headerShown: true,
+              contentStyle: styles.background,
+            })}
           />
         </>
       )}
@@ -233,11 +230,14 @@ function BottomTabNavigator() {
   );
 }
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
+  background: {
+    backgroundColor: theme.grayscale['0'],
+  },
   headerStyle: {
-    fontFamily: 'pretendard',
+    fontFamily: 'pretendard-regular',
     fontWeight: 'bold',
-    fontSize: theme.textStyles?.title3?.fontSize,
-    lineHeight: theme.textStyles?.title3?.lineHeight,
+    fontSize: theme.textStyles.title3.fontSize,
+    lineHeight: theme.textStyles.title3.lineHeight,
   },
 }));

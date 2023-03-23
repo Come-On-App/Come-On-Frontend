@@ -16,7 +16,7 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "ignorePatterns": ["babel.config.js", "node_modules"],
+  "ignorePatterns": ["*.config.js", "*.config.ts", "node_modules"],
   "rules": {
     // lodash rule -
     "lodash-fp/consistent-compose": "off",

@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { Keyboard, View } from 'react-native';
 import React, { useState } from 'react';
 import { makeStyles } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
@@ -21,13 +21,12 @@ export default function TabOneScreen() {
 }
 
 function OneScreenTop() {
-  const [isLoggedin] = useState(true); // SERVER-API: 추후 사용자 로그인 처리
-  const styles = useStyles(isLoggedin);
+  const styles = useStyles();
 
   return (
     <View style={styles.screenTopContainer}>
       <DateRangeSerchBar />
-      {isLoggedin && <CreateMeetingRoomButton />}
+      <CreateMeetingRoomButton />
     </View>
   );
 }
@@ -43,9 +42,10 @@ function OneScreenMain() {
 }
 
 function DateRangeSerchBar() {
-  const [search, setSearch] = useState('2022.08.28 ~ 2022.08.30');
-  const updateSearch = (text: string) => {
-    setSearch(text);
+  const [search, setSearch] = useState('날짜 검색 기능 다음 업데이트 예정');
+  const updateSearch = () => {
+    Keyboard.dismiss();
+    setSearch(prev => prev);
   };
   const styles = useStyles();
 
@@ -76,7 +76,7 @@ function CreateMeetingRoomButton() {
   );
 }
 
-const useStyles = makeStyles((theme, isLoggedin: boolean) => ({
+const useStyles = makeStyles(() => ({
   screenContainer: {
     flex: 1,
     paddingBottom: -38, // 네비게이션 탭 패딩 공간 제거
@@ -88,7 +88,7 @@ const useStyles = makeStyles((theme, isLoggedin: boolean) => ({
     paddingBottom: 2,
   },
   serchContainer: {
-    flex: isLoggedin ? 0.85 : 1,
+    flex: 0.85,
   },
   buttonContainer: {
     flex: 0.15,
