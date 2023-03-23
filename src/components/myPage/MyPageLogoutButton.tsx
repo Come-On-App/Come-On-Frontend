@@ -3,11 +3,17 @@ import { View } from 'react-native';
 import { Button, makeStyles } from '@rneui/themed';
 
 import useAuth from '@hooks/useAuth';
+import useWebSocket from '@hooks/useWebSocket';
 
 export default function LogoutButton() {
   const { setLogout } = useAuth();
+  const { deactivate } = useWebSocket();
   const styles = useStyles();
   const TITLE = '로그아웃';
+  const onPressLogout = () => {
+    setLogout();
+    deactivate();
+  };
 
   return (
     <View>
@@ -16,7 +22,7 @@ export default function LogoutButton() {
         type="clear"
         titleStyle={styles.button}
         containerStyle={styles.buttonContainer}
-        onPress={() => setLogout()}
+        onPress={onPressLogout}
       />
     </View>
   );
