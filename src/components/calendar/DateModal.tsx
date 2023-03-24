@@ -1,6 +1,6 @@
 import React from 'react';
 import Font, { BoldFont } from '@components/Font';
-import { ScrollView, View } from 'react-native';
+import { ScrollView, StyleProp, Text, View, ViewStyle } from 'react-native';
 import { makeStyles } from '@rneui/themed';
 import Button from '@components/button/Buttons';
 import { requestGetDateVotingDetails } from '@api/meeting/voting';
@@ -107,12 +107,40 @@ function ModalMiddleWithAvatar({
   votingUsers: VotingUsers[];
 }) {
   const styles = useStyles();
+  const result: React.ReactNode[] = [];
+  const isOdd = votingUsers.length % 2 === 1;
+  const rendering = () => {
+    for (let i = 0; i < votingUsers.length; i += 2) {
+      result.push(
+        <View
+          style={[
+            styles.AvatarAndNameViewStyle,
+            isOdd && i === votingUsers.length - 1 ? styles.width : {},
+          ]}
+        >
+          <AvatarAndName
+            style={styles.LabelSpacing}
+            key={votingUsers[i].userId}
+            user={votingUsers[i]}
+          />
+          {i + 1 < votingUsers.length ? (
+            <AvatarAndName
+              key={votingUsers[i + 1].userId}
+              user={votingUsers[i + 1]}
+            />
+          ) : (
+            <View style={styles.blankFlex} />
+          )}
+        </View>,
+      );
+    }
+
+    return result;
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.middleAvatarAndNameView}>
-      {votingUsers.map(user => (
-        <AvatarAndName key={user.userId} user={user} />
-      ))}
+      {rendering()}
     </ScrollView>
   );
 }
@@ -142,22 +170,26 @@ function ConfirmDateButton({ onClickHandler }: { onClickHandler: () => void }) {
   );
 }
 
-function AvatarAndName({ user }: { user: VotingUsers }) {
+function AvatarAndName({
+  user,
+  style,
+}: {
+  user: VotingUsers;
+  style?: StyleProp<ViewStyle>;
+}) {
   const { nickname, profileImageUrl } = user;
   const styles = useStyles();
 
   return (
-    <View style={styles.AvatarAndNameViewStyle}>
-      <View style={styles.AvatarAndNameViewStyle}>
-        <Avatar
-          size={28}
-          path={profileImageUrl}
-          containerStyle={styles.AvatarAndName}
-        />
-        <Font style={{ textAlign: 'center' }}>
-          {nickname.length > 5 ? `${nickname.slice(0, 5)} ..` : nickname}
-        </Font>
-      </View>
+    <View style={[styles.AvatarAndNameOneUser, style]}>
+      <Avatar
+        size={28}
+        path={profileImageUrl}
+        containerStyle={styles.AvatarAndName}
+      />
+      <Font style={{ textAlign: 'center' }}>
+        {nickname.length > 5 ? `${nickname.slice(0, 4)} ..` : nickname}
+      </Font>
     </View>
   );
 }
@@ -209,7 +241,7 @@ const useStyles = makeStyles(theme => ({
   middleAvatarAndNameView: {
     height: 100,
     width: '100%',
-    flexDirection: 'row',
+
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -244,11 +276,26 @@ const useStyles = makeStyles(theme => ({
     lineHeight: theme.textStyles.body1.lineHeight,
     fontSize: theme.textStyles.body1.fontSize,
   },
-  AvatarAndName: { marginRight: 4 },
+  AvatarAndName: { marginRight: 10 },
   AvatarAndNameViewStyle: {
     flex: 1,
+    marginTop: 12,
+    flexDirection: 'row',
+    marginHorizontal: 10,
+  },
+  AvatarAndNameOneUser: {
+    flex: 0.5,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  LabelSpacing: {
+    marginRight: 20,
+  },
+  width: {
+    width: '100%',
+  },
+  blankFlex: {
+    flex: 0.38,
   },
 }));
