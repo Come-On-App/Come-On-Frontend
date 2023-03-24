@@ -7,7 +7,6 @@ import { useMutation } from 'react-query';
 const useMeetingTimeMutation = (meetingId: number) => {
   const { updateQueryCache, cancelQueryCache } =
     useQueryCache<GetMeetingTimeResponse>([
-      QueryKeys.meetings,
       QueryKeys.meetingDetail,
       QueryKeys.time,
       meetingId,

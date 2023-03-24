@@ -5,7 +5,7 @@ import { requestGetMeetingTime } from '@api/meeting/meetings';
 
 function useMeetingTimeQuery(meetingId: number) {
   const { data: meetingTime } = useQuery(
-    [QueryKeys.meetings, QueryKeys.meetingDetail, QueryKeys.time, meetingId],
+    [QueryKeys.meetingDetail, QueryKeys.time, meetingId],
     ({ signal }) => requestGetMeetingTime({ meetingId }, signal),
     {
       select: ({ meetingStartTime }) => {

@@ -62,6 +62,8 @@ serverAxios.interceptors.response.use(
 
 // 소셜로그인
 export const setLogin = async (data: SocialLoginProps) => {
+  console.log('set', `${SERVER_ADDRESS}${data.url}`);
+
   const res = await serverAxios.post(`${SERVER_ADDRESS}${data.url}`, data.data);
 
   if (res.status === 200) {
