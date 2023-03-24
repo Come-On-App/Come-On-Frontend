@@ -1,13 +1,13 @@
 import { Keyboard, View } from 'react-native';
 import React, { useState } from 'react';
 import { makeStyles } from '@rneui/themed';
-import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import SearchBar from '@components/SearchBar';
 import { IconButton } from '@components/button/Buttons';
 import CardList from '@components/meetingCard/CardList';
 import { MeetingMode } from '@features/meetingSlice';
+import { useGoToCreateMeetingScreen } from '@hooks/useGoTo';
 
 // 모임 관리 스크린
 export default function TabOneScreen() {
@@ -43,7 +43,7 @@ function OneScreenMain() {
 }
 
 function DateRangeSerchBar() {
-  const [search, setSearch] = useState('날짜 검색 기능 다음 업데이트 예정');
+  const [search, setSearch] = useState('날짜 검색 업데이트 예정');
   const updateSearch = () => {
     Keyboard.dismiss();
     setSearch(prev => prev);
@@ -59,9 +59,9 @@ function DateRangeSerchBar() {
 
 function CreateMeetingRoomButton() {
   const styles = useStyles();
-  const navigation = useNavigation();
-  const goToCreateMeetingScreen = () =>
-    navigation.navigate('CreateMeeting', { mode: MeetingMode.create });
+  const goToCreateMeetingScreen = useGoToCreateMeetingScreen(
+    MeetingMode.create,
+  );
 
   return (
     <View style={styles.buttonContainer}>
