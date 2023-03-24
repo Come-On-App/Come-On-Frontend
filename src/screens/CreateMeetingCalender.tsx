@@ -4,12 +4,11 @@ import { makeStyles } from '@rneui/themed';
 
 import { SubDateProps } from '@type/meeting.calendar';
 import { RootStackScreenProps } from '@type/navigation';
+import FlexButtons from '@components/button/FlexButtons';
 import {
   setCalendarEndTo,
   setCalendarStartFrom,
 } from '../features/meetingSlice';
-import CancelButton from '../components/button/CancelButton';
-import ConfirmButton from '../components/button/ConfirmButton';
 
 import Font from '../components/Font';
 import { useAppDispatch } from '../hooks/redux/hooks';
@@ -55,15 +54,11 @@ function CreateMeetingCalender({
       <View style={styles.calendarContainer}>
         <Calendar type="PERIOD" data={undefined} setDate={setDate} />
       </View>
-      <View style={styles.buttons}>
-        <CancelButton
-          title="취소"
-          onPressHandler={cancelHandler}
-          style={{
-            marginRight: 12,
-          }}
+      <View>
+        <FlexButtons
+          cancelHandler={cancelHandler}
+          onPressConfirm={confirmHandelr}
         />
-        <ConfirmButton title="확인" onPressHandler={confirmHandelr} />
       </View>
     </View>
   );

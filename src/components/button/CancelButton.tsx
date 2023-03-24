@@ -26,7 +26,6 @@ export default CancelButton;
 
 const styles = StyleSheet.create({
   cancelBtnStyle: {
-    minWidth: 150,
     borderRadius: 4,
     height: 48,
     backgroundColor: theme.grayscale?.[300],

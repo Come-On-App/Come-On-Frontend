@@ -1,6 +1,6 @@
 import React from 'react';
 import Font, { BoldFont } from '@components/Font';
-import { ScrollView, StyleProp, Text, View, ViewStyle } from 'react-native';
+import { ScrollView, StyleProp, View, ViewStyle } from 'react-native';
 import { makeStyles } from '@rneui/themed';
 import Button from '@components/button/Buttons';
 import { requestGetDateVotingDetails } from '@api/meeting/voting';

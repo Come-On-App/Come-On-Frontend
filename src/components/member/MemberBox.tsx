@@ -185,7 +185,9 @@ function MemberBox({ hostId, meetingId, meetingUsers }: MemberBoxProps) {
           }
         })
         .catch(err => {
-          if (err) console.log('에러가 발생했습니다.');
+          if (err) {
+            errorAlert('강퇴과정에서 에러가 발생했습니다.');
+          }
         });
       successAlert('유저가 강퇴되었습니다.');
     });
