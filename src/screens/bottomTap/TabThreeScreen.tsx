@@ -2,7 +2,6 @@ import React from 'react';
 import { Keyboard, Pressable, View } from 'react-native';
 import { makeStyles, Divider } from '@rneui/themed';
 
-import { Font } from '@components/Font';
 import Profile from '@components/myPage/MyPageProfile';
 import Nickname from '@components/myPage/MyPageNickName';
 
@@ -41,11 +40,7 @@ function ScreenTop() {
 function ScreenMain() {
   const styles = useStyles();
 
-  return (
-    <View style={styles.myPageMainContainer}>
-      <Font>캘린더 컴포넌트</Font>
-    </View>
-  );
+  return <View style={styles.myPageMainContainer} />;
 }
 
 const useStyles = makeStyles(theme => ({

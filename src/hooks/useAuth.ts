@@ -37,9 +37,6 @@ function useAuth() {
   const accessToken = useAppSelector(state => state.auth.accessToken);
   const refreshToken = useAppSelector(state => state.auth.refreshToken);
   const myId = useAppSelector(state => state.auth.userId);
-  const getAccessToken = useCallback(() => {
-    return accessToken;
-  }, [accessToken]);
   const getRefreshToken = useCallback(() => {
     return refreshToken;
   }, [refreshToken]);
@@ -70,7 +67,7 @@ function useAuth() {
     isAuth,
     setLogout,
     setTokens,
-    getAccessToken,
+    accessToken,
     getRefreshToken,
     autoLogin,
     setLogin,

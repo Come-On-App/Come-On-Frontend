@@ -11,6 +11,8 @@ import {
   LittleMemberBoxProps,
   OnLineAvatarProps,
 } from '@type/meeting.memberBox';
+import { Title, TitleName } from '@screens/meeting/detail/common';
+import { errorAlert, successAlert } from '@utils/alert';
 import useAuth from '@hooks/useAuth';
 import {
   MemberBoxProps,
@@ -83,7 +85,6 @@ function MemberAvatar({
   banUserList,
   onlineUserList,
   hostId,
-  meetingId,
   onPressAvatar,
 }: BanMemberAvatarProps) {
   const styles = useStyles();
@@ -185,7 +186,9 @@ function MemberBox({ hostId, meetingId, meetingUsers }: MemberBoxProps) {
           }
         })
         .catch(err => {
-          if (err) console.log('에러가 발생했습니다.');
+          if (err) {
+            errorAlert('에러가 발생했습니다.');
+          }
         });
       successAlert('유저가 강퇴되었습니다.');
     });
@@ -231,7 +234,7 @@ function MemberBoxTitle({ userCount }: MemberBoxTitleProps) {
 
   return (
     <View style={styles.meetingMemberLabelStyle}>
-      <Label>모임멤버 </Label>
+      <Title title={TitleName.member} />
       <Label style={styles.colorText}>{userCount}</Label>
     </View>
   );
@@ -275,6 +278,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'space-between',
   },
   colorText: {
+    alignSelf: 'center',
     color: theme.colors.primary,
   },
   memberBox: {

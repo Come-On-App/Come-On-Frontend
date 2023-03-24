@@ -1,45 +1,11 @@
 {
   "expo": {
-    "name": "come-on",
+    "name": "Come On!",
     "slug": "come-on",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": ["**/*"],
-    "ios": {
-      "bundleIdentifier": "com.comeon.app",
-      "buildNumber": "1.0.0",
-      "supportsTablet": true
-    },
-    "android": {
-      "package": "com.comeon.app",
-      "versionCode": 1,
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+    "extra": {
+      "eas": {
+        "projectId": "f7044c0a-2efb-4e36-8189-d3f827a0e89e"
       }
-    },
-    "web": {
-      "favicon": "./assets/images/favicon.png"
-    },
-    "plugins": [
-      [
-        "expo-image-picker",
-        {
-          "photosPermission": "이 앱을 사용하기 위해선 사진첩에 대한 권한이 필요합니다."
-        }
-      ],
-      "expo-apple-authentication"
-    ]
+    }
   }
 }
