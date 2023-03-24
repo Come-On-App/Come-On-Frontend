@@ -19,6 +19,7 @@ const app = {
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
+  icon: app.icon,
   name: app.name,
   slug: app.slug,
   scheme: app.identifier,
@@ -56,4 +57,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     ],
     'expo-apple-authentication',
   ],
+  extra: {
+    eas: {
+      projectId: 'f7044c0a-2efb-4e36-8189-d3f827a0e89e',
+    },
+  },
 });
