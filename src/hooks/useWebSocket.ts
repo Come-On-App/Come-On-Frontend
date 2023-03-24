@@ -8,7 +8,7 @@ import type {
   messageCallbackType,
   StompConfig,
 } from '@stomp/stompjs';
-import { WEBSOCKET_SERVER_URL } from '@env';
+import { WEBSOCKET_URL } from '@env';
 import { log } from '@utils/log';
 
 const stompConfig: StompConfig = {
@@ -34,7 +34,7 @@ const checkToken = (token: string) => {
   return token;
 };
 const createSocketURL = (token: string) => {
-  return `${WEBSOCKET_SERVER_URL}/ws-meetings?token=${token}`;
+  return `${WEBSOCKET_URL}/ws-meetings?token=${token}`;
 };
 const createMeetingURN = (id: number) => {
   return `/sub/meetings/${id}`;

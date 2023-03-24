@@ -4,13 +4,19 @@ import { makeStyles, Avatar } from '@rneui/themed';
 import { Members } from '@type/api.meeting';
 import { requestMeetingMembersDrop } from '@api/meeting/members';
 import { ButtonGroup } from '@components/button/Buttons';
-import { successAlert, errorAlert } from '@utils/alert';
+import {
+  successAlert,
+  errorAlert,
+  errorAlert,
+  successAlert,
+} from '@utils/alert';
 import useSocketMeeting from '@hooks/useSocketMeeting';
 import {
   BanMemberAvatarProps,
   LittleMemberBoxProps,
   OnLineAvatarProps,
 } from '@type/meeting.memberBox';
+import { Title, TitleName } from '@screens/meeting/detail/common';
 import useAuth from '@hooks/useAuth';
 import {
   MemberBoxProps,
@@ -83,7 +89,6 @@ function MemberAvatar({
   banUserList,
   onlineUserList,
   hostId,
-  meetingId,
   onPressAvatar,
 }: BanMemberAvatarProps) {
   const styles = useStyles();
@@ -233,7 +238,7 @@ function MemberBoxTitle({ userCount }: MemberBoxTitleProps) {
 
   return (
     <View style={styles.meetingMemberLabelStyle}>
-      <Label>모임멤버 </Label>
+      <Title title={TitleName.member} />
       <Label style={styles.colorText}>{userCount}</Label>
     </View>
   );
@@ -277,6 +282,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'space-between',
   },
   colorText: {
+    alignSelf: 'center',
     color: theme.colors.primary,
   },
   memberBox: {

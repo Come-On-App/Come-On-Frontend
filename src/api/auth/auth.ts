@@ -1,6 +1,6 @@
 import { copy } from '@utils/fn';
 import { store } from '@app/store';
-import { SERVER_ADDRESS } from '@env';
+import { COMEON_API_URL } from '@env';
 import { errorAlert } from '@utils/alert';
 import { logout } from '@features/authSlice';
 import { SocialLoginProps } from '@type/index';
@@ -29,7 +29,7 @@ serverAxios.interceptors.response.use(
       config,
       response: { data, status },
     } = err;
-    const URL = `${SERVER_ADDRESS}/api/v1/auth/reissue`;
+    const URL = `${COMEON_API_URL}/api/v1/auth/reissue`;
 
     if (config.url === URL || status !== 401 || config.sent) {
       return Promise.reject(err);
@@ -62,9 +62,7 @@ serverAxios.interceptors.response.use(
 
 // 소셜로그인
 export const setLogin = async (data: SocialLoginProps) => {
-  console.log('set', `${SERVER_ADDRESS}${data.url}`);
-
-  const res = await serverAxios.post(`${SERVER_ADDRESS}${data.url}`, data.data);
+  const res = await serverAxios.post(`${COMEON_API_URL}${data.url}`, data.data);
 
   if (res.status === 200) {
     const tokenDatas = await res.data;
