@@ -1,4 +1,4 @@
-import { GOOGLE_MAP_API_KEY_ANDROID, GOOGLE_MAP_API_KEY_IOS } from '@env';
+//@ts-nocheck
 import { ExpoConfig, ConfigContext } from 'expo/config';
 
 const text = {
@@ -41,7 +41,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     buildNumber: app.version,
     supportsTablet: true,
     config: {
-      googleMapsApiKey: GOOGLE_MAP_API_KEY_IOS,
+      googleMapsApiKey: process.env.GOOGLE_MAP_API_KEY_IOS,
     },
   },
   android: {
@@ -52,7 +52,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       backgroundColor: app.backgroundColor,
     },
     config: {
-      googleMaps: { apiKey: GOOGLE_MAP_API_KEY_ANDROID },
+      googleMaps: { apiKey: process.env.GOOGLE_MAP_API_KEY_ANDROID },
     },
   },
   plugins: [
