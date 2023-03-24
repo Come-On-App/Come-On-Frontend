@@ -1,6 +1,14 @@
 /* eslint-disable padding-line-between-statements */
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { View, KeyboardAvoidingView } from 'react-native';
+import {
+  View,
+  Dimensions,
+  ViewStyle,
+  StyleProp,
+  ScrollView,
+  Keyboard,
+  Pressable,
+} from 'react-native';
 
 import { promiseFlow, usePromiseFlow } from '@utils/promise';
 import {
@@ -61,7 +69,19 @@ function AnimTrigger({
   return isValid;
 }
 
-const num = 0;
+interface LayoutProps {
+  children: React.ReactNode;
+  containerStyle: StyleProp<ViewStyle>;
+}
+const { width } = Dimensions.get('window');
+
+function LayoutHeight({ children, containerStyle }: LayoutProps) {
+  const styles = useStyles();
+
+  const sizeStyle = width < 385 ? styles.smallContainerStyle : {};
+  return <View style={[containerStyle, sizeStyle]}>{children}</View>;
+}
+
 function CreateMeeting({
   navigation,
   route: {
@@ -105,13 +125,13 @@ function CreateMeeting({
   }, [meetingId, setCurrentMeetingId]);
 
   return (
-    <View style={[styles.container]}>
+    <LayoutHeight containerStyle={styles.container}>
       <EditInputForm
         AnimationView={AnimationBounceView}
         meetingId={meetingId}
       />
       <Buttons navigation={navigation} trigger={trigger} />
-    </View>
+    </LayoutHeight>
   );
 }
 
@@ -197,17 +217,19 @@ function EditInputForm({ AnimationView, meetingId }: EditInpurFormProps) {
   if (!editData && mode === MeetingMode.edit) return null;
 
   return (
-    <KeyboardAvoidingView behavior="padding" style={styles.InputFormontainer}>
-      <InputImageWithAinm AnimationView={AnimationView} id="image" />
-      <AnimationInputBox
-        inputProps={inputProps}
-        AnimationView={AnimationView}
-      />
-      <AnimationInputDate
-        AnimationView={AnimationView}
-        dateConfig={dateConfig}
-      />
-    </KeyboardAvoidingView>
+    <Pressable onPress={Keyboard.dismiss}>
+      <ScrollView style={styles.InputFormontainer}>
+        <InputImageWithAinm AnimationView={AnimationView} id="image" />
+        <AnimationInputBox
+          inputProps={inputProps}
+          AnimationView={AnimationView}
+        />
+        <AnimationInputDate
+          AnimationView={AnimationView}
+          dateConfig={dateConfig}
+        />
+      </ScrollView>
+    </Pressable>
   );
 }
 
@@ -330,8 +352,13 @@ function Buttons({
         title="취소"
         onPressHandler={cancelHandler}
         style={styles.buttonStyle}
+        width={width < 385 ? 120 : 130}
       />
-      <ConfirmButton title="확인" onPressHandler={onPressConfirm} />
+      <ConfirmButton
+        title="확인"
+        onPressHandler={onPressConfirm}
+        width={width < 385 ? 192 : 202}
+      />
     </View>
   );
 }
@@ -346,6 +373,7 @@ const useStyles = makeStyles(theme => ({
     marginRight: 12,
   },
   buttons: {
+    width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 20,
@@ -364,4 +392,5 @@ const useStyles = makeStyles(theme => ({
   iconColor: {
     color: theme.grayscale['500'],
   },
+  smallContainerStyle: {},
 }));

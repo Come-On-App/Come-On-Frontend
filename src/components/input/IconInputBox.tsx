@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@rneui/themed';
-import { View, Text, StyleProp, ViewStyle } from 'react-native';
+import { View, Text, StyleProp, ViewStyle, Dimensions } from 'react-native';
 import Icon from '@components/Icon';
 import { IconProps } from '../../types';
 
@@ -38,6 +38,7 @@ function IconInputBox({
   );
 }
 
+const { width } = Dimensions.get('window');
 const useStyles = makeStyles(theme => ({
   meetingNoteInput: {
     textAlignVertical: 'center',
@@ -45,7 +46,7 @@ const useStyles = makeStyles(theme => ({
     marginLeft: 10,
   },
   dateContainer: {
-    padding: 14,
+    padding: width < 385 ? 8 + 1.75 : 12 + 1.85,
     borderWidth: 1,
     borderRadius: 4,
     flexDirection: 'row',

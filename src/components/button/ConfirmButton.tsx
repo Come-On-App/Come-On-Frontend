@@ -1,22 +1,27 @@
 import React from 'react';
-import { StyleProp, StyleSheet, TextStyle, View } from 'react-native';
+import { StyleProp, TextStyle, View, ViewStyle } from 'react-native';
 import { Button } from '@rneui/themed';
 
+import { makeStyles } from '@rneui/base';
 import theme from '../../constants/themed';
 
 interface ButtonProps {
   title: string;
   onPressHandler: () => void;
   style?: StyleProp<TextStyle>;
+  width?: number;
 }
 
-function ConfirmButton({ title, onPressHandler, style }: ButtonProps) {
+function ConfirmButton({ title, onPressHandler, style, width }: ButtonProps) {
+  const styles = useStyles();
+
   return (
     <View style={style}>
       <Button
         title={title}
         onPress={onPressHandler}
-        buttonStyle={[styles.cancelBtnStyle, style]}
+        buttonStyle={[style]}
+        containerStyle={[styles.confirmBtnStyle, { width }]}
       />
     </View>
   );
@@ -24,16 +29,13 @@ function ConfirmButton({ title, onPressHandler, style }: ButtonProps) {
 
 export default ConfirmButton;
 
-const styles = StyleSheet.create({
-  cancelBtnStyle: {
+const useStyles = makeStyles({
+  confirmBtnStyle: {
     borderRadius: 4,
-    minWidth: 202,
+    width: 202,
     height: 48,
+    justifyContent: 'center',
     backgroundColor: theme.lightColors?.primary,
     color: 'white',
   },
 });
-
-ConfirmButton.defaultProps = {
-  style: styles.cancelBtnStyle,
-};

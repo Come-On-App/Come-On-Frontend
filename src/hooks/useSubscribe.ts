@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { requestGetMyInfo } from '@api/user/user';
 import { useMemo, useEffect } from 'react';
 import { requestMeetingMembers } from '@api/meeting/members';
@@ -8,8 +9,8 @@ import {
   GetMeetingMembersResponse,
 } from '@type/api.meeting';
 import {
-  Individual,
   IMeeting,
+  IMeetingIndividual,
   IMeetingPlaceLock,
   ISubscribeList,
 } from '@type/hook.webSocket';
@@ -20,6 +21,7 @@ import { promiseFlow } from '@utils/promise';
 import { GetMyInfoResponse } from '@type/api.user';
 import { requestPostMeetingPlacesUnLock } from '@api/meeting/places';
 import { PlaceLock } from '@features/placeLockSlice';
+import { BottomTabScreenNavigation } from '@type/navigation';
 import { fallbackImage } from './query/useUserQuery';
 import usePlace from './redux/usePlace';
 import usePlaceLock, {
@@ -48,9 +50,10 @@ export default function useSubscribe(meetingId: number) {
 function useSubscribeIndividual(meetingId: number) {
   const { placeLockDispatch } = usePlaceLock();
   const { subscribeIndividual } = useWebSocket();
+  const navigation = useNavigation<BottomTabScreenNavigation>();
   const onMessage = useMemo(
-    () => onIndividualMessageFn(meetingId, [placeLockDispatch]),
-    [meetingId, placeLockDispatch],
+    () => onIndividualMessageFn(meetingId, [placeLockDispatch], navigation),
+    [meetingId, navigation, placeLockDispatch],
   );
 
   useEffect(() => {
@@ -94,41 +97,49 @@ function useSubscribePlace(meetingId: number) {
 function onIndividualMessageFn(
   meetingId: number,
   dispatchs: [PlaceLockDispatch],
+  navigation: BottomTabScreenNavigation,
 ) {
   const [placeLockDispatch] = dispatchs;
 
   return (message: IMessage) => {
-    const messageBody: Individual = JSON.parse(message.body);
+    const messageBody: IMeeting = JSON.parse(message.body);
 
     log(`/user/queue/meetings/${meetingId} - message.body]`, messageBody);
 
-    if (fn.isEmpty(messageBody.lockedPlaces)) return;
+    if (messageBody.messageType === 'LOCKED_MEETING_PLACE_LIST') {
+      const { data } = messageBody as IMeetingIndividual;
 
-    const [lockedPlace] = messageBody.lockedPlaces;
+      if (fn.isEmpty(data.lockedPlaces)) return;
 
-    promiseFlow(requestGetMyInfo, [
-      ({ userId }: GetMyInfoResponse) => {
-        // 기존에 락을 건 유저가 현재 유저 아이디와 같은 경우 (비정상 경로)
-        if (userId === lockedPlace.lockingUserId) {
-          requestPostMeetingPlacesUnLock({
-            meetingId,
-            placeId: lockedPlace.meetingPlaceId,
-          });
+      const [lockedPlace] = data.lockedPlaces;
 
-          return;
-        }
+      promiseFlow(requestGetMyInfo, [
+        ({ userId }: GetMyInfoResponse) => {
+          // 기존에 락을 건 유저가 현재 유저 아이디와 같은 경우 (비정상 경로)
+          if (userId === lockedPlace.lockingUserId) {
+            requestPostMeetingPlacesUnLock({
+              meetingId,
+              placeId: lockedPlace.meetingPlaceId,
+            });
 
-        const payload = {
-          data: {
-            meetingId: messageBody.meetingId,
-            meetingPlaceId: lockedPlace.meetingPlaceId,
-            userId: lockedPlace.lockingUserId,
-          },
-        };
+            return;
+          }
 
-        setCurrentLockUser(payload, placeLockDispatch);
-      },
-    ]);
+          const payload = {
+            data: {
+              meetingId: data.meetingId,
+              meetingPlaceId: lockedPlace.meetingPlaceId,
+              userId: lockedPlace.lockingUserId,
+            },
+          };
+
+          setCurrentLockUser(payload, placeLockDispatch);
+        },
+      ]);
+    } else if (messageBody.messageType === 'DROPPED') {
+      successAlert('모임에서 강퇴되었습니다...😥');
+      navigation.reset({ routes: [{ name: 'TabOne' }] });
+    }
   };
 }
 

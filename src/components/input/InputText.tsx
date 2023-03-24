@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@rneui/themed';
-import { TextInput, View } from 'react-native';
+import { Dimensions, TextInput, View } from 'react-native';
 
 import { BoldFont, Font } from '../Font';
 import type {
@@ -39,7 +39,7 @@ export function AnimationInputBox({
 
   return (
     <View>
-      <InputBoxTop label={label} maxLength={maxLength} text={value} />
+      <InputBoxTop label={label} maxLength={maxLength} text={value} bold />
       <AnimationView id="name">
         <InputBoxMain
           value={value}
@@ -54,16 +54,17 @@ export function AnimationInputBox({
   );
 }
 
-export function InputBoxTop({ label, text, maxLength }: InputTopProps) {
+export function InputBoxTop({ label, text, maxLength, bold }: InputTopProps) {
   const styles = useStyles();
 
   return (
     <View style={styles.inputTextContainer}>
-      <InputBoxTopTitle label={label} />
+      <InputBoxTopTitle label={label} bold={bold} />
       <InputBoxTopTextLength text={text} maxLength={maxLength} />
     </View>
   );
 }
+const { width } = Dimensions.get('window');
 
 export function InputBoxMain(props: InputProps) {
   const { value, maxLength, multiline, placeholder, onChangeText, style } =
@@ -71,7 +72,7 @@ export function InputBoxMain(props: InputProps) {
   const styles = useStyles();
 
   return (
-    <View style={styles.inputContainer}>
+    <View style={[styles.inputContainer]}>
       <Input
         value={value}
         maxLength={maxLength}
@@ -129,7 +130,7 @@ export function Input(props: InputProps) {
 
 const useStyles = makeStyles(theme => ({
   meetingNoteInput: {
-    padding: 12,
+    padding: width < 385 ? 8 : 12,
     borderWidth: 1,
     borderRadius: 4,
     textAlignVertical: 'top',
@@ -153,13 +154,5 @@ const useStyles = makeStyles(theme => ({
   multiline: {
     minHeight: 100,
     maxHeight: 100,
-  },
-  dateContainer: {
-    padding: 14,
-    borderWidth: 1,
-    borderRadius: 4,
-    flexDirection: 'row',
-    textAlignVertical: 'center',
-    borderColor: theme.grayscale['200'],
   },
 }));

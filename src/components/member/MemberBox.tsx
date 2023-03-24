@@ -4,8 +4,7 @@ import { makeStyles, Avatar } from '@rneui/themed';
 import { Members } from '@type/api.meeting';
 import { requestMeetingMembersDrop } from '@api/meeting/members';
 import { ButtonGroup } from '@components/button/Buttons';
-import useAuth from '@hooks/useAuth';
-import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { successAlert, errorAlert } from '@utils/alert';
 import useSocketMeeting from '@hooks/useSocketMeeting';
 import {
   BanMemberAvatarProps,
@@ -14,6 +13,7 @@ import {
 } from '@type/meeting.memberBox';
 import { Title, TitleName } from '@screens/meeting/detail/common';
 import { errorAlert, successAlert } from '@utils/alert';
+import useAuth from '@hooks/useAuth';
 import {
   MemberBoxProps,
   MemberBoxSubTitleProps,
@@ -148,7 +148,7 @@ function MemberBox({ hostId, meetingId, meetingUsers }: MemberBoxProps) {
     if (!visible) return;
 
     if (item.userId === hostId) {
-      Toast.show({ text1: '방장은 선택할 수 없습니다.' });
+      errorAlert('방장은 선택할 수 없습니다.');
 
       return;
     }
