@@ -1,14 +1,14 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import Layout from '@components/Layout';
 import MemberBox from '@components/member/MemberBox';
 
 import useMemberQuery, { findHostUser } from '@hooks/query/useMemberQuery';
 
 import useMeeting from '@hooks/useMeeting';
-import Layout from '@components/Layout';
 
 // 모임 멤버
 function Member({ meetingId }: { meetingId: number }) {
+  const { setTotalMemberCounts } = useMeeting();
   const { members } = useMemberQuery(meetingId);
 
   useEffect(() => {

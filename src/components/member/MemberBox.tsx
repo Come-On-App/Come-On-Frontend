@@ -12,7 +12,6 @@ import {
   OnLineAvatarProps,
 } from '@type/meeting.memberBox';
 import { Title, TitleName } from '@screens/meeting/detail/common';
-import { errorAlert, successAlert } from '@utils/alert';
 import useAuth from '@hooks/useAuth';
 import {
   MemberBoxProps,
