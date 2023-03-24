@@ -4,12 +4,7 @@ import { makeStyles, Avatar } from '@rneui/themed';
 import { Members } from '@type/api.meeting';
 import { requestMeetingMembersDrop } from '@api/meeting/members';
 import { ButtonGroup } from '@components/button/Buttons';
-import {
-  successAlert,
-  errorAlert,
-  errorAlert,
-  successAlert,
-} from '@utils/alert';
+import { successAlert, errorAlert } from '@utils/alert';
 import useSocketMeeting from '@hooks/useSocketMeeting';
 import {
   BanMemberAvatarProps,
