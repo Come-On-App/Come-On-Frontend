@@ -6,6 +6,10 @@ import fn from '@utils/fn';
 import useRefreshBy from '@hooks/query/useRefresh';
 import useMeetingQuery from '@hooks/query/useMeetingQuery';
 import useRefreshOnFocus from '@hooks/query/useRefreshOnFocus';
+import Font from '@components/Font';
+import Button from '@components/button/Buttons';
+import { useGoToCreateMeetingScreen } from '@hooks/useGoTo';
+import { MeetingMode } from '@features/meetingSlice';
 import Card, { CardSkeleton } from './Card';
 
 // 모임 관리 리스트
@@ -18,6 +22,10 @@ function CardList() {
 
   if (fn.isEmpty(sliceResponse)) {
     return <CardListSkeleton />;
+  }
+
+  if (fn.isEmpty(sliceResponse.contents)) {
+    return <CardEmpty />;
   }
 
   return (
@@ -49,9 +57,54 @@ export function CardListSkeleton() {
   );
 }
 
+function CardEmpty() {
+  const styles = useStyles();
+  const goToCreateMeetingScreen = useGoToCreateMeetingScreen(
+    MeetingMode.create,
+  );
+  const config = {
+    button: {
+      text: '모임 등록하러 가기',
+      heigth: 56,
+    },
+    title: '등록된 모임이 없습니다. 모임을 등록해주세요!',
+  };
+
+  return (
+    <View style={[styles.cardContianer, styles.cardEmptyContianer]}>
+      <View style={styles.cardEmptyContent}>
+        <Button
+          bold
+          text={config.button.text}
+          onPress={goToCreateMeetingScreen}
+          buttonStyle={styles.cardEmptyButton}
+          height={config.button.heigth}
+        />
+        <Font>{config.title}</Font>
+      </View>
+    </View>
+  );
+}
+
 const useStyles = makeStyles(() => ({
   cardContianer: {
     alignItems: 'center',
+  },
+  cardEmptyContianer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  cardEmptyContent: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  cardEmptyButton: {
+    marginBottom: 12,
+    width: 190,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 }));
 
