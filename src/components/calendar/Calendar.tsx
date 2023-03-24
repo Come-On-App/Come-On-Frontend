@@ -10,13 +10,13 @@ import {
   requestDeleteDateVoting,
 } from '@api/meeting/voting';
 
-import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import {
   CalendarPeriodTypeProps,
   CalendarVotingTypeProps,
   CalenderClickEventType,
   CalendarProps,
 } from '@type/meeting.calendar';
+import { successAlert } from '@utils/alert';
 import Font from '../Font';
 import LocaleConfig from './LocaleConfig';
 import CustomCalendarTheme, { DayTheme } from './CustomCalendarTheme';
@@ -270,15 +270,13 @@ function DefaultCalendar({
       if (myVotingDates.includes(date.date)) {
         requestDeleteDateVoting({ meetingId, payload: date }).then(res => {
           if (res.success) {
-            Toast.show({
-              text1: `${korStr} 에 투표가 취소되었습니다.`,
-            });
+            successAlert(`${korStr} 에 투표가 취소되었습니다.`);
           }
         });
       } else {
         requestAddDateVoting({ meetingId, payload: date }).then(res => {
           if (res.success) {
-            Toast.show({ text1: `${korStr} 에 투표 되었습니다.` });
+            successAlert(`${korStr} 에 투표 되었습니다.`);
           }
         });
       }

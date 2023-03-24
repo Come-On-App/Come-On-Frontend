@@ -4,9 +4,18 @@ import MemberBox from '@components/member/MemberBox';
 
 import useMemberQuery, { findHostUser } from '@hooks/query/useMemberQuery';
 
+import useMeeting from '@hooks/useMeeting';
+import Layout from '@components/Layout';
+
 // 모임 멤버
 function Member({ meetingId }: { meetingId: number }) {
   const { members } = useMemberQuery(meetingId);
+
+  useEffect(() => {
+    if (!members) return;
+
+    setTotalMemberCounts(members.contentsCount);
+  }, [members, setTotalMemberCounts]);
 
   if (!members) {
     return null;

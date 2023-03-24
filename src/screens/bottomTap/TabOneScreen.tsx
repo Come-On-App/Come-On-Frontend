@@ -7,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import SearchBar from '@components/SearchBar';
 import { IconButton } from '@components/button/Buttons';
 import CardList from '@components/meetingCard/CardList';
+import { MeetingMode } from '@features/meetingSlice';
 
 // 모임 관리 스크린
 export default function TabOneScreen() {
@@ -59,7 +60,8 @@ function DateRangeSerchBar() {
 function CreateMeetingRoomButton() {
   const styles = useStyles();
   const navigation = useNavigation();
-  const goToCreateMeetingScreen = () => navigation.navigate('CreateMeeting');
+  const goToCreateMeetingScreen = () =>
+    navigation.navigate('CreateMeeting', { mode: MeetingMode.create });
 
   return (
     <View style={styles.buttonContainer}>

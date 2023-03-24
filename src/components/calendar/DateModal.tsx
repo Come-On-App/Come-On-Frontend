@@ -7,12 +7,13 @@ import { requestGetDateVotingDetails } from '@api/meeting/voting';
 import { VotingUsers } from '@type/api.meeting';
 import Avatar from '@components/member/Avatar';
 import { requestConfirmMeetingDate } from '@api/meeting/confirm';
-import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 import useAuth from '@hooks/useAuth';
 import { CalenderClickEventType } from '@type/meeting.calendar';
 import useMeeting from '@hooks/useMeeting';
 import { useQuery } from 'react-query';
+import { successAlert } from '@utils/alert';
+import { QueryKeys } from '@api/queryClient';
 import LoadingComponent from './LoadingComponent';
 
 function returnDotDate(date: CalenderClickEventType) {
@@ -52,12 +53,12 @@ export default function DateModal({
     };
 
     requestConfirmMeetingDate({ meetingId, payload }).then(res => {
-      if (res.success) Toast.show({ text1: '모임일이 확정되었습니다.' });
+      if (res.success) successAlert('모임일이 확정되었습니다.🎉');
     });
   };
   // 추후 스켈레톤으로
   const payload = { date: date.dateString };
-  const { data: dateDetails } = useQuery(['votingDetails'], () =>
+  const { data: dateDetails } = useQuery([QueryKeys.votingDetails], () =>
     requestGetDateVotingDetails({
       meetingId,
       payload,

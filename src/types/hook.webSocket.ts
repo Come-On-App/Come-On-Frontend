@@ -2,7 +2,10 @@ type MessageType =
   | 'RESOURCE_UPDATED_EVENT'
   | 'UNSUBSCRIBE_MEETING_EVENT'
   | 'SUBSCRIBE_MEETING_EVENT'
-  | 'MEETING_SUBSCRIBE_USER_LIST';
+  | 'MEETING_SUBSCRIBE_USER_LIST'
+  | 'LOCKED_MEETING_PLACE_LIST'
+  | 'LOCKED_MEETING_PLACE_LIST'
+  | 'DROPPED';
 
 type MeetingResourceType =
   | 'MEETING_METADATA'
@@ -57,6 +60,11 @@ export interface ISubscribeList extends IMessageBody {
   data: Pick<Data, 'meetingId' | 'userIds'>;
 }
 
+// 강퇴당한 유저가 받을 정보
+export interface IDroppedMeeting extends IMessageBody {
+  data: Pick<Data, 'meetingId' | 'userId'>;
+}
+
 // 모임 장소 락 등록 메시지
 // 모임 장소 락 해제 메시지
 export interface IMeetingPlaceLock extends IMessageBody {
@@ -67,11 +75,6 @@ export interface IMeetingPlaceLock extends IMessageBody {
 }
 
 // 모임 구독시, 개인 메시지 구독 경로
-export interface Individual {
-  meetingResourceType: 'LOCKED_MEETING_PLACE_LIST';
-  meetingId: number;
-  lockedPlaces: {
-    meetingPlaceId: number;
-    lockingUserId: number;
-  }[];
+export interface IMeetingIndividual extends IMessageBody {
+  data: Pick<Data, 'meetingId' | 'lockedPlaces'>;
 }
