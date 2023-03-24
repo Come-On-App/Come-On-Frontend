@@ -1,5 +1,6 @@
 import _ from 'lodash/fp';
 import _isPromise from 'is-promise';
+import { log } from './log';
 
 export default _;
 
@@ -56,4 +57,11 @@ export function createTimeFormat(date: Date) {
   const payload = `${hoursFormatted}:${minutesFormatted}:00`;
 
   return { formatted, payload };
+}
+
+export function isExpiry(date: string) {
+  const targetDate = new Date(date);
+  const currentDate = new Date();
+
+  return targetDate < currentDate;
 }
