@@ -32,7 +32,7 @@ export default ConfirmButton;
 const useStyles = makeStyles({
   confirmBtnStyle: {
     borderRadius: 4,
-    width: 202,
+
     height: 48,
     justifyContent: 'center',
     backgroundColor: theme.lightColors?.primary,

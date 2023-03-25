@@ -33,6 +33,7 @@ import { AnimationInputBox } from '@components/input/InputText';
 import { makeStyles } from '@rneui/themed';
 import { MeetingMode } from '@features/meetingSlice';
 import { errorAlert, successAlert } from '@utils/alert';
+import FlexButtons from '@components/button/FlexButtons';
 import CancelButton from '../components/button/CancelButton';
 import ConfirmButton from '../components/button/ConfirmButton';
 import {
@@ -309,9 +310,7 @@ function Buttons({
     });
     resetMeetingData();
     errorAlert('모임 생성에 실패했습니다...');
-    navigation.goBack();
   }, [navigation, resetMeetingData]);
-
   // Mode : (create/edit)
   const requestHandler = useCallback(
     ({ mode }: { mode: MeetingMode }) => {
@@ -347,19 +346,10 @@ function Buttons({
   }, [trigger, animValues, meetingMode, requestHandler]);
 
   return (
-    <View style={styles.buttons}>
-      <CancelButton
-        title="취소"
-        onPressHandler={cancelHandler}
-        style={styles.buttonStyle}
-        width={width < 385 ? 120 : 130}
-      />
-      <ConfirmButton
-        title="확인"
-        onPressHandler={onPressConfirm}
-        width={width < 385 ? 192 : 202}
-      />
-    </View>
+    <FlexButtons
+      cancelHandler={cancelHandler}
+      onPressConfirm={onPressConfirm}
+    />
   );
 }
 const useStyles = makeStyles(theme => ({
@@ -369,10 +359,9 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: 'white',
     justifyContent: 'space-between',
   },
-  buttonStyle: {
-    marginRight: 12,
-  },
+
   buttons: {
+    flex: 1,
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',

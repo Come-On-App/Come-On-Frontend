@@ -47,6 +47,12 @@ export type PlaceSelectNavigation = PlaceSelectScreenProps['navigation'];
 
 export type RootScreenParams = NavigatorScreenParams<RootTabParamList>;
 
+export type RootNavigation = NativeStackNavigationProp<
+  RootStackParamList,
+  'Root',
+  string
+>;
+
 export type BottomTabScreenNavigation =
   BottomTabScreenProps<RootTabParamList>['navigation'];
 

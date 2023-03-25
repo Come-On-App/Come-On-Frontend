@@ -162,6 +162,10 @@ function PeriodCalendar({ setDate }: CalendarPeriodTypeProps) {
       if (!startDay) {
         markedDates.set(selectedDay, DAYSTYLE);
         setDay({ ...day, startDay: selectedDay });
+        const oneDay = { startDate: selectedDay, endDate: selectedDay };
+
+        if (setDate) setDate(oneDay);
+
         setMarkedDate(Object.fromEntries(markedDates.entries()));
 
         return;

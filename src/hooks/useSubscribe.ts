@@ -21,7 +21,11 @@ import { promiseFlow } from '@utils/promise';
 import { GetMyInfoResponse } from '@type/api.user';
 import { requestPostMeetingPlacesUnLock } from '@api/meeting/places';
 import { PlaceLock } from '@features/placeLockSlice';
-import { BottomTabScreenNavigation } from '@type/navigation';
+import {
+  BottomTabScreenNavigation,
+  RootNavigation,
+  RootScreenParams,
+} from '@type/navigation';
 import { fallbackImage } from './query/useUserQuery';
 import usePlace from './redux/usePlace';
 import usePlaceLock, {
@@ -50,7 +54,7 @@ export default function useSubscribe(meetingId: number) {
 function useSubscribeIndividual(meetingId: number) {
   const { placeLockDispatch } = usePlaceLock();
   const { subscribeIndividual } = useWebSocket();
-  const navigation = useNavigation<BottomTabScreenNavigation>();
+  const navigation = useNavigation<RootNavigation>();
   const onMessage = useMemo(
     () => onIndividualMessageFn(meetingId, [placeLockDispatch], navigation),
     [meetingId, navigation, placeLockDispatch],
@@ -97,7 +101,7 @@ function useSubscribePlace(meetingId: number) {
 function onIndividualMessageFn(
   meetingId: number,
   dispatchs: [PlaceLockDispatch],
-  navigation: BottomTabScreenNavigation,
+  navigation: RootNavigation,
 ) {
   const [placeLockDispatch] = dispatchs;
 
@@ -138,7 +142,7 @@ function onIndividualMessageFn(
       ]);
     } else if (messageBody.messageType === 'DROPPED') {
       successAlert('모임에서 강퇴되었습니다...😥');
-      navigation.reset({ routes: [{ name: 'TabOne' }] });
+      navigation.reset({ routes: [{ name: 'Root' }] });
     }
   };
 }
