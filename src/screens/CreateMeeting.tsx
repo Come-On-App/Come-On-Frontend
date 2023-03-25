@@ -34,8 +34,7 @@ import { makeStyles } from '@rneui/themed';
 import { MeetingMode } from '@features/meetingSlice';
 import { errorAlert, successAlert } from '@utils/alert';
 import FlexButtons from '@components/button/FlexButtons';
-import CancelButton from '../components/button/CancelButton';
-import ConfirmButton from '../components/button/ConfirmButton';
+
 import {
   AnimationInputDate,
   InputImageWithAinm,

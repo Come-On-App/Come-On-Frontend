@@ -5,6 +5,7 @@ import WebView from 'react-native-webview';
 import { SocialLoginProps } from '@type/index';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { REACT_APP_REST_API_KEY, REACT_APP_REDIRECT_URI } from '@env';
+import { Platform } from 'react-native';
 
 export default function KakaoLoginWebView() {
   const INJECTED_JAVASCRIPT = `window.ReactNativeWebView.postMessage("check")`;
@@ -42,7 +43,11 @@ export default function KakaoLoginWebView() {
         }}
         injectedJavaScript={INJECTED_JAVASCRIPT}
         onMessage={event => {
-          if (!event.nativeEvent.loading) LogInProgress(event.nativeEvent.url);
+          if (Platform.OS === 'android' && !event.nativeEvent.loading) {
+            LogInProgress(event.nativeEvent.url);
+          } else if (Platform.OS === 'ios' && event.nativeEvent.loading) {
+            LogInProgress(event.nativeEvent.url);
+          }
         }}
       />
     </SafeAreaView>
