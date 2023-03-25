@@ -12,6 +12,7 @@ import { setLogin } from '@api/auth/auth';
 import useAuth from '@hooks/useAuth';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
+import { ResponseType } from 'expo-auth-session';
 import { SocialLoginProps } from '../../types';
 import GoogleLogo from '../../assets/images/logo/GoogleLogo';
 
@@ -25,6 +26,7 @@ function GoogleLoginBtn() {
     expoClientId: REACT_APP_EXPO_CLIENT_ID,
     iosClientId: REACT_APP_IOS_CLIENT_ID,
     androidClientId: REACT_APP_ANDROID_CLIENT_ID,
+    responseType: ResponseType.IdToken,
   });
   const requestTokenGoogle = useCallback(
     async (idToken: string) => {
