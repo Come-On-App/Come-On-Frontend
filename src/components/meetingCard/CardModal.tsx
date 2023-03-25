@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { makeStyles } from '@rneui/themed';
 import * as Clipboard from 'expo-clipboard';
 
@@ -15,31 +15,54 @@ import { CodeInput } from '@components/InviteCode';
 import { ButtonGroup } from '@components/button/Buttons';
 import { useQuery } from 'react-query';
 import { QueryKeys } from '@api/queryClient';
-import { requestGetEntryCode } from '@api/meeting/meetings';
-import { GetEntryCodeResponse } from '@type/api.meeting';
+import {
+  requestGetEntryCode,
+  requestPostEntryCode,
+} from '@api/meeting/meetings';
+import { GetEntryCodeResponse, ErrorMeetingResponse } from '@type/api.meeting';
 import { SetState } from '@type/index';
+import { promiseFlow } from '@utils/promise';
+import { isExpiry } from '@utils/fn';
+import { errorAlert, successAlert } from '@utils/alert';
 
 function CardModal({ isVisible, onClose, meetingId }: CardModalProps) {
   const styles = useStyles();
-  const initCode: GetEntryCodeResponse = {
+  const [code, setCode] = useState<GetEntryCodeResponse>({
     entryCode: '------',
     expiredAt: '',
     meetingId: 0,
-  };
-  const { data: { entryCode } = initCode, isLoading } = useQuery(
-    [QueryKeys.meetings, meetingId],
+  });
+  const { data, isLoading } = useQuery(
+    [QueryKeys.meetingDetail, QueryKeys.time, meetingId],
     () => requestGetEntryCode(meetingId),
     {
       enabled: isVisible,
     },
   );
 
+  useEffect(() => {
+    if (!data) return;
+
+    setCode(data);
+
+    if (isExpiry(data.expiredAt)) {
+      promiseFlow(data.meetingId, [requestPostEntryCode, setCode], {
+        onSuccess: () => {
+          successAlert('코드가 만료되어 갱신되었습니다!');
+        },
+        onError: (error: ErrorMeetingResponse) => {
+          errorAlert(error.response.data.errorDescription);
+        },
+      });
+    }
+  }, [data]);
+
   return (
     <Modal isVisible={isVisible}>
       <View style={styles.modalContainer}>
         <CardModalTop isLoading={isLoading} />
-        <CardModalMain code={entryCode} />
-        <CardModalBottom code={entryCode} onClose={onClose} />
+        <CardModalMain code={code.entryCode} />
+        <CardModalBottom code={code.entryCode} onClose={onClose} />
       </View>
     </Modal>
   );

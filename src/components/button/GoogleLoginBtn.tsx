@@ -1,5 +1,4 @@
 import { Pressable } from 'react-native';
-import { ResponseType } from 'expo-auth-session';
 import React, { useCallback, useEffect } from 'react';
 import { makeStyles } from '@rneui/themed';
 
@@ -26,7 +25,6 @@ function GoogleLoginBtn() {
     expoClientId: REACT_APP_EXPO_CLIENT_ID,
     iosClientId: REACT_APP_IOS_CLIENT_ID,
     androidClientId: REACT_APP_ANDROID_CLIENT_ID,
-    responseType: ResponseType.IdToken,
   });
   const requestTokenGoogle = useCallback(
     async (idToken: string) => {

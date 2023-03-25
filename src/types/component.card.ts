@@ -29,6 +29,7 @@ export interface CardMenuDisplayProps {
 export interface CardMenuItemsProps {
   role: MemberRole;
   meetingId: number;
+  hideMenu: () => void;
 }
 
 export interface CardModalButtonProps {

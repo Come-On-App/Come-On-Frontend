@@ -1,6 +1,6 @@
 import React, { memo, useCallback, useState } from 'react';
 import { makeStyles } from '@rneui/themed';
-import { Alert, View } from 'react-native';
+import { View } from 'react-native';
 import { Menu, MenuDivider, MenuItem } from 'react-native-material-menu';
 
 import useMeetingMutation from '@hooks/query/useMeetingMutation';
@@ -13,8 +13,8 @@ import type {
 } from '@type/component.card';
 import { IconButton } from '@components/button/Buttons';
 import Font from '@components/Font';
-import { useNavigation } from '@react-navigation/native';
 import { MeetingMode } from '@features/meetingSlice';
+import { useGoToCreateMeetingScreen } from '@hooks/useGoTo';
 import CardModal from './CardModal';
 
 const MemoMenu = memo(Menu);
@@ -35,7 +35,11 @@ function CardMenu({ role, meetingId }: CardMenuProps) {
       onRequestClose={hideMenu}
       style={styles.menu}
     >
-      <MemoCardMenuItems role={role} meetingId={meetingId} />
+      <MemoCardMenuItems
+        role={role}
+        meetingId={meetingId}
+        hideMenu={hideMenu}
+      />
     </MemoMenu>
   );
 }
@@ -56,15 +60,17 @@ function CardMenuIcon({ showMenu }: CardMenuDisplayProps) {
   );
 }
 
-function CardMenuItems({ role, meetingId }: CardMenuItemsProps) {
+function CardMenuItems({ role, meetingId, hideMenu }: CardMenuItemsProps) {
   const { deleteMeeting } = useMeetingMutation();
   const [codeModal, setCodeModal] = useState(false);
-  const navigation = useNavigation();
-  const onPressHandler = () =>
-    navigation.navigate('CreateMeeting', {
-      mode: MeetingMode.edit,
-      meetingId,
-    });
+  const goToEditMeetingScreen = useGoToCreateMeetingScreen(
+    MeetingMode.edit,
+    meetingId,
+  );
+  const onPressHandler = () => {
+    hideMenu();
+    goToEditMeetingScreen();
+  };
   const toggleCodeModal = useCallback(() => setCodeModal(prev => !prev), []);
   const menuConfig: MenuConfig[] = [
     { onPress: toggleCodeModal, text: '초대코드 관리', permission: true },

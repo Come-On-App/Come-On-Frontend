@@ -3,6 +3,8 @@ declare module '@env' {
   export const GOOGLE_PLACES_URL: string;
   export const COMEON_API_URL: string;
   export const WEBSOCKET_URL: string;
+  export const GOOGLE_MAP_API_KEY_ANDROID: string;
+  export const GOOGLE_MAP_API_KEY_IOS: string;
 
   export const REACT_APP_REST_API_KEY: string;
   export const REACT_APP_REDIRECT_URI: string;

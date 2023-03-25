@@ -95,6 +95,7 @@
     "no-shadow": "off",
     "@typescript-eslint/no-shadow": ["error"],
     "react/require-default-props": "off",
-    "global-require": "off"
+    "global-require": "off",
+    "react/style-prop-object": "off"
   }
 }

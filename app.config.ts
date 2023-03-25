@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { ExpoConfig, ConfigContext } from 'expo/config';
 
 const text = {
@@ -39,6 +40,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     bundleIdentifier: app.identifier,
     buildNumber: app.version,
     supportsTablet: true,
+    config: {
+      googleMapsApiKey: process.env.GOOGLE_MAP_API_KEY_IOS,
+    },
   },
   android: {
     package: app.identifier,
@@ -46,6 +50,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     adaptiveIcon: {
       foregroundImage: app.foregroundImage,
       backgroundColor: app.backgroundColor,
+    },
+    config: {
+      googleMaps: { apiKey: process.env.GOOGLE_MAP_API_KEY_ANDROID },
     },
   },
   plugins: [
