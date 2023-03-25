@@ -23,7 +23,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   icon: app.icon,
   name: app.name,
   slug: app.slug,
-  scheme: app.identifier,
+  scheme: app.slug,
   version: app.version,
   orientation: 'portrait',
   userInterfaceStyle: 'light',
