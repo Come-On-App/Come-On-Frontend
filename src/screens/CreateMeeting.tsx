@@ -126,11 +126,16 @@ function CreateMeeting({
 
   return (
     <LayoutHeight containerStyle={styles.container}>
-      <EditInputForm
-        AnimationView={AnimationBounceView}
-        meetingId={meetingId}
-      />
-      <Buttons navigation={navigation} trigger={trigger} />
+      <ScrollView
+        style={styles.InputFormontainer}
+        showsVerticalScrollIndicator={false}
+      >
+        <EditInputForm
+          AnimationView={AnimationBounceView}
+          meetingId={meetingId}
+        />
+        <Buttons navigation={navigation} trigger={trigger} />
+      </ScrollView>
     </LayoutHeight>
   );
 }
@@ -218,17 +223,15 @@ function EditInputForm({ AnimationView, meetingId }: EditInpurFormProps) {
 
   return (
     <Pressable onPress={Keyboard.dismiss}>
-      <ScrollView style={styles.InputFormontainer}>
-        <InputImageWithAinm AnimationView={AnimationView} id="image" />
-        <AnimationInputBox
-          inputProps={inputProps}
-          AnimationView={AnimationView}
-        />
-        <AnimationInputDate
-          AnimationView={AnimationView}
-          dateConfig={dateConfig}
-        />
-      </ScrollView>
+      <InputImageWithAinm AnimationView={AnimationView} id="image" />
+      <AnimationInputBox
+        inputProps={inputProps}
+        AnimationView={AnimationView}
+      />
+      <AnimationInputDate
+        AnimationView={AnimationView}
+        dateConfig={dateConfig}
+      />
     </Pressable>
   );
 }
