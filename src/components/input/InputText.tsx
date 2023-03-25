@@ -131,6 +131,7 @@ export function Input(props: InputProps) {
 const useStyles = makeStyles(theme => ({
   meetingNoteInput: {
     padding: width < 385 ? 8 : 12,
+    height: 48,
     borderWidth: 1,
     borderRadius: 4,
     textAlignVertical: 'top',
