@@ -1,23 +1,20 @@
 //@ts-nocheck
 import { ExpoConfig, ConfigContext } from 'expo/config';
-
 const text = {
   photosPermission: '이 앱을 사용하기 위해선 사진첩에 대한 권한이 필요합니다.',
 };
-
 const app = {
   name: 'Come On!',
   slug: 'come-on',
   version: '1.0.0',
   identifier: 'com.comeon.app',
-  backgroundColor: '#ffffff',
+  backgroundColor: '#FFFFFF',
   icon: './src/assets/images/icon.png',
   favicon: './src/assets/images/favicon.png',
   image: './src/assets/images/splash.png',
   foregroundImage: './src/assets/images/adaptive-icon.png',
   versionCode: 1,
 };
-
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   icon: app.icon,

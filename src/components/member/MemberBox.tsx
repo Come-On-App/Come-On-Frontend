@@ -234,6 +234,7 @@ function MemberBoxTitle({ userCount }: MemberBoxTitleProps) {
   return (
     <View style={styles.meetingMemberLabelStyle}>
       <Title title={TitleName.member} />
+
       <Label style={styles.colorText}>{userCount}</Label>
     </View>
   );

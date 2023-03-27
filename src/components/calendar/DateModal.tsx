@@ -281,12 +281,13 @@ const useStyles = makeStyles(theme => ({
     flex: 1,
     marginTop: 12,
     flexDirection: 'row',
-    marginHorizontal: 10,
+    justifyContent: 'center',
+    marginHorizontal: 1.5,
   },
   AvatarAndNameOneUser: {
     flex: 0.5,
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
   LabelSpacing: {
@@ -296,6 +297,6 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
   },
   blankFlex: {
-    flex: 0.38,
+    flex: 0.5,
   },
 }));

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleProp, TextStyle, View, ViewStyle } from 'react-native';
+import { StyleProp, TextStyle, View, ActivityIndicator } from 'react-native';
 import { Button } from '@rneui/themed';
 
 import { makeStyles } from '@rneui/base';
@@ -9,20 +9,35 @@ interface ButtonProps {
   title: string;
   onPressHandler: () => void;
   style?: StyleProp<TextStyle>;
+  loading?: boolean;
   width?: number;
 }
 
-function ConfirmButton({ title, onPressHandler, style, width }: ButtonProps) {
+function ConfirmButton({
+  title,
+  onPressHandler,
+  style,
+  width,
+  loading,
+}: ButtonProps) {
   const styles = useStyles();
 
   return (
     <View style={style}>
-      <Button
-        title={title}
-        onPress={onPressHandler}
-        buttonStyle={[style]}
-        containerStyle={[styles.confirmBtnStyle, { width }]}
-      />
+      {loading ? (
+        <Button
+          title={<ActivityIndicator color="white" />}
+          buttonStyle={[style]}
+          containerStyle={[styles.confirmBtnStyle, { width }]}
+        />
+      ) : (
+        <Button
+          title={title}
+          onPress={onPressHandler}
+          buttonStyle={[style]}
+          containerStyle={[styles.confirmBtnStyle, { width }]}
+        />
+      )}
     </View>
   );
 }

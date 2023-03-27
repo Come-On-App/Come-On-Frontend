@@ -16,13 +16,11 @@ import { ResponseType } from 'expo-auth-session';
 import { SocialLoginProps } from '../../types';
 import GoogleLogo from '../../assets/images/logo/GoogleLogo';
 
-WebBrowser.maybeCompleteAuthSession();
-
 function GoogleLoginBtn() {
   const styles = useStyles();
   const { setLogin: setLoginAuth } = useAuth();
   const requestTokenUrl = '/api/v1/oauth/google';
-  const [_request, response, promptAsync] = Google.useAuthRequest({
+  const [_request, response, promptAsync] = Google.useIdTokenAuthRequest({
     expoClientId: REACT_APP_EXPO_CLIENT_ID,
     iosClientId: REACT_APP_IOS_CLIENT_ID,
     androidClientId: REACT_APP_ANDROID_CLIENT_ID,
@@ -37,6 +35,8 @@ function GoogleLoginBtn() {
 
       setLogin(data).then(res => {
         setLoginAuth(res);
+
+        WebBrowser.maybeCompleteAuthSession();
       });
     },
     [setLoginAuth],
