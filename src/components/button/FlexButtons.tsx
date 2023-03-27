@@ -7,9 +7,14 @@ import ConfirmButton from './ConfirmButton';
 interface FlexButtonProps {
   cancelHandler: () => void;
   onPressConfirm: () => void;
+  loading?: boolean;
 }
 
-function FlexButtons({ cancelHandler, onPressConfirm }: FlexButtonProps) {
+function FlexButtons({
+  cancelHandler,
+  onPressConfirm,
+  loading,
+}: FlexButtonProps) {
   const styles = useStyles();
 
   return (
@@ -19,7 +24,11 @@ function FlexButtons({ cancelHandler, onPressConfirm }: FlexButtonProps) {
           <CancelButton title="취소" onPressHandler={cancelHandler} />
         </View>
         <View style={{ flex: 0.57 }}>
-          <ConfirmButton title="확인" onPressHandler={onPressConfirm} />
+          <ConfirmButton
+            title="확인"
+            onPressHandler={onPressConfirm}
+            loading={loading}
+          />
         </View>
       </View>
     </View>
