@@ -1,6 +1,8 @@
 import { AuthResponse } from '@type/index';
 import { useCallback } from 'react';
 import { setTokensToDB } from '@api/token/token';
+import { isExpiry } from '@utils/fn';
+import { AccessTokenRes } from '../types/index';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
 import { login, logout, setToken } from '../features/authSlice';
 import { getValueFor } from '../utils/secureStore';
@@ -53,6 +55,11 @@ function useAuth() {
     const myToken = await tokenDataIsValid();
 
     if (myToken) {
+      const expiryTime = myToken.accessToken.expiry;
+      const isTokenExpiry = !isExpiry(expiryTime);
+
+      if (isTokenExpiry) return;
+
       setLogin(myToken);
     }
   }, [setLogin]);

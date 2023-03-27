@@ -11,8 +11,13 @@ import useMeeting from '@hooks/useMeeting';
 import { makeStyles } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 
-import { KeyboardAvoidingView, Pressable, View } from 'react-native';
-import Font, { BoldFont } from '@components/Font';
+import {
+  KeyboardAvoidingView,
+  Pressable,
+  View,
+  Dimensions,
+} from 'react-native';
+import { BoldFont } from '@components/Font';
 import { AnimationInputBox } from './InputText';
 import InputImage from './InputImage';
 import IconInputBox, { isValid } from './IconInputBox';
@@ -105,7 +110,7 @@ export function AnimationInputDate({
     <View style={styles.inputContainer}>
       <BoldFont style={styles.title}>투표 기간</BoldFont>
       <AnimationView id="date">
-        <Pressable style={styles.inputContainer} onPress={onPressLabel}>
+        <Pressable style={styles.inputBoxHeight} onPress={onPressLabel}>
           <IconInputBox
             iconConfig={iconConfig}
             condition={isValid(meetingData.calendarStartFrom)}
@@ -136,6 +141,10 @@ const useStyles = makeStyles(theme => ({
     fontSize: 16,
   },
   inputContainer: {
+    marginTop: 12,
+  },
+  inputBoxHeight: {
+    height: 48,
     marginTop: 12,
   },
   iconColor: {

@@ -24,7 +24,6 @@ import CreateMeeting from '@screens/CreateMeeting';
 import CreateMeetingCalender from '@screens/CreateMeetingCalender';
 import MeetingRoomCalendar from '@screens/MeetingRoomCalendar';
 import LoginScreen from '@screens/LoginScreen';
-import KakaoLoginWebView from '@screens/KakaoLoginView';
 import TabOneScreen from '@screens/bottomTap/TabOneScreen';
 import TabThreeScreen from '@screens/bottomTap/TabThreeScreen';
 import TabTwoScreen from '@screens/bottomTap/TabTwoScreen';
@@ -37,6 +36,7 @@ import { createTabBarIcon } from '@components/Icon';
 import LogoutButton from '@components/myPage/MyPageLogoutButton';
 import MyPageHeaderTitle from '@components/myPage/MyPageHeaderTitle';
 import PlaceSelectHeaderTitle from '@components/placeSelect/PlaceSelectHeaderTitle';
+import TestTest from '@components/button/TestTest';
 
 function TabThreeIcon() {
   const size = 32;
@@ -160,24 +160,14 @@ function RootNavigator() {
           />
         </>
       ) : (
-        <>
-          <Stack.Screen
-            name="LoginScreen"
-            component={LoginScreen}
-            options={() => ({
-              headerShown: false,
-              contentStyle: styles.background,
-            })}
-          />
-          <Stack.Screen
-            name="KakaoLoginWebView"
-            component={KakaoLoginWebView}
-            options={() => ({
-              headerShown: true,
-              contentStyle: styles.background,
-            })}
-          />
-        </>
+        <Stack.Screen
+          name="LoginScreen"
+          component={LoginScreen}
+          options={() => ({
+            headerShown: false,
+            contentStyle: styles.background,
+          })}
+        />
       )}
     </Stack.Navigator>
   );

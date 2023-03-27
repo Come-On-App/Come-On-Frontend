@@ -263,7 +263,7 @@ function Buttons({
     }),
     [calendarStartFrom, meetingImgUri, meetingName],
   );
-
+  const [loading, setLoading] = useState<boolean>(false);
   // # function
   const cancelHandler = () => {
     resetMeetingData();
@@ -286,6 +286,7 @@ function Buttons({
 
   const onSuccessCreateMode = useCallback(
     (newMeetingId: MeetingId) => {
+      setLoading(false);
       navigation.reset({
         index: 0,
         routes: [{ name: 'Root' }],
@@ -316,6 +317,7 @@ function Buttons({
   // Mode : (create/edit)
   const requestHandler = useCallback(
     ({ mode }: { mode: MeetingMode }) => {
+      setLoading(true);
       return mode === MeetingMode.create
         ? promiseFlow<AssetState | null, MeetingId>(
             payload.createMeetingPayload,
@@ -351,6 +353,7 @@ function Buttons({
     <FlexButtons
       cancelHandler={cancelHandler}
       onPressConfirm={onPressConfirm}
+      loading={loading}
     />
   );
 }
