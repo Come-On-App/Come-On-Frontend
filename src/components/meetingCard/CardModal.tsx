@@ -33,7 +33,7 @@ function CardModal({ isVisible, onClose, meetingId }: CardModalProps) {
     meetingId: 0,
   });
   const { data, isLoading } = useQuery(
-    [QueryKeys.meetingDetail, QueryKeys.time, meetingId],
+    [QueryKeys.meetingDetail, QueryKeys.code, meetingId],
     () => requestGetEntryCode(meetingId),
     {
       enabled: isVisible,
