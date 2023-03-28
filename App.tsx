@@ -1,3 +1,4 @@
+import 'expo-dev-client';
 import * as encoding from 'text-encoding';
 import React from 'react';
 import { Provider } from 'react-redux';

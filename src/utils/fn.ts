@@ -1,6 +1,4 @@
 import _ from 'lodash/fp';
-import _isPromise from 'is-promise';
-import { log } from './log';
 
 export default _;
 
@@ -8,15 +6,7 @@ export const copy = _.cloneDeep;
 
 export const getSize = _.size;
 
-export const isPromise = _isPromise;
-
 export const emptyString = '' as string;
-
-export function nextIndex(currentIndex: number) {
-  const ONE = 1;
-
-  return _.add(currentIndex, ONE);
-}
 
 export function generateCache<K, V>() {
   const map = new Map<K, V>();
@@ -48,9 +38,9 @@ export function pickSafelyBy<T extends object, F>(
 }
 
 export function createTimeFormat(date: Date) {
-  const hours = date.getHours(); // 시간 정보를 추출합니다.
-  const minutes = date.getMinutes(); // 분 정보를 추출합니다.
-  const meridiem = hours >= 12 ? 'PM' : 'AM'; // 오전/오후 정보를 추출합니다.
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const meridiem = hours >= 12 ? 'PM' : 'AM';
   const hoursFormatted = hours.toString().padStart(2, '0');
   const minutesFormatted = minutes.toString().padStart(2, '0');
   const formatted = `${hoursFormatted}:${minutesFormatted} ${meridiem}`;
