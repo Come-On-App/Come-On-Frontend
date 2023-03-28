@@ -118,7 +118,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center',
   },
   mainContainer: {
-    flex: 0.7,
+    flex: 0.65,
     paddingVertical: 10,
   },
   footerContainer: {
