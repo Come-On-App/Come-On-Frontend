@@ -8,7 +8,7 @@ import {
 } from '@components/input/InputText';
 import useUserQuery from '@hooks/query/useUserQuery';
 import useUserMutation from '@hooks/query/useUserMutation';
-import { successAlert } from '@utils/alert';
+import { errorAlert, successAlert } from '@utils/alert';
 import type { NickNameIconButtonProps } from '@type/component.mypage';
 import { IconButton } from '@components/button/Buttons';
 import fn, { emptyString } from '@utils/fn';
@@ -27,6 +27,13 @@ export default function Nickname() {
   const [nickname, setNickname] = useState(user?.nickname || emptyString);
   const onPressHandler = () => {
     if (fn.isEmpty(user)) return;
+
+    if (fn.isEmpty(nickname)) {
+      errorAlert('공백일 수 없습니다');
+      setNickname(user.nickname);
+
+      return;
+    }
 
     const payload = {
       nickname,
