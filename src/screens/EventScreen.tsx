@@ -12,7 +12,7 @@ export default function EventScreen({
 
   useEffect(() => {
     navigation.setOptions({
-      title: '기여자',
+      title: '제작자',
     });
   }, [navigation]);
 
@@ -77,6 +77,8 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: 'white',
     width: '80%',
     height: '80%',
+    borderWidth: 2,
+    borderColor: theme.grayscale['50'],
     borderRadius: 8,
     shadowColor: '#000',
     shadowOffset: {
