@@ -1,7 +1,6 @@
-import React, { createRef, useState } from 'react';
-import { Keyboard, TextInput, View } from 'react-native';
+import React, { useState } from 'react';
+import { Keyboard, View } from 'react-native';
 import { Input, makeStyles } from '@rneui/themed';
-import { Input as BaseInput } from '@rneui/base';
 
 import {
   InputBoxTopTextLength,
@@ -26,7 +25,6 @@ export default function Nickname() {
   const { user } = useUserQuery();
   const { mutate } = useUserMutation();
   const [nickname, setNickname] = useState(user?.nickname || emptyString);
-  const testRef = createRef<TextInput & BaseInput>();
   const onPressHandler = () => {
     if (fn.isEmpty(user)) return;
 
@@ -46,9 +44,9 @@ export default function Nickname() {
   return (
     <View style={styles.container}>
       <Input
-        ref={testRef}
         value={nickname}
         onChangeText={setNickname}
+        placeholder={user?.nickname}
         inputStyle={styles.nickNameText}
         rightIcon={<NickNameIconButton onPress={onPressHandler} />}
         containerStyle={styles.nickNameWrap}
