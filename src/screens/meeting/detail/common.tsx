@@ -25,6 +25,9 @@ interface TimeProps {
   date: Date;
   type?: 'View' | 'Pressable';
   onPress?: () => void;
+  style?: {
+    color: string;
+  };
 }
 
 export function Title({ title }: Title) {
@@ -46,20 +49,22 @@ export function Container({ children, FixedItem }: Container) {
   );
 }
 
-export function Time({ date, type = 'View', onPress }: TimeProps) {
+export function Time({ date, type = 'View', onPress, style }: TimeProps) {
   const styles = useStyles();
   const Component = type === 'View' ? View : Pressable;
 
   return (
     <Component onPress={onPress} style={styles.timeContainer}>
-      <Font style={styles.timeText}>{createTimeFormat(date).formatted}</Font>
+      <Font style={[styles.timeText, style]}>
+        {createTimeFormat(date).formatted}
+      </Font>
     </Component>
   );
 }
 
 const useStyles = makeStyles(() => ({
   titleText: {
-    fontSize: 18,
+    fontSize: 16,
   },
   container: {
     flex: 1,

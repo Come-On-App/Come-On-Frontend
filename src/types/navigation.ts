@@ -29,10 +29,6 @@ export type PlaceSelectParamList = {
   Map: undefined;
 };
 
-export type LoginParamList = {
-  setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
 export type RoomCalendarParamList = {
   meetingId: undefined;
 };
@@ -40,21 +36,22 @@ export type RoomCalendarParamList = {
 export type PlaceSelectScreenProps =
   NativeStackScreenProps<PlaceSelectParamList>;
 
-export type PlaceSelectScreenParams =
-  NavigatorScreenParams<PlaceSelectParamList>;
-
 export type PlaceSelectNavigation = PlaceSelectScreenProps['navigation'];
 
 export type RootScreenParams = NavigatorScreenParams<RootTabParamList>;
 
+export type PlaceSelectParams = NavigatorScreenParams<PlaceSelectParamList>;
+
 export type RootNavigation = NativeStackNavigationProp<
   RootStackParamList,
-  'Root',
-  string
+  'Root'
 >;
 
 export type BottomTabScreenNavigation =
   BottomTabScreenProps<RootTabParamList>['navigation'];
+
+export type NativeStackScreenNavigation =
+  NativeStackScreenProps<RootStackParamList>['navigation'];
 
 export type MeetingDetailNavigation = NativeStackNavigationProp<
   RootStackParamList,
@@ -64,20 +61,20 @@ export type MeetingDetailNavigation = NativeStackNavigationProp<
 
 export type CreateMeetingNavigation = NativeStackNavigationProp<
   RootStackParamList,
-  'CreateMeeting',
-  undefined
+  'CreateMeeting'
 >;
 
 export type RootStackParamList = {
   Root: RootScreenParams;
   MeetingRoom: undefined;
   CreateMeeting: { mode: MeetingMode; meetingId?: number };
-  PlaceSelect: PlaceSelectScreenParams;
+  PlaceSelect: PlaceSelectParams;
   MeetingDetail: { meetingId: number };
   CreateMeetingCalender: undefined;
   MeetingRoomCalendar: { meetingId: number };
   LoginScreen: undefined;
   KakaoLoginWebView: undefined;
+  EasterEgg: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
