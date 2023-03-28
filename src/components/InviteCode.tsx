@@ -18,7 +18,10 @@ import {
 } from '@type/api.meeting';
 import { errorAlert, successAlert } from '@utils/alert';
 import { useNavigation } from '@react-navigation/native';
-import type { BottomTabScreenNavigation } from '@type/navigation';
+import type {
+  BottomTabScreenNavigation,
+  NativeStackScreenNavigation,
+} from '@type/navigation';
 import type { CodeButtonProps, CodeInputProps, SetState } from '@type/index';
 import { Font } from './Font';
 import Button from './button/Buttons';
@@ -29,6 +32,7 @@ const config = {
   cursorSymbol: '🍕',
   cellCount: 6,
   entryText: '입장하기',
+  easterEgg: '221215',
 };
 
 export default function InviteCode() {
@@ -36,9 +40,17 @@ export default function InviteCode() {
     PostJoinPayload,
     PostJoinResponse
   >();
-  const navigation = useNavigation<BottomTabScreenNavigation>();
+  const navigation = useNavigation<
+    BottomTabScreenNavigation & NativeStackScreenNavigation
+  >();
   const [codeText, setCodeText] = useState(emptyString);
   const onPressHandler = () => {
+    if (codeText === config.easterEgg) {
+      navigation.navigate('EasterEgg');
+
+      return;
+    }
+
     promiseFlow({ entryCode: codeText }, [requestMeetingJoin], {
       onSuccess: () => {
         setCodeText(emptyString);

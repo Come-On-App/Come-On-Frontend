@@ -36,7 +36,7 @@ import { createTabBarIcon } from '@components/Icon';
 import LogoutButton from '@components/myPage/MyPageLogoutButton';
 import MyPageHeaderTitle from '@components/myPage/MyPageHeaderTitle';
 import PlaceSelectHeaderTitle from '@components/placeSelect/PlaceSelectHeaderTitle';
-import TestTest from '@components/button/TestTest';
+import EventScreen from '@screens/EventScreen';
 
 function TabThreeIcon() {
   const size = 32;
@@ -114,7 +114,14 @@ function RootNavigator() {
               gestureEnabled: false,
             }}
           />
-          {/* FIXME: 개발용 */}
+          <Stack.Screen
+            name="EasterEgg"
+            component={EventScreen}
+            options={{
+              headerShown: true,
+              contentStyle: styles.background,
+            }}
+          />
           <Stack.Screen
             name="MeetingDetail"
             component={MeetingDetail}
@@ -123,6 +130,7 @@ function RootNavigator() {
               contentStyle: styles.background,
             }}
           />
+
           <Stack.Screen
             name="CreateMeeting"
             component={CreateMeeting}
