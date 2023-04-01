@@ -11,12 +11,7 @@ import useMeeting from '@hooks/useMeeting';
 import { makeStyles } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 
-import {
-  KeyboardAvoidingView,
-  Pressable,
-  View,
-  Dimensions,
-} from 'react-native';
+import { KeyboardAvoidingView, Pressable, View } from 'react-native';
 import { BoldFont } from '@components/Font';
 import { AnimationInputBox } from './InputText';
 import InputImage from './InputImage';
@@ -87,7 +82,7 @@ export function AnimationInputDate({
   const styles = useStyles();
   const navigation = useNavigation();
   const onPressLabel = () => {
-    navigation.navigate('CreateMeetingCalender');
+    navigation.navigate('PeriodCalendar');
   };
   const [date, setDate] = useState({ startDate: '', endDate: '' });
   const {
@@ -110,7 +105,12 @@ export function AnimationInputDate({
     <View style={styles.inputContainer}>
       <BoldFont style={styles.title}>투표 기간</BoldFont>
       <AnimationView id="date">
-        <Pressable style={styles.inputBoxHeight} onPress={onPressLabel}>
+        <Pressable
+          style={styles.inputBoxHeight}
+          onPress={
+            dateConfig.onPressHandler ? dateConfig.onPressHandler : onPressLabel
+          }
+        >
           <IconInputBox
             iconConfig={iconConfig}
             condition={isValid(meetingData.calendarStartFrom)}

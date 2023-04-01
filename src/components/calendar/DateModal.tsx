@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useId } from 'react';
 import Font, { BoldFont } from '@components/Font';
 import { ScrollView, StyleProp, View, ViewStyle } from 'react-native';
 import { makeStyles } from '@rneui/themed';
@@ -117,6 +117,7 @@ function ModalMiddleWithAvatar({
             styles.AvatarAndNameViewStyle,
             isOdd && i === votingUsers.length - 1 ? styles.width : {},
           ]}
+          key={i}
         >
           <AvatarAndName
             style={styles.LabelSpacing}

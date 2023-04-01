@@ -52,6 +52,17 @@ function useMeeting() {
   const setCurrentMeetingId = (meetId: number) => {
     dispatch(setMeetingId(meetId));
   };
+  const getCalendarData = useCallback(() => {
+    const data = {
+      startFrom: meetingSelector.meetingData.calendarStartFrom,
+      endTo: meetingSelector.meetingData.calendarEndTo,
+    };
+
+    return data;
+  }, [
+    meetingSelector.meetingData.calendarEndTo,
+    meetingSelector.meetingData.calendarStartFrom,
+  ]);
   const resetMeetingData = useCallback(() => {
     dispatch(reset());
   }, [dispatch]);
@@ -101,6 +112,7 @@ function useMeeting() {
     setMyMeetingImgPath,
     setMyMeetingName,
     resetMeetingData,
+    getCalendarData,
   };
 }
 

@@ -75,8 +75,8 @@ const meetingSlice = createSlice({
       };
 
       if (
-        state.meetingData.meetingName &&
-        state.meetingData.calendarStartFrom &&
+        state.meetingData.meetingName ||
+        state.meetingData.calendarStartFrom ||
         state.meetingData.calendarEndTo
       ) {
         state.meetingData = newData;

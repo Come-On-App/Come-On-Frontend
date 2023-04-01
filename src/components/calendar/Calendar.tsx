@@ -2,7 +2,11 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { makeStyles, Overlay } from '@rneui/themed';
 import { View } from 'react-native';
-import { CalendarList, DateData } from 'react-native-calendars';
+import {
+  CalendarList,
+  CalendarProvider,
+  DateData,
+} from 'react-native-calendars';
 import { MarkedDates } from 'react-native-calendars/src/types';
 
 import {
@@ -17,7 +21,7 @@ import {
   CalendarProps,
 } from '@type/meeting.calendar';
 import { successAlert } from '@utils/alert';
-import Font from '../Font';
+import { BoldFont } from '../Font';
 import LocaleConfig from './LocaleConfig';
 import CustomCalendarTheme, { DayTheme } from './CustomCalendarTheme';
 
@@ -41,6 +45,7 @@ const ENDSTYLE = {
 const PERIODSTYLE = {
   selected: true,
   customContainerStyle: DayTheme.DayTheme?.dayStyle?.container,
+  textColor: 'black',
   color: DayTheme.DayTheme?.colors?.dayFilteredColor,
 };
 const DAYSTYLE = {
@@ -80,11 +85,11 @@ const renderSelectedDate = (
     markedDates.set(date, {
       customStyles: {
         container: {
-          borderRadius: 0,
+          borderRadius: 4,
           backgroundColor: `rgba(51,127,254, ${userCounts[idx] / totalUsers})`,
         },
         text: {
-          color: 'black',
+          color: 'white',
         },
       },
     });
@@ -124,7 +129,9 @@ function CalendarHeader(date: XDate) {
 
   return (
     <View style={styles.calendarTitle}>
-      <Font>{`${year}년 ${strMonth}월`}</Font>
+      <BoldFont
+        style={styles.calendarTitleFont}
+      >{`${year}년 ${strMonth}월`}</BoldFont>
     </View>
   );
 }
@@ -202,15 +209,16 @@ function PeriodCalendar({ setDate }: CalendarPeriodTypeProps) {
 
   return (
     <CalendarList
-      theme={CustomCalendarTheme}
       calendarStyle={styles.calendarStyle}
       onDayPress={onPressDayHandlerPeriod}
       minDate={today}
+      theme={CustomCalendarTheme}
       markingType="period"
       scrollToOverflowEnabled
       markedDates={markedDate || {}}
       nestedScrollEnabled
       pastScrollRange={0}
+      renderPlaceholder={() => <LoadingComponent size="large" />}
       displayLoadingIndicator={false}
       futureScrollRange={12}
       initialNumToRender={1}
@@ -301,7 +309,7 @@ function DefaultCalendar({
   );
 
   return (
-    <>
+    <CalendarProvider date={startFrom}>
       <CalendarList
         calendarStyle={styles.calendarStyle}
         onDayPress={onPressHandler}
@@ -309,12 +317,11 @@ function DefaultCalendar({
         maxDate={endTo}
         markingType="custom"
         markedDates={selectedDates}
-        pastScrollRange={0}
         scrollEnabled
+        pastScrollRange={0}
+        enableSwipeMonths
         onDayLongPress={onDayLongPressHandler}
-        renderPlaceholder={(_year, _months) => (
-          <LoadingComponent size="large" />
-        )}
+        renderPlaceholder={() => <LoadingComponent size="large" />}
         displayLoadingIndicator={false}
         futureScrollRange={month}
         showScrollIndicator
@@ -343,7 +350,7 @@ function DefaultCalendar({
           )}
         </Overlay>
       ) : null}
-    </>
+    </CalendarProvider>
   );
 }
 
@@ -393,24 +400,24 @@ export default Calendar;
 const useStyles = makeStyles(theme => ({
   calendarContainer: {
     width: '100%',
-
     height: '98%',
     backgroundColor: 'white',
     borderRadius: 12,
+    paddingBottom: 20,
   },
   calendarStyle: {
     width: '100%',
     borderRadius: 12,
   },
-  dayTextAtIndex0: {
-    color: theme.colors.warning,
-  },
   calendarTitle: {
+    flexDirection: 'row',
     justifyContent: 'flex-start',
     marginTop: 10,
     marginBottom: 10,
-
     width: '100%',
+  },
+  calendarTitleFont: {
+    fontSize: 16,
   },
   loadingContainer: {
     justifyContent: 'center',

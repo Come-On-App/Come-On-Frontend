@@ -11,14 +11,15 @@ import LoadingComponent from '@components/calendar/LoadingComponent';
 import { useQuery } from 'react-query';
 import { RootStackScreenProps } from '@type/navigation';
 import { QueryKeys } from '@api/queryClient';
-import Label from '../components/input/Label';
-import MemberBox from '../components/member/MemberBox';
 
-function MeetingRoomCalendar({
+import MemberBox from '../components/member/MemberBox';
+import { Title, TitleName } from './meeting/detail/common';
+
+function SelectCalendar({
   route: {
     params: { meetingId },
   },
-}: RootStackScreenProps<'MeetingRoomCalendar'>) {
+}: RootStackScreenProps<'SelectCalendar'>) {
   const styles = useStyles();
   const navigation = useNavigation();
   const { data: meetingDetail } = useQuery(
@@ -54,7 +55,7 @@ function MeetingRoomCalendar({
         />
       </View>
 
-      <Label>모임기간</Label>
+      <Title title={TitleName.date} />
       <Calendar
         type="DEFAULT"
         data={votingDetail}
@@ -70,7 +71,7 @@ function MeetingRoomCalendar({
   );
 }
 
-export default MeetingRoomCalendar;
+export default SelectCalendar;
 
 const useStyles = makeStyles(() => ({
   container: {
