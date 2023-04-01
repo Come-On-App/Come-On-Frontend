@@ -36,7 +36,6 @@ import { createTabBarIcon } from '@components/Icon';
 import LogoutButton from '@components/myPage/MyPageLogoutButton';
 import MyPageHeaderTitle from '@components/myPage/MyPageHeaderTitle';
 import PlaceSelectHeaderTitle from '@components/placeSelect/PlaceSelectHeaderTitle';
-import TestTest from '@components/button/TestTest';
 
 function TabThreeIcon() {
   const size = 32;

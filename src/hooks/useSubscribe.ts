@@ -21,11 +21,7 @@ import { promiseFlow } from '@utils/promise';
 import { GetMyInfoResponse } from '@type/api.user';
 import { requestPostMeetingPlacesUnLock } from '@api/meeting/places';
 import { PlaceLock } from '@features/placeLockSlice';
-import {
-  BottomTabScreenNavigation,
-  RootNavigation,
-  RootScreenParams,
-} from '@type/navigation';
+import { RootNavigation } from '@type/navigation';
 import { fallbackImage } from './query/useUserQuery';
 import usePlace from './redux/usePlace';
 import usePlaceLock, {

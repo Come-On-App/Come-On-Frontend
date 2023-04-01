@@ -11,8 +11,9 @@ import LoadingComponent from '@components/calendar/LoadingComponent';
 import { useQuery } from 'react-query';
 import { RootStackScreenProps } from '@type/navigation';
 import { QueryKeys } from '@api/queryClient';
-import Label from '../components/input/Label';
+
 import MemberBox from '../components/member/MemberBox';
+import { Title, TitleName } from './meeting/detail/common';
 
 function MeetingRoomCalendar({
   route: {
@@ -54,7 +55,7 @@ function MeetingRoomCalendar({
         />
       </View>
 
-      <Label>모임기간</Label>
+      <Title title={TitleName.date} />
       <Calendar
         type="DEFAULT"
         data={votingDetail}

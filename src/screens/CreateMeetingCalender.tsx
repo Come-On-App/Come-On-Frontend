@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View } from 'react-native';
+import { Dimensions, Text, View } from 'react-native';
 import { makeStyles } from '@rneui/themed';
 
 import { SubDateProps } from '@type/meeting.calendar';
@@ -13,6 +13,8 @@ import {
 import Font from '../components/Font';
 import { useAppDispatch } from '../hooks/redux/hooks';
 import Calendar from '../components/calendar/Calendar';
+
+const { width } = Dimensions.get('window');
 
 function SubLabelDate({ date }: SubDateProps) {
   const { startDate, endDate } = date;
@@ -97,7 +99,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: 12,
   },
   sublabelContainer: {
-    flex: 0.5,
+    flex: width > 385 ? 0.5 : 0.6,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
