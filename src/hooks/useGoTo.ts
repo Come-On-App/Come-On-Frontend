@@ -1,14 +1,14 @@
 import { MeetingMode } from '@features/meetingSlice';
 import { useNavigation } from '@react-navigation/native';
 
-// eslint-disable-next-line import/prefer-default-export
-export function useGoToCreateMeetingScreen(
-  mode: MeetingMode,
-  meetingId?: number,
-) {
+function useGoToScreen() {
   const navigation = useNavigation();
-  const goToCreateMeetingScreen = () =>
+  const goToCreateMeetingScreen = (mode: MeetingMode, meetingId?: number) =>
     navigation.navigate('CreateMeeting', { mode, meetingId });
+  const goToReportPostScreen = (meetingId: number) =>
+    navigation.navigate('ReportPost', { meetingId });
 
-  return goToCreateMeetingScreen;
+  return { goToCreateMeetingScreen, goToReportPostScreen };
 }
+
+export default useGoToScreen;

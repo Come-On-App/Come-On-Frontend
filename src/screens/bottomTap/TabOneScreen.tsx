@@ -7,7 +7,7 @@ import SearchBar from '@components/SearchBar';
 import { IconButton } from '@components/button/Buttons';
 import CardList from '@components/meetingCard/CardList';
 import { MeetingMode } from '@features/meetingSlice';
-import { useGoToCreateMeetingScreen } from '@hooks/useGoTo';
+import useGoToScreen from '@hooks/useGoTo';
 
 // 모임 관리 스크린
 export default function TabOneScreen() {
@@ -59,9 +59,7 @@ function DateRangeSerchBar() {
 
 function CreateMeetingRoomButton() {
   const styles = useStyles();
-  const goToCreateMeetingScreen = useGoToCreateMeetingScreen(
-    MeetingMode.create,
-  );
+  const { goToCreateMeetingScreen } = useGoToScreen();
 
   return (
     <View style={styles.buttonContainer}>
@@ -71,7 +69,7 @@ function CreateMeetingRoomButton() {
           size: styles.buttonIcon.size,
           color: styles.buttonIcon.color,
         }}
-        onPress={goToCreateMeetingScreen}
+        onPress={() => goToCreateMeetingScreen(MeetingMode.create)}
         style={styles.button}
       />
     </View>
@@ -84,7 +82,7 @@ const useStyles = makeStyles(() => ({
     paddingBottom: -38, // 네비게이션 탭 패딩 공간 제거
   },
   screenTopContainer: {
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
     flexDirection: 'row',
     alignItems: 'center',
     paddingBottom: 2,
@@ -108,6 +106,6 @@ const useStyles = makeStyles(() => ({
   },
   cardContainer: {
     flex: 1,
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
   },
 }));
