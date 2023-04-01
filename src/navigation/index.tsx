@@ -27,6 +27,8 @@ import LoginScreen from '@screens/LoginScreen';
 import TabOneScreen from '@screens/bottomTap/TabOneScreen';
 import TabThreeScreen from '@screens/bottomTap/TabThreeScreen';
 import TabTwoScreen from '@screens/bottomTap/TabTwoScreen';
+import EventScreen from '@screens/EventScreen';
+import ReportPost from '@screens/reportPost/ReportPost';
 
 import CancelIconButton, {
   CancelPlaceSelectIconButton,
@@ -36,7 +38,6 @@ import { createTabBarIcon } from '@components/Icon';
 import LogoutButton from '@components/myPage/MyPageLogoutButton';
 import MyPageHeaderTitle from '@components/myPage/MyPageHeaderTitle';
 import PlaceSelectHeaderTitle from '@components/placeSelect/PlaceSelectHeaderTitle';
-import EventScreen from '@screens/EventScreen';
 
 function TabThreeIcon() {
   const size = 32;
@@ -117,6 +118,14 @@ function RootNavigator() {
           <Stack.Screen
             name="EasterEgg"
             component={EventScreen}
+            options={{
+              headerShown: true,
+              contentStyle: styles.background,
+            }}
+          />
+          <Stack.Screen
+            name="ReportPost"
+            component={ReportPost}
             options={{
               headerShown: true,
               contentStyle: styles.background,
