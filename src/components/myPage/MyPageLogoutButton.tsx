@@ -4,15 +4,26 @@ import { Button, makeStyles } from '@rneui/themed';
 
 import useAuth from '@hooks/useAuth';
 import useWebSocket from '@hooks/useWebSocket';
+import * as WebBrowser from 'expo-web-browser';
+import * as Linking from 'expo-linking';
+import { COMEON_API_URL } from '@env';
 
+WebBrowser.maybeCompleteAuthSession({ skipRedirectCheck: true });
 export default function LogoutButton() {
-  const { setLogout } = useAuth();
+  const { setLogout, authSelector } = useAuth();
   const { deactivate } = useWebSocket();
+  const { accessToken } = authSelector;
   const styles = useStyles();
+  const callbackUrl = Linking.createURL('/logout/callback');
   const TITLE = '로그아웃';
-  const onPressLogout = () => {
-    setLogout();
-    deactivate();
+  const baseUrl = `${COMEON_API_URL}/logout?atk=${accessToken?.token}&redirect_uri=${callbackUrl}`;
+  const onPressLogout = async () => {
+    const result = await WebBrowser.openAuthSessionAsync(baseUrl, callbackUrl);
+
+    if (result.type === 'success') {
+      setLogout();
+      deactivate();
+    }
   };
 
   return (

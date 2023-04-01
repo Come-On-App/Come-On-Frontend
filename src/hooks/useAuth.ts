@@ -2,7 +2,6 @@ import { AuthResponse } from '@type/index';
 import { useCallback } from 'react';
 import { setTokensToDB } from '@api/token/token';
 import { isExpiry } from '@utils/fn';
-import { AccessTokenRes } from '../types/index';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
 import { login, logout, setToken } from '../features/authSlice';
 import { getValueFor } from '../utils/secureStore';
@@ -36,6 +35,7 @@ const getTokenData = async (name: 'accessToken' | 'refreshToken') => {
 function useAuth() {
   const dispatch = useAppDispatch();
   const isAuth = useAppSelector(state => state.auth.haveToken);
+  const authSelector = useAppSelector(state => state.auth);
   const accessToken = useAppSelector(state => state.auth.accessToken);
   const refreshToken = useAppSelector(state => state.auth.refreshToken);
   const myId = useAppSelector(state => state.auth.userId);
@@ -75,6 +75,7 @@ function useAuth() {
     setLogout,
     setTokens,
     accessToken,
+    authSelector,
     getRefreshToken,
     autoLogin,
     setLogin,

@@ -1,6 +1,5 @@
 import React from 'react';
 import { makeStyles } from '@rneui/themed';
-import * as WebBrowser from 'expo-web-browser';
 import { View, Text, Platform } from 'react-native';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
