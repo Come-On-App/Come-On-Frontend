@@ -10,6 +10,7 @@ import { setLogin } from '@api/auth/auth';
 import { REACT_APP_REST_API_KEY, REACT_APP_REDIRECT_URI } from '@env';
 import KakaoLogo from '../../assets/images/logo/KakaoLogo';
 
+WebBrowser.maybeCompleteAuthSession();
 export default function KakaoLoginBtn() {
   const styles = useStyles();
   const { setLogin: login } = useAuth();

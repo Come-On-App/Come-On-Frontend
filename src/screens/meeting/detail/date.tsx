@@ -21,7 +21,7 @@ import useUserQuery from '@hooks/query/useUserQuery';
 import { TitleName, Title, text, Time, requestAPI } from './common';
 
 // 모임 기간
-function MeetingDate({ calendar, meetingId, navigation }: DateProps) {
+export function MeetingDate({ calendar, meetingId, navigation }: DateProps) {
   return (
     <Layout>
       <DateTop />

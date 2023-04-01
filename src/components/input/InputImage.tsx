@@ -27,8 +27,6 @@ function InputImage() {
       setMyImgUri(path.uri);
 
       setImageUri(imgUri);
-
-      return;
     }
 
     if (imgUri) {

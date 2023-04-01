@@ -10,6 +10,7 @@ const theme = createTheme({
   },
   calendarStyles: {
     period: '#EFF6FE',
+    blackStyle: 'black',
   },
   darkColors: {},
   mode: 'light',

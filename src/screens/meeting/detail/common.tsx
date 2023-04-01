@@ -8,7 +8,12 @@ import type { Places } from '@type/screen.meeting';
 import MapView from 'react-native-maps';
 import usePlace from '@hooks/redux/usePlace';
 import { MapRegion } from '@type/index';
-import { RootStackScreenProps } from '@type/navigation';
+import {
+  BottomTabScreenNavigation,
+  PlaceSelectNavigation,
+  RootNavigation,
+  RootStackScreenProps,
+} from '@type/navigation';
 import { GetMeetingDetailResponse } from '@type/api.meeting';
 import { Pressable, ScrollView, View } from 'react-native';
 
@@ -146,6 +151,22 @@ export function useSetTitle(
       title: meetingDetail.meetingMetaData.meetingName,
     });
   }, [meetingDetail, navigation]);
+}
+
+export function useSetTitleCommon(
+  navigation:
+    | BottomTabScreenNavigation
+    | PlaceSelectNavigation
+    | RootNavigation,
+  title: string,
+) {
+  useEffect(() => {
+    if (!title) return;
+
+    navigation.setOptions({
+      title,
+    });
+  }, [navigation, title]);
 }
 
 export const requestAPI =
