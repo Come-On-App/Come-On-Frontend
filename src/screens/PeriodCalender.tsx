@@ -5,6 +5,7 @@ import { makeStyles } from '@rneui/themed';
 import { SubDateProps } from '@type/meeting.calendar';
 import { RootStackScreenProps } from '@type/navigation';
 import FlexButtons from '@components/button/FlexButtons';
+import useMeeting from '@hooks/useMeeting';
 import {
   setCalendarEndTo,
   setCalendarStartFrom,
@@ -33,12 +34,14 @@ function PeriodCalendar({
   navigation,
 }: RootStackScreenProps<'PeriodCalendar'>) {
   const styles = useStyles();
+  const { resetMeetingData } = useMeeting();
   const dispatch = useAppDispatch();
   const [date, setDate] = useState({
     startDate: '0000-00-00',
     endDate: '0000-00-00',
   });
   const cancelHandler = () => {
+    resetMeetingData();
     navigation.goBack();
   };
   const confirmHandelr = () => {
