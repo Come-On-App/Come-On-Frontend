@@ -1,9 +1,10 @@
-import Logo from '@assets/images/logo/Logo';
-import Font, { BoldFont } from '@components/Font';
-import { makeStyles } from '@rneui/themed';
-import { RootStackScreenProps } from '@type/navigation';
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
+import { makeStyles } from '@rneui/themed';
+
+import { RootStackScreenProps } from '@type/navigation';
+import Logo from '@assets/images/logo/Logo';
+import Font, { BoldFont } from '@components/Font';
 
 export default function EventScreen({
   navigation,

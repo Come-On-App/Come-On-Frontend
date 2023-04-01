@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from 'react';
 import { View } from 'react-native';
 
-import Layout from '@components/Layout';
+import { MeetingLayout } from '@components/Layout';
 import Font from '@components/Font';
 import Button from '@components/button/Buttons';
 import Icon from '@components/Icon';
@@ -18,21 +18,24 @@ import useMeetingTimeQuery from '@hooks/query/useMeetingTimeQuery';
 import useMeetingTimeMutation from '@hooks/query/useMeetingTimeMutation';
 import useMemberQuery, { isHostUser } from '@hooks/query/useMemberQuery';
 import useUserQuery from '@hooks/query/useUserQuery';
-import { TitleName, Title, text, Time, requestAPI } from './common';
+import { meeting } from '@assets/config';
+import { Title, Time, requestAPI } from './common';
+
+const { detail } = meeting.text;
 
 // 모임 기간
 function MeetingDate({ calendar, meetingId, navigation }: DateProps) {
   return (
-    <Layout>
+    <MeetingLayout>
       <DateTop />
       <DateMain calendar={calendar} meetingId={meetingId} />
       <DateBottom meetingId={meetingId} navigation={navigation} />
-    </Layout>
+    </MeetingLayout>
   );
 }
 
 function DateTop() {
-  return <Title title={TitleName.date} />;
+  return <Title title={detail.date} />;
 }
 
 function DateMain({ calendar, meetingId }: DateMainProps) {
@@ -55,7 +58,7 @@ function DateMainLeft({ calendar }: DateMainLeftProps) {
       <View style={styles.dateMainLeftContainer}>
         <Icon name="calendar-today" size={size} color={color} />
         <Font style={styles.dateMainLeftCalendar}>
-          {text.calendar(calendar)}
+          {detail.vote.range(calendar)}
         </Font>
       </View>
     </View>
@@ -107,7 +110,7 @@ function DateBottom({ meetingId, navigation }: DateBottomProps) {
     <View style={styles.dateBottomLayout}>
       <Button
         bold
-        text={text.voteBtn}
+        text={detail.vote.button}
         onPress={onPressHandler}
         buttonStyle={styles.dateBottomButton}
       />

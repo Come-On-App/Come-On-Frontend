@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useState } from 'react';
+import React, { memo, useState } from 'react';
 import { makeStyles } from '@rneui/themed';
 import { View } from 'react-native';
 import { Menu, MenuDivider, MenuItem } from 'react-native-material-menu';
@@ -14,7 +14,8 @@ import type {
 import { IconButton } from '@components/button/Buttons';
 import Font from '@components/Font';
 import { MeetingMode } from '@features/meetingSlice';
-import { useGoToCreateMeetingScreen } from '@hooks/useGoTo';
+import useGoToScreen from '@hooks/useGoTo';
+import { meeting } from '@assets/config';
 import CardModal from './CardModal';
 
 const MemoMenu = memo(Menu);
@@ -60,24 +61,38 @@ function CardMenuIcon({ showMenu }: CardMenuDisplayProps) {
   );
 }
 
+const { menu: textMenu } = meeting.text;
+
 function CardMenuItems({ role, meetingId, hideMenu }: CardMenuItemsProps) {
   const { deleteMeeting } = useMeetingMutation();
   const [codeModal, setCodeModal] = useState(false);
-  const goToEditMeetingScreen = useGoToCreateMeetingScreen(
-    MeetingMode.edit,
-    meetingId,
-  );
-  const onPressHandler = () => {
-    hideMenu();
-    goToEditMeetingScreen();
+  const { goToCreateMeetingScreen, goToReportPostScreen } = useGoToScreen();
+  const toggleCodeModal = () => {
+    setCodeModal(prev => !prev);
   };
-  const toggleCodeModal = useCallback(() => setCodeModal(prev => !prev), []);
+  const goToEditScreen = () => {
+    hideMenu();
+    goToCreateMeetingScreen(MeetingMode.edit, meetingId);
+  };
+  const goToReportScreen = () => {
+    hideMenu();
+    goToReportPostScreen(meetingId);
+  };
+  const deletePost = () => {
+    hideMenu();
+    deleteMeeting(meetingId);
+  };
   const menuConfig: MenuConfig[] = [
-    { onPress: toggleCodeModal, text: '초대코드 관리', permission: true },
-    { onPress: onPressHandler, text: '모임 수정', permission: true },
+    { onPress: toggleCodeModal, text: textMenu.code, permission: true },
+    { onPress: goToEditScreen, text: textMenu.edit, permission: true },
     {
-      onPress: deleteMeeting.bind({}, meetingId),
-      text: '모임 탈퇴',
+      onPress: goToReportScreen,
+      text: textMenu.report,
+      permission: false,
+    },
+    {
+      onPress: deletePost,
+      text: textMenu.delete,
       permission: false,
       style: { color: 'red' },
     },

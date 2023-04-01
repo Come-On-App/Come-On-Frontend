@@ -3,7 +3,6 @@ import React, { Dispatch, RefObject, SetStateAction, useEffect } from 'react';
 import fn, { createTimeFormat } from '@utils/fn';
 import Font, { BoldFont } from '@components/Font';
 import { makeStyles } from '@rneui/themed';
-import { Calendar } from '@type/meeting.date';
 import type { Places } from '@type/screen.meeting';
 import MapView from 'react-native-maps';
 import usePlace from '@hooks/redux/usePlace';
@@ -11,9 +10,10 @@ import { MapRegion } from '@type/index';
 import { RootStackScreenProps } from '@type/navigation';
 import { GetMeetingDetailResponse } from '@type/api.meeting';
 import { Pressable, ScrollView, View } from 'react-native';
+import { ScrrenLayout } from '@components/Layout';
 
 interface Title {
-  title: TitleName;
+  title: string;
 }
 
 interface Container {
@@ -40,12 +40,12 @@ export function Container({ children, FixedItem }: Container) {
   const styles = useStyles();
 
   return (
-    <View style={styles.container}>
+    <ScrrenLayout>
       {FixedItem}
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.content}>{children}</View>
       </ScrollView>
-    </View>
+    </ScrrenLayout>
   );
 }
 
@@ -66,12 +66,7 @@ const useStyles = makeStyles(() => ({
   titleText: {
     fontSize: 16,
   },
-  container: {
-    flex: 1,
-    marginTop: 20,
-    marginHorizontal: 15,
-    marginBottom: 30,
-  },
+
   content: {
     alignItems: 'center',
   },
@@ -87,18 +82,6 @@ const useStyles = makeStyles(() => ({
     color: 'white',
   },
 }));
-
-export enum TitleName {
-  member = '모임멤버 ',
-  date = '모임기간',
-  place = '모임장소',
-}
-
-export const text = {
-  calendar: (calendar: Calendar) => `${calendar.startFrom} ~ ${calendar.endTo}`,
-  voteBtn: '날짜 투표하기',
-};
-
 const colors = [
   '#fc5c65',
   '#fd9644',

@@ -105,6 +105,7 @@ export interface InputProps {
   placeholder: string;
   onChangeText: (text: string) => void;
   style?: StyleProp<TextStyle>;
+  containerStyle?: StyleProp<ViewStyle>;
 }
 
 export interface InputFormProps {
@@ -286,7 +287,9 @@ export interface Icon {
 
 // SearchBar
 export interface SearchBarProps {
-  style?: StyleProp<TextStyle>;
+  fontStyle?: StyleProp<TextStyle>;
+  containerStyle?: StyleProp<ViewStyle>;
+  inputContainerStyle?: StyleProp<ViewStyle>;
   IconType: IconName;
   value: string;
   onChange?: (text: string) => void;

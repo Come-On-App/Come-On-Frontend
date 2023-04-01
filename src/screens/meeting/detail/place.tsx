@@ -4,25 +4,28 @@ import { View } from 'react-native';
 import MeetingDetailPlaceCard from '@components/placeCard/PlaceCard';
 import usePlaceLock from '@hooks/redux/usePlaceLock';
 import Avatar from '@components/member/Avatar';
-import Layout from '@components/Layout';
+import { MeetingLayout } from '@components/Layout';
 import type {
   PlaceMainProps,
   PlaceProps,
   PlaceTopProps,
 } from '@type/screen.meeting';
 import { makeStyles } from '@rneui/themed';
+import { meeting } from '@assets/config';
 import MeetingDetailMap from './Map';
-import { getRandomColor, Title, TitleName } from './common';
+import { getRandomColor, Title } from './common';
+
+const { detail } = meeting.text;
 
 // 모임 장소
 function Place({ meetingId, navigation }: PlaceProps) {
   const [color] = useState(getRandomColor());
 
   return (
-    <Layout>
+    <MeetingLayout>
       <PlaceTop color={color} />
       <PlaceMain color={color} meetingId={meetingId} navigation={navigation} />
-    </Layout>
+    </MeetingLayout>
   );
 }
 
@@ -36,7 +39,7 @@ function PlaceTop({ color }: PlaceTopProps) {
 
   return (
     <View style={[styles.placeTopContainer, styles.commonHeight]}>
-      <Title title={TitleName.place} />
+      <Title title={detail.place} />
       {placeLockState.lockUserImage && (
         <Avatar
           size={styles.commonHeight.height}

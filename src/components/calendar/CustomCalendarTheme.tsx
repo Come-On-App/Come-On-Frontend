@@ -1,7 +1,7 @@
 import { Theme as CalendarTheme } from 'react-native-calendars/src/types';
 import { createTheme } from '@rneui/themed';
 
-import theme from '../../constants/themed';
+import theme from '../../assets/themed';
 
 const CustomCalendarTheme: CalendarTheme = {
   'stylesheet.calendar.header': {

@@ -3,7 +3,7 @@ import { StyleProp, TextStyle, View, ActivityIndicator } from 'react-native';
 import { Button } from '@rneui/themed';
 
 import { makeStyles } from '@rneui/base';
-import theme from '../../constants/themed';
+import theme from '../../assets/themed';
 
 interface ButtonProps {
   title: string;

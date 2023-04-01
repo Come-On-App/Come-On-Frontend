@@ -11,8 +11,9 @@ import {
   LittleMemberBoxProps,
   OnLineAvatarProps,
 } from '@type/meeting.memberBox';
-import { Title, TitleName } from '@screens/meeting/detail/common';
+import { Title } from '@screens/meeting/detail/common';
 import useAuth from '@hooks/useAuth';
+import { meeting } from '@assets/config';
 import {
   MemberBoxProps,
   MemberBoxSubTitleProps,
@@ -22,6 +23,8 @@ import {
 import Label from '../input/Label';
 import Font from '../Font';
 import BadgedAvatar from './BadgedAvatar';
+
+const { detail } = meeting.text;
 
 function OnLineUserAvatar({ item, onPressHandler }: OnLineAvatarProps) {
   const { profileImageUrl } = item;
@@ -233,8 +236,7 @@ function MemberBoxTitle({ userCount }: MemberBoxTitleProps) {
 
   return (
     <View style={styles.meetingMemberLabelStyle}>
-      <Title title={TitleName.member} />
-
+      <Title title={detail.member} />
       <Label style={styles.colorText}>{userCount}</Label>
     </View>
   );

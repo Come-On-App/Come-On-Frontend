@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Image, Pressable, View } from 'react-native';
+import { View } from 'react-native';
 
 import useImagePicker from '@hooks/useImagePicker';
 import useMeeting from '@hooks/useMeeting';
 
 import { makeStyles } from '@rneui/themed';
-import { BoldFont, Font } from '../Font';
-import Icon from '../Icon';
+import ImageContent from '@components/Image';
+import { Title } from '@screens/meeting/detail/common';
+import { report } from '@assets/config';
 
 function InputImage() {
   const styles = useStyles();
@@ -14,7 +15,7 @@ function InputImage() {
   const {
     meetingSelector: { meetingImgPath, imgUri },
   } = useMeeting();
-  const [path, pickImage2] = useImagePicker();
+  const [path, pickImage] = useImagePicker();
   const [imageUri, setImageUri] = useState<string>();
 
   useEffect(() => {
@@ -38,77 +39,17 @@ function InputImage() {
 
   return (
     <View style={styles.container}>
-      <BoldFont style={styles.label}>사진등록</BoldFont>
-      <Pressable onPress={pickImage2} style={[styles.imageContainer]}>
-        {imageUri ? (
-          <Image
-            style={[styles.image]}
-            source={{
-              uri: imageUri,
-            }}
-          />
-        ) : (
-          <ImageContent />
-        )}
-      </Pressable>
+      <Title title={report.text.image} />
+      <ImageContent onPress={pickImage} imageURL={imageUri} />
     </View>
   );
 }
 
 export default InputImage;
 
-function ImageContent() {
-  const styles = useStyles();
-
-  return (
-    <View style={styles.imageBox}>
-      <Icon
-        name="camera-alt"
-        size={28}
-        color={styles.imageContentColor.color}
-      />
-      <Font style={styles.fontColor}>사진을 등록해 주세요</Font>
-    </View>
-  );
-}
-
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   container: {
     marginTop: 28,
     marginBottom: 12,
-  },
-  imageContainer: {
-    overflow: 'hidden',
-    marginTop: 12,
-    width: '100%',
-    height: 200,
-    backgroundColor: theme.grayscale?.[100],
-    borderColor: theme.grayscale?.[200],
-    borderStyle: 'solid',
-    borderWidth: 1,
-    borderRadius: 4,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  image: {
-    width: '100%',
-    height: '100%',
-    borderRadius: 8,
-  },
-  label: {
-    color: theme.grayscale?.[900],
-    fontSize: theme.textStyles?.title4?.fontSize,
-    lineHeight: theme.textStyles?.title4?.lineHeight,
-  },
-  fontColor: {
-    color: theme.grayscale?.[500],
-  },
-  imageBox: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  imageContentColor: {
-    color: theme.grayscale?.[500],
   },
 }));

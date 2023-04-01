@@ -24,11 +24,14 @@ import { SetState } from '@type/index';
 import { promiseFlow } from '@utils/promise';
 import { isExpiry } from '@utils/fn';
 import { errorAlert, successAlert } from '@utils/alert';
+import { meeting } from '@assets/config';
+
+const textModal = meeting.text.modal;
 
 function CardModal({ isVisible, onClose, meetingId }: CardModalProps) {
   const styles = useStyles();
   const [code, setCode] = useState<GetEntryCodeResponse>({
-    entryCode: '------',
+    entryCode: textModal.emptyCode,
     expiredAt: '',
     meetingId: 0,
   });
@@ -48,7 +51,7 @@ function CardModal({ isVisible, onClose, meetingId }: CardModalProps) {
     if (isExpiry(data.expiredAt)) {
       promiseFlow(data.meetingId, [requestPostEntryCode, setCode], {
         onSuccess: () => {
-          successAlert('코드가 만료되어 갱신되었습니다!');
+          successAlert(textModal.expiry);
         },
         onError: (error: ErrorMeetingResponse) => {
           errorAlert(error.response.data.errorDescription);
@@ -69,12 +72,11 @@ function CardModal({ isVisible, onClose, meetingId }: CardModalProps) {
 }
 
 function CardModalTop({ isLoading }: CardModalTopProps) {
-  const text = isLoading ? '초대코드 확인중...' : '초대코드가 생성됐습니다!';
   const styles = useStyles();
 
   return (
     <View style={styles.topContainer}>
-      <BoldFont style={styles.title}>{text}</BoldFont>
+      <BoldFont style={styles.title}>{textModal.loading(isLoading)}</BoldFont>
     </View>
   );
 }
@@ -103,11 +105,10 @@ function CardModalCode({ code }: Code) {
 
 function CardModalText() {
   const styles = useStyles();
-  const MODAL_TEXT = '복사해서 사용하세요';
 
   return (
     <View style={styles.textContainer}>
-      <Font style={styles.text}>{MODAL_TEXT}</Font>
+      <Font style={styles.text}>{textModal.copy}</Font>
     </View>
   );
 }
@@ -122,21 +123,16 @@ const setClipboard = (stateAction: SetState<boolean>) => {
 function CardModalBottom({ onClose, code }: CardModalButtonProps) {
   const { primary, success } = useStyles();
   const [isCopiedText, stateAction] = useState(false);
-  const text = {
-    cancel: '닫기',
-    copy: '복사하기',
-    success: '복사완료!',
-  };
   const button = {
     backgroundColor: isCopiedText ? success.color : primary.color,
-    secondText: isCopiedText ? text.success : text.copy,
+    secondText: isCopiedText ? textModal.button.success : textModal.button.copy,
   };
   const onPressHandler = setClipboard(stateAction).bind(undefined, code);
 
   return (
     <ButtonGroup
       firstButton={{
-        text: text.cancel,
+        text: textModal.button.cancel,
         onPress: onClose,
       }}
       secondButton={{
