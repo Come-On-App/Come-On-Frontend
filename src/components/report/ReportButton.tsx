@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Button from '@components/button/Buttons';
-import { report } from '@assets/config';
+import { report } from '@constants/config';
 
 function ReportButton() {
   return (

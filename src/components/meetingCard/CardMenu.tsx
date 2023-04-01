@@ -15,7 +15,7 @@ import { IconButton } from '@components/button/Buttons';
 import Font from '@components/Font';
 import { MeetingMode } from '@features/meetingSlice';
 import useGoToScreen from '@hooks/useGoTo';
-import { meeting } from '@assets/config';
+import { meeting } from '@constants/config';
 import CardModal from './CardModal';
 
 const MemoMenu = memo(Menu);

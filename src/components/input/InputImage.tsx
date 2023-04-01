@@ -7,7 +7,7 @@ import useMeeting from '@hooks/useMeeting';
 import { makeStyles } from '@rneui/themed';
 import ImageContent from '@components/Image';
 import { Title } from '@screens/meeting/detail/common';
-import { report } from '@assets/config';
+import { report } from '@constants/config';
 
 function InputImage() {
   const styles = useStyles();

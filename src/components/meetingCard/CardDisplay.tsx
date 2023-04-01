@@ -9,7 +9,7 @@ import type {
 } from '@type/component.card';
 import Icon from '@components/Icon';
 import Font from '@components/Font';
-import { meeting } from '@assets/config';
+import { meeting } from '@constants/config';
 
 const { display } = meeting.text;
 

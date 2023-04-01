@@ -11,7 +11,7 @@ import type {
   PlaceTopProps,
 } from '@type/screen.meeting';
 import { makeStyles } from '@rneui/themed';
-import { meeting } from '@assets/config';
+import { meeting } from '@constants/config';
 import MeetingDetailMap from './Map';
 import { getRandomColor, Title } from './common';
 

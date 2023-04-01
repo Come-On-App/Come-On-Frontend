@@ -10,7 +10,7 @@ import Font from '@components/Font';
 import Button from '@components/button/Buttons';
 import useGoToScreen from '@hooks/useGoTo';
 import { MeetingMode } from '@features/meetingSlice';
-import { meeting } from '@assets/config';
+import { meeting } from '@constants/config';
 import Card, { CardSkeleton } from './Card';
 
 // 모임 관리 리스트

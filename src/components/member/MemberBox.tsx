@@ -13,7 +13,7 @@ import {
 } from '@type/meeting.memberBox';
 import { Title } from '@screens/meeting/detail/common';
 import useAuth from '@hooks/useAuth';
-import { meeting } from '@assets/config';
+import { meeting } from '@constants/config';
 import {
   MemberBoxProps,
   MemberBoxSubTitleProps,

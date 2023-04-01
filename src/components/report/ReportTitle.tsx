@@ -5,7 +5,7 @@ import { Title } from '@screens/meeting/detail/common';
 import { SetState } from '@type/index';
 import { Input } from '@components/input/InputText';
 import { emptyString } from '@utils/fn';
-import { report } from '@assets/config';
+import { report } from '@constants/config';
 import { Content } from './common';
 
 interface ReportTitleProps {

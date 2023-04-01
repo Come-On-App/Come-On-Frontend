@@ -6,7 +6,7 @@ import { Form } from '@type/component.report';
 import { Content } from '@components/report/common';
 import { SetState } from '@type/index';
 import { Title } from '@screens/meeting/detail/common';
-import { report } from '@assets/config';
+import { report } from '@constants/config';
 
 interface ReportDiscriptionProps {
   description: string;

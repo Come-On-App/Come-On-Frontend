@@ -18,7 +18,7 @@ import useMeetingTimeQuery from '@hooks/query/useMeetingTimeQuery';
 import useMeetingTimeMutation from '@hooks/query/useMeetingTimeMutation';
 import useMemberQuery, { isHostUser } from '@hooks/query/useMemberQuery';
 import useUserQuery from '@hooks/query/useUserQuery';
-import { meeting } from '@assets/config';
+import { meeting } from '@constants/config';
 import { Title, Time, requestAPI } from './common';
 
 const { detail } = meeting.text;

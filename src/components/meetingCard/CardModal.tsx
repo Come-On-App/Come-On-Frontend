@@ -24,7 +24,7 @@ import { SetState } from '@type/index';
 import { promiseFlow } from '@utils/promise';
 import { isExpiry } from '@utils/fn';
 import { errorAlert, successAlert } from '@utils/alert';
-import { meeting } from '@assets/config';
+import { meeting } from '@constants/config';
 
 const textModal = meeting.text.modal;
 
