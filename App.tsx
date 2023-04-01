@@ -15,7 +15,7 @@ import { store } from './src/app/store';
 import Navigation from './src/navigation';
 import { queryClient } from './src/api/queryClient';
 import useCachedResources from './src/hooks/useCachedResources';
-import theme from './src/constants/themed';
+import theme from './src/assets/themed';
 
 Object.assign(global, {
   TextEncoder: encoding.TextEncoder,
