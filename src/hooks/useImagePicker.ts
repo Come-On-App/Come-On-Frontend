@@ -8,7 +8,7 @@ import {
 import { useCallback, useState } from 'react';
 
 import { promiseFlow } from '@utils/promise';
-import { getFileName, inferTypeImage } from '@utils/image';
+import { getFileName, inferTypeImage, MANUAL_CONVERSION } from '@utils/image';
 import { nativeAlert } from '@utils/alert';
 import type { AssetState, PickImage } from '@type/hook.imagePicker';
 
@@ -61,7 +61,7 @@ const useImagePicker = (): [AssetState | null, PickImage] => {
       allowsEditing: true,
       aspect: [4, 3],
       quality: 0.5,
-      base64: true,
+      base64: MANUAL_CONVERSION,
     });
 
     if (!imagePickerResult.canceled) {
