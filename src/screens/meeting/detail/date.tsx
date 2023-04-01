@@ -100,7 +100,7 @@ function DateMainRight({ meetingId }: DateMainRightProps) {
 function DateBottom({ meetingId, navigation }: DateBottomProps) {
   const styles = useStyles();
   const onPressHandler = () => {
-    navigation.navigate('MeetingRoomCalendar', { meetingId });
+    navigation.navigate('SelectCalendar', { meetingId });
   };
 
   return (

@@ -10,7 +10,7 @@ import type {
 import CardMenu from './CardMenu';
 import { ConfirmDisplay, GroupDisplay } from './CardDisplay';
 
-function CardTopInfo(info: TopInfoProps) {
+export function CardTopInfo(info: TopInfoProps) {
   const { role, meetingId } = info;
   const styles = useStyles();
 

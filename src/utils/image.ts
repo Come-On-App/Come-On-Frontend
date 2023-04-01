@@ -23,7 +23,7 @@ export function inferTypeImage(fileName: string) {
 }
 
 // 수동으로 blob 변환이 필요할떄 true로 할당한다. (React Native Debugger Only)
-const MANUAL_CONVERSION = true;
+const MANUAL_CONVERSION = false;
 const config = {
   responseType: 'blob',
   responseEncoding: 'binary',

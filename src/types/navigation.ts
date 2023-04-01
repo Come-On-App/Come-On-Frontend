@@ -74,8 +74,8 @@ export type RootStackParamList = {
   CreateMeeting: { mode: MeetingMode; meetingId?: number };
   PlaceSelect: PlaceSelectScreenParams;
   MeetingDetail: { meetingId: number };
-  CreateMeetingCalender: undefined;
-  MeetingRoomCalendar: { meetingId: number };
+  PeriodCalendar: undefined;
+  SelectCalendar: { meetingId: number };
   LoginScreen: undefined;
   KakaoLoginWebView: undefined;
 };

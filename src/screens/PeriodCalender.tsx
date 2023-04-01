@@ -29,9 +29,9 @@ function SubLabelDate({ date }: SubDateProps) {
   );
 }
 
-function CreateMeetingCalender({
+function PeriodCalendar({
   navigation,
-}: RootStackScreenProps<'CreateMeetingCalender'>) {
+}: RootStackScreenProps<'PeriodCalendar'>) {
   const styles = useStyles();
   const dispatch = useAppDispatch();
   const [date, setDate] = useState({
@@ -66,7 +66,7 @@ function CreateMeetingCalender({
   );
 }
 
-export default CreateMeetingCalender;
+export default PeriodCalendar;
 
 const useStyles = makeStyles(theme => ({
   container: {

@@ -82,7 +82,7 @@ export function AnimationInputDate({
   const styles = useStyles();
   const navigation = useNavigation();
   const onPressLabel = () => {
-    navigation.navigate('CreateMeetingCalender');
+    navigation.navigate('PeriodCalendar');
   };
   const [date, setDate] = useState({ startDate: '', endDate: '' });
   const {

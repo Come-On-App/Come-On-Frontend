@@ -15,11 +15,11 @@ import { QueryKeys } from '@api/queryClient';
 import MemberBox from '../components/member/MemberBox';
 import { Title, TitleName } from './meeting/detail/common';
 
-function MeetingRoomCalendar({
+function SelectCalendar({
   route: {
     params: { meetingId },
   },
-}: RootStackScreenProps<'MeetingRoomCalendar'>) {
+}: RootStackScreenProps<'SelectCalendar'>) {
   const styles = useStyles();
   const navigation = useNavigation();
   const { data: meetingDetail } = useQuery(
@@ -71,7 +71,7 @@ function MeetingRoomCalendar({
   );
 }
 
-export default MeetingRoomCalendar;
+export default SelectCalendar;
 
 const useStyles = makeStyles(() => ({
   container: {
