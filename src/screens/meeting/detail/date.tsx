@@ -24,7 +24,7 @@ import { Title, Time, requestAPI } from './common';
 const { vote } = detailConfig.text;
 
 // 모임 기간
-function MeetingDate({ calendar, meetingId, navigation }: DateProps) {
+export function MeetingDate({ calendar, meetingId, navigation }: DateProps) {
   return (
     <MeetingLayout>
       <DateTop />
@@ -103,7 +103,7 @@ function DateMainRight({ meetingId }: DateMainRightProps) {
 function DateBottom({ meetingId, navigation }: DateBottomProps) {
   const styles = useStyles();
   const onPressHandler = () => {
-    navigation.navigate('MeetingRoomCalendar', { meetingId });
+    navigation.navigate('SelectCalendar', { meetingId });
   };
 
   return (

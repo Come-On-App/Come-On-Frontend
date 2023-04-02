@@ -21,8 +21,8 @@ import MeetingDetail from '@screens/meeting/detail';
 import PlaceSelect from '@screens/place/Select';
 import PlaceSearch from '@screens/place/Search';
 import CreateMeeting from '@screens/CreateMeeting';
-import CreateMeetingCalender from '@screens/CreateMeetingCalender';
-import MeetingRoomCalendar from '@screens/MeetingRoomCalendar';
+import PeriodCalendar from '@screens/PeriodCalender';
+import SelectCalendar from '@screens/SelectCalendar';
 import LoginScreen from '@screens/LoginScreen';
 import TabOneScreen from '@screens/bottomTap/TabOneScreen';
 import TabThreeScreen from '@screens/bottomTap/TabThreeScreen';
@@ -153,8 +153,8 @@ function RootNavigator() {
             })}
           />
           <Stack.Screen
-            name="CreateMeetingCalender"
-            component={CreateMeetingCalender}
+            name="PeriodCalendar"
+            component={PeriodCalendar}
             options={() => ({
               title: '모임등록',
               headerTitleAlign: 'center',
@@ -164,8 +164,8 @@ function RootNavigator() {
             })}
           />
           <Stack.Screen
-            name="MeetingRoomCalendar"
-            component={MeetingRoomCalendar}
+            name="SelectCalendar"
+            component={SelectCalendar}
             options={() => ({
               headerTitleAlign: 'center',
               headerTitleStyle: styles.headerStyle,

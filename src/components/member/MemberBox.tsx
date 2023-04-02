@@ -24,7 +24,7 @@ import Label from '../input/Label';
 import Font from '../Font';
 import BadgedAvatar from './BadgedAvatar';
 
-function OnLineUserAvatar({ item, onPressHandler }: OnLineAvatarProps) {
+export function OnLineUserAvatar({ item, onPressHandler }: OnLineAvatarProps) {
   const { profileImageUrl } = item;
   const styles = useStyles();
 
@@ -59,7 +59,7 @@ function MasterIcon() {
   );
 }
 
-function LittleMemberBox({
+export function LittleMemberBox({
   item,
   banUserList,
   children,
@@ -125,7 +125,7 @@ function MemberAvatar({
   );
 }
 
-function MemberBox({ hostId, meetingId, meetingUsers }: MemberBoxProps) {
+export function MemberBox({ hostId, meetingId, meetingUsers }: MemberBoxProps) {
   const { myId } = useAuth();
   const styles = useStyles();
   const [visible, setVisible] = useState(false);
@@ -229,7 +229,7 @@ function MemberBox({ hostId, meetingId, meetingUsers }: MemberBoxProps) {
   );
 }
 
-function MemberBoxTitle({ userCount }: MemberBoxTitleProps) {
+export function MemberBoxTitle({ userCount }: MemberBoxTitleProps) {
   const styles = useStyles();
 
   return (
@@ -240,7 +240,7 @@ function MemberBoxTitle({ userCount }: MemberBoxTitleProps) {
   );
 }
 
-function UserRow({ user, renderAvatar }: UserRowProps) {
+export function UserRow({ user, renderAvatar }: UserRowProps) {
   const styles = useStyles();
 
   return (
@@ -254,7 +254,7 @@ function UserRow({ user, renderAvatar }: UserRowProps) {
   );
 }
 
-function MemberBoxSubTitle({ onClickManage }: MemberBoxSubTitleProps) {
+export function MemberBoxSubTitle({ onClickManage }: MemberBoxSubTitleProps) {
   const styles = useStyles();
 
   return (

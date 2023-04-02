@@ -119,11 +119,20 @@ function CreateMeeting({
   }, [datas, error, isError, isSuccess, navigation, resetMeetingData]);
 
   useEffect(() => {
+    if (mode === MeetingMode.edit) {
+      navigation.setOptions({
+        title: '모임수정',
+      });
+    }
     if (meetingId) {
       setCurrentMeetingId(meetingId);
     }
-  }, [meetingId, setCurrentMeetingId]);
-
+  }, [meetingId, mode, navigation, resetMeetingData, setCurrentMeetingId]);
+  useEffect(() => {
+    return () => {
+      resetMeetingData();
+    };
+  }, [resetMeetingData]);
   return (
     <LayoutHeight containerStyle={styles.container}>
       <ScrollView
@@ -162,20 +171,23 @@ function EditInputForm({ AnimationView, meetingId }: EditInpurFormProps) {
     placeholder: '날짜 범위를 선택해주세요',
   });
 
+  const { data: editData } = useQuery(
+    [QueryKeys.meetingDetail, meetingId],
+    () => requestGetMeetingDetail2(meetingId!),
+    { enabled: !!meetingId },
+  );
+
   const inputProps: InputTextProps = {
     label: '모임이름',
-    placeholder: '모임이름을 입력해주세요!',
+    placeholder: editData
+      ? editData?.meetingMetaData.meetingName
+      : '모임이름을 입력해주세요!',
     maxLength: 30,
     value: name,
     onChangeText: onChangeHandler,
     multiline: false,
   };
 
-  const { data: editData } = useQuery(
-    [QueryKeys.meetingDetail, meetingId],
-    () => requestGetMeetingDetail2(meetingId!),
-    { enabled: !!meetingId },
-  );
   useEffect(() => {
     if (!editData) return;
     const date = {
@@ -208,9 +220,7 @@ function EditInputForm({ AnimationView, meetingId }: EditInpurFormProps) {
 
   useEffect(() => {
     if (!editData) return;
-    if (name === '') {
-      setName(editData.meetingMetaData.meetingName);
-    }
+
     setMyMeetingName(name);
   }, [editData, name, setMyMeetingName]);
 

@@ -55,6 +55,7 @@ declare module '@rneui/themed' {
     };
     calendarStyles: {
       period: string;
+      blackStyle: string;
     };
   }
 }
@@ -130,6 +131,7 @@ export interface ImageAnimationProps extends AnimationViewType {
 type DateConfig = {
   value: string;
   placeholder: string;
+  onPressHandler?: () => void;
 };
 export interface AnimationInputDateProps extends AnimationViewType {
   dateConfig: DateConfig;
