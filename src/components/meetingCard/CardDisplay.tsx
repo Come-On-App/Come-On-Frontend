@@ -9,6 +9,9 @@ import type {
 } from '@type/component.card';
 import Icon from '@components/Icon';
 import Font from '@components/Font';
+import { displayConfig } from '@constants/config';
+
+const { totalPeople, decided } = displayConfig.text;
 
 function DisplayIcon({ icon: iconName }: DisplayIconProps) {
   const { icon, iconContainer } = useStyles();
@@ -22,24 +25,22 @@ function DisplayIcon({ icon: iconName }: DisplayIconProps) {
 
 export function GroupDisplay({ people }: GroupDisplayProps) {
   const styles = useStyles();
-  const totalPeople = `${people}명`;
 
   return (
     <View style={styles.contianer}>
       <DisplayIcon icon="groups" />
-      <Font style={styles.font}>{totalPeople}</Font>
+      <Font style={styles.font}>{totalPeople(people)}</Font>
     </View>
   );
 }
 
 export function ConfirmDisplay({ isDecided }: ConfirmDisplayProps) {
   const styles = useStyles(isDecided);
-  const title = isDecided ? '확정' : '미확정';
 
   return (
     <View style={styles.contianer}>
       {isDecided ? <DisplayIcon icon="check-circle" /> : null}
-      <Font style={styles.font}>{title}</Font>
+      <Font style={styles.font}>{decided(isDecided)}</Font>
     </View>
   );
 }

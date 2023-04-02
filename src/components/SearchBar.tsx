@@ -7,7 +7,14 @@ import type { SearchBarProps } from '../types';
 
 export default function SearchBar(props: SearchBarProps) {
   const styles = useStyles();
-  const { value, style, IconType, onChange } = props;
+  const {
+    value,
+    fontStyle,
+    IconType,
+    onChange,
+    containerStyle,
+    inputContainerStyle,
+  } = props;
 
   return (
     <RneSearchBar
@@ -20,9 +27,9 @@ export default function SearchBar(props: SearchBarProps) {
           size={styles.icon.size}
         />
       }
-      containerStyle={styles.container}
-      inputContainerStyle={styles.input}
-      style={[styles.font, style]}
+      containerStyle={[styles.container, containerStyle]}
+      inputContainerStyle={[styles.input, inputContainerStyle]}
+      style={[styles.font, fontStyle]}
     />
   );
 }

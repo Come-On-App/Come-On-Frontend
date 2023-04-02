@@ -57,5 +57,12 @@ function TimePickerAndroid({ onSubmit }: TimePickerProps) {
     });
   };
 
-  return <Time type="Pressable" onPress={onPressHandler} date={date} />;
+  return (
+    <Time
+      type="Pressable"
+      onPress={onPressHandler}
+      date={date}
+      style={{ color: '#212121' }}
+    />
+  );
 }

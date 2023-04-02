@@ -16,7 +16,12 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "ignorePatterns": ["*.config.js", "*.config.ts", "node_modules"],
+  "ignorePatterns": [
+    "*.config.js",
+    "*.config.ts",
+    "react-native-maps-plugin.js",
+    "node_modules"
+  ],
   "rules": {
     // lodash rule -
     "lodash-fp/consistent-compose": "off",

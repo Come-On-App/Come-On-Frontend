@@ -27,6 +27,8 @@ import LoginScreen from '@screens/LoginScreen';
 import TabOneScreen from '@screens/bottomTap/TabOneScreen';
 import TabThreeScreen from '@screens/bottomTap/TabThreeScreen';
 import TabTwoScreen from '@screens/bottomTap/TabTwoScreen';
+import EventScreen from '@screens/EventScreen';
+import ReportPost from '@screens/reportPost/ReportPost';
 
 import CancelIconButton, {
   CancelPlaceSelectIconButton,
@@ -113,7 +115,22 @@ function RootNavigator() {
               gestureEnabled: false,
             }}
           />
-          {/* FIXME: 개발용 */}
+          <Stack.Screen
+            name="EasterEgg"
+            component={EventScreen}
+            options={{
+              headerShown: true,
+              contentStyle: styles.background,
+            }}
+          />
+          <Stack.Screen
+            name="ReportPost"
+            component={ReportPost}
+            options={{
+              headerShown: true,
+              contentStyle: styles.background,
+            }}
+          />
           <Stack.Screen
             name="MeetingDetail"
             component={MeetingDetail}
@@ -122,6 +139,7 @@ function RootNavigator() {
               contentStyle: styles.background,
             }}
           />
+
           <Stack.Screen
             name="CreateMeeting"
             component={CreateMeeting}

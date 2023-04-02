@@ -67,12 +67,19 @@ export function InputBoxTop({ label, text, maxLength, bold }: InputTopProps) {
 const { width } = Dimensions.get('window');
 
 export function InputBoxMain(props: InputProps) {
-  const { value, maxLength, multiline, placeholder, onChangeText, style } =
-    props;
+  const {
+    value,
+    maxLength,
+    multiline,
+    placeholder,
+    onChangeText,
+    style,
+    containerStyle,
+  } = props;
   const styles = useStyles();
 
   return (
-    <View style={[styles.inputContainer]}>
+    <View style={[styles.inputContainer, containerStyle]}>
       <Input
         value={value}
         maxLength={maxLength}
@@ -111,8 +118,15 @@ export function InputBoxTopTextLength({
 }
 
 export function Input(props: InputProps) {
-  const { value, maxLength, onChangeText, placeholder, multiline, style } =
-    props;
+  const {
+    value,
+    maxLength,
+    onChangeText,
+    placeholder,
+    multiline,
+    style,
+    containerStyle,
+  } = props;
   const styles = useStyles();
 
   return (
@@ -122,7 +136,12 @@ export function Input(props: InputProps) {
       multiline={multiline}
       placeholder={placeholder}
       onChangeText={onChangeText}
-      style={[styles.meetingNoteInput, multiline && styles.multiline, style]}
+      style={[
+        styles.meetingNoteInput,
+        multiline && styles.multiline,
+        style,
+        containerStyle,
+      ]}
       placeholderTextColor={styles.meetingNoteInput.placeholder}
     />
   );

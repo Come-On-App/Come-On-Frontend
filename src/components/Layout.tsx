@@ -1,19 +1,35 @@
+import { makeStyles } from '@rneui/themed';
 import React from 'react';
 import { StyleProp, View, ViewStyle } from 'react-native';
 
 interface LayoutProps {
-  containerStyle?: StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle>;
   children: React.ReactNode;
 }
 
-/**
- * 테스트 컴포넌트
- */
 // 모임 상세 레이아웃 (모임 디테일)
-export default function Layout({ containerStyle, children }: LayoutProps) {
-  return (
-    <View style={[containerStyle, { width: '100%', marginVertical: 5 }]}>
-      {children}
-    </View>
-  );
+export function MeetingLayout({ style, children }: LayoutProps) {
+  const styles = useStyles();
+
+  return <View style={[styles.meetingLayout, style]}>{children}</View>;
 }
+
+// 기본 스크린 레이아웃
+export function ScrrenLayout({ style, children }: LayoutProps) {
+  const styles = useStyles();
+
+  return <View style={[styles.scrrenLayout, style]}>{children}</View>;
+}
+
+const useStyles = makeStyles(() => ({
+  meetingLayout: {
+    width: '100%',
+    marginVertical: 5,
+  },
+  scrrenLayout: {
+    flex: 1,
+    marginTop: 20,
+    marginHorizontal: 15,
+    marginBottom: 30,
+  },
+}));

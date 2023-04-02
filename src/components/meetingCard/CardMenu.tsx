@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useState } from 'react';
+import React, { memo, useState } from 'react';
 import { makeStyles } from '@rneui/themed';
 import { View } from 'react-native';
 import { Menu, MenuDivider, MenuItem } from 'react-native-material-menu';
@@ -14,9 +14,11 @@ import type {
 import { IconButton } from '@components/button/Buttons';
 import Font from '@components/Font';
 import { MeetingMode } from '@features/meetingSlice';
-import { useGoToCreateMeetingScreen } from '@hooks/useGoTo';
+import useGoToScreen from '@hooks/useGoTo';
+import { menuConfig } from '@constants/config';
 import CardModal from './CardModal';
 
+const { text } = menuConfig;
 const MemoMenu = memo(Menu);
 const MemoCardMenuItems = memo(CardMenuItems);
 const MemoCardMenuList = memo(CardMenuList);
@@ -63,21 +65,33 @@ function CardMenuIcon({ showMenu }: CardMenuDisplayProps) {
 function CardMenuItems({ role, meetingId, hideMenu }: CardMenuItemsProps) {
   const { deleteMeeting } = useMeetingMutation();
   const [codeModal, setCodeModal] = useState(false);
-  const goToEditMeetingScreen = useGoToCreateMeetingScreen(
-    MeetingMode.edit,
-    meetingId,
-  );
-  const onPressHandler = () => {
-    hideMenu();
-    goToEditMeetingScreen();
+  const { goToCreateMeetingScreen, goToReportPostScreen } = useGoToScreen();
+  const toggleCodeModal = () => {
+    setCodeModal(prev => !prev);
   };
-  const toggleCodeModal = useCallback(() => setCodeModal(prev => !prev), []);
-  const menuConfig: MenuConfig[] = [
-    { onPress: toggleCodeModal, text: '초대코드 관리', permission: true },
-    { onPress: onPressHandler, text: '모임 수정', permission: true },
+  const goToEditScreen = () => {
+    hideMenu();
+    goToCreateMeetingScreen(MeetingMode.edit, meetingId);
+  };
+  const goToReportScreen = () => {
+    hideMenu();
+    goToReportPostScreen(meetingId);
+  };
+  const deletePost = () => {
+    hideMenu();
+    deleteMeeting(meetingId);
+  };
+  const menu: MenuConfig[] = [
+    { onPress: toggleCodeModal, text: text.code, permission: true },
+    { onPress: goToEditScreen, text: text.edit, permission: true },
     {
-      onPress: deleteMeeting.bind({}, meetingId),
-      text: '모임 탈퇴',
+      onPress: goToReportScreen,
+      text: text.report,
+      permission: false,
+    },
+    {
+      onPress: deletePost,
+      text: text.delete,
       permission: false,
       style: { color: 'red' },
     },
@@ -92,7 +106,7 @@ function CardMenuItems({ role, meetingId, hideMenu }: CardMenuItemsProps) {
           meetingId={meetingId}
         />
       </View>
-      <MemoCardMenuList menu={menuConfig} role={role} />
+      <MemoCardMenuList menu={menu} role={role} />
     </View>
   );
 }
@@ -102,13 +116,13 @@ function CardMenuList({ role, menu }: CardMenuItemProps) {
 
   return (
     <>
-      {menu.map(({ onPress, text, permission, style }) => {
+      {menu.map(({ onPress, text: menuName, permission, style }) => {
         if (role === 'PARTICIPANT' && permission) return null;
 
         return (
-          <View key={text}>
+          <View key={menuName}>
             <MenuItem onPress={onPress}>
-              <Font style={[styles.itemFont, style]}>{text}</Font>
+              <Font style={[styles.itemFont, style]}>{menuName}</Font>
             </MenuItem>
             <MenuDivider />
           </View>

@@ -8,9 +8,12 @@ import useMeetingQuery from '@hooks/query/useMeetingQuery';
 import useRefreshOnFocus from '@hooks/query/useRefreshOnFocus';
 import Font from '@components/Font';
 import Button from '@components/button/Buttons';
-import { useGoToCreateMeetingScreen } from '@hooks/useGoTo';
+import useGoToScreen from '@hooks/useGoTo';
 import { MeetingMode } from '@features/meetingSlice';
+import { emptyConfig } from '@constants/config';
 import Card, { CardSkeleton } from './Card';
+
+const { text } = emptyConfig;
 
 // 모임 관리 리스트
 function CardList() {
@@ -59,28 +62,19 @@ export function CardListSkeleton() {
 
 function CardEmpty() {
   const styles = useStyles();
-  const goToCreateMeetingScreen = useGoToCreateMeetingScreen(
-    MeetingMode.create,
-  );
-  const config = {
-    button: {
-      text: '모임 등록하러 가기',
-      heigth: 56,
-    },
-    title: '등록된 모임이 없습니다. 모임을 등록해주세요!',
-  };
+  const { goToCreateMeetingScreen } = useGoToScreen();
 
   return (
     <View style={[styles.cardContianer, styles.cardEmptyContianer]}>
       <View style={styles.cardEmptyContent}>
         <Button
           bold
-          text={config.button.text}
-          onPress={goToCreateMeetingScreen}
+          text={text.button.create}
+          onPress={() => goToCreateMeetingScreen(MeetingMode.create)}
           buttonStyle={styles.cardEmptyButton}
-          height={config.button.heigth}
+          height={emptyConfig.height}
         />
-        <Font>{config.title}</Font>
+        <Font>{text.description}</Font>
       </View>
     </View>
   );

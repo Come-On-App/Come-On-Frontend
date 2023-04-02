@@ -5,6 +5,9 @@ import { Divider, makeStyles } from '@rneui/themed';
 import type { CardSubTitleProps, CardTtileProps } from '@type/component.card';
 import Icon from '@components/Icon';
 import Font, { BoldFont } from '@components/Font';
+import { displayConfig } from '@constants/config';
+
+const { subTitle } = displayConfig.text;
 
 export function CardTitle({ titleText }: CardTtileProps) {
   const styles = useStyles();
@@ -14,7 +17,6 @@ export function CardTitle({ titleText }: CardTtileProps) {
 
 export function CardSubTitle({ userText, dateRange }: CardSubTitleProps) {
   const styles = useStyles();
-  const subTitleDate = `${dateRange.calendarStartFrom} ~ ${dateRange.calendarEndTo}`;
 
   return (
     <View style={styles.subTitleContianer}>
@@ -35,7 +37,7 @@ export function CardSubTitle({ userText, dateRange }: CardSubTitleProps) {
         size={styles.icon.size}
         color={styles.icon.color}
       />
-      <Font style={styles.subTitleDateFont}>{subTitleDate}</Font>
+      <Font style={styles.subTitleDateFont}>{subTitle(dateRange)}</Font>
     </View>
   );
 }

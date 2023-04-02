@@ -11,8 +11,9 @@ import {
   LittleMemberBoxProps,
   OnLineAvatarProps,
 } from '@type/meeting.memberBox';
-import { Title, TitleName } from '@screens/meeting/detail/common';
+import { Title } from '@screens/meeting/detail/common';
 import useAuth from '@hooks/useAuth';
+import { detailConfig } from '@constants/config';
 import {
   MemberBoxProps,
   MemberBoxSubTitleProps,
@@ -233,8 +234,7 @@ export function MemberBoxTitle({ userCount }: MemberBoxTitleProps) {
 
   return (
     <View style={styles.meetingMemberLabelStyle}>
-      <Title title={TitleName.member} />
-
+      <Title title={detailConfig.text.member} />
       <Label style={styles.colorText}>{userCount}</Label>
     </View>
   );

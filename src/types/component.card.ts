@@ -79,7 +79,7 @@ export interface RightAreaProps {
 
 export interface MenuConfig {
   onPress: () => void;
-  text: '초대코드 관리' | '모임 수정' | '모임 탈퇴';
+  text: string;
   permission: boolean;
   style?: {
     color: 'red';

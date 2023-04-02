@@ -24,3 +24,7 @@ web-build/
 .env
 
 package-lock.json
+
+#firebase
+google-services.json
+GoogleService-Info.plist

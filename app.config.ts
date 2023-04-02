@@ -1,8 +1,10 @@
 //@ts-nocheck
 import { ExpoConfig, ConfigContext } from 'expo/config';
+
 const text = {
   photosPermission: '이 앱을 사용하기 위해선 사진첩에 대한 권한이 필요합니다.',
 };
+
 const app = {
   name: 'Come On!',
   slug: 'come-on',
@@ -15,6 +17,7 @@ const app = {
   foregroundImage: './src/assets/images/adaptive-icon.png',
   versionCode: 1,
 };
+
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   icon: app.icon,
@@ -40,6 +43,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     config: {
       googleMapsApiKey: process.env.GOOGLE_MAP_API_KEY_IOS,
     },
+    googleServicesFile: './GoogleService-Info.plist',
   },
   android: {
     package: app.identifier,
@@ -51,8 +55,21 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     config: {
       googleMaps: { apiKey: process.env.GOOGLE_MAP_API_KEY_ANDROID },
     },
+    googleServicesFile: './google-services.json',
   },
   plugins: [
+    '@react-native-firebase/app',
+    '@react-native-firebase/perf',
+    '@react-native-firebase/crashlytics',
+    './react-native-maps-plugin',
+    [
+      'expo-build-properties',
+      {
+        ios: {
+          useFrameworks: 'static',
+        },
+      },
+    ],
     [
       'expo-image-picker',
       {

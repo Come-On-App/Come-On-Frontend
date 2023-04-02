@@ -1,5 +1,5 @@
 import React, { memo, useEffect } from 'react';
-import Layout from '@components/Layout';
+import { MeetingLayout } from '@components/Layout';
 import MemberBox from '@components/member/MemberBox';
 
 import useMemberQuery, { findHostUser } from '@hooks/query/useMemberQuery';
@@ -22,13 +22,13 @@ function Member({ meetingId }: { meetingId: number }) {
   }
 
   return (
-    <Layout>
+    <MeetingLayout>
       <MemberBox
         meetingId={meetingId}
         hostId={findHostUser(members.contents).userId}
         meetingUsers={members.contents}
       />
-    </Layout>
+    </MeetingLayout>
   );
 }
 
