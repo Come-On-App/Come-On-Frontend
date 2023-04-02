@@ -11,11 +11,11 @@ import type {
   PlaceTopProps,
 } from '@type/screen.meeting';
 import { makeStyles } from '@rneui/themed';
-import { meeting } from '@constants/config';
+import { detailConfig } from '@constants/config';
 import MeetingDetailMap from './Map';
 import { getRandomColor, Title } from './common';
 
-const { detail } = meeting.text;
+const { text } = detailConfig;
 
 // 모임 장소
 function Place({ meetingId, navigation }: PlaceProps) {
@@ -39,7 +39,7 @@ function PlaceTop({ color }: PlaceTopProps) {
 
   return (
     <View style={[styles.placeTopContainer, styles.commonHeight]}>
-      <Title title={detail.place} />
+      <Title title={text.place} />
       {placeLockState.lockUserImage && (
         <Avatar
           size={styles.commonHeight.height}

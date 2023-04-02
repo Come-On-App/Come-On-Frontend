@@ -30,13 +30,15 @@ export default function EventScreen({
 }
 
 function MemberList() {
+  const { row } = useStyles();
+
   return (
     <View>
       <Member type="Backend">
         <Font>유하영</Font>
       </Member>
       <Member type="Frontend">
-        <View style={{ flexDirection: 'row' }}>
+        <View style={row}>
           <Font>방정배,</Font>
           <Font>강예정</Font>
         </View>
@@ -63,6 +65,9 @@ function Member({
 }
 
 const useStyles = makeStyles(theme => ({
+  row: {
+    flexDirection: 'row',
+  },
   container: {
     flex: 1,
     alignItems: 'center',

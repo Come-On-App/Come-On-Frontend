@@ -5,13 +5,15 @@ import useImagePicker from '@hooks/useImagePicker';
 import { Form } from '@type/component.report';
 import { Title } from '@screens/meeting/detail/common';
 import { SetState } from '@type/index';
-import { report } from '@constants/config';
+import { reportConfig } from '@constants/config';
 import { Content } from './common';
 
 interface ReportImageProps {
   image: string;
   setForm: SetState<Form>;
 }
+
+const { text } = reportConfig;
 
 function ReportImage({ setForm, image }: ReportImageProps) {
   const [assetState, pickImage] = useImagePicker();
@@ -26,7 +28,7 @@ function ReportImage({ setForm, image }: ReportImageProps) {
 
   return (
     <Content>
-      <Title title={report.text.image} />
+      <Title title={text.image} />
       <ImageContent onPress={pickImage} imageURL={image} />
     </Content>
   );

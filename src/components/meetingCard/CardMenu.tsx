@@ -15,9 +15,10 @@ import { IconButton } from '@components/button/Buttons';
 import Font from '@components/Font';
 import { MeetingMode } from '@features/meetingSlice';
 import useGoToScreen from '@hooks/useGoTo';
-import { meeting } from '@constants/config';
+import { menuConfig } from '@constants/config';
 import CardModal from './CardModal';
 
+const { text } = menuConfig;
 const MemoMenu = memo(Menu);
 const MemoCardMenuItems = memo(CardMenuItems);
 const MemoCardMenuList = memo(CardMenuList);
@@ -61,8 +62,6 @@ function CardMenuIcon({ showMenu }: CardMenuDisplayProps) {
   );
 }
 
-const { menu: textMenu } = meeting.text;
-
 function CardMenuItems({ role, meetingId, hideMenu }: CardMenuItemsProps) {
   const { deleteMeeting } = useMeetingMutation();
   const [codeModal, setCodeModal] = useState(false);
@@ -82,17 +81,17 @@ function CardMenuItems({ role, meetingId, hideMenu }: CardMenuItemsProps) {
     hideMenu();
     deleteMeeting(meetingId);
   };
-  const menuConfig: MenuConfig[] = [
-    { onPress: toggleCodeModal, text: textMenu.code, permission: true },
-    { onPress: goToEditScreen, text: textMenu.edit, permission: true },
+  const menu: MenuConfig[] = [
+    { onPress: toggleCodeModal, text: text.code, permission: true },
+    { onPress: goToEditScreen, text: text.edit, permission: true },
     {
       onPress: goToReportScreen,
-      text: textMenu.report,
+      text: text.report,
       permission: false,
     },
     {
       onPress: deletePost,
-      text: textMenu.delete,
+      text: text.delete,
       permission: false,
       style: { color: 'red' },
     },
@@ -107,7 +106,7 @@ function CardMenuItems({ role, meetingId, hideMenu }: CardMenuItemsProps) {
           meetingId={meetingId}
         />
       </View>
-      <MemoCardMenuList menu={menuConfig} role={role} />
+      <MemoCardMenuList menu={menu} role={role} />
     </View>
   );
 }
@@ -117,13 +116,13 @@ function CardMenuList({ role, menu }: CardMenuItemProps) {
 
   return (
     <>
-      {menu.map(({ onPress, text, permission, style }) => {
+      {menu.map(({ onPress, text: menuName, permission, style }) => {
         if (role === 'PARTICIPANT' && permission) return null;
 
         return (
-          <View key={text}>
+          <View key={menuName}>
             <MenuItem onPress={onPress}>
-              <Font style={[styles.itemFont, style]}>{text}</Font>
+              <Font style={[styles.itemFont, style]}>{menuName}</Font>
             </MenuItem>
             <MenuDivider />
           </View>

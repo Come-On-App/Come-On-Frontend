@@ -7,7 +7,7 @@ import useMeeting from '@hooks/useMeeting';
 import { makeStyles } from '@rneui/themed';
 import ImageContent from '@components/Image';
 import { Title } from '@screens/meeting/detail/common';
-import { report } from '@constants/config';
+import { reportConfig } from '@constants/config';
 
 function InputImage() {
   const styles = useStyles();
@@ -39,7 +39,7 @@ function InputImage() {
 
   return (
     <View style={styles.container}>
-      <Title title={report.text.image} />
+      <Title title={reportConfig.text.image} />
       <ImageContent onPress={pickImage} imageURL={imageUri} />
     </View>
   );

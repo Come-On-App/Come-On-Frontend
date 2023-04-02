@@ -1,13 +1,15 @@
 import React from 'react';
 
 import Button from '@components/button/Buttons';
-import { report } from '@constants/config';
+import { reportConfig } from '@constants/config';
+
+const { text } = reportConfig;
 
 function ReportButton() {
   return (
     <Button
       onPress={() => ''}
-      text={report.text.button}
+      text={text.button}
       bold
       buttonStyle={{ backgroundColor: '#F05E51' }}
     />

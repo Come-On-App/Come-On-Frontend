@@ -1,48 +1,56 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import { Input, InputBoxTopTextLength } from '@components/input/InputText';
+import { InputBoxTopTextLength } from '@components/input/InputText';
 import { Form } from '@type/component.report';
-import { Content } from '@components/report/common';
+import { Content, ReportInput } from '@components/report/common';
 import { SetState } from '@type/index';
 import { Title } from '@screens/meeting/detail/common';
-import { report } from '@constants/config';
+import { reportConfig } from '@constants/config';
+import { makeStyles } from '@rneui/themed';
+
+const { maxLength, text } = reportConfig;
 
 interface ReportDiscriptionProps {
   description: string;
   setForm: SetState<Form>;
 }
 
+interface ReportTitleProps {
+  description: string;
+}
+
 function ReportDiscription({ setForm, description }: ReportDiscriptionProps) {
   return (
     <Content>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-        <Title title={report.text.discription} />
-        <InputBoxTopTextLength
-          maxLength={report.maxLength}
-          text={description}
-        />
-      </View>
-      <Input
+      <ReportTitle description={description} />
+      <ReportInput
         multiline
+        placeholder={text.placeholder}
         value={description}
-        maxLength={report.maxLength}
-        placeholder={report.text.placeholder}
-        onChangeText={text => {
-          setForm(prev => {
-            return {
-              ...prev,
-              description: text,
-            };
-          });
-        }}
-        containerStyle={{
-          marginVertical: 5,
-          padding: 5,
-        }}
+        setState={setForm}
+        keyType="description"
       />
     </Content>
   );
 }
+
+function ReportTitle({ description }: ReportTitleProps) {
+  const styles = useStyles();
+
+  return (
+    <View style={styles.reportTitleContainer}>
+      <Title title={text.discription} />
+      <InputBoxTopTextLength maxLength={maxLength} text={description} />
+    </View>
+  );
+}
+
+const useStyles = makeStyles(() => ({
+  reportTitleContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+}));
 
 export default ReportDiscription;

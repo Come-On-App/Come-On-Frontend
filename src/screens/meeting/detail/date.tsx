@@ -18,10 +18,10 @@ import useMeetingTimeQuery from '@hooks/query/useMeetingTimeQuery';
 import useMeetingTimeMutation from '@hooks/query/useMeetingTimeMutation';
 import useMemberQuery, { isHostUser } from '@hooks/query/useMemberQuery';
 import useUserQuery from '@hooks/query/useUserQuery';
-import { meeting } from '@constants/config';
+import { detailConfig } from '@constants/config';
 import { Title, Time, requestAPI } from './common';
 
-const { detail } = meeting.text;
+const { vote } = detailConfig.text;
 
 // 모임 기간
 function MeetingDate({ calendar, meetingId, navigation }: DateProps) {
@@ -35,7 +35,7 @@ function MeetingDate({ calendar, meetingId, navigation }: DateProps) {
 }
 
 function DateTop() {
-  return <Title title={detail.date} />;
+  return <Title title={detailConfig.text.date} />;
 }
 
 function DateMain({ calendar, meetingId }: DateMainProps) {
@@ -58,7 +58,7 @@ function DateMainLeft({ calendar }: DateMainLeftProps) {
       <View style={styles.dateMainLeftContainer}>
         <Icon name="calendar-today" size={size} color={color} />
         <Font style={styles.dateMainLeftCalendar}>
-          {detail.vote.range(calendar)}
+          {detailConfig.text.vote.range(calendar)}
         </Font>
       </View>
     </View>
@@ -110,7 +110,7 @@ function DateBottom({ meetingId, navigation }: DateBottomProps) {
     <View style={styles.dateBottomLayout}>
       <Button
         bold
-        text={detail.vote.button}
+        text={vote.button}
         onPress={onPressHandler}
         buttonStyle={styles.dateBottomButton}
       />

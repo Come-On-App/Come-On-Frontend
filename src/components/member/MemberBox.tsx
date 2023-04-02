@@ -13,7 +13,7 @@ import {
 } from '@type/meeting.memberBox';
 import { Title } from '@screens/meeting/detail/common';
 import useAuth from '@hooks/useAuth';
-import { meeting } from '@constants/config';
+import { detailConfig } from '@constants/config';
 import {
   MemberBoxProps,
   MemberBoxSubTitleProps,
@@ -23,8 +23,6 @@ import {
 import Label from '../input/Label';
 import Font from '../Font';
 import BadgedAvatar from './BadgedAvatar';
-
-const { detail } = meeting.text;
 
 function OnLineUserAvatar({ item, onPressHandler }: OnLineAvatarProps) {
   const { profileImageUrl } = item;
@@ -236,7 +234,7 @@ function MemberBoxTitle({ userCount }: MemberBoxTitleProps) {
 
   return (
     <View style={styles.meetingMemberLabelStyle}>
-      <Title title={detail.member} />
+      <Title title={detailConfig.text.member} />
       <Label style={styles.colorText}>{userCount}</Label>
     </View>
   );

@@ -10,8 +10,10 @@ import Font from '@components/Font';
 import Button from '@components/button/Buttons';
 import useGoToScreen from '@hooks/useGoTo';
 import { MeetingMode } from '@features/meetingSlice';
-import { meeting } from '@constants/config';
+import { emptyConfig } from '@constants/config';
 import Card, { CardSkeleton } from './Card';
+
+const { text } = emptyConfig;
 
 // 모임 관리 리스트
 function CardList() {
@@ -67,12 +69,12 @@ function CardEmpty() {
       <View style={styles.cardEmptyContent}>
         <Button
           bold
-          text={meeting.text.empty.button}
+          text={text.button.create}
           onPress={() => goToCreateMeetingScreen(MeetingMode.create)}
           buttonStyle={styles.cardEmptyButton}
-          height={meeting.height}
+          height={emptyConfig.height}
         />
-        <Font>{meeting.text.empty.title}</Font>
+        <Font>{text.description}</Font>
       </View>
     </View>
   );

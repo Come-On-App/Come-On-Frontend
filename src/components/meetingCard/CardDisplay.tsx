@@ -9,9 +9,9 @@ import type {
 } from '@type/component.card';
 import Icon from '@components/Icon';
 import Font from '@components/Font';
-import { meeting } from '@constants/config';
+import { displayConfig } from '@constants/config';
 
-const { display } = meeting.text;
+const { totalPeople, decided } = displayConfig.text;
 
 function DisplayIcon({ icon: iconName }: DisplayIconProps) {
   const { icon, iconContainer } = useStyles();
@@ -29,7 +29,7 @@ export function GroupDisplay({ people }: GroupDisplayProps) {
   return (
     <View style={styles.contianer}>
       <DisplayIcon icon="groups" />
-      <Font style={styles.font}>{display.totalPeople(people)}</Font>
+      <Font style={styles.font}>{totalPeople(people)}</Font>
     </View>
   );
 }
@@ -40,7 +40,7 @@ export function ConfirmDisplay({ isDecided }: ConfirmDisplayProps) {
   return (
     <View style={styles.contianer}>
       {isDecided ? <DisplayIcon icon="check-circle" /> : null}
-      <Font style={styles.font}>{display.decided(isDecided)}</Font>
+      <Font style={styles.font}>{decided(isDecided)}</Font>
     </View>
   );
 }

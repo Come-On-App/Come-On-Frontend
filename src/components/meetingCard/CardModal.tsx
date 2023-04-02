@@ -24,14 +24,14 @@ import { SetState } from '@type/index';
 import { promiseFlow } from '@utils/promise';
 import { isExpiry } from '@utils/fn';
 import { errorAlert, successAlert } from '@utils/alert';
-import { meeting } from '@constants/config';
+import { modalConfig } from '@constants/config';
 
-const textModal = meeting.text.modal;
+const { text } = modalConfig;
 
 function CardModal({ isVisible, onClose, meetingId }: CardModalProps) {
   const styles = useStyles();
   const [code, setCode] = useState<GetEntryCodeResponse>({
-    entryCode: textModal.emptyCode,
+    entryCode: text.emptyCode,
     expiredAt: '',
     meetingId: 0,
   });
@@ -51,7 +51,7 @@ function CardModal({ isVisible, onClose, meetingId }: CardModalProps) {
     if (isExpiry(data.expiredAt)) {
       promiseFlow(data.meetingId, [requestPostEntryCode, setCode], {
         onSuccess: () => {
-          successAlert(textModal.expiry);
+          successAlert(text.expiry);
         },
         onError: (error: ErrorMeetingResponse) => {
           errorAlert(error.response.data.errorDescription);
@@ -76,7 +76,7 @@ function CardModalTop({ isLoading }: CardModalTopProps) {
 
   return (
     <View style={styles.topContainer}>
-      <BoldFont style={styles.title}>{textModal.loading(isLoading)}</BoldFont>
+      <BoldFont style={styles.title}>{text.loading(isLoading)}</BoldFont>
     </View>
   );
 }
@@ -108,7 +108,7 @@ function CardModalText() {
 
   return (
     <View style={styles.textContainer}>
-      <Font style={styles.text}>{textModal.copy}</Font>
+      <Font style={styles.text}>{text.copy}</Font>
     </View>
   );
 }
@@ -125,14 +125,14 @@ function CardModalBottom({ onClose, code }: CardModalButtonProps) {
   const [isCopiedText, stateAction] = useState(false);
   const button = {
     backgroundColor: isCopiedText ? success.color : primary.color,
-    secondText: isCopiedText ? textModal.button.success : textModal.button.copy,
+    secondText: isCopiedText ? text.button.success : text.button.copy,
   };
   const onPressHandler = setClipboard(stateAction).bind(undefined, code);
 
   return (
     <ButtonGroup
       firstButton={{
-        text: textModal.button.cancel,
+        text: text.button.cancel,
         onPress: onClose,
       }}
       secondButton={{
