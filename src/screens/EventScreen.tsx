@@ -34,14 +34,17 @@ function MemberList() {
 
   return (
     <View>
-      <Member type="Backend">
-        <Font>유하영</Font>
-      </Member>
       <Member type="Frontend">
         <View style={row}>
-          <Font>방정배,</Font>
+          <Font>방정배, </Font>
           <Font>강예정</Font>
         </View>
+      </Member>
+      <Member type="Designer">
+        <Font>김경진</Font>
+      </Member>
+      <Member type="Backend">
+        <Font>유하영</Font>
       </Member>
     </View>
   );
@@ -51,7 +54,7 @@ function Member({
   type,
   children,
 }: {
-  type: 'Backend' | 'Frontend';
+  type: 'Backend' | 'Frontend' | 'Designer';
   children: React.ReactNode;
 }) {
   const styles = useStyles();

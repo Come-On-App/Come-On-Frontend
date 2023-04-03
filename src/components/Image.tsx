@@ -4,6 +4,7 @@ import { ActivityIndicator, Pressable, View } from 'react-native';
 import Font from '@components/Font';
 import { Icon, Image, makeStyles } from '@rneui/themed';
 import { PickImage } from '@type/hook.imagePicker';
+import { emptyString } from '@utils/fn';
 
 interface ImageContentProps {
   onPress: PickImage;
@@ -13,7 +14,7 @@ interface ImageContentProps {
 
 export default function ImageContent({
   onPress,
-  imageURL,
+  imageURL = emptyString,
   isLoading,
 }: ImageContentProps) {
   const styles = useStyles();

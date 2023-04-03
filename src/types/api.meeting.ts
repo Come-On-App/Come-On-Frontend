@@ -258,12 +258,19 @@ export interface PostMeetingTimeResponse {
 // GET /api/v1/meetings/{meeting-id}/members (payalod)
 export type GetMeetingMembersPayload = number;
 
+// GET /api/v2/meetings/{meeting-id}/members (payalod)
+export type GetMeetingMembersPayload2 = number;
+
 export interface GetMeetingMembersResponse {
   memberId: number;
   userId: number;
   nickname: string;
-  profileImageUrl: string;
+  profileImageUrl: string | null;
   memberRole: MemberRole;
+}
+
+export interface GetMeetingMembersResponse2 extends GetMeetingMembersResponse {
+  profileImageUrl: string;
 }
 
 // POST /api/v1/meetings/{meeting-id}/members/drop (payalod)
@@ -280,6 +287,10 @@ export interface PostMeetingMembersDropResponse {
 // GET /api/v1/meetings/{meeting-id}/members (response)
 export type GetMeetingMembersListResponse =
   ListResponse<GetMeetingMembersResponse>;
+
+// GET /api/v2/meetings/{meeting-id}/members (response)
+export type GetMeetingMembersListResponse2 =
+  ListResponse<GetMeetingMembersResponse2>;
 
 // GET /api/v1/meetings/{meeting-id}/places (paylaod)
 export type GetMeetingPlacesPayalod = number;
@@ -461,4 +472,17 @@ export interface PostMeetingPlacesUnLockPayload {
 // POST /api/v2/meetings/{meeting-id}/places/{place-id}/unlock (response)
 export interface PostMeetingPlacesUnLockResponse {
   success: boolean;
+}
+
+// POST /api/v1/report/meeting (payload)
+export interface PostReportMeetingPayload {
+  meetingId: number;
+  title: string;
+  content: string;
+  reportImageUrl: null | string;
+}
+
+// POST /api/v1/report/meeting (payload)
+export interface PostReportMeetingResponse {
+  reportId: number;
 }

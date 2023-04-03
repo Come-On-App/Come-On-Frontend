@@ -19,6 +19,8 @@ import type {
   PostMeetingResponse,
   PostMeetingTimePayalod,
   PostMeetingTimeResponse,
+  PostReportMeetingPayload,
+  PostReportMeetingResponse,
 } from '@type/api.meeting';
 
 /**
@@ -59,6 +61,7 @@ export async function requestPatchMeetings(
  */
 export async function requestGetMeetings(
   payload?: Partial<GetMeetingPayload>,
+  signal?: AbortSignal,
 ): Promise<GetMeetingSliceResponse> {
   const URL = '/api/v1/meetings';
   const { data } = await serverAxios.get(URL, {
@@ -66,6 +69,7 @@ export async function requestGetMeetings(
       ...payload,
       size: 100,
     },
+    signal,
   });
 
   return data;
@@ -177,6 +181,21 @@ export async function requestPostMeetingTime(
   const { data } = await serverAxios.post(URL, {
     meetingStartTime: payload.meetingStartTime,
   });
+
+  return data;
+}
+
+/**
+ * POST /api/v1/report/meeting 모임 신고
+ * @requires Authorization Bearer {access-token}
+ * @param payload 신고할 모임의 관련 정보
+ * @returns 생성된 신고 게시물의 식별값
+ */
+export async function requestPostReportMeeting(
+  payload: PostReportMeetingPayload,
+): Promise<PostReportMeetingResponse> {
+  const URL = `/api/v1/report/meeting`;
+  const { data } = await serverAxios.post(URL, payload);
 
   return data;
 }

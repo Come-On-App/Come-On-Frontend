@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import {
   setMeetingMode as setMyMeetingMode,
   MeetingMode,
@@ -9,6 +9,7 @@ import {
 } from '@features/meetingSlice';
 import { AssetState } from '@type/hook.imagePicker';
 import { PatchMeetingPayload } from '@type/api.meeting';
+import { Calendar } from '@type/meeting.date';
 import {
   setMeetingId,
   setMeetingImgPath,
@@ -52,13 +53,11 @@ function useMeeting() {
   const setCurrentMeetingId = (meetId: number) => {
     dispatch(setMeetingId(meetId));
   };
-  const getCalendarData = useCallback(() => {
-    const data = {
+  const calendarData: Calendar = useMemo(() => {
+    return {
       startFrom: meetingSelector.meetingData.calendarStartFrom,
       endTo: meetingSelector.meetingData.calendarEndTo,
     };
-
-    return data;
   }, [
     meetingSelector.meetingData.calendarEndTo,
     meetingSelector.meetingData.calendarStartFrom,
@@ -112,7 +111,7 @@ function useMeeting() {
     setMyMeetingImgPath,
     setMyMeetingName,
     resetMeetingData,
-    getCalendarData,
+    calendarData,
   };
 }
 

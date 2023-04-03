@@ -4,30 +4,27 @@ import { ScrollView } from 'react-native';
 import { ScrrenLayout } from '@components/Layout';
 import { RootStackScreenProps } from '@type/navigation';
 import { emptyString } from '@utils/fn';
-import useAuth from '@hooks/useAuth';
 import { Form } from '@type/component.report';
-import ReportImage from '@components/report/ReportImage';
 import ReportTitle from '@components/report/ReportTitle';
 import ReportDiscription from '@components/report/ReportDiscription';
 import ReportButton from '@components/report/ReportButton';
+import ReportImage from '@components/report/ReportImage';
 
 function ReportPost({ route }: RootStackScreenProps<'ReportPost'>) {
-  const { myId } = useAuth();
   const [form, setForm] = useState<Form>({
-    image: emptyString,
+    meetingId: route.params.meetingId,
     title: emptyString,
     description: emptyString,
-    userId: myId,
-    meetingId: route.params.meetingId,
+    reportImageAsset: null,
   });
 
   return (
-    <ScrollView style={{ flex: 1 }}>
+    <ScrollView>
       <ScrrenLayout>
-        <ReportImage setForm={setForm} image={form.image} />
+        <ReportImage setForm={setForm} image={form.reportImageAsset} />
         <ReportTitle setForm={setForm} title={form.title} />
         <ReportDiscription setForm={setForm} description={form.description} />
-        <ReportButton />
+        <ReportButton form={form} />
       </ScrrenLayout>
     </ScrollView>
   );

@@ -21,7 +21,7 @@ import useUserQuery from '@hooks/query/useUserQuery';
 import { detailConfig } from '@constants/config';
 import { Title, Time, requestAPI } from './common';
 
-const { vote } = detailConfig.text;
+const { button } = detailConfig.text;
 
 // 모임 기간
 export function MeetingDate({ calendar, meetingId, navigation }: DateProps) {
@@ -58,7 +58,7 @@ function DateMainLeft({ calendar }: DateMainLeftProps) {
       <View style={styles.dateMainLeftContainer}>
         <Icon name="calendar-today" size={size} color={color} />
         <Font style={styles.dateMainLeftCalendar}>
-          {detailConfig.text.vote.range(calendar)}
+          {detailConfig.text.range(calendar)}
         </Font>
       </View>
     </View>
@@ -110,7 +110,7 @@ function DateBottom({ meetingId, navigation }: DateBottomProps) {
     <View style={styles.dateBottomLayout}>
       <Button
         bold
-        text={vote.button}
+        text={button.vote}
         onPress={onPressHandler}
         buttonStyle={styles.dateBottomButton}
       />

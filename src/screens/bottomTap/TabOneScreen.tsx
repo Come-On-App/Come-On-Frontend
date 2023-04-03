@@ -1,14 +1,16 @@
-import { Keyboard, Pressable, View } from 'react-native';
+import { View } from 'react-native';
 import React, { useState } from 'react';
 import { Overlay, makeStyles } from '@rneui/themed';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import SearchBar from '@components/SearchBar';
+import { SearchBarMock } from '@components/SearchBar';
 import { IconButton } from '@components/button/Buttons';
 import CardList from '@components/meetingCard/CardList';
 import { MeetingMode } from '@features/meetingSlice';
 import useGoToScreen from '@hooks/useGoTo';
 import ModalCalendar from '@components/calendar/ModalCalendar';
+import useMeeting from '@hooks/useMeeting';
+import { detailConfig } from '@constants/config';
 
 // 모임 관리 스크린
 export default function TabOneScreen() {
@@ -44,14 +46,12 @@ function OneScreenMain() {
   );
 }
 
+const { text } = detailConfig;
+
 function DateRangeSerchBar() {
   const styles = useStyles();
-  const [search, setSearch] = useState('날짜 검색 업데이트 예정');
   const [visible, setVisible] = useState<boolean>(false);
-  const updateSearch = () => {
-    Keyboard.dismiss();
-    setSearch(prev => prev);
-  };
+  const { calendarData } = useMeeting();
   const toggleOverlay = () => {
     setVisible(!visible);
   };
@@ -59,13 +59,14 @@ function DateRangeSerchBar() {
   return (
     <>
       <View style={styles.serchContainer}>
-        <Pressable onPress={toggleOverlay}>
-          <SearchBar
-            IconType="date-range"
-            value={search}
-            onChange={updateSearch}
-          />
-        </Pressable>
+        <SearchBarMock
+          fontSize={14}
+          text={
+            calendarData.startFrom ? text.range(calendarData) : '날짜 필터링'
+          }
+          searchIcon="date-range"
+          onPress={toggleOverlay}
+        />
       </View>
       <Overlay
         isVisible={visible}

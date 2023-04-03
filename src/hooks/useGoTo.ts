@@ -7,8 +7,13 @@ function useGoToScreen() {
     navigation.navigate('CreateMeeting', { mode, meetingId });
   const goToReportPostScreen = (meetingId: number) =>
     navigation.navigate('ReportPost', { meetingId });
+  const goBack = () => {
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+    }
+  };
 
-  return { goToCreateMeetingScreen, goToReportPostScreen };
+  return { goToCreateMeetingScreen, goToReportPostScreen, goBack };
 }
 
 export default useGoToScreen;
