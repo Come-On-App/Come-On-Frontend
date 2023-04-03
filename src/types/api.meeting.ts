@@ -462,3 +462,16 @@ export interface PostMeetingPlacesUnLockPayload {
 export interface PostMeetingPlacesUnLockResponse {
   success: boolean;
 }
+
+// POST /api/v1/report/meeting (payload)
+export interface PostReportMeetingPayload {
+  meetingId: number;
+  title: string;
+  content: string;
+  reportImageUrl: null | string;
+}
+
+// POST /api/v1/report/meeting (payload)
+export interface PostReportMeetingResponse {
+  reportId: number;
+}
