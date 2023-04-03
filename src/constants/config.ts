@@ -7,6 +7,8 @@ export const reportConfig = {
     discription: '신고 내용',
     placeholder: '신고 내용을 작성해주세요.',
     button: '신고하기',
+    deleteSuccessMessage: '해당 모임 신고가 접수되었습니다.',
+    confirm: '신고가 진행된다면 자동으로 모임에서 제외되게 됩니다.',
   },
   maxLength: 150,
 };

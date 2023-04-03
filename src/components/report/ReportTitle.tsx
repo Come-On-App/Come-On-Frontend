@@ -24,6 +24,7 @@ function ReportTitle({ setForm, title }: ReportTitleProps) {
         value={title}
         setState={setForm}
         keyType="title"
+        containerStyle={{ textAlignVertical: 'center' }}
       />
     </Content>
   );
