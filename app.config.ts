@@ -43,7 +43,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     config: {
       googleMapsApiKey: process.env.GOOGLE_MAP_API_KEY_IOS,
     },
-    googleServicesFile: './GoogleService-Info.plist',
+    googleServicesFile:
+      process.env.GOOGLE_SERVICES_FILE_IOS || './GoogleService-Info.plist',
   },
   android: {
     package: app.identifier,
@@ -55,7 +56,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     config: {
       googleMaps: { apiKey: process.env.GOOGLE_MAP_API_KEY_ANDROID },
     },
-    googleServicesFile: './google-services.json',
+    googleServicesFile:
+      process.env.GOOGLE_SERVICES_FILE_ANDROID || './google-services.json',
   },
   plugins: [
     '@react-native-firebase/app',

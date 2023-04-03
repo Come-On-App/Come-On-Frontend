@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { requestGetMyInfo } from '@api/user/user';
 import { useMemo, useEffect } from 'react';
-import { requestMeetingMembers } from '@api/meeting/members';
+import { requestMeetingMembers2 } from '@api/meeting/members';
 import { invalidateQueries, QueryKeys } from '@api/queryClient';
 import { IMessage } from '@stomp/stompjs';
 import {
@@ -233,7 +233,7 @@ function setCurrentLockUser(
   promiseFlow<number, GetMeetingMembersResponse>(
     messageBody.meetingId,
     [
-      requestMeetingMembers,
+      requestMeetingMembers2,
       (info: GetMeetingMembersListResponse) => {
         const [currentLockUser] = info.contents.filter(
           item => item.userId === messageBody.userId,

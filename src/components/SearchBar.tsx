@@ -2,8 +2,10 @@ import React from 'react';
 import { SearchBar as RneSearchBar, makeStyles } from '@rneui/themed';
 import { GestureResponderEvent, Pressable, View } from 'react-native';
 
+import { emptyString } from '@utils/fn';
 import Icon from './Icon';
-import type { SearchBarProps } from '../types';
+import type { IconName, SearchBarProps } from '../types';
+import Font from './Font';
 
 export default function SearchBar(props: SearchBarProps) {
   const styles = useStyles();
@@ -35,21 +37,32 @@ export default function SearchBar(props: SearchBarProps) {
 }
 
 interface SearchBarMockProps {
+  searchIcon?: IconName;
+  text?: string;
+  fontSize?: number;
   onPress: (event: GestureResponderEvent) => void;
 }
 
-export function SearchBarMock({ onPress }: SearchBarMockProps) {
+export function SearchBarMock({
+  onPress,
+  fontSize,
+  text = emptyString,
+  searchIcon = 'search',
+}: SearchBarMockProps) {
   const styles = useStyles();
 
   return (
     <Pressable onPress={onPress}>
       <View style={styles.searchBarMockContainer}>
         <View style={styles.searchBarMockInputContainer}>
-          <Icon
-            name="search"
-            color={styles.icon.color}
-            size={styles.icon.size}
-          />
+          <View style={styles.searchBarMockIcon}>
+            <Icon
+              name={searchIcon}
+              color={styles.icon.color}
+              size={styles.icon.size}
+            />
+          </View>
+          <Font style={{ fontSize }}>{text}</Font>
         </View>
       </View>
     </Pressable>
@@ -92,5 +105,9 @@ const useStyles = makeStyles(theme => ({
     paddingRight: 4,
     alignItems: 'center',
     justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  searchBarMockIcon: {
+    marginRight: 10,
   },
 }));

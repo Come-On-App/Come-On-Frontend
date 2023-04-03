@@ -5,7 +5,9 @@ import type {
   DeleteMeetingPayload,
   DeleteMeetingResponse,
   GetMeetingMembersListResponse,
+  GetMeetingMembersListResponse2,
   GetMeetingMembersPayload,
+  GetMeetingMembersPayload2,
   PostMeetingMembersDropPayload,
   PostMeetingMembersDropResponse,
 } from '@type/api.meeting';
@@ -20,6 +22,24 @@ export async function requestMeetingMembers(
   payload: GetMeetingMembersPayload,
   signal?: AbortSignal,
 ): Promise<GetMeetingMembersListResponse> {
+  const URL = `/api/v1/meetings/${payload}/members`;
+  const { data } = await serverAxios.get(URL, {
+    signal: signal || undefined,
+  });
+
+  return data;
+}
+
+/**
+ * GET /api/v2/meetings/{meeting-id}/members 모임 회원 리스트 조회 (v2)
+ * @requires Authorization Bearer {access-token}
+ * @param payload 모임의 식별값
+ * @returns 모임 회원 리스트
+ */
+export async function requestMeetingMembers2(
+  payload: GetMeetingMembersPayload2,
+  signal?: AbortSignal,
+): Promise<GetMeetingMembersListResponse2> {
   const URL = `/api/v2/meetings/${payload}/members`;
   const { data } = await serverAxios.get(URL, {
     signal: signal || undefined,

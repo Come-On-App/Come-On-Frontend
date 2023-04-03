@@ -11,6 +11,7 @@ import Button from '@components/button/Buttons';
 import useGoToScreen from '@hooks/useGoTo';
 import { MeetingMode } from '@features/meetingSlice';
 import { emptyConfig } from '@constants/config';
+import useMeeting from '@hooks/useMeeting';
 import Card, { CardSkeleton } from './Card';
 
 const { text } = emptyConfig;
@@ -18,7 +19,11 @@ const { text } = emptyConfig;
 // 모임 관리 리스트
 function CardList() {
   const styles = useStyles();
-  const { sliceResponse, refetch } = useMeetingQuery();
+  const { calendarData } = useMeeting();
+  const { sliceResponse, refetch } = useMeetingQuery({
+    dateFrom: calendarData.startFrom || undefined,
+    dateTo: calendarData.endTo || undefined,
+  });
   const { isRefetching, onRefresh } = useRefreshBy(refetch);
 
   useRefreshOnFocus(refetch);

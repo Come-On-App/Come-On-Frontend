@@ -7,6 +7,8 @@ export const reportConfig = {
     discription: '신고 내용',
     placeholder: '신고 내용을 작성해주세요.',
     button: '신고하기',
+    deleteSuccessMessage: '해당 모임 신고가 접수되었습니다.',
+    confirm: '신고가 진행된다면 자동으로 모임에서 제외되게 됩니다.',
   },
   maxLength: 150,
 };
@@ -62,10 +64,9 @@ export const detailConfig = {
     date: '모임기간',
     place: '모임장소',
     imageUpload: '사진등록',
-    vote: {
-      range: (calendar: Calendar) =>
-        `${calendar.startFrom} ~ ${calendar.endTo}`,
-      button: '날짜 투표하기',
+    button: {
+      vote: '날짜 투표하기',
     },
+    range: (calendar: Calendar) => `${calendar.startFrom} ~ ${calendar.endTo}`,
   },
 };

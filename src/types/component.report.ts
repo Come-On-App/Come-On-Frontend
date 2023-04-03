@@ -1,7 +1,10 @@
+import { AssetState } from '@type/hook.imagePicker';
+
+export type ReportImageAsset = AssetState | null;
+
 export interface Form {
-  image: string;
+  reportImageAsset: ReportImageAsset;
   title: string;
   description: string;
-  userId: number;
   meetingId: number;
 }

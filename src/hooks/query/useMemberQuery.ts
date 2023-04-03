@@ -6,12 +6,12 @@ import {
   GetMeetingMembersResponse,
 } from '@type/api.meeting';
 import { errorAlert } from '@utils/alert';
-import { requestMeetingMembers } from '@api/meeting/members';
+import { requestMeetingMembers2 } from '@api/meeting/members';
 
 function useMemberQuery(meetingId: number) {
   const { data: members } = useQuery(
     [QueryKeys.meetingDetail, QueryKeys.members, meetingId],
-    ({ signal }) => requestMeetingMembers(meetingId, signal),
+    ({ signal }) => requestMeetingMembers2(meetingId, signal),
     {
       onError: (error: ErrorMeetingResponse) => {
         errorAlert(error.response.data.errorDescription);
