@@ -64,10 +64,9 @@ export const detailConfig = {
     date: '모임기간',
     place: '모임장소',
     imageUpload: '사진등록',
-    vote: {
-      range: (calendar: Calendar) =>
-        `${calendar.startFrom} ~ ${calendar.endTo}`,
-      button: '날짜 투표하기',
+    button: {
+      vote: '날짜 투표하기',
     },
+    range: (calendar: Calendar) => `${calendar.startFrom} ~ ${calendar.endTo}`,
   },
 };
