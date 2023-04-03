@@ -61,6 +61,7 @@ export async function requestPatchMeetings(
  */
 export async function requestGetMeetings(
   payload?: Partial<GetMeetingPayload>,
+  signal?: AbortSignal,
 ): Promise<GetMeetingSliceResponse> {
   const URL = '/api/v1/meetings';
   const { data } = await serverAxios.get(URL, {
@@ -68,6 +69,7 @@ export async function requestGetMeetings(
       ...payload,
       size: 100,
     },
+    signal,
   });
 
   return data;

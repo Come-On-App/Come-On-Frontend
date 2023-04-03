@@ -4,6 +4,7 @@ import useMeeting from '@hooks/useMeeting';
 import { View } from 'react-native';
 import React, { useState } from 'react';
 import { makeStyles } from '@rneui/themed';
+import { emptyString } from '@utils/fn';
 
 export default function ModalCalendar({
   toggleOverlay,
@@ -12,8 +13,8 @@ export default function ModalCalendar({
 }) {
   const styles = useStyles();
   const [date, setDate] = useState({
-    startDate: '0000-00-00',
-    endDate: '0000-00-00',
+    startDate: emptyString,
+    endDate: emptyString,
   });
   const { resetMeetingData, setCalendarDate } = useMeeting();
   const cancelHandler = () => {
@@ -31,6 +32,7 @@ export default function ModalCalendar({
     <>
       <View style={styles.calendarContainer}>
         <Calendar
+          setDate={setDate}
           type="DEFAULT"
           options={{ minDate: false, noListCalendar: true }}
         />

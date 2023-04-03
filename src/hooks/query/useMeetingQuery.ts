@@ -5,10 +5,12 @@ import {
   requestGetMeetingDetail,
   requestGetMeetings,
 } from '@api/meeting/meetings';
+import { GetMeetingPayload } from '@type/api.meeting';
 
-const useMeetingQuery = () => {
-  const { data: sliceResponse, refetch } = useQuery([QueryKeys.meetings], () =>
-    requestGetMeetings(),
+const useMeetingQuery = (payload: Partial<GetMeetingPayload>) => {
+  const { data: sliceResponse, refetch } = useQuery(
+    [QueryKeys.meetings, payload],
+    ({ signal }) => requestGetMeetings(payload, signal),
   );
 
   return { sliceResponse, refetch };
