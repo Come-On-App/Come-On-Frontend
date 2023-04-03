@@ -60,7 +60,7 @@ export const modalConfig = {
 
 export const detailConfig = {
   text: {
-    member: '모임멤버',
+    member: '모임멤버 ',
     date: '모임기간',
     place: '모임장소',
     imageUpload: '사진등록',
