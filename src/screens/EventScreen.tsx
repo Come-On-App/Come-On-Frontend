@@ -40,7 +40,7 @@ function MemberList() {
           <Font>강예정</Font>
         </View>
       </Member>
-      <Member type="designer">
+      <Member type="Designer">
         <Font>김경진</Font>
       </Member>
       <Member type="Backend">
@@ -54,7 +54,7 @@ function Member({
   type,
   children,
 }: {
-  type: 'Backend' | 'Frontend' | 'designer';
+  type: 'Backend' | 'Frontend' | 'Designer';
   children: React.ReactNode;
 }) {
   const styles = useStyles();
