@@ -12,8 +12,11 @@ import { useQuery } from 'react-query';
 import { RootStackScreenProps } from '@type/navigation';
 import { QueryKeys } from '@api/queryClient';
 
+import { detailConfig } from '@constants/config';
 import MemberBox from '../components/member/MemberBox';
-import { Title, TitleName } from './meeting/detail/common';
+import { Title } from './meeting/detail/common';
+
+const { text } = detailConfig;
 
 function SelectCalendar({
   route: {
@@ -55,7 +58,7 @@ function SelectCalendar({
         />
       </View>
 
-      <Title title={TitleName.date} />
+      <Title title={text.date} />
       <Calendar
         type="DEFAULT"
         data={votingDetail}
