@@ -33,7 +33,7 @@ export async function requestUploadImage(
 
 export async function requestImageUpload(
   imagePath: AssetState,
-): Promise<string | null> {
+): Promise<string> {
   return promiseFlow(imagePath, [
     convertImageFormData,
     createImageFormData,
