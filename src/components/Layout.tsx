@@ -1,6 +1,6 @@
 import { makeStyles } from '@rneui/themed';
 import React from 'react';
-import { StyleProp, View, ViewStyle } from 'react-native';
+import { StyleProp, View, ViewStyle, Dimensions } from 'react-native';
 
 interface LayoutProps {
   style?: StyleProp<ViewStyle>;
@@ -20,6 +20,16 @@ export function ScrrenLayout({ style, children }: LayoutProps) {
 
   return <View style={[styles.scrrenLayout, style]}>{children}</View>;
 }
+
+const { width, height } = Dimensions.get('window');
+
+export default {
+  window: {
+    width,
+    height,
+  },
+  isSmallDevice: width < 375,
+};
 
 const useStyles = makeStyles(() => ({
   meetingLayout: {
