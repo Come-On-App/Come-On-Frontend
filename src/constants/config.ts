@@ -67,6 +67,7 @@ export const detailConfig = {
     button: {
       vote: '날짜 투표하기',
     },
+    search: '원하는 모임 날짜를 검색해 보세요',
     range: (calendar: Calendar) => `${calendar.startFrom} ~ ${calendar.endTo}`,
   },
 };
