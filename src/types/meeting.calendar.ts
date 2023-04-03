@@ -38,6 +38,12 @@ export type CalendarProps = {
       endDate: string;
     }>
   >;
+  options?: CalendarOptions;
+};
+
+export type CalendarOptions = {
+  minDate: boolean;
+  noListCalendar: boolean;
 };
 
 export type CalenderClickEventType = {
@@ -65,6 +71,7 @@ export interface CalendarVotingTypeProps {
 
 export interface CalendarPeriodTypeProps {
   data?: GetDateVotingResponse;
+  options?: CalendarOptions;
   setDate?: React.Dispatch<
     React.SetStateAction<{
       startDate: string;

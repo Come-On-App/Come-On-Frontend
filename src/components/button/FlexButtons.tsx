@@ -1,6 +1,6 @@
 import { makeStyles } from '@rneui/themed';
 import React from 'react';
-import { View } from 'react-native';
+import { StyleProp, View, ViewStyle } from 'react-native';
 import CancelButton from './CancelButton';
 import ConfirmButton from './ConfirmButton';
 
@@ -8,17 +8,19 @@ interface FlexButtonProps {
   cancelHandler: () => void;
   onPressConfirm: () => void;
   loading?: boolean;
+  style?: StyleProp<ViewStyle>;
 }
 
 function FlexButtons({
   cancelHandler,
   onPressConfirm,
   loading,
+  style,
 }: FlexButtonProps) {
   const styles = useStyles();
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <View style={styles.buttons}>
         <View style={{ flex: 0.4 }}>
           <CancelButton title="취소" onPressHandler={cancelHandler} />

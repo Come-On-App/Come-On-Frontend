@@ -6,6 +6,7 @@ import {
   CalendarList,
   CalendarProvider,
   DateData,
+  Calendar as CustomCalendar,
 } from 'react-native-calendars';
 import { MarkedDates } from 'react-native-calendars/src/types';
 
@@ -121,7 +122,7 @@ const getDatesRangeArray = (start: string, end: string) => {
 
 /** 캘린더 컴포넌트들 */
 
-function CalendarHeader(date: XDate) {
+function CalendarHeader(date: Date) {
   const styles = useStyles();
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
@@ -152,7 +153,7 @@ function setCalendarStyle(array: Array<string>) {
   return dataMap;
 }
 
-function PeriodCalendar({ setDate }: CalendarPeriodTypeProps) {
+function PeriodCalendar({ setDate, options }: CalendarPeriodTypeProps) {
   const styles = useStyles();
   const today = new Date().toISOString().substring(0, 10);
   const [markedDate, setMarkedDate] = useState<MarkedDates>();
@@ -207,11 +208,19 @@ function PeriodCalendar({ setDate }: CalendarPeriodTypeProps) {
       setDate({ startDate: day.startDay, endDate: day.endDay });
   }, [day.endDay, day.startDay, setDate]);
 
-  return (
+  return options?.noListCalendar ? (
+    <CustomCalendar
+      calendarStyle={styles.calendarStyle}
+      onDayPress={onPressDayHandlerPeriod}
+      markedDates={markedDate || {}}
+      theme={CustomCalendarTheme}
+      markingType="period"
+    />
+  ) : (
     <CalendarList
       calendarStyle={styles.calendarStyle}
       onDayPress={onPressDayHandlerPeriod}
-      minDate={today}
+      minDate={options?.minDate === true ? today : ''}
       theme={CustomCalendarTheme}
       markingType="period"
       scrollToOverflowEnabled
@@ -367,6 +376,7 @@ function Calendar({
   setDate,
   meetingId,
   hostId,
+  options,
 }: CalendarProps): JSX.Element {
   const styles = useStyles();
 
@@ -389,7 +399,7 @@ function Calendar({
           meetingId={meetingId}
         />
       ) : (
-        <MemorizedPeriodCalendar setDate={setDate} />
+        <MemorizedPeriodCalendar setDate={setDate} options={options} />
       )}
     </View>
   );
