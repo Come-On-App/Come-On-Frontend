@@ -85,10 +85,9 @@ const useStyles = makeStyles(theme => ({
     marginBottom: 20,
   },
   calendarContainer: {
-    width: '80%',
-    flex: 0.8,
+    width: '100%',
+    flex: 1,
     justifyContent: 'center',
-    height: 600,
   },
   title: {
     fontSize: 16,
