@@ -34,11 +34,10 @@ import { makeStyles } from '@rneui/themed';
 import { MeetingMode } from '@features/meetingSlice';
 import { errorAlert, successAlert } from '@utils/alert';
 import FlexButtons from '@components/button/FlexButtons';
-
 import {
   AnimationInputDate,
   InputImageWithAinm,
-} from '../../../components/input/InputForm';
+} from '@components/input/InputForm';
 
 type ValuesType = {
   [key in Ids]: string;

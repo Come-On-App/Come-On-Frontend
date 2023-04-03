@@ -6,14 +6,10 @@ import { SubDateProps } from '@type/meeting.calendar';
 import { RootStackScreenProps } from '@type/navigation';
 import FlexButtons from '@components/button/FlexButtons';
 import useMeeting from '@hooks/useMeeting';
-import {
-  setCalendarEndTo,
-  setCalendarStartFrom,
-} from '../../../features/meetingSlice';
-
-import Font from '../../../components/Font';
-import { useAppDispatch } from '../../../hooks/redux/hooks';
-import Calendar from '../../../components/calendar/Calendar';
+import { useAppDispatch } from '@hooks/redux/hooks';
+import { setCalendarEndTo, setCalendarStartFrom } from '@features/meetingSlice';
+import Font from '@components/Font';
+import Calendar from '@components/calendar/Calendar';
 
 const { width } = Dimensions.get('window');
 
