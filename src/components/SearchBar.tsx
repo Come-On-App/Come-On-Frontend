@@ -55,11 +55,7 @@ export function SearchBarMock({
     <Pressable onPress={onPress}>
       <View style={styles.searchBarMockContainer}>
         <View style={styles.searchBarMockInputContainer}>
-          <View
-            style={{
-              marginRight: 10,
-            }}
-          >
+          <View style={styles.searchBarMockIcon}>
             <Icon
               name={searchIcon}
               color={styles.icon.color}
@@ -110,5 +106,8 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
+  },
+  searchBarMockIcon: {
+    marginRight: 10,
   },
 }));
