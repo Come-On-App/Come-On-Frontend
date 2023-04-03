@@ -1,11 +1,13 @@
 import React, { ReactNode } from 'react';
-import { View } from 'react-native';
+import { StyleProp, TextStyle, View } from 'react-native';
 
 import { Input } from '@components/input/InputText';
 import { reportConfig } from '@constants/config';
 import { Form } from '@type/component.report';
 import { SetState } from '@type/index';
 import { makeStyles } from '@rneui/themed';
+import { PostReportMeetingPayload } from '@type/api.meeting';
+import { imageURLConversion } from '@api/image/upload';
 
 const { maxLength } = reportConfig;
 
@@ -15,6 +17,7 @@ interface ReportInputProps {
   keyType: keyof Form;
   multiline: boolean;
   placeholder: string;
+  containerStyle?: StyleProp<TextStyle>;
 }
 
 interface ContentProps {
@@ -33,6 +36,7 @@ export function ReportInput({
   keyType,
   multiline,
   placeholder,
+  containerStyle,
 }: ReportInputProps) {
   const styles = useStyles();
 
@@ -50,7 +54,7 @@ export function ReportInput({
           };
         });
       }}
-      containerStyle={styles.reportContainer}
+      containerStyle={[styles.reportContainer, containerStyle]}
     />
   );
 }
@@ -65,3 +69,16 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.grayscale[100],
   },
 }));
+
+export async function createPayload(
+  form: Form,
+): Promise<PostReportMeetingPayload> {
+  const imageURL = await imageURLConversion(form.reportImageAsset);
+
+  return {
+    meetingId: form.meetingId,
+    content: form.description,
+    title: form.title,
+    reportImageUrl: imageURL,
+  };
+}
