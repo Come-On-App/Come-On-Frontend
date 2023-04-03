@@ -9,11 +9,11 @@ import useMeeting from '@hooks/useMeeting';
 import {
   setCalendarEndTo,
   setCalendarStartFrom,
-} from '../features/meetingSlice';
+} from '../../../features/meetingSlice';
 
-import Font from '../components/Font';
-import { useAppDispatch } from '../hooks/redux/hooks';
-import Calendar from '../components/calendar/Calendar';
+import Font from '../../../components/Font';
+import { useAppDispatch } from '../../../hooks/redux/hooks';
+import Calendar from '../../../components/calendar/Calendar';
 
 const { width } = Dimensions.get('window');
 
@@ -85,8 +85,8 @@ const useStyles = makeStyles(theme => ({
     marginBottom: 20,
   },
   calendarContainer: {
-    width: '100%',
-    flex: 1,
+    width: '80%',
+    flex: 0.8,
     justifyContent: 'center',
     height: 600,
   },

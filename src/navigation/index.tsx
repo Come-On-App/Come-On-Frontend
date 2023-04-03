@@ -20,9 +20,8 @@ import { useWebSocketConnect } from '@hooks/useWebSocket';
 import MeetingDetail from '@screens/meeting/detail';
 import PlaceSelect from '@screens/place/Select';
 import PlaceSearch from '@screens/place/Search';
-import CreateMeeting from '@screens/CreateMeeting';
-import PeriodCalendar from '@screens/PeriodCalender';
-import SelectCalendar from '@screens/SelectCalendar';
+import CreateMeeting from '@screens/meeting/create/CreateMeeting';
+import PeriodCalendar from '@screens/meeting/create/PeriodCalender';
 import LoginScreen from '@screens/LoginScreen';
 import TabOneScreen from '@screens/bottomTap/TabOneScreen';
 import TabThreeScreen from '@screens/bottomTap/TabThreeScreen';
@@ -38,6 +37,7 @@ import { createTabBarIcon } from '@components/Icon';
 import LogoutButton from '@components/myPage/MyPageLogoutButton';
 import MyPageHeaderTitle from '@components/myPage/MyPageHeaderTitle';
 import PlaceSelectHeaderTitle from '@components/placeSelect/PlaceSelectHeaderTitle';
+import SelectCalendar from '@screens/meeting/detail/SelectCalendar';
 
 function TabThreeIcon() {
   const size = 32;

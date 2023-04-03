@@ -1,6 +1,6 @@
-import { Keyboard, View } from 'react-native';
+import { Keyboard, Pressable, View } from 'react-native';
 import React, { useState } from 'react';
-import { makeStyles } from '@rneui/themed';
+import { Overlay, makeStyles } from '@rneui/themed';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import SearchBar from '@components/SearchBar';
@@ -8,6 +8,9 @@ import { IconButton } from '@components/button/Buttons';
 import CardList from '@components/meetingCard/CardList';
 import { MeetingMode } from '@features/meetingSlice';
 import useGoToScreen from '@hooks/useGoTo';
+import Calendar from '@components/calendar/Calendar';
+import FlexButtons from '@components/button/FlexButtons';
+import useMeeting from '@hooks/useMeeting';
 
 // 모임 관리 스크린
 export default function TabOneScreen() {
@@ -43,18 +46,72 @@ function OneScreenMain() {
   );
 }
 
+function ModalCalendar({ toggleOverlay }: { toggleOverlay: () => void }) {
+  const styles = useStyles();
+  const [date, setDate] = useState({
+    startDate: '0000-00-00',
+    endDate: '0000-00-00',
+  });
+  const { resetMeetingData, setCalendarDate } = useMeeting();
+  const cancelHandler = () => {
+    resetMeetingData();
+    toggleOverlay();
+  };
+  const confirmHandelr = () => {
+    const data = { startDate: date.startDate, endDate: date.endDate };
+
+    setCalendarDate(data);
+    toggleOverlay();
+  };
+
+  return (
+    <>
+      <View style={styles.calendarContainer}>
+        <Calendar
+          type="DEFAULT"
+          options={{ minDate: false, noListCalendar: true }}
+        />
+      </View>
+      <FlexButtons
+        style={styles.flexButtonStyle}
+        cancelHandler={cancelHandler}
+        onPressConfirm={confirmHandelr}
+      />
+    </>
+  );
+}
+
 function DateRangeSerchBar() {
+  const styles = useStyles();
   const [search, setSearch] = useState('날짜 검색 업데이트 예정');
+  const [visible, setVisible] = useState<boolean>(false);
   const updateSearch = () => {
     Keyboard.dismiss();
     setSearch(prev => prev);
   };
-  const styles = useStyles();
+  const toggleOverlay = () => {
+    setVisible(!visible);
+  };
 
   return (
-    <View style={styles.serchContainer}>
-      <SearchBar IconType="date-range" value={search} onChange={updateSearch} />
-    </View>
+    <>
+      <View style={styles.serchContainer}>
+        <Pressable onPress={toggleOverlay}>
+          <SearchBar
+            IconType="date-range"
+            value={search}
+            onChange={updateSearch}
+          />
+        </Pressable>
+      </View>
+      <Overlay
+        isVisible={visible}
+        onBackdropPress={toggleOverlay}
+        overlayStyle={styles.overlayStyle}
+      >
+        <ModalCalendar toggleOverlay={toggleOverlay} />
+      </Overlay>
+    </>
   );
 }
 
@@ -108,5 +165,18 @@ const useStyles = makeStyles(() => ({
   cardContainer: {
     flex: 1,
     paddingHorizontal: 15,
+  },
+  calendarContainer: {
+    width: '100%',
+    flex: 1,
+    justifyContent: 'center',
+  },
+  overlayStyle: {
+    flex: 0.56,
+    width: '80%',
+    borderRadius: 10,
+  },
+  flexButtonStyle: {
+    marginBottom: 12,
   },
 }));
