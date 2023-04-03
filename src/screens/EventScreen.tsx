@@ -34,14 +34,14 @@ function MemberList() {
 
   return (
     <View>
-      <Member type="Backend">
-        <Font>유하영</Font>
-      </Member>
       <Member type="Frontend">
         <View style={row}>
-          <Font>방정배,</Font>
+          <Font>방정배, </Font>
           <Font>강예정</Font>
         </View>
+      </Member>
+      <Member type="Backend">
+        <Font>유하영</Font>
       </Member>
     </View>
   );
