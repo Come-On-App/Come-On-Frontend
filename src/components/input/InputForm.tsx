@@ -90,7 +90,7 @@ export function AnimationInputDate({
   } = useMeeting();
   const iconConfig: IconProps = {
     name: 'calendar-today',
-    size: 24,
+    size: 20,
     color: styles.iconColor.color,
   };
 
