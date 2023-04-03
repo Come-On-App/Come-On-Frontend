@@ -29,7 +29,7 @@ function OneScreenTop() {
 
   return (
     <View style={styles.screenTopContainer}>
-      <DateRangeSerchBar />
+      <DateRangeSearchBar />
 
       <CreateMeetingRoomButton />
     </View>
@@ -48,7 +48,7 @@ function OneScreenMain() {
 
 const { text } = detailConfig;
 
-function DateRangeSerchBar() {
+function DateRangeSearchBar() {
   const styles = useStyles();
   const [visible, setVisible] = useState<boolean>(false);
   const { calendarData } = useMeeting();
@@ -61,9 +61,7 @@ function DateRangeSerchBar() {
       <View style={styles.serchContainer}>
         <SearchBarMock
           fontSize={14}
-          text={
-            calendarData.startFrom ? text.range(calendarData) : '날짜 필터링'
-          }
+          text={calendarData.startFrom ? text.range(calendarData) : text.search}
           searchIcon="date-range"
           onPress={toggleOverlay}
         />
