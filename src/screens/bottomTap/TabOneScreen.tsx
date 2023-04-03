@@ -8,9 +8,7 @@ import { IconButton } from '@components/button/Buttons';
 import CardList from '@components/meetingCard/CardList';
 import { MeetingMode } from '@features/meetingSlice';
 import useGoToScreen from '@hooks/useGoTo';
-import Calendar from '@components/calendar/Calendar';
-import FlexButtons from '@components/button/FlexButtons';
-import useMeeting from '@hooks/useMeeting';
+import ModalCalendar from '@components/calendar/ModalCalendar';
 
 // 모임 관리 스크린
 export default function TabOneScreen() {
@@ -43,41 +41,6 @@ function OneScreenMain() {
     <View style={styles.cardContainer}>
       <CardList />
     </View>
-  );
-}
-
-function ModalCalendar({ toggleOverlay }: { toggleOverlay: () => void }) {
-  const styles = useStyles();
-  const [date, setDate] = useState({
-    startDate: '0000-00-00',
-    endDate: '0000-00-00',
-  });
-  const { resetMeetingData, setCalendarDate } = useMeeting();
-  const cancelHandler = () => {
-    resetMeetingData();
-    toggleOverlay();
-  };
-  const confirmHandelr = () => {
-    const data = { startDate: date.startDate, endDate: date.endDate };
-
-    setCalendarDate(data);
-    toggleOverlay();
-  };
-
-  return (
-    <>
-      <View style={styles.calendarContainer}>
-        <Calendar
-          type="DEFAULT"
-          options={{ minDate: false, noListCalendar: true }}
-        />
-      </View>
-      <FlexButtons
-        style={styles.flexButtonStyle}
-        cancelHandler={cancelHandler}
-        onPressConfirm={confirmHandelr}
-      />
-    </>
   );
 }
 
