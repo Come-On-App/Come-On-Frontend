@@ -38,7 +38,7 @@ import FlexButtons from '@components/button/FlexButtons';
 import {
   AnimationInputDate,
   InputImageWithAinm,
-} from '../components/input/InputForm';
+} from '../../../components/input/InputForm';
 
 type ValuesType = {
   [key in Ids]: string;
