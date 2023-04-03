@@ -82,6 +82,7 @@ function DateRangeSerchBar() {
 function CreateMeetingRoomButton() {
   const styles = useStyles();
   const { goToCreateMeetingScreen } = useGoToScreen();
+  const { resetMeetingData } = useMeeting();
 
   return (
     <View style={styles.buttonContainer}>
@@ -91,7 +92,10 @@ function CreateMeetingRoomButton() {
           size: styles.buttonIcon.size,
           color: styles.buttonIcon.color,
         }}
-        onPress={() => goToCreateMeetingScreen(MeetingMode.create)}
+        onPress={() => {
+          resetMeetingData();
+          goToCreateMeetingScreen(MeetingMode.create);
+        }}
         style={styles.button}
       />
     </View>
