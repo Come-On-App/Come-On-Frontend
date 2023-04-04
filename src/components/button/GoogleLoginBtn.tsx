@@ -35,8 +35,6 @@ function GoogleLoginBtn() {
 
       setLogin(data).then(res => {
         setLoginAuth(res);
-
-        WebBrowser.maybeCompleteAuthSession();
       });
     },
     [setLoginAuth],
@@ -56,7 +54,7 @@ function GoogleLoginBtn() {
     <Pressable
       style={({ pressed }) => [pressed && styles.pressed, styles.btnStyle]}
       onPress={() => {
-        promptAsync();
+        promptAsync({ showInRecents: true });
       }}
     >
       <GoogleLogo />

@@ -328,12 +328,12 @@ function DefaultCalendar({
         markedDates={selectedDates}
         scrollEnabled
         pastScrollRange={0}
-        enableSwipeMonths
         onDayLongPress={onDayLongPressHandler}
         renderPlaceholder={() => <LoadingComponent size="large" />}
         displayLoadingIndicator={false}
         futureScrollRange={month}
-        showScrollIndicator
+        showScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
         theme={CustomCalendarTheme}
         renderHeader={date => {
           if (!date) return null;
@@ -418,6 +418,7 @@ const useStyles = makeStyles(theme => ({
   calendarStyle: {
     width: '100%',
     borderRadius: 12,
+    marginBottom: 30,
   },
   calendarTitle: {
     flexDirection: 'row',
