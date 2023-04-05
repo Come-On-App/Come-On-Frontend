@@ -3,7 +3,18 @@
     "version": ">= 3.8.1"
   },
   "build": {
+    "dev-eas": {
+      "env": {
+        "TYPE": "dev"
+      }
+    },
+    "production-eas": {
+      "env": {
+        "TYPE": "production"
+      }
+    },
     "development": {
+      "extends": "dev-eas",
       "developmentClient": true,
       "distribution": "internal",
       "ios": {
@@ -12,6 +23,7 @@
       }
     },
     "preview": {
+      "extends": "dev-eas",
       "distribution": "internal",
       "android": {
         "buildType": "apk"
@@ -19,12 +31,15 @@
       "ios": {
         "simulator": true,
         "resourceClass": "m-medium"
-      }
+      },
+      "channel": "preview"
     },
     "production": {
+      "extends": "production-eas",
       "ios": {
         "resourceClass": "m-medium"
-      }
+      },
+      "channel": "production"
     }
   },
   "submit": {
