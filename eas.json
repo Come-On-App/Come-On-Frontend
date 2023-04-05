@@ -3,7 +3,20 @@
     "version": ">= 3.8.1"
   },
   "build": {
+    "dev-eas": {
+      "env": {
+        "OWNER": "jeongbaebang_dev",
+        "PROJECT_EAS_ID": "f7044c0a-2efb-4e36-8189-d3f827a0e89e"
+      }
+    },
+    "production-eas": {
+      "env": {
+        "OWNER": "come-on-app",
+        "PROJECT_EAS_ID": "390f7f40-6936-467d-901c-b3c6724e76f2"
+      }
+    },
     "development": {
+      "extends": "dev-eas",
       "developmentClient": true,
       "distribution": "internal",
       "ios": {
@@ -12,6 +25,7 @@
       }
     },
     "preview": {
+      "extends": "dev-eas",
       "distribution": "internal",
       "android": {
         "buildType": "apk"
@@ -19,12 +33,15 @@
       "ios": {
         "simulator": true,
         "resourceClass": "m-medium"
-      }
+      },
+      "channel": "preview"
     },
     "production": {
+      "extends": "production-eas",
       "ios": {
         "resourceClass": "m-medium"
-      }
+      },
+      "channel": "production"
     }
   },
   "submit": {

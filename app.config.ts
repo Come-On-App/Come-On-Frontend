@@ -18,6 +18,8 @@ const app = {
   versionCode: 1,
 };
 
+const projectId = process.env.PROJECT_EAS_ID;
+
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   icon: app.icon,
@@ -39,7 +41,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ios: {
     bundleIdentifier: app.identifier,
     buildNumber: app.version,
-    supportsTablet: true,
+    supportsTablet: false,
     config: {
       googleMapsApiKey: process.env.GOOGLE_MAP_API_KEY_IOS,
     },
@@ -80,9 +82,16 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     ],
     'expo-apple-authentication',
   ],
+  updates: {
+    url: `https://u.expo.dev/${projectId}`,
+  },
+  runtimeVersion: {
+    policy: 'sdkVersion',
+  },
+  owner: process.env.OWNER,
   extra: {
     eas: {
-      projectId: 'f7044c0a-2efb-4e36-8189-d3f827a0e89e',
+      projectId,
     },
   },
 });
