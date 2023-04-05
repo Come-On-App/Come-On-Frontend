@@ -5,14 +5,12 @@
   "build": {
     "dev-eas": {
       "env": {
-        "OWNER": "jeongbaebang_dev",
-        "PROJECT_EAS_ID": "f7044c0a-2efb-4e36-8189-d3f827a0e89e"
+        "TYPE": "dev"
       }
     },
     "production-eas": {
       "env": {
-        "OWNER": "come-on-app",
-        "PROJECT_EAS_ID": "390f7f40-6936-467d-901c-b3c6724e76f2"
+        "TYPE": "production"
       }
     },
     "development": {

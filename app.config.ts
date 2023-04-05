@@ -18,7 +18,18 @@ const app = {
   versionCode: 1,
 };
 
-const projectId = process.env.PROJECT_EAS_ID;
+const EAS = {
+  dev: {
+    owner: 'jeongbaebang_dev',
+    projectId: 'f7044c0a-2efb-4e36-8189-d3f827a0e89e',
+  },
+  production: {
+    owner: 'come-on-app',
+    projectId: '390f7f40-6936-467d-901c-b3c6724e76f2',
+  },
+};
+
+const { owner, projectId } = EAS[process.env.TYPE || 'dev'];
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
@@ -88,7 +99,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   runtimeVersion: {
     policy: 'sdkVersion',
   },
-  owner: process.env.OWNER,
+  owner,
   extra: {
     eas: {
       projectId,
