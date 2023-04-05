@@ -31,6 +31,17 @@ export interface GetMyInfoResponse {
   name: string;
 }
 
+// GET /api/v2/users/me (response)
+export interface GetMyInfoResponse2 {
+  userId: number;
+  nickname: string;
+  profileImageType: 'CUSTOM' | 'DEFAULT';
+  profileImageUrl: string;
+  role: Role;
+  email: string | null;
+  name: string;
+}
+
 // PUT /api/v1/users/me (payload)
 export interface PutMyInfoPayload {
   nickname: string;

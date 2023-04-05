@@ -1,8 +1,8 @@
 import React from 'react';
-
 import type { RootStackScreenProps } from '@type/navigation';
 import useSubscribe from '@hooks/useSubscribe';
 import { useMeetingDetailQuery } from '@hooks/query/useMeetingQuery';
+
 import Place from './place';
 import Member from './Member';
 import Date from './date';

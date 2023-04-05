@@ -1,12 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
-import { requestGetMyInfo } from '@api/user/user';
+import { requestGetMyInfo2 } from '@api/user/user';
 import { useMemo, useEffect } from 'react';
 import { requestMeetingMembers2 } from '@api/meeting/members';
 import { invalidateQueries, QueryKeys } from '@api/queryClient';
 import { IMessage } from '@stomp/stompjs';
 import {
   GetMeetingMembersListResponse,
-  GetMeetingMembersResponse,
+  GetMeetingMembersResponse2,
 } from '@type/api.meeting';
 import {
   IMeeting,
@@ -15,14 +15,13 @@ import {
   ISubscribeList,
 } from '@type/hook.webSocket';
 import { successAlert } from '@utils/alert';
-import fn, { pickSafelyBy } from '@utils/fn';
+import fn from '@utils/fn';
 import { log } from '@utils/log';
 import { promiseFlow } from '@utils/promise';
 import { GetMyInfoResponse } from '@type/api.user';
 import { requestPostMeetingPlacesUnLock } from '@api/meeting/places';
 import { PlaceLock } from '@features/placeLockSlice';
 import { RootNavigation } from '@type/navigation';
-import { fallbackImage } from './query/useUserQuery';
 import usePlace from './redux/usePlace';
 import usePlaceLock, {
   PlaceLockDispatch,
@@ -113,7 +112,7 @@ function onIndividualMessageFn(
 
       const [lockedPlace] = data.lockedPlaces;
 
-      promiseFlow(requestGetMyInfo, [
+      promiseFlow(requestGetMyInfo2, [
         ({ userId }: GetMyInfoResponse) => {
           // 기존에 락을 건 유저가 현재 유저 아이디와 같은 경우 (비정상 경로)
           if (userId === lockedPlace.lockingUserId) {
@@ -224,13 +223,13 @@ function setCurrentLockUser(
     meetingId: messageBody.meetingId,
     meetingPlaceId: messageBody.meetingPlaceId,
     userId: messageBody.userId,
-    lockUserImage: fallbackImage,
+    lockUserImage: null,
   };
 
   // @see [https://github.com/Come-On-App/Come-On-Frontend/issues/97]
   dispatch(payload);
 
-  promiseFlow<number, GetMeetingMembersResponse>(
+  promiseFlow<number, GetMeetingMembersResponse2>(
     messageBody.meetingId,
     [
       requestMeetingMembers2,
@@ -246,7 +245,7 @@ function setCurrentLockUser(
       onSuccess: user => {
         dispatch({
           ...payload,
-          lockUserImage: pickSafelyBy(user, 'profileImageUrl', fallbackImage),
+          lockUserImage: user.profileImageUrl,
         });
       },
     },

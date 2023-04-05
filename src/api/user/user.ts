@@ -7,6 +7,7 @@ import type {
   PutMyInfoPayload,
   PutMyInfoResponse,
   PostApplePayload,
+  GetMyInfoResponse2,
 } from '@type/api.user';
 
 /**
@@ -18,6 +19,22 @@ export async function requestGetMyInfo(
   signal?: AbortSignal,
 ): Promise<GetMyInfoResponse> {
   const URL = `/api/v1/users/me`;
+  const { data } = await serverAxios.get(URL, {
+    signal: signal || undefined,
+  });
+
+  return data;
+}
+
+/**
+ * GET /api/v2/users/me 내 정보 조회 (V2)
+ * @requires Authorization Bearer {access-token}
+ * @returns 내 정보
+ */
+export async function requestGetMyInfo2(
+  signal?: AbortSignal,
+): Promise<GetMyInfoResponse2> {
+  const URL = `/api/v2/users/me`;
   const { data } = await serverAxios.get(URL, {
     signal: signal || undefined,
   });
