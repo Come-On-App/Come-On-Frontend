@@ -1,12 +1,11 @@
 /* eslint-disable react/destructuring-assignment */
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect, useMemo } from 'react';
 import { makeStyles, Overlay } from '@rneui/themed';
 import { View } from 'react-native';
 import {
   CalendarList,
   CalendarProvider,
   DateData,
-  Calendar as CustomCalendar,
 } from 'react-native-calendars';
 import { MarkedDates } from 'react-native-calendars/src/types';
 
@@ -16,10 +15,10 @@ import {
 } from '@api/meeting/voting';
 
 import {
-  CalendarPeriodTypeProps,
   CalendarVotingTypeProps,
   CalenderClickEventType,
   CalendarProps,
+  CalendarPeriodScrollProps,
 } from '@type/meeting.calendar';
 import { successAlert } from '@utils/alert';
 import { BoldFont } from '../Font';
@@ -54,19 +53,18 @@ const DAYSTYLE = {
   textColor: 'white',
   customContainerStyle: DayTheme.DayTheme?.dayStyle?.oneDaySelectedStyle,
 };
-/** 로직에 사용되는 함수들 */
-const returnMonthDiff = (startDate: Date, endDate: Date) => {
+const returnDayDiff = (startDate: Date, endDate: Date) => {
   const msecDiff = endDate.getTime() - startDate.getTime();
-  const monthDiff = msecDiff / (24 * 60 * 60 * 1000) / 12;
-
-  return monthDiff;
-};
-const renderMonth = (startDate: string, endDate: string) => {
-  const endDay = new Date(endDate);
-  const startDay = new Date(startDate);
-  const dayDiff = Math.floor(returnMonthDiff(startDay, endDay));
+  const dayDiff = Math.ceil(msecDiff / (24 * 60 * 60 * 1000));
 
   return dayDiff;
+};
+const renderMonth = (startDate: string, endDate: string) => {
+  const startMonth = Number.parseInt(startDate.slice(5, 7), 10);
+  const endMonth = Number.parseInt(endDate.slice(5, 7), 10);
+  const calendarMonth = endMonth - startMonth + 1;
+
+  return calendarMonth;
 };
 const dateToKorString = (date: string) => {
   const year = date.slice(0, 4);
@@ -100,7 +98,8 @@ const renderSelectedDate = (
 
   return result;
 };
-const getDatesRangeArray = (start: string, end: string) => {
+
+export const getDatesRangeArray = (start: string, end: string) => {
   const arr = [];
 
   for (
@@ -137,7 +136,7 @@ function CalendarHeader(date: Date) {
   );
 }
 
-function setCalendarStyle(array: Array<string>) {
+export function setCalendarStyle(array: Array<string>) {
   const dataMap = new Map<string, object>();
 
   array.forEach((key: string, index: number) => {
@@ -208,36 +207,27 @@ function PeriodCalendar({ setDate, options }: CalendarPeriodTypeProps) {
       setDate({ startDate: day.startDay, endDate: day.endDay });
   }, [day.endDay, day.startDay, setDate]);
 
-  return options?.noListCalendar ? (
-    <CustomCalendar
-      calendarStyle={styles.calendarStyle}
-      onDayPress={onPressDayHandlerPeriod}
-      markedDates={markedDate || {}}
-      theme={CustomCalendarTheme}
-      markingType="period"
-    />
-  ) : (
-    <CalendarList
-      calendarStyle={styles.calendarStyle}
-      onDayPress={onPressDayHandlerPeriod}
-      minDate={options?.minDate === true ? today : ''}
-      theme={CustomCalendarTheme}
-      markingType="period"
-      scrollToOverflowEnabled
-      markedDates={markedDate || {}}
-      nestedScrollEnabled
-      pastScrollRange={0}
-      renderPlaceholder={() => <LoadingComponent size="large" />}
-      displayLoadingIndicator={false}
-      futureScrollRange={12}
-      initialNumToRender={1}
-      showScrollIndicator={false}
-      renderHeader={date => {
-        if (!date) return null;
+  return (
+    <CalendarProvider date={today}>
+      <CalendarList
+        calendarStyle={styles.calendarStyle}
+        onDayPress={onPressDayHandlerPeriod}
+        minDate={String(new Date())}
+        theme={CustomCalendarTheme}
+        markingType="period"
+        scrollToOverflowEnabled
+        markedDates={markedDate || {}}
+        enableSwipeMonths
+        pastScrollRange={0}
+        renderPlaceholder={() => <LoadingComponent size="large" />}
+        initialNumToRender={2}
+        renderHeader={date => {
+          if (!date) return null;
 
-        return CalendarHeader(date);
-      }}
-    />
+          return CalendarHeader(date);
+        }}
+      />
+    </CalendarProvider>
   );
 }
 
@@ -327,6 +317,7 @@ function DefaultCalendar({
         markingType="custom"
         markedDates={selectedDates}
         scrollEnabled
+        current={startFrom}
         pastScrollRange={0}
         onDayLongPress={onDayLongPressHandler}
         renderPlaceholder={() => <LoadingComponent size="large" />}
@@ -376,7 +367,6 @@ function Calendar({
   setDate,
   meetingId,
   hostId,
-  options,
 }: CalendarProps): JSX.Element {
   const styles = useStyles();
 
@@ -399,7 +389,7 @@ function Calendar({
           meetingId={meetingId}
         />
       ) : (
-        <MemorizedPeriodCalendar setDate={setDate} options={options} />
+        <MemorizedPeriodCalendar setDate={setDate} />
       )}
     </View>
   );

@@ -9,7 +9,7 @@ import useMeeting from '@hooks/useMeeting';
 import { useAppDispatch } from '@hooks/redux/hooks';
 import { setCalendarEndTo, setCalendarStartFrom } from '@features/meetingSlice';
 import Font from '@components/Font';
-import Calendar from '@components/calendar/Calendar';
+import { MemorizedPeriodCalendar } from '@components/calendar/Calendar';
 
 const { width } = Dimensions.get('window');
 
@@ -53,7 +53,7 @@ function PeriodCalendar({
         <SubLabelDate date={date} />
       </View>
       <View style={styles.calendarContainer}>
-        <Calendar type="PERIOD" data={undefined} setDate={setDate} />
+        <MemorizedPeriodCalendar setDate={setDate} />
       </View>
       <View>
         <FlexButtons

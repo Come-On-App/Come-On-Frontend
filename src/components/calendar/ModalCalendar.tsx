@@ -1,10 +1,10 @@
-import Calendar from '@components/calendar/Calendar';
 import FlexButtons from '@components/button/FlexButtons';
 import useMeeting from '@hooks/useMeeting';
 import { View } from 'react-native';
 import React, { useState } from 'react';
 import { makeStyles } from '@rneui/themed';
 import { emptyString } from '@utils/fn';
+import PeriodArrowCalendar from './PeriodArrowCalendar';
 
 export default function ModalCalendar({
   toggleOverlay,
@@ -31,11 +31,7 @@ export default function ModalCalendar({
   return (
     <>
       <View style={styles.calendarContainer}>
-        <Calendar
-          setDate={setDate}
-          type="DEFAULT"
-          options={{ minDate: false, noListCalendar: true }}
-        />
+        <PeriodArrowCalendar setDate={setDate} />
       </View>
       <FlexButtons
         style={styles.flexButtonStyle}
@@ -55,6 +51,7 @@ const useStyles = makeStyles(() => ({
   overlayStyle: {
     flex: 0.56,
     width: '80%',
+
     borderRadius: 10,
   },
   flexButtonStyle: {
