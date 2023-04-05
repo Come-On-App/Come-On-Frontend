@@ -99,6 +99,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   runtimeVersion: {
     policy: 'sdkVersion',
   },
+  originalFullName: `@${owner}/${app.slug}`,
   owner,
   extra: {
     eas: {
