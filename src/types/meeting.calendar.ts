@@ -69,6 +69,16 @@ export interface CalendarVotingTypeProps {
   >;
 }
 
+export interface CalendarPeriodScrollProps {
+  data?: GetDateVotingResponse;
+  setDate?: React.Dispatch<
+    React.SetStateAction<{
+      startDate: string;
+      endDate: string;
+    }>
+  >;
+}
+
 export interface CalendarPeriodTypeProps {
   data?: GetDateVotingResponse;
   options?: CalendarOptions;

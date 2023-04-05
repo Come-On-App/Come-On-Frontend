@@ -1,4 +1,4 @@
-import React, { useId } from 'react';
+import React from 'react';
 import Font, { BoldFont } from '@components/Font';
 import { ScrollView, StyleProp, View, ViewStyle } from 'react-native';
 import { makeStyles } from '@rneui/themed';
