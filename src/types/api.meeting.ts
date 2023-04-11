@@ -255,7 +255,7 @@ export interface PostMeetingTimeResponse {
   success: boolean;
 }
 
-// GET /api/v1/meetings/{meeting-id}/members (payalod)
+// GET /api/v2/meetings/{meeting-id}/members (payalod)
 export type GetMeetingMembersPayload = number;
 
 // GET /api/v2/meetings/{meeting-id}/members (payalod)

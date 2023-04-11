@@ -16,6 +16,8 @@ import { ResponseType } from 'expo-auth-session';
 import { SocialLoginProps } from '../../types';
 import GoogleLogo from '../../assets/images/logo/GoogleLogo';
 
+WebBrowser.maybeCompleteAuthSession();
+
 function GoogleLoginBtn() {
   const styles = useStyles();
   const { setLogin: setLoginAuth } = useAuth();
