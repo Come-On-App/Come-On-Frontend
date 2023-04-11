@@ -1,4 +1,7 @@
+import { PlaceSelect } from '@type/index';
 import _ from 'lodash/fp';
+import { requestPostMeetingPlacesUnLock } from '@api/meeting/places';
+import { promiseFlow } from './promise';
 
 export default _;
 
@@ -54,4 +57,20 @@ export function isExpiry(date: string) {
   const currentDate = new Date();
 
   return targetDate < currentDate;
+}
+
+export function unLockMeeting(
+  placeState: PlaceSelect,
+  placeResetDispatch: () => void,
+) {
+  if (placeState.state === 'Modify' && placeState.isLock) {
+    const payload = {
+      meetingId: placeState.meetingId,
+      placeId: placeState.meetingPlaceId,
+    };
+
+    promiseFlow(payload, [requestPostMeetingPlacesUnLock], {
+      onSuccess: placeResetDispatch,
+    });
+  }
 }

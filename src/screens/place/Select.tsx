@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { View } from 'react-native';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { View, BackHandler } from 'react-native';
 import { makeStyles } from '@rneui/themed';
 
 import usePlace from '@hooks/redux/usePlace';
@@ -18,6 +18,7 @@ import { PlaceSelectBottomProps } from '@type/component.placeselect';
 import { ErrorMeetingResponse } from '@type/api.meeting';
 import { errorAlert } from '@utils/alert';
 import RelativeHeightContent from '@components/RelativeHeight';
+import { unLockMeeting } from '@utils/fn';
 
 export default function PlaceSelect() {
   const styles = useStyles();
@@ -77,6 +78,19 @@ function PlaceSelectBottom({ onOpen }: PlaceSelectBottomProps) {
     });
     navigation.goBack();
   };
+  const handleBackButton = useCallback(() => {
+    unLockMeeting(placeState, placeResetDispatch);
+
+    return false;
+  }, [placeResetDispatch, placeState]);
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', handleBackButton);
+    };
+  }, [handleBackButton]);
 
   useEffect(() => {
     if (isLockRequestReady && !isLockRequested.current) {

@@ -2,10 +2,10 @@ import React, { useCallback } from 'react';
 import { StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+
 import { CancelIconButtonWithActionProps } from '@type/component.button';
-import { requestPostMeetingPlacesUnLock } from '@api/meeting/places';
-import { promiseFlow } from '@utils/promise';
 import usePlace from '@hooks/redux/usePlace';
+import { unLockMeeting } from '@utils/fn';
 
 export default function CancelIconButton() {
   const navigation = useNavigation();
@@ -39,18 +39,7 @@ export function CancelIconButtonWithAction({
 
 export function CancelPlaceSelectIconButton() {
   const { placeResetDispatch, placeState } = usePlace();
-  const actionFn = () => {
-    if (placeState.state === 'Modify' && placeState.isLock) {
-      const payload = {
-        meetingId: placeState.meetingId,
-        placeId: placeState.meetingPlaceId,
-      };
-
-      promiseFlow(payload, [requestPostMeetingPlacesUnLock], {
-        onSuccess: placeResetDispatch,
-      });
-    }
-  };
+  const actionFn = () => unLockMeeting(placeState, placeResetDispatch);
 
   return <CancelIconButtonWithAction actionFn={actionFn} />;
 }
