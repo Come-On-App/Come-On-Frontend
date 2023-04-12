@@ -13,12 +13,13 @@ import useAuth from '@hooks/useAuth';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import { ResponseType } from 'expo-auth-session';
+import { LoginButtonProps } from '@type/component.button';
 import { SocialLoginProps } from '../../types';
 import GoogleLogo from '../../assets/images/logo/GoogleLogo';
 
 WebBrowser.maybeCompleteAuthSession();
 
-function GoogleLoginBtn() {
+function GoogleLoginBtn({ setLoading }: LoginButtonProps) {
   const styles = useStyles();
   const { setLogin: setLoginAuth } = useAuth();
   const requestTokenUrl = '/api/v1/oauth/google';
@@ -37,9 +38,10 @@ function GoogleLoginBtn() {
 
       setLogin(data).then(res => {
         setLoginAuth(res);
+        setLoading(false);
       });
     },
-    [setLoginAuth],
+    [setLoading, setLoginAuth],
   );
 
   useEffect(() => {
@@ -47,10 +49,11 @@ function GoogleLoginBtn() {
       if (response && response.type === 'success') {
         const { params } = response;
 
+        setLoading(true);
         await requestTokenGoogle(params.id_token);
       }
     })();
-  }, [response, requestTokenGoogle]);
+  }, [response, requestTokenGoogle, setLoading]);
 
   return (
     <Pressable
