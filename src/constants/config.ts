@@ -71,3 +71,13 @@ export const detailConfig = {
     range: (calendar: Calendar) => `${calendar.startFrom} ~ ${calendar.endTo}`,
   },
 };
+
+export const settingConfig = {
+  text: {
+    logout: '로그아웃',
+    withdraw: '회원탈퇴',
+    supportUrl: 'SupportUrl로 이동하기',
+    privacy: '개인정보처리방침',
+    termsOfService: '이용약관',
+  },
+};

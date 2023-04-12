@@ -23,7 +23,7 @@ export function inferTypeImage(fileName: string) {
 }
 
 // 수동으로 blob 변환이 필요할떄 true로 할당한다. (React Native Debugger Only)
-export const MANUAL_CONVERSION = true;
+export const MANUAL_CONVERSION = false;
 
 const config = {
   responseType: 'blob',
@@ -33,8 +33,6 @@ const config = {
 export async function convertImageFormData(
   asset: AssetState,
 ): Promise<FormDataValue> {
-  console.log(asset);
-
   if (!MANUAL_CONVERSION) return fn.pick(['name', 'type', 'uri'], asset);
 
   // 디버거 모드 활성 시에는 직접 blob 형태로 변환후 전달해 줘야 한다.

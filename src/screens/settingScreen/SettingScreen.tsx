@@ -9,6 +9,7 @@ import * as WebBrowser from 'expo-web-browser';
 import Font from '@components/Font';
 import { requestWithDraw } from '@api/user/user';
 import { errorAlert, successAlert } from '@utils/alert';
+import { settingConfig } from '@constants/config';
 import { Title } from '../meeting/detail/common';
 import IconTitle from './IconTitle';
 
@@ -44,7 +45,6 @@ function PressableTextTab({
 function QuitButtion() {
   const { setLogout } = useAuth();
   const { deactivate } = useWebSocket();
-  const TITLE = '회원탈퇴';
   const styles = useStyles();
   const onPressQuit = async () => {
     const data = await requestWithDraw();
@@ -60,7 +60,7 @@ function QuitButtion() {
 
   return (
     <PressableTextTab onPress={onPressQuit}>
-      <Font style={styles.textStyle}>{TITLE}</Font>
+      <Font style={styles.textStyle}>{settingConfig.text.withdraw}</Font>
     </PressableTextTab>
   );
 }
@@ -71,7 +71,6 @@ function LogoutButton() {
   const { accessToken } = authSelector;
   const styles = useStyles();
   const callbackUrl = Linking.createURL('/logout/callback');
-  const TITLE = '로그아웃';
   const baseUrl = `${COMEON_API_URL}/logout?atk=${accessToken?.token}&redirect_uri=${callbackUrl}`;
   const onPressLogout = async () => {
     const result = await WebBrowser.openAuthSessionAsync(baseUrl, callbackUrl);
@@ -84,9 +83,7 @@ function LogoutButton() {
 
   return (
     <PressableTextTab onPress={onPressLogout}>
-      <View>
-        <Font style={styles.textStyle}>{TITLE}</Font>
-      </View>
+      <Font style={styles.textStyle}>{settingConfig.text.logout}</Font>
     </PressableTextTab>
   );
 }
@@ -100,13 +97,13 @@ function SettingButton() {
     WebBrowser.openBrowserAsync(urlConfig.privacyUrl);
   };
   const onClickTosUrl = () => {
-    WebBrowser.openBrowserAsync(urlConfig.termOfservice);
+    WebBrowser.openBrowserAsync(urlConfig.termOfService);
   };
   const urlConfig = {
     supportUrl:
       'https://comeonmobile.notion.site/ComeOn-Mobile-1a0d0f02319347de8e905ac4cf5fcba1',
     privacyUrl: 'https://sites.google.com/view/come-on-privacy/%ED%99%88',
-    termOfservice:
+    termOfService:
       'https://sites.google.com/view/come-on-terms-of-service/%ED%99%88',
   };
   const iconConfig = {
@@ -133,7 +130,6 @@ function SettingButton() {
       </View>
       <LogoutButton />
       <QuitButtion />
-
       <View style={styles.titleStyle}>
         <IconTitle
           iconName="email"
@@ -147,13 +143,13 @@ function SettingButton() {
       <EmailTab>{emailLink.email3}</EmailTab>
       <View style={styles.thirdTabStyle}>
         <PressableTextTab onPress={onClickSupportUrl}>
-          <Title title="SupportUrl로 이동하기" />
+          <Title title={settingConfig.text.supportUrl} />
         </PressableTextTab>
         <PressableTextTab onPress={onClickPrivacyUrl}>
-          <Title title="개인정보취급방침" />
+          <Title title={settingConfig.text.privacy} />
         </PressableTextTab>
         <PressableTextTab onPress={onClickTosUrl}>
-          <Title title="이용약관" />
+          <Title title={settingConfig.text.termsOfService} />
         </PressableTextTab>
       </View>
     </View>
