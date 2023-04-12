@@ -79,5 +79,19 @@ export const settingConfig = {
     supportUrl: 'SupportUrl로 이동하기',
     privacy: '개인정보처리방침',
     termsOfService: '이용약관',
+    account: '계정관리',
+    supportEmail: '개발자 연락처',
+  },
+  urls: {
+    supportUrl:
+      'https://comeonmobile.notion.site/ComeOn-Mobile-1a0d0f02319347de8e905ac4cf5fcba1',
+    privacyUrl: 'https://sites.google.com/view/come-on-privacy/%ED%99%88',
+    termOfService:
+      'https://sites.google.com/view/come-on-terms-of-service/%ED%99%88',
+  },
+  supportEmail: {
+    email1: 'bananana0118@gmail.com',
+    email2: 'yoo971202@naver.com',
+    email3: 'jeongbaebangdev@gmail.com',
   },
 };

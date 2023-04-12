@@ -88,34 +88,20 @@ function LogoutButton() {
   );
 }
 
-function SettingButton() {
+function SettingScreen() {
   const styles = useStyles();
   const onClickSupportUrl = () => {
-    WebBrowser.openBrowserAsync(urlConfig.supportUrl);
+    WebBrowser.openBrowserAsync(settingConfig.urls.supportUrl);
   };
   const onClickPrivacyUrl = () => {
-    WebBrowser.openBrowserAsync(urlConfig.privacyUrl);
+    WebBrowser.openBrowserAsync(settingConfig.urls.privacyUrl);
   };
   const onClickTosUrl = () => {
-    WebBrowser.openBrowserAsync(urlConfig.termOfService);
-  };
-  const urlConfig = {
-    supportUrl:
-      'https://comeonmobile.notion.site/ComeOn-Mobile-1a0d0f02319347de8e905ac4cf5fcba1',
-    privacyUrl: 'https://sites.google.com/view/come-on-privacy/%ED%99%88',
-    termOfService:
-      'https://sites.google.com/view/come-on-terms-of-service/%ED%99%88',
+    WebBrowser.openBrowserAsync(settingConfig.urls.termOfService);
   };
   const iconConfig = {
     size: 24,
     color: 'black',
-    title1: '계정관리',
-    title2: '개발자 연락처',
-  };
-  const emailLink = {
-    email1: 'bananana0118@gmail.com',
-    email2: 'yoo971202@naver.com',
-    email3: 'jeongbaebangdev@gmail.com',
   };
 
   return (
@@ -125,7 +111,7 @@ function SettingButton() {
           iconName="account-circle"
           size={iconConfig.size}
           color={iconConfig.color}
-          title={iconConfig.title1}
+          title={settingConfig.text.account}
         />
       </View>
       <LogoutButton />
@@ -135,12 +121,12 @@ function SettingButton() {
           iconName="email"
           size={iconConfig.size}
           color={iconConfig.color}
-          title={iconConfig.title2}
+          title={settingConfig.text.supportEmail}
         />
       </View>
-      <EmailTab>{emailLink.email1}</EmailTab>
-      <EmailTab>{emailLink.email2}</EmailTab>
-      <EmailTab>{emailLink.email3}</EmailTab>
+      {Object.values(settingConfig.supportEmail).map(key => (
+        <EmailTab key={key}>{key}</EmailTab>
+      ))}
       <View style={styles.thirdTabStyle}>
         <PressableTextTab onPress={onClickSupportUrl}>
           <Title title={settingConfig.text.supportUrl} />
@@ -156,7 +142,7 @@ function SettingButton() {
   );
 }
 
-export default SettingButton;
+export default SettingScreen;
 
 const useStyles = makeStyles(theme => ({
   container: {
