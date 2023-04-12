@@ -19,6 +19,10 @@ type ButtonTextStyle = {
   color: string;
 };
 
+export type LoginButtonProps = {
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
 export interface ButtonProps {
   text: string;
   bold?: boolean;

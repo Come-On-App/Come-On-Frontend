@@ -75,6 +75,7 @@ export type RootStackParamList = {
   LoginScreen: undefined;
   KakaoLoginWebView: undefined;
   EasterEgg: undefined;
+  Setting: undefined;
   ReportPost: { meetingId: number };
 };
 

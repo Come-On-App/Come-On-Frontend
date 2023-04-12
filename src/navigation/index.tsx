@@ -34,10 +34,11 @@ import CancelIconButton, {
 } from '@components/button/CancelIconButton';
 import Avatar from '@components/member/Avatar';
 import { createTabBarIcon } from '@components/Icon';
-import LogoutButton from '@components/myPage/MyPageLogoutButton';
 import MyPageHeaderTitle from '@components/myPage/MyPageHeaderTitle';
 import PlaceSelectHeaderTitle from '@components/placeSelect/PlaceSelectHeaderTitle';
 import SelectCalendar from '@screens/meeting/detail/SelectCalendar';
+import SettingScrren from '@screens/settingScreen/SettingScreen';
+import SettingButton from '@components/myPage/SettingButton';
 
 function TabThreeIcon() {
   const size = 32;
@@ -139,7 +140,17 @@ function RootNavigator() {
               contentStyle: styles.background,
             }}
           />
-
+          <Stack.Screen
+            name="Setting"
+            component={SettingScrren}
+            options={{
+              title: '설정',
+              headerTitleAlign: 'center',
+              headerShown: true,
+              contentStyle: styles.background,
+              headerTitleStyle: styles.headerStyle,
+            }}
+          />
           <Stack.Screen
             name="CreateMeeting"
             component={CreateMeeting}
@@ -228,7 +239,7 @@ function BottomTabNavigator() {
         options={{
           headerTitleAlign: 'center',
           headerTitle: MyPageHeaderTitle,
-          headerRight: LogoutButton,
+          headerRight: SettingButton,
           tabBarLabel: '마이페이지',
           tabBarIcon: TabThreeIcon,
         }}

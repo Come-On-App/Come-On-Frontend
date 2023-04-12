@@ -96,3 +96,6 @@ export interface PostApplePayload {
 
 // POST /api/v1/oauth/apple (response)
 export type PostAppleResponse = Token;
+
+// DELETE /api/v1/users/me (response)
+export type DeleteWithdrawResponse = { success: boolean };
