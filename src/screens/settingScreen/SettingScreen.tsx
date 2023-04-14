@@ -46,15 +46,17 @@ function QuitButtion() {
   const { setLogout } = useAuth();
   const { deactivate } = useWebSocket();
   const styles = useStyles();
+  const SUCCESSTEXT = '저희 앱을 이용해 주셔서 감사했습니다 🙇‍♀️🙇‍♂️!';
+  const ERRORTEXT = '문제가 발생했습니다.';
   const onPressQuit = async () => {
     const data = await requestWithDraw();
 
     if (data.success === true) {
-      successAlert('저희 앱을 이용해 주셔서 감사했습니다 🙇‍♀️🙇‍♂️!');
+      successAlert(SUCCESSTEXT);
       setLogout();
       deactivate();
     } else {
-      errorAlert('문제가 발생했습니다.');
+      errorAlert(ERRORTEXT);
     }
   };
 
@@ -66,9 +68,11 @@ function QuitButtion() {
 }
 
 function LogoutButton() {
-  const { setLogout, authSelector } = useAuth();
+  const {
+    setLogout,
+    authSelector: { accessToken },
+  } = useAuth();
   const { deactivate } = useWebSocket();
-  const { accessToken } = authSelector;
   const styles = useStyles();
   const callbackUrl = Linking.createURL('/logout/callback');
   const baseUrl = `${COMEON_API_URL}/logout?atk=${accessToken?.token}&redirect_uri=${callbackUrl}`;

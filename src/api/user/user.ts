@@ -86,7 +86,7 @@ export async function requestPostApple(
 }
 
 /**
- * POST /api/v1/oauth/apple 애플 로그인
+ * DELETE /api/v1/users/me 회원탈퇴
  * @requires Authorization Bearer {access-token}
  * @returns success :boolean
  */
