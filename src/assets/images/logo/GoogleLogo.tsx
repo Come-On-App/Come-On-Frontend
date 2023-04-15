@@ -13,7 +13,6 @@ function GoogleLogo() {
         fill="white"
         stroke="#4285F4"
       />
-
       <Path
         fillRule="evenodd"
         clipRule="evenodd"

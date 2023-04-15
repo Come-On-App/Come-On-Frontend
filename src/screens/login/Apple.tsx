@@ -14,6 +14,7 @@ import { promiseFlow } from '@utils/promise';
 import { requestPostApple } from '@api/user/user';
 import { PostApplePayload, PostAppleResponse } from '@type/api.user';
 import useAuth from '@hooks/useAuth';
+import { LoginButtonProps } from '@type/component.button';
 
 type AppleLoginErrorCodes =
   | 'ERR_INVALID_OPERATION'
@@ -50,10 +51,11 @@ function createPaylaod(credential: AppleAuthenticationCredential) {
   return payload;
 }
 
-function AppleLoginBtn() {
+function AppleLoginBtn({ setLoading }: LoginButtonProps) {
   const styles = useStyles();
   const { setLogin } = useAuth();
   const onPressHandlr = () => {
+    setLoading(true);
     promiseFlow<AppleAuthenticationSignInOptions, PostAppleResponse>(
       {
         requestedScopes: [
@@ -65,6 +67,7 @@ function AppleLoginBtn() {
       {
         onSuccess: response => {
           // 로그인 성공
+          setLoading(false);
           setLogin(response);
         },
         onError: (e: AppleError) => {

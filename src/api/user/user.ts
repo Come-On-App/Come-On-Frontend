@@ -8,6 +8,7 @@ import type {
   PutMyInfoResponse,
   PostApplePayload,
   GetMyInfoResponse2,
+  DeleteWithdrawResponse,
 } from '@type/api.user';
 
 /**
@@ -80,6 +81,18 @@ export async function requestPostApple(
 ): Promise<PostAppleResponse> {
   const URL = `/api/v1/oauth/apple`;
   const { data } = await serverAxios.post(URL, payload);
+
+  return data;
+}
+
+/**
+ * DELETE /api/v1/users/me 회원탈퇴
+ * @requires Authorization Bearer {access-token}
+ * @returns success :boolean
+ */
+export async function requestWithDraw(): Promise<DeleteWithdrawResponse> {
+  const URL = `/api/v1/users/me`;
+  const { data } = await serverAxios.delete(URL);
 
   return data;
 }

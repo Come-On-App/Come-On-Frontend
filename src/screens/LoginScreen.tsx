@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@rneui/themed';
-import { View, Text, Platform } from 'react-native';
+import { View, Text, Platform, ActivityIndicator } from 'react-native';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import * as WebBrowser from 'expo-web-browser';
 
 import Logo from '../assets/images/logo/Logo';
 import KakaoLoginBtn from '../components/button/KakaoLoginBtn';
 import GoogleLoginBtn from '../components/button/GoogleLoginBtn';
 import AppleLoginBtn from './login/Apple';
 
+WebBrowser.maybeCompleteAuthSession();
+
 function LoginScreen() {
   const styles = useStyles();
   const platform = Platform.OS;
+  const [loading, setLoading] = useState<boolean>(false);
 
   return (
     <View style={styles.container}>
@@ -22,13 +26,27 @@ function LoginScreen() {
         </View>
         <View style={styles.line} />
         <View style={styles.buttons}>
-          <KakaoLoginBtn />
-          {platform === 'ios' ? <AppleLoginBtn /> : null}
-          <GoogleLoginBtn />
+          {loading ? (
+            <LoadingComponent />
+          ) : (
+            <>
+              <KakaoLoginBtn setLoading={setLoading} />
+              {platform === 'ios' ? (
+                <AppleLoginBtn setLoading={setLoading} />
+              ) : null}
+              <GoogleLoginBtn setLoading={setLoading} />
+            </>
+          )}
         </View>
       </>
     </View>
   );
+}
+
+function LoadingComponent() {
+  const styles = useStyles();
+
+  return <ActivityIndicator color={styles.color.color} size="large" />;
 }
 
 export default LoginScreen;
@@ -73,4 +91,7 @@ const useStyles = makeStyles(theme => ({
     marginBottom: 30,
   },
   labels: { width: '100%', height: 30, alignItems: 'center' },
+  color: {
+    color: theme.colors.secondary,
+  },
 }));

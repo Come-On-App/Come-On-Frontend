@@ -12,6 +12,7 @@ import { useQuery } from 'react-query';
 import { RootStackScreenProps } from '@type/navigation';
 import { QueryKeys } from '@api/queryClient';
 import MemberBox from '@components/member/MemberBox';
+import { detailConfig } from '@constants/config';
 import { Title } from './common';
 
 function SelectCalendar({
@@ -53,8 +54,8 @@ function SelectCalendar({
           meetingId={meetingId}
         />
       </View>
-      {/* //임시 */}
-      <Title title="모임 기간" />
+
+      <Title title={detailConfig.text.date} />
       <Calendar
         type="DEFAULT"
         data={votingDetail}

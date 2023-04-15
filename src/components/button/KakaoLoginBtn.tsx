@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { makeStyles } from '@rneui/themed';
 import { Pressable } from 'react-native';
 
@@ -8,19 +8,36 @@ import useAuth from '@hooks/useAuth';
 import { SocialLoginProps } from '@type/index';
 import { setLogin } from '@api/auth/auth';
 import { REACT_APP_REST_API_KEY, REACT_APP_REDIRECT_URI } from '@env';
+import { LoginButtonProps } from '@type/component.button';
 import KakaoLogo from '../../assets/images/logo/KakaoLogo';
 
-export default function KakaoLoginBtn() {
+export default function KakaoLoginBtn({ setLoading }: LoginButtonProps) {
   const styles = useStyles();
   const { setLogin: login } = useAuth();
+  const requestToken = useCallback(
+    async (requestCode: string) => {
+      const requestTokenUrl = '/api/v1/oauth/kakao';
+      const data: SocialLoginProps = {
+        url: requestTokenUrl,
+        data: { code: requestCode },
+      };
+
+      setLogin(data).then(res => {
+        login(res);
+      });
+    },
+    [login],
+  );
   const baseUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${REACT_APP_REST_API_KEY}&redirect_uri=${REACT_APP_REDIRECT_URI}&response_type=code&`;
-  const openBrowserAsync = async () => {
+  const openBrowserAsync = useCallback(async () => {
     const callbackUrl = Linking.createURL('/oauth/callback/kakao?code=');
     const response = await WebBrowser.openAuthSessionAsync(
       baseUrl,
       callbackUrl,
       { showInRecents: true },
     );
+
+    setLoading(true);
 
     if (response.type === 'success') {
       const exp = 'code=';
@@ -29,16 +46,7 @@ export default function KakaoLoginBtn() {
 
       await requestToken(resquestCode);
     }
-  };
-  const requestToken = async (requestCode: string) => {
-    const requestTokenUrl = '/api/v1/oauth/kakao';
-    const data: SocialLoginProps = {
-      url: requestTokenUrl,
-      data: { code: requestCode },
-    };
-
-    setLogin(data).then(res => login(res));
-  };
+  }, [baseUrl, requestToken, setLoading]);
 
   return (
     <Pressable
