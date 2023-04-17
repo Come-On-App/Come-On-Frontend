@@ -54,6 +54,7 @@ function WithdrawButton() {
   const CANCELTEXT = '아니요';
   const CONFIRMTEXT = '네';
   const WITHDRAWTEXT = '정말 탈퇴하시겠습니까? 😳';
+  const WITHDRAWTEXT2 = '기존의 데이터는 모두 사라집니다';
   const onPressQuit = async () => {
     const data = await requestWithDraw();
 
@@ -80,6 +81,7 @@ function WithdrawButton() {
 
       <Modal isVisible={isVisible} style={styles.ModalStyle}>
         <Font>{WITHDRAWTEXT}</Font>
+        <Font>{WITHDRAWTEXT2}</Font>
         <FlexButtons
           cancelHandler={cancleHandler}
           onPressConfirm={onPressConfirm}

@@ -8,6 +8,7 @@ import { serverAxios } from '@api/axiosInstance';
 import { requestPostRefreshToken } from '@api/user/user';
 import { deleteValueFor, getValueFor } from '@utils/secureStore';
 import { getToken, setTokensToDB, StoreKey } from '@api/token/token';
+import axios from 'axios';
 
 serverAxios.interceptors.request.use(
   async config => {
@@ -23,7 +24,9 @@ serverAxios.interceptors.request.use(
 const { dispatch } = store;
 
 serverAxios.interceptors.response.use(
-  res => res,
+  async res => {
+    return res;
+  },
   async err => {
     const {
       config,
@@ -51,9 +54,19 @@ serverAxios.interceptors.response.use(
       if (!result) {
         dispatch(logout());
         errorAlert('로그인 해주세요');
+
+        return Promise.reject(err);
       }
 
-      return config;
+      const accessToken = await getToken();
+      const configCopy = await copy(config);
+
+      if (accessToken)
+        configCopy.headers.Authorization = `Bearer ${accessToken}`;
+
+      const resData = await axios(configCopy);
+
+      return resData;
     }
 
     return Promise.reject(err);
