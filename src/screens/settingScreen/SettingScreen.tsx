@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@rneui/themed';
 import { Pressable, View } from 'react-native';
 import useAuth from '@hooks/useAuth';
@@ -10,6 +10,8 @@ import Font from '@components/Font';
 import { requestWithDraw } from '@api/user/user';
 import { errorAlert, successAlert } from '@utils/alert';
 import { settingConfig } from '@constants/config';
+import Modal from '@components/Modal';
+import FlexButtons from '@components/button/FlexButtons';
 import { Title } from '../meeting/detail/common';
 import IconTitle from './IconTitle';
 
@@ -17,7 +19,7 @@ function EmailTab({ children }: { children: string }) {
   const styles = useStyles();
 
   return (
-    <View style={styles.tabStyle}>
+    <View style={styles.defaultPress}>
       <Font style={styles.textStyle}>{children}</Font>
     </View>
   );
@@ -42,12 +44,16 @@ function PressableTextTab({
   );
 }
 
-function QuitButtion() {
+function WithdrawButton() {
   const { setLogout } = useAuth();
   const { deactivate } = useWebSocket();
+  const [isVisible, setIsVisible] = useState<boolean>(false);
   const styles = useStyles();
   const SUCCESSTEXT = '저희 앱을 이용해 주셔서 감사했습니다 🙇‍♀️🙇‍♂️!';
   const ERRORTEXT = '문제가 발생했습니다.';
+  const CANCELTEXT = '아니요';
+  const CONFIRMTEXT = '네';
+  const WITHDRAWTEXT = '정말 탈퇴하시겠습니까? 😳';
   const onPressQuit = async () => {
     const data = await requestWithDraw();
 
@@ -59,11 +65,33 @@ function QuitButtion() {
       errorAlert(ERRORTEXT);
     }
   };
+  const cancleHandler = () => {
+    setIsVisible(false);
+  };
+  const onPressConfirm = () => {
+    onPressQuit();
+  };
 
   return (
-    <PressableTextTab onPress={onPressQuit}>
-      <Font style={styles.textStyle}>{settingConfig.text.withdraw}</Font>
-    </PressableTextTab>
+    <>
+      <PressableTextTab onPress={() => setIsVisible(!isVisible)}>
+        <Font style={styles.textStyle}>{settingConfig.text.withdraw}</Font>
+      </PressableTextTab>
+
+      <Modal isVisible={isVisible} style={styles.ModalStyle}>
+        <Font>{WITHDRAWTEXT}</Font>
+        <FlexButtons
+          cancelHandler={cancleHandler}
+          onPressConfirm={onPressConfirm}
+          options={{
+            cancelText: CANCELTEXT,
+            confirmText: CONFIRMTEXT,
+            cancelButtonColor: styles.witchdrawCancelColors,
+            confirmButtonColor: styles.withdrawColors,
+          }}
+        />
+      </Modal>
+    </>
   );
 }
 
@@ -80,8 +108,8 @@ function LogoutButton() {
     const result = await WebBrowser.openAuthSessionAsync(baseUrl, callbackUrl);
 
     if (result.type === 'success') {
-      setLogout();
       deactivate();
+      setLogout();
     }
   };
 
@@ -119,7 +147,7 @@ function SettingScreen() {
         />
       </View>
       <LogoutButton />
-      <QuitButtion />
+      <WithdrawButton />
       <View style={styles.titleStyle}>
         <IconTitle
           iconName="email"
@@ -165,10 +193,6 @@ const useStyles = makeStyles(theme => ({
   textContainer: {
     marginLeft: 6,
   },
-  tabStyle: {
-    paddingHorizontal: 20,
-    paddingVertical: 5,
-  },
   titleStyle: {
     marginTop: 35,
     marginBottom: 10,
@@ -184,5 +208,18 @@ const useStyles = makeStyles(theme => ({
   defaultPress: {
     paddingHorizontal: 20,
     paddingVertical: 5,
+  },
+  ModalStyle: {
+    height: 150,
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    paddingBottom: 0,
+  },
+  withdrawColors: {
+    backgroundColor: theme.colors.warning,
+  },
+  witchdrawCancelColors: {
+    backgroundColor: theme.colors.primary,
   },
 }));

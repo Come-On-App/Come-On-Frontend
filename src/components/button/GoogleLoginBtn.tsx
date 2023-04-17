@@ -14,6 +14,7 @@ import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import { ResponseType } from 'expo-auth-session';
 import { LoginButtonProps } from '@type/component.button';
+import { errorAlert } from '@utils/alert';
 import { SocialLoginProps } from '../../types';
 import GoogleLogo from '../../assets/images/logo/GoogleLogo';
 
@@ -29,6 +30,7 @@ function GoogleLoginBtn({ setLoading }: LoginButtonProps) {
     androidClientId: REACT_APP_ANDROID_CLIENT_ID,
     responseType: ResponseType.IdToken,
   });
+  const ERRORTEXT = '문제가 발생했습니다.';
   const requestTokenGoogle = useCallback(
     async (idToken: string) => {
       const data: SocialLoginProps = {
@@ -36,10 +38,15 @@ function GoogleLoginBtn({ setLoading }: LoginButtonProps) {
         data: { idToken },
       };
 
-      setLogin(data).then(res => {
-        setLoginAuth(res);
-        setLoading(false);
-      });
+      setLogin(data)
+        .then(res => {
+          setLoginAuth(res);
+          setLoading(false);
+        })
+        .catch(() => {
+          errorAlert(ERRORTEXT);
+          setLoading(false);
+        });
     },
     [setLoading, setLoginAuth],
   );

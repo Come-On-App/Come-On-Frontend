@@ -15,6 +15,7 @@ import { requestPostApple } from '@api/user/user';
 import { PostApplePayload, PostAppleResponse } from '@type/api.user';
 import useAuth from '@hooks/useAuth';
 import { LoginButtonProps } from '@type/component.button';
+import { errorAlert } from '@utils/alert';
 
 type AppleLoginErrorCodes =
   | 'ERR_INVALID_OPERATION'
@@ -54,6 +55,7 @@ function createPaylaod(credential: AppleAuthenticationCredential) {
 function AppleLoginBtn({ setLoading }: LoginButtonProps) {
   const styles = useStyles();
   const { setLogin } = useAuth();
+  const ERRORTEXT = '문제가 발생했습니다.';
   const onPressHandlr = () => {
     setLoading(true);
     promiseFlow<AppleAuthenticationSignInOptions, PostAppleResponse>(
@@ -71,11 +73,15 @@ function AppleLoginBtn({ setLoading }: LoginButtonProps) {
           setLogin(response);
         },
         onError: (e: AppleError) => {
+          setLoading(false);
+
           if (e.code === 'ERR_REQUEST_CANCELED') {
             // handle that the user canceled the sign-in flow
+            errorAlert(ERRORTEXT);
             log('ERR_REQUEST_CANCELED', e);
           } else {
             // handle other errors
+            errorAlert(ERRORTEXT);
             log('error outer', e);
           }
         },

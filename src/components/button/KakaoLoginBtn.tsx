@@ -9,27 +9,14 @@ import { SocialLoginProps } from '@type/index';
 import { setLogin } from '@api/auth/auth';
 import { REACT_APP_REST_API_KEY, REACT_APP_REDIRECT_URI } from '@env';
 import { LoginButtonProps } from '@type/component.button';
+import { errorAlert } from '@utils/alert';
 import KakaoLogo from '../../assets/images/logo/KakaoLogo';
 
 export default function KakaoLoginBtn({ setLoading }: LoginButtonProps) {
   const styles = useStyles();
   const { setLogin: login } = useAuth();
-  const requestToken = useCallback(
-    async (requestCode: string) => {
-      const requestTokenUrl = '/api/v1/oauth/kakao';
-      const data: SocialLoginProps = {
-        url: requestTokenUrl,
-        data: { code: requestCode },
-      };
-
-      setLogin(data).then(res => {
-        login(res);
-      });
-    },
-    [login],
-  );
   const baseUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${REACT_APP_REST_API_KEY}&redirect_uri=${REACT_APP_REDIRECT_URI}&response_type=code&`;
-  const openBrowserAsync = useCallback(async () => {
+  const openBrowserAsync = async () => {
     const callbackUrl = Linking.createURL('/oauth/callback/kakao?code=');
     const response = await WebBrowser.openAuthSessionAsync(
       baseUrl,
@@ -45,8 +32,27 @@ export default function KakaoLoginBtn({ setLoading }: LoginButtonProps) {
       const resquestCode = response.url.substring(condition + exp.length);
 
       await requestToken(resquestCode);
+    } else {
+      setLoading(false);
     }
-  }, [baseUrl, requestToken, setLoading]);
+  };
+  const requestToken = async (requestCode: string) => {
+    const ERRORTEXT = '문제가 발생했습니다.';
+    const requestTokenUrl = '/api/v1/oauth/kakao';
+    const data: SocialLoginProps = {
+      url: requestTokenUrl,
+      data: { code: requestCode },
+    };
+
+    setLogin(data)
+      .then(res => {
+        login(res);
+        setLoading(false);
+      })
+      .catch(() => {
+        errorAlert(ERRORTEXT);
+      });
+  };
 
   return (
     <Pressable

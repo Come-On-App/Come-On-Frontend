@@ -8,15 +8,24 @@ interface ButtonProps {
   onPressHandler: () => void;
   width?: number;
   style?: StyleProp<TextStyle>;
+  color?: { backgroundColor: string };
 }
 
-function CancelButton({ title, onPressHandler, style, width }: ButtonProps) {
+function CancelButton({
+  title,
+  onPressHandler,
+  style,
+  width,
+  color,
+}: ButtonProps) {
+  const buttonColor = color || { backgroundColor: theme.grayscale?.[300] };
+
   return (
     <View style={style}>
       <Button
         title={title}
         onPress={onPressHandler}
-        buttonStyle={[styles.cancelBtnStyle, { width }]}
+        buttonStyle={[styles.cancelBtnStyle, { width }, buttonColor]}
       />
     </View>
   );
