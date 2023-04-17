@@ -14,7 +14,10 @@ const app = {
   name: 'Come On!',
   slug: 'come-on',
   version: '1.0.0',
-  identifier: 'com.comeon.app',
+  identifier: {
+    ios: 'com.comeon.ios.app',
+    android: 'com.comeon.app',
+  },
   backgroundColor: '#FFFFFF',
   icon: './src/assets/images/icon.png',
   favicon: './src/assets/images/favicon.png',
@@ -55,7 +58,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     backgroundColor: app.backgroundColor,
   },
   ios: {
-    bundleIdentifier: app.identifier,
+    bundleIdentifier: app.identifier.ios,
     buildNumber: app.version,
     supportsTablet: false,
     infoPlist: {
@@ -68,7 +71,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       process.env.GOOGLE_SERVICES_FILE_IOS || './GoogleService-Info.plist',
   },
   android: {
-    package: app.identifier,
+    package: app.identifier.android,
     versionCode: app.versionCode,
     adaptiveIcon: {
       foregroundImage: app.foregroundImage,
