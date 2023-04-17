@@ -2,7 +2,12 @@
 import { ExpoConfig, ConfigContext } from 'expo/config';
 
 const text = {
-  photosPermission: '이 앱을 사용하기 위해선 사진첩에 대한 권한이 필요합니다.',
+  permissions: {
+    photos:
+      '앱에서 프로필 이미지를 업로드하려면 사진 라이브러리에 액세스해야 합니다.\n업로드된 이미지는 사용자의 프로필 표시에 사용됩니다.\n사용자의 프로필 이미지를 설정하려면 권한을 허용해주세요.',
+    location:
+      '앱에서 사용자의 위치에 접근하려면 위치 권한에 액세스해야 합니다.\n위치 권한이 허용되면 앱은 주변 지역 정보를 제공하고 지도상에서 사용자의 위치를 표시하는 데 사용됩니다.',
+  },
 };
 
 const app = {
@@ -53,6 +58,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     bundleIdentifier: app.identifier,
     buildNumber: app.version,
     supportsTablet: false,
+    infoPlist: {
+      NSLocationWhenInUseUsageDescription: text.permissions.location,
+    },
     config: {
       googleMapsApiKey: process.env.GOOGLE_MAP_API_KEY_IOS,
     },
@@ -88,7 +96,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     [
       'expo-image-picker',
       {
-        photosPermission: text.photosPermission,
+        photosPermission: text.permissions.photos,
       },
     ],
     'expo-apple-authentication',
