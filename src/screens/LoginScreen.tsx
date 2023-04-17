@@ -2,14 +2,10 @@ import React, { useState } from 'react';
 import { makeStyles } from '@rneui/themed';
 import { View, Text, Platform, ActivityIndicator } from 'react-native';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
-import * as WebBrowser from 'expo-web-browser';
-
 import Logo from '../assets/images/logo/Logo';
 import KakaoLoginBtn from '../components/button/KakaoLoginBtn';
 import GoogleLoginBtn from '../components/button/GoogleLoginBtn';
 import AppleLoginBtn from './login/Apple';
-
-WebBrowser.maybeCompleteAuthSession();
 
 function LoginScreen() {
   const styles = useStyles();

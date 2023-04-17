@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleProp, TextStyle, View, ActivityIndicator } from 'react-native';
 import { Button } from '@rneui/themed';
-
 import { makeStyles } from '@rneui/base';
 import theme from '../../constants/themed';
 
@@ -11,6 +10,7 @@ interface ButtonProps {
   style?: StyleProp<TextStyle>;
   loading?: boolean;
   width?: number;
+  color?: { backgroundColor: string };
 }
 
 function ConfirmButton({
@@ -19,8 +19,10 @@ function ConfirmButton({
   style,
   width,
   loading,
+  color,
 }: ButtonProps) {
   const styles = useStyles();
+  const buttonColor = color || { backgroundColor: theme.lightColors?.primary };
 
   return (
     <View style={style}>
@@ -28,14 +30,14 @@ function ConfirmButton({
         <Button
           title={<ActivityIndicator color="white" />}
           buttonStyle={[style]}
-          containerStyle={[styles.confirmBtnStyle, { width }]}
+          containerStyle={[styles.confirmBtnStyle, { width }, buttonColor]}
         />
       ) : (
         <Button
           title={title}
           onPress={onPressHandler}
-          buttonStyle={[style]}
-          containerStyle={[styles.confirmBtnStyle, { width }]}
+          buttonStyle={[style, buttonColor]}
+          containerStyle={[styles.confirmBtnStyle, { width }, buttonColor]}
         />
       )}
     </View>

@@ -34,6 +34,7 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'row',
   },
   textContainer: {
+    justifyContent: 'center',
     marginLeft: 5,
   },
 }));
