@@ -28,7 +28,7 @@ import Button from './button/Buttons';
 
 const config = {
   successText: '가입 성공',
-  instructionText: '전달받은 코드를 입력해주세요',
+  instructionText: '공유 받은 입장 코드를 입력해 주세요',
   cursorSymbol: '🍕',
   cellCount: 6,
   entryText: '입장하기',

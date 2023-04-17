@@ -2,14 +2,22 @@
 import { ExpoConfig, ConfigContext } from 'expo/config';
 
 const text = {
-  photosPermission: '이 앱을 사용하기 위해선 사진첩에 대한 권한이 필요합니다.',
+  permissions: {
+    photos:
+      '앱에서 이미지를 업로드하려면 사용자의 사진 라이브러리에 접근해야 합니다. 이를 위해 사진 권한이 필요합니다.\n 권한을 허용하면 사용자의 프로필 이미지를 표시하거나 모임 등록 이미지에 사용할 수 있습니다.',
+    location:
+      '앱에서 사용자의 위치에 접근하려면 위치 권한에 접근해야 합니다.\n 위치 권한이 허용되면 앱은 사용자 주변의 지역 정보를 제공하고 지도상에서 사용자의 위치를 표시하는 데 사용됩니다.',
+  },
 };
 
 const app = {
   name: 'Come On!',
   slug: 'come-on',
   version: '1.0.0',
-  identifier: 'com.comeon.app',
+  identifier: {
+    ios: 'com.comeon.ios.app',
+    android: 'com.comeon.app',
+  },
   backgroundColor: '#FFFFFF',
   icon: './src/assets/images/icon.png',
   favicon: './src/assets/images/favicon.png',
@@ -50,9 +58,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     backgroundColor: app.backgroundColor,
   },
   ios: {
-    bundleIdentifier: app.identifier,
+    bundleIdentifier: app.identifier.ios,
     buildNumber: app.version,
     supportsTablet: false,
+    infoPlist: {
+      NSLocationWhenInUseUsageDescription: text.permissions.location,
+    },
     config: {
       googleMapsApiKey: process.env.GOOGLE_MAP_API_KEY_IOS,
     },
@@ -60,7 +71,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       process.env.GOOGLE_SERVICES_FILE_IOS || './GoogleService-Info.plist',
   },
   android: {
-    package: app.identifier,
+    package: app.identifier.android,
     versionCode: app.versionCode,
     adaptiveIcon: {
       foregroundImage: app.foregroundImage,
@@ -88,7 +99,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     [
       'expo-image-picker',
       {
-        photosPermission: text.photosPermission,
+        photosPermission: text.permissions.photos,
       },
     ],
     'expo-apple-authentication',
