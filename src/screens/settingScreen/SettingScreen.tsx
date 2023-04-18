@@ -60,8 +60,8 @@ function WithdrawButton() {
 
     if (data.success === true) {
       successAlert(SUCCESSTEXT);
-      setLogout();
       deactivate();
+      setLogout();
     } else {
       errorAlert(ERRORTEXT);
     }
