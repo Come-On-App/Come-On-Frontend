@@ -70,6 +70,7 @@ function WithdrawButton() {
     setIsVisible(false);
   };
   const onPressConfirm = () => {
+    setIsVisible(false);
     onPressQuit();
   };
 
