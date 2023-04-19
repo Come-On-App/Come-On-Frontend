@@ -60,8 +60,8 @@ function WithdrawButton() {
 
     if (data.success === true) {
       successAlert(SUCCESSTEXT);
-      setLogout();
       deactivate();
+      setLogout();
     } else {
       errorAlert(ERRORTEXT);
     }
@@ -70,6 +70,7 @@ function WithdrawButton() {
     setIsVisible(false);
   };
   const onPressConfirm = () => {
+    setIsVisible(false);
     onPressQuit();
   };
 

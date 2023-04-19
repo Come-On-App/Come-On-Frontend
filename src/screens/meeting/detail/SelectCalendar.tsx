@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { makeStyles } from '@rneui/themed';
 import Calendar from '@components/calendar/Calendar';
 
-import { requestGetMeetingDetail } from '@api/meeting/meetings';
+import { requestGetMeetingDetail2 } from '@api/meeting/meetings';
 import { useNavigation } from '@react-navigation/native';
 import { requestGetDateVoting } from '@api/meeting/voting';
 import LoadingComponent from '@components/calendar/LoadingComponent';
@@ -24,7 +24,7 @@ function SelectCalendar({
   const navigation = useNavigation();
   const { data: meetingDetail } = useQuery(
     [QueryKeys.meetingDetail, meetingId],
-    () => requestGetMeetingDetail(meetingId),
+    () => requestGetMeetingDetail2(meetingId),
   );
   const { data: votingDetail } = useQuery([QueryKeys.voting, meetingId], () =>
     requestGetDateVoting(meetingId),

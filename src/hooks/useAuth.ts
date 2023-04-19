@@ -42,11 +42,11 @@ function useAuth() {
   const getRefreshToken = useCallback(() => {
     return refreshToken;
   }, [refreshToken]);
-  const setLogout = useCallback(async () => {
+  const setLogout = useCallback(() => {
     dispatch(logout());
   }, [dispatch]);
   const setLogin = useCallback(
-    async (token: AuthResponse) => {
+    (token: AuthResponse) => {
       dispatch(login(token));
     },
     [dispatch],

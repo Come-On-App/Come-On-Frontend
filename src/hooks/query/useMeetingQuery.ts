@@ -2,7 +2,7 @@ import { useQuery } from 'react-query';
 
 import { QueryKeys } from '@api/queryClient';
 import {
-  requestGetMeetingDetail,
+  requestGetMeetingDetail2,
   requestGetMeetings,
 } from '@api/meeting/meetings';
 import { GetMeetingPayload } from '@type/api.meeting';
@@ -19,7 +19,7 @@ const useMeetingQuery = (payload: Partial<GetMeetingPayload>) => {
 export const useMeetingDetailQuery = (meetingId: number) => {
   const { data: meetingDetail } = useQuery(
     [QueryKeys.meetingDetail, meetingId],
-    ({ signal }) => requestGetMeetingDetail(meetingId, signal),
+    ({ signal }) => requestGetMeetingDetail2(meetingId, signal),
     {
       enabled: Boolean(meetingId),
     },

@@ -61,8 +61,9 @@ serverAxios.interceptors.response.use(
       const accessToken = await getToken();
       const configCopy = await copy(config);
 
-      if (accessToken)
+      if (accessToken) {
         configCopy.headers.Authorization = `Bearer ${accessToken}`;
+      }
 
       const resData = await axios(configCopy);
 
