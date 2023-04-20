@@ -13,7 +13,8 @@ const text = {
 const app = {
   name: 'Come On!',
   slug: 'come-on',
-  version: '1.0.0',
+  version: '1.0.1',
+  versionCode: 2,
   identifier: {
     ios: 'com.comeon.ios.app',
     android: 'com.comeon.app',
@@ -23,7 +24,6 @@ const app = {
   favicon: './src/assets/images/favicon.png',
   image: './src/assets/images/splash.png',
   foregroundImage: './src/assets/images/adaptive-icon.png',
-  versionCode: 1,
 };
 
 const EAS = {
