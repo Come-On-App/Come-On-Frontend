@@ -48,6 +48,9 @@
         "appleId": "jeongbaebangdev@gmail.com",
         "ascAppId": "6447347168",
         "appleTeamId": "8G9LPQ5X7A"
+      },
+      "android": {
+        "serviceAccountKeyPath": "./pc-api-7603760352208588036-950-a84f02e89339.json"
       }
     }
   }
