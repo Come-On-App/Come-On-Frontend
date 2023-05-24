@@ -20,7 +20,7 @@ function SubLabelDate({ date }: SubDateProps) {
   return (
     <View style={styles.sublabelContainer}>
       <Text style={styles.dateText}>{startDate}</Text>
-      <Text style={styles.dateText}>~</Text>
+      <Text style={styles.dateText}> ~ </Text>
       <Text style={styles.dateText}>{endDate}</Text>
     </View>
   );
@@ -97,7 +97,6 @@ const useStyles = makeStyles(theme => ({
     marginTop: 12,
   },
   sublabelContainer: {
-    flex: width > 385 ? 0.5 : 0.6,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
