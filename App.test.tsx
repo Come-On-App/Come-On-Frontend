@@ -9,7 +9,7 @@ describe('<App />', () => {
     render(<App />);
 
     expect(
-      screen.getByText('Open up App.tsx to start working on your app!')
+      screen.getByText('Open up App.tsx to start working on your app!'),
     ).toBeOnTheScreen();
   });
 });
