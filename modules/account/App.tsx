@@ -1,8 +1,12 @@
 import React from 'react';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 
 function App() {
-  return <View>App</View>;
+  return (
+    <View>
+      <Text>App</Text>
+    </View>
+  );
 }
 
 export default App;

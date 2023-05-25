@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import TestId from '../../shared/constants/testIds';
+
+import TestId from '@shared/constants/testIds';
 
 function MyPage() {
   return (
