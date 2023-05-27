@@ -1,5 +1,5 @@
 /* eslint-disable react/destructuring-assignment */
-import React, { useCallback, useState, useEffect, useMemo } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { makeStyles, Overlay } from '@rneui/themed';
 import { View } from 'react-native';
 import {
@@ -18,7 +18,7 @@ import {
   CalendarVotingTypeProps,
   CalenderClickEventType,
   CalendarProps,
-  CalendarPeriodScrollProps,
+  CalendarPeriodTypeProps,
 } from '@type/meeting.calendar';
 import { successAlert } from '@utils/alert';
 import { BoldFont } from '../Font';
@@ -152,7 +152,7 @@ export function setCalendarStyle(array: Array<string>) {
   return dataMap;
 }
 
-function PeriodCalendar({ setDate, options }: CalendarPeriodTypeProps) {
+function PeriodCalendar({ setDate }: CalendarPeriodTypeProps) {
   const styles = useStyles();
   const today = new Date().toISOString().substring(0, 10);
   const [markedDate, setMarkedDate] = useState<MarkedDates>();
