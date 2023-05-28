@@ -6,7 +6,7 @@ import TestId from '@shared/constants/testIds';
 import MyPageNavigator from './MyPageNavigator';
 
 describe('<MyPageNavigator />', () => {
-  test('첫 진입점은 마이페이지 컴포넌트를 렌더링한다.', () => {
+  test('렌더링 시 마이페이지 컴포넌트가 표시된다.', () => {
     const Navigation = (
       <NavigationContainer>
         <MyPageNavigator />
