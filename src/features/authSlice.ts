@@ -27,16 +27,12 @@ const authSlice = createSlice({
       state.userId = action.payload.accessToken.userId;
     },
     login: (state, action: PayloadAction<AuthResponse>) => {
-      setTokensToDB(action.payload);
-
       state.haveToken = true;
       state.accessToken = action.payload.accessToken;
       state.refreshToken = action.payload.refreshToken;
       state.userId = action.payload.accessToken.userId;
     },
     logout: state => {
-      deleteTokensfromDB();
-
       state.haveToken = false;
       state.accessToken = null;
       state.refreshToken = null;

@@ -1,6 +1,7 @@
 import { AuthResponse } from '@type/index';
 import { useCallback } from 'react';
 import { isExpiry } from '@utils/fn';
+import { deleteTokensfromDB, setTokensToDB } from '@api/token/token';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
 import { login, logout } from '../features/authSlice';
 import { getValueFor } from '../utils/secureStore';
@@ -44,10 +45,12 @@ function useAuth() {
     return refreshToken;
   }, [refreshToken]);
   const setLogout = useCallback(() => {
+    deleteTokensfromDB();
     dispatch(logout());
   }, [dispatch]);
   const setLogin = useCallback(
     (token: AuthResponse) => {
+      setTokensToDB(token);
       dispatch(login(token));
     },
     [dispatch],
