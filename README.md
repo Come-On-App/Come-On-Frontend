@@ -48,13 +48,6 @@
 <br>
 <h2>기술스택</h2>
 <h3> Front-end</h3>
-<br>
-<br>
-<h2>목적</h2>
-<h3>약속 또는 모임을 관리하고 각자의 일정을 쉽게 공유할 수는 없을까? 에서 시작하게 되었습니다.</h3>
-<br>
-<br>
-
 <img src="https://img.shields.io/badge/Typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=white">
 <img src="https://img.shields.io/badge/ReactNative-61DAFB?style=for-the-badge&logo=react&logoColor=white">
 <img src="https://img.shields.io/badge/reactquery-FF4154?style=for-the-badge&logo=react&logoColor=white">
@@ -63,16 +56,26 @@
 
 <br>
 <br>
+<h2>목적</h2>
+약속 또는 모임을 관리하고 각자의 일정을 쉽게 공유할 수는 없을까? <br>에서 시작하게 되었습니다.
+<br>
+<br>
+
+
+<br>
+<br>
 
 <h2>기능</h2>
-<h3>
-1. 모임생성 <br>
-2. 약속날짜 선택<br>
-3. 약속장소 선택<br>
-4. 웹소켓을 이용한 접속중 유저 확인<br>
-</h3>
+
+<p>1. 모임생성</p>
+<p>2. 약속날짜 선택</p>
+<p>3. 약속장소 선택</p>
+<p>4. 웹소켓을 이용한 접속중 유저 확인</p>
+
 <br>
 <br>
+    
+<h2>미리보기</h2>
 
 <table  style="margin-left: auto; margin-right: auto;">
 <thead>
