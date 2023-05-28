@@ -6,9 +6,10 @@ import MyPage from '@account/screens/MyPage';
 /**
  * 작업 목표
  * 0. 프로젝트 구조 구성 (https://www.reactnative.express/app/project_structure) [v]
- * 1. 네비게이터 구조화 [x]
- * 2. 네비게이터 테스트 작성 [x]
+ * 1. 네비게이터 구조화 [v]
+ * 2. 네비게이터 테스트 작성 [v]
  * 3. 네비게이터 리팩토링 [x]
+ * 4. 네비게이터 타입작성 [v]
  */
 
 export default function App() {
