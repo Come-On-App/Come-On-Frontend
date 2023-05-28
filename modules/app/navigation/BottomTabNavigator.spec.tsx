@@ -18,7 +18,6 @@ describe('<BottomTabNavigator />', () => {
 
     const Component = screen.getByTestId(TestId.account.myPage);
 
-    expect(Component).toBeDefined();
     expect(Component).toBeOnTheScreen();
     expect(Component).toHaveTextContent('MyPage');
   });
@@ -34,7 +33,6 @@ describe('<BottomTabNavigator />', () => {
 
     const Component = screen.getByTestId(TestId.join.Meeting);
 
-    expect(Component).toBeDefined();
     expect(Component).toBeOnTheScreen();
     expect(Component).toHaveTextContent('JoinMeeting');
   });

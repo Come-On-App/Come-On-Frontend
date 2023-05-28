@@ -10,7 +10,6 @@ describe('<JoinMeeting />', () => {
 
     const Component = screen.getByTestId(TestId.join.Meeting);
 
-    expect(Component).toBeDefined();
     expect(Component).toBeOnTheScreen();
     expect(Component).toHaveTextContent('JoinMeeting');
   });

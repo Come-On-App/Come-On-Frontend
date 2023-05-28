@@ -10,7 +10,6 @@ describe('<MyPage />', () => {
 
     const Component = screen.getByTestId(TestId.account.myPage);
 
-    expect(Component).toBeDefined();
     expect(Component).toBeOnTheScreen();
     expect(Component).toHaveTextContent('MyPage');
   });
