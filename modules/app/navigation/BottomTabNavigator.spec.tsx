@@ -6,7 +6,7 @@ import TestId from '@shared/constants/testIds';
 import BottomTabNavigator from './BottomTabNavigator';
 
 describe('<BottomTabNavigator />', () => {
-  test('렌더링이 완료되면 첫 번째 하단 네비게이터가 렌더링 된다.', () => {
+  test('첫 번째 하단 네비게이터 마이페이지가 렌더링 된다.', () => {
     const Navigation = (
       <NavigationContainer>
         <BottomTabNavigator />

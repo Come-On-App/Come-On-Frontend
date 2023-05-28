@@ -2,14 +2,19 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import MyPageNavigator from '@account/navigation/MyPageNavigator';
-import { RootTabParamList } from '../types/navigation';
+import { Tab, options } from './config';
+import { BottomTabParamList } from '../types/navigation';
 
-const { Navigator, Screen } = createBottomTabNavigator<RootTabParamList>();
+const { Navigator, Screen } = createBottomTabNavigator<BottomTabParamList>();
 
 function BottomTabNavigator() {
   return (
-    <Navigator initialRouteName="TabThree">
-      <Screen name="TabThree" component={MyPageNavigator} />
+    <Navigator initialRouteName={Tab.three}>
+      <Screen
+        name={Tab.three}
+        component={MyPageNavigator}
+        options={options[Tab.three]}
+      />
     </Navigator>
   );
 }
