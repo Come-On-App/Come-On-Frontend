@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -85,19 +85,12 @@ function PlaceSelectNavigator() {
 function RootNavigator() {
   const { isAuth: isLogin, autoLogin, accessToken } = useAuth();
   const styles = useStyles();
-  const [token, setToken] = useState<string>();
 
   useEffect(() => {
     autoLogin();
   }, [autoLogin]);
 
-  useEffect(() => {
-    if (!accessToken) return;
-
-    setToken(accessToken.token);
-  }, [accessToken]);
-
-  useWebSocketConnect(token);
+  useWebSocketConnect(accessToken?.token);
 
   return (
     <Stack.Navigator>

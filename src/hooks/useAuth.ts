@@ -1,10 +1,14 @@
 import { AuthResponse } from '@type/index';
 import { useCallback } from 'react';
-import { setTokensToDB } from '@api/token/token';
 import { isExpiry } from '@utils/fn';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
-import { login, logout, setToken } from '../features/authSlice';
+import { login, logout } from '../features/authSlice';
 import { getValueFor } from '../utils/secureStore';
+
+enum StoreKey {
+  refreshToken = 'refreshToken',
+  accessToken = 'accessToken',
+}
 
 export const tokenDataIsValid = async () => {
   const accessTkn = await getTokenData(StoreKey.accessToken);
@@ -19,11 +23,6 @@ export const tokenDataIsValid = async () => {
   return false;
 };
 
-enum StoreKey {
-  refreshToken = 'refreshToken',
-  accessToken = 'accessToken',
-}
-
 const getTokenData = async (name: 'accessToken' | 'refreshToken') => {
   const tokenData = await getValueFor(name);
 
@@ -34,11 +33,8 @@ const getTokenData = async (name: 'accessToken' | 'refreshToken') => {
 
 function useAuth() {
   const dispatch = useAppDispatch();
-  const isAuth = useAppSelector(state => state.auth.haveToken);
   const authSelector = useAppSelector(state => state.auth);
-  const accessToken = useAppSelector(state => state.auth.accessToken);
-  const refreshToken = useAppSelector(state => state.auth.refreshToken);
-  const myId = useAppSelector(state => state.auth.userId);
+  const { accessToken, refreshToken, userId, haveToken: isAuth } = authSelector;
   const getRefreshToken = useCallback(() => {
     return refreshToken;
   }, [refreshToken]);
@@ -56,30 +52,23 @@ function useAuth() {
 
     if (myToken) {
       const expiryTime = myToken.accessToken.expiry;
-      const isTokenExpiry = !isExpiry(expiryTime);
+      const isTokenExpiry = isExpiry(expiryTime);
 
       if (isTokenExpiry) return;
 
       setLogin(myToken);
     }
   }, [setLogin]);
-  const setTokens = async (token: AuthResponse | null) => {
-    if (token) {
-      await setTokensToDB(token);
-      dispatch(setToken(token));
-    }
-  };
 
   return {
     isAuth,
     setLogout,
-    setTokens,
     accessToken,
     authSelector,
     getRefreshToken,
     autoLogin,
     setLogin,
-    myId,
+    userId,
   };
 }
 
