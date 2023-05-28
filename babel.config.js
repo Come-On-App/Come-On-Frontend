@@ -10,6 +10,7 @@ module.exports = function (api) {
           alias: {
             '@account': './modules/account',
             '@shared': './modules/shared',
+            '@join': './modules/join',
           },
         },
       ],
