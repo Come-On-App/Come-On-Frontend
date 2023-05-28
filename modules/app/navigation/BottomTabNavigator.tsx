@@ -2,7 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import MyPageNavigator from '@account/navigation/MyPageNavigator';
-import EnterMeeting from '@join/screen/EnterMeeting';
+import JoinMeeting from '@join/screen/JoinMeeting';
 import { Tab, options } from './config';
 import { BottomTabParamList } from '../types/navigation';
 
@@ -18,7 +18,7 @@ function BottomTabNavigator({ initialRouteName }: { initialRouteName?: Tab }) {
     <Navigator initialRouteName={initialRouteName}>
       <Screen
         name={Tab.two}
-        component={EnterMeeting}
+        component={JoinMeeting}
         options={options[Tab.two]}
       />
       <Screen

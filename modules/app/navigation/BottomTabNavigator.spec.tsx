@@ -36,6 +36,6 @@ describe('<BottomTabNavigator />', () => {
 
     expect(Component).toBeDefined();
     expect(Component).toBeOnTheScreen();
-    expect(Component).toHaveTextContent('EnterMeeting');
+    expect(Component).toHaveTextContent('JoinMeeting');
   });
 });
