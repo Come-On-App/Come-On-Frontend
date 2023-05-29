@@ -6,7 +6,7 @@ import { MyPageParamList } from '@account/types/navigation';
 
 const { Screen, Navigator } = createNativeStackNavigator<MyPageParamList>();
 
-function MyPageNavigator() {
+function AccountNavigator() {
   return (
     <Navigator initialRouteName="MyPage">
       <Screen name="MyPage" component={MyPage} />
@@ -14,4 +14,4 @@ function MyPageNavigator() {
   );
 }
 
-export default MyPageNavigator;
+export default AccountNavigator;

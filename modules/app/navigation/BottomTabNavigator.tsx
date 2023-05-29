@@ -1,16 +1,16 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import MyPageNavigator from '@account/navigation/MyPageNavigator';
+import MyPageNavigator from '@account/navigation/AccountNavigator';
 import MeetingCode from '@userConnection/screen/MeetingCode';
-import MeetingPostList from '@post/screen/MeetingPostList';
+import PostNavigator from '@post/navigation/PostNavigator';
 import { Tab, options } from './config';
 import { BottomTabParamList } from '../types/navigation';
 
 const { Navigator, Screen } = createBottomTabNavigator<BottomTabParamList>();
 
 /**
- * 첫번째 스크린: 게시물 리스트
+ * 첫번째 스크린: 모임 게시물 리스트
  * 두번째 스크린: 모임 입장
  * 세번째 스크린: 마이페이지
  */
@@ -19,7 +19,7 @@ function BottomTabNavigator({ initialRouteName }: { initialRouteName?: Tab }) {
     <Navigator initialRouteName={initialRouteName}>
       <Screen
         name={Tab.one}
-        component={MeetingPostList}
+        component={PostNavigator}
         options={options[Tab.one]}
       />
       <Screen
