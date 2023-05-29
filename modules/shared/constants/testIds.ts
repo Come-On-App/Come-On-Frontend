@@ -1,9 +1,12 @@
 const TestId = {
   account: {
-    myPage: 'TestId__MyPage',
+    myPage: 'TestId__account_myPage',
   },
-  join: {
-    Meeting: 'TestId__JoinMeeting',
+  userConnection: {
+    code: 'TestId__userConnection_code',
+  },
+  post: {
+    list: 'TestId__post_list',
   },
 } as const;
 

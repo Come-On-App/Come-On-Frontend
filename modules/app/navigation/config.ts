@@ -5,6 +5,7 @@ export enum Tab {
 }
 
 export const options = {
+  [Tab.one]: {},
   [Tab.two]: {
     tabBarLabel: '모임입장',
   },

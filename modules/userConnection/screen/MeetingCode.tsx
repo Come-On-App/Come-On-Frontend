@@ -2,12 +2,12 @@ import TestId from '@shared/constants/testIds';
 import React from 'react';
 import { Text, View } from 'react-native';
 
-function JoinMeeting() {
+function MeetingCode() {
   return (
-    <View testID={TestId.join.Meeting}>
-      <Text>JoinMeeting</Text>
+    <View testID={TestId.userConnection.code}>
+      <Text>MeetingCode</Text>
     </View>
   );
 }
 
-export default JoinMeeting;
+export default MeetingCode;
