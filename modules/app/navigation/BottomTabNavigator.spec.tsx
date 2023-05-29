@@ -7,7 +7,37 @@ import BottomTabNavigator from './BottomTabNavigator';
 import { Tab } from './config';
 
 describe('<BottomTabNavigator />', () => {
-  test('세 번째 하단 네비게이터는 마이페이지 컴포넌트가 렌더링 된다.', () => {
+  test('첫 번째 하단 네비게이터는 모임 리스트 컴포넌트가 렌더링 되어야 한다.', () => {
+    const Navigation = (
+      <NavigationContainer>
+        <BottomTabNavigator initialRouteName={Tab.one} />
+      </NavigationContainer>
+    );
+
+    render(Navigation);
+
+    const Component = screen.getByTestId(TestId.post.list);
+
+    expect(Component).toBeOnTheScreen();
+    expect(Component).toHaveTextContent('MeetingPostList');
+  });
+
+  test('두 번째 하단 네비게이터는 모임 입장 컴포넌트가 렌더링 되어야 한다.', () => {
+    const Navigation = (
+      <NavigationContainer>
+        <BottomTabNavigator initialRouteName={Tab.two} />
+      </NavigationContainer>
+    );
+
+    render(Navigation);
+
+    const Component = screen.getByTestId(TestId.userConnection.code);
+
+    expect(Component).toBeOnTheScreen();
+    expect(Component).toHaveTextContent('MeetingCode');
+  });
+
+  test('세 번째 하단 네비게이터는 마이페이지 컴포넌트가 렌더링 되어야 한다.', () => {
     const Navigation = (
       <NavigationContainer>
         <BottomTabNavigator initialRouteName={Tab.three} />
@@ -20,20 +50,5 @@ describe('<BottomTabNavigator />', () => {
 
     expect(Component).toBeOnTheScreen();
     expect(Component).toHaveTextContent('MyPage');
-  });
-
-  test('두 번째 하단 네비게이터는 모임 입장 컴포넌트가 렌더링 된다.', () => {
-    const Navigation = (
-      <NavigationContainer>
-        <BottomTabNavigator initialRouteName={Tab.two} />
-      </NavigationContainer>
-    );
-
-    render(Navigation);
-
-    const Component = screen.getByTestId(TestId.join.Meeting);
-
-    expect(Component).toBeOnTheScreen();
-    expect(Component).toHaveTextContent('JoinMeeting');
   });
 });
