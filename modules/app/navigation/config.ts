@@ -5,7 +5,9 @@ export enum Tab {
 }
 
 export const options = {
-  [Tab.one]: {},
+  [Tab.one]: {
+    tabBarLabel: '모임관리',
+  },
   [Tab.two]: {
     tabBarLabel: '모임입장',
   },
