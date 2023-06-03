@@ -1,7 +1,7 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import MyPage from '@account/screens/MyPage';
+import { StyleSheet, View } from 'react-native';
+import RootNavigation from './modules/app/navigation/RootNavigation';
 
 /**
  * 작업 목표
@@ -15,9 +15,8 @@ import MyPage from '@account/screens/MyPage';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <MyPage />
       <StatusBar style="auto" />
+      <RootNavigation />
     </View>
   );
 }
@@ -25,8 +24,5 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
