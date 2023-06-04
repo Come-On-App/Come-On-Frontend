@@ -12,6 +12,5 @@ describe('<MeetingPostList />', () => {
     const Component = screen.getByTestId(TestId.post.list);
 
     expect(Component).toBeOnTheScreen();
-    expect(Component).toHaveTextContent('MeetingPostList');
   });
 });

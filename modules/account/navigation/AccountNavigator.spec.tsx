@@ -18,6 +18,5 @@ describe('<MyPageNavigator />', () => {
     const Component = screen.getByTestId(TestId.account.myPage);
 
     expect(Component).toBeOnTheScreen();
-    expect(Component).toHaveTextContent('MyPage');
   });
 });

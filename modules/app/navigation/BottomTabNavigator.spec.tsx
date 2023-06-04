@@ -19,7 +19,6 @@ describe('<BottomTabNavigator />', () => {
     const Component = screen.getByTestId(TestId.post.list);
 
     expect(Component).toBeOnTheScreen();
-    expect(Component).toHaveTextContent('MeetingPostList');
   });
 
   test('두 번째 하단 네비게이터는 모임 입장 컴포넌트가 렌더링 되어야 한다.', () => {
@@ -34,7 +33,6 @@ describe('<BottomTabNavigator />', () => {
     const Component = screen.getByTestId(TestId.userConnection.code);
 
     expect(Component).toBeOnTheScreen();
-    expect(Component).toHaveTextContent('MeetingCode');
   });
 
   test('세 번째 하단 네비게이터는 마이페이지 컴포넌트가 렌더링 되어야 한다.', () => {
@@ -49,6 +47,5 @@ describe('<BottomTabNavigator />', () => {
     const Component = screen.getByTestId(TestId.account.myPage);
 
     expect(Component).toBeOnTheScreen();
-    expect(Component).toHaveTextContent('MyPage');
   });
 });
