@@ -9,12 +9,12 @@ describe('<RootNavigatro />', () => {
   test('최초에 앱이 실행되면 첫 번째 하단 네비게이터가 활성화돼야 한다.', () => {
     render(<RootNavigation />);
 
-    const FirstBottomTap = screen.getByRole('button', {
+    const FirstBottomTab = screen.getByRole('button', {
       name: options.TabOne.tabBarLabel,
     });
     const Component = screen.getByTestId(TestId.post.list);
 
     expect(Component).toBeOnTheScreen();
-    expect(FirstBottomTap).toHaveAccessibilityState({ selected: true });
+    expect(FirstBottomTab).toHaveAccessibilityState({ selected: true });
   });
 });
