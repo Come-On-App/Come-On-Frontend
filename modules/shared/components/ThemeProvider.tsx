@@ -4,7 +4,7 @@ import { ThemeProvider as Tp } from '@rneui/themed';
 import { theme } from '@shared/constants/themed';
 
 /**
- * [React Native Elements] 정의된 스타일 테마를 제공.
+ * [React Native Elements] 커스텀 정의된 스타일 테마를 제공.
  * @see docs https://reactnativeelements.com/docs/customization/themeprovider
  */
 function ThemeProvider({ children }: { children: ReactNode }) {
