@@ -17,7 +17,7 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "ignorePatterns": ["*.config.js", "node_modules"],
+  "ignorePatterns": ["*.config.*", "node_modules"],
   "rules": {
     "import/no-unresolved": 0,
     "react/jsx-filename-extension": [
