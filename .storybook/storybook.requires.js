@@ -54,7 +54,7 @@ try {
 
 const getStories = () => {
   return {
-    "./modules/shared/stories/Button.stories.tsx": require("../modules/shared/stories/Button.stories.tsx"),
+    "./modules/shared/components/Button.stories.tsx": require("../modules/shared/components/Button.stories.tsx"),
   };
 };
 
