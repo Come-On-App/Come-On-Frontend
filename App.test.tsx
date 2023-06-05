@@ -3,7 +3,7 @@ import { describe, test, expect } from '@jest/globals';
 import { render, screen, fireEvent } from '@testing-library/react-native';
 
 import TestId from '@shared/constants/testIds';
-import App from './App';
+import { App } from './App';
 import { options } from './modules/app/navigation/config';
 
 describe('<App />', () => {
