@@ -5,7 +5,7 @@ import MyPageNavigator from '@account/navigation/AccountNavigator';
 import MeetingCode from '@userConnection/screen/MeetingCode';
 import PostNavigator from '@post/navigation/PostNavigator';
 import { Tab, options } from './config';
-import { BottomTabParamList } from '../types/navigation';
+import { BottomTabParamList } from './type';
 
 const { Navigator, Screen } = createBottomTabNavigator<BottomTabParamList>();
 

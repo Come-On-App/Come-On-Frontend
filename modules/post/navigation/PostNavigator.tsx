@@ -1,7 +1,7 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { MeetingPostListParamList } from '@post/types/navigation';
+import { MeetingPostListParamList } from '@post/navigation/type';
 import MeetingPostList from '@post/screen/MeetingPostList';
 
 const { Screen, Navigator } =

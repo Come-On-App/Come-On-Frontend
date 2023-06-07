@@ -55,7 +55,6 @@ try {
 const getStories = () => {
   return {
     "./modules/app/navigation/BottomTabNavigator.stories.tsx": require("../modules/app/navigation/BottomTabNavigator.stories.tsx"),
-    "./modules/shared/components/Button.stories.tsx": require("../modules/shared/components/Button.stories.tsx"),
   };
 };
 

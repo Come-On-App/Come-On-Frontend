@@ -1,4 +1,4 @@
-import { Tab } from '../navigation/config';
+import { Tab } from './config';
 
 export type BottomTabParamList = {
   [Tab.one]: undefined;

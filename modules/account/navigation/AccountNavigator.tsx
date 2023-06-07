@@ -2,7 +2,7 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import MyPage from '@account/screens/MyPage';
-import { MyPageParamList } from '@account/types/navigation';
+import { MyPageParamList } from '@account/navigation/type';
 
 const { Screen, Navigator } = createNativeStackNavigator<MyPageParamList>();
 
