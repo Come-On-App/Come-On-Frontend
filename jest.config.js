@@ -7,6 +7,7 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: [
     './modules/**/*.@(js|jsx|ts|tsx)',
+    '!./modules/**/*.stories.@(js|jsx|ts|tsx)',
     '!**/coverage/**',
     '!**/node_modules/**',
     '!**/babel.config.js',
