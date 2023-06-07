@@ -8,7 +8,7 @@ describe('<MeetingCode />', () => {
   test('모임 입장 컴포넌트가 렌더링 되어야 한다.', () => {
     render(<MeetingCode />);
 
-    const Component = screen.getByTestId(TestId.userConnection.code);
+    const Component = screen.getByTestId(TestId.connection.code);
 
     expect(Component).toBeOnTheScreen();
     expect(Component).toHaveTextContent('MeetingCode');

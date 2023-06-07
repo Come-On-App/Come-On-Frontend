@@ -2,7 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import MyPageNavigator from '@account/navigation/AccountNavigator';
-import MeetingCode from '@userConnection/screen/MeetingCode';
+import MeetingCode from '@connection/screen/MeetingCode';
 import PostNavigator from '@post/navigation/PostNavigator';
 import { Tab, options } from './config';
 import { BottomTabParamList } from './type';

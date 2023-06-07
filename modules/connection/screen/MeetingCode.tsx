@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 
 function MeetingCode() {
   return (
-    <View testID={TestId.userConnection.code}>
+    <View testID={TestId.connection.code}>
       <Text>MeetingCode</Text>
     </View>
   );

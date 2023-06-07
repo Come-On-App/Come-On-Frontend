@@ -30,7 +30,7 @@ describe('<BottomTabNavigator />', () => {
 
     render(Navigation);
 
-    const Component = screen.getByTestId(TestId.userConnection.code);
+    const Component = screen.getByTestId(TestId.connection.code);
 
     expect(Component).toBeOnTheScreen();
   });

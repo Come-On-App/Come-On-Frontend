@@ -17,7 +17,7 @@ describe('<App />', () => {
 
       fireEvent.press(BottomTap);
 
-      expect(screen.getByTestId(TestId.userConnection.code)).toBeOnTheScreen();
+      expect(screen.getByTestId(TestId.connection.code)).toBeOnTheScreen();
     });
 
     test('세 번째 하단 탭을 클릭하면 마이페이지 스크린으로 네비게이터 되어야 한다.', () => {
