@@ -7,11 +7,12 @@
     "test": "jest --watchAll",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "storybook": "sb-rn-get-stories && STORYBOOK_ENABLED='true' expo start",
-    "storybook-generate": "sb-rn-get-stories",
-    "storybook-watch": "sb-rn-watcher"
+    "storybook": "sb-rn-get-stories && STORYBOOK_ENABLED='true' npx expo start",
+    "storybook-watch": "sb-rn-watcher",
+    "storybook-generate": "sb-rn-get-stories"
   },
   "dependencies": {
+    "@expo/vector-icons": "^13.0.0",
     "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/native-stack": "^6.9.12",
