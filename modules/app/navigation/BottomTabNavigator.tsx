@@ -16,7 +16,10 @@ const { Navigator, Screen } = createBottomTabNavigator<BottomTabParamList>();
  */
 function BottomTabNavigator({ initialRouteName }: { initialRouteName?: Tab }) {
   return (
-    <Navigator initialRouteName={initialRouteName}>
+    <Navigator
+      initialRouteName={initialRouteName}
+      screenOptions={{ headerShown: false }}
+    >
       <Screen
         name={Tab.one}
         component={PostNavigator}
