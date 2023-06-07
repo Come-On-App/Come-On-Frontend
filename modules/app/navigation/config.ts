@@ -1,4 +1,4 @@
-import createTabBarIcon from '../components/TabBarIcon/TabBarIcon';
+import createTabBarIcon from '../components/tabBarIcon/TabBarIcon';
 
 export enum Tab {
   one = 'TabOne',

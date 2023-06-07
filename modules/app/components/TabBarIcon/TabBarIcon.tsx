@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Icon from '@shared/components/Icon/Icon';
+import Icon from '@shared/components/icon/Icon';
 import { IconName } from '@shared/components/Icon/type';
 import tabBarIcon from './config';
 
