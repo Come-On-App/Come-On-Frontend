@@ -1,14 +1,26 @@
 import { createTheme } from '@rneui/themed';
 
-export const colors = {
+declare module '@rneui/themed' {
+  export interface Theme {
+    font: typeof font;
+  }
+}
+
+const lightColors = {
   primary: '#337FFE',
   secondary: '#FFC724',
   warning: '#F05E51',
   info: '#24ABE4',
   success: '#20BD4A',
 } as const;
-
-export const font = {
+const darkColors = {
+  primary: '#1145AA',
+  secondary: '#AA9E0B',
+  warning: '#A03127',
+  info: '#0E7BAA',
+  success: '#0B8A36',
+} as const;
+const font = {
   grayscale: {
     900: '#212121',
     800: '#424242',
@@ -51,6 +63,7 @@ export const font = {
 } as const;
 
 export const theme = createTheme({
-  lightColors: colors,
+  lightColors,
+  darkColors,
   font,
 });
