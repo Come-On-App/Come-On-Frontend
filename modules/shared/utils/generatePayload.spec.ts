@@ -36,7 +36,7 @@ describe('generatePayload()', () => {
     test('기존 상태를 직접 수정할 수 없다.', () => {
       const newPayalod = { age: 40, arr: [1, 2, 3, 4] };
 
-      payload.update(state => {
+      payload.update((state) => {
         state.arr.push(4);
 
         return {

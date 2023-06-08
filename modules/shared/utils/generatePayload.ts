@@ -30,7 +30,7 @@ export default function generatePayload<T extends object>(initialPayload: T) {
 
       if (!isEqual(oldPayload, newPayload)) {
         currentPayload = newPayload;
-        watchers.forEach(watcher => watcher(cloneDeep(newPayload)));
+        watchers.forEach((watcher) => watcher(cloneDeep(newPayload)));
       }
     }
 
