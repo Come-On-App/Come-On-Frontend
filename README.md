@@ -1,7 +1,8 @@
 <h1 align="center">ComeOn - 모임관리 App플랫폼</h1>
-<a href="https://play.google.com/store/apps/details?id=com.comeon.app">플레이스토어</a>
-
-앱스토어 "여기로 모여" 검색
+<a href="https://play.google.com/store/apps/details?id=com.comeon.app">플레이스토어</a><br>
+<a href="
+1:45
+https://apps.apple.com/kr/app/come-on-%EC%97%AC%EA%B8%B0%EB%A1%9C-%EB%AA%A8%EC%97%AC/id6447347168">앱스토어</a>
 <br>
 <br>
 
@@ -60,7 +61,6 @@
 약속 또는 모임을 관리하고 각자의 일정을 쉽게 공유할 수는 없을까? <br>에서 시작하게 되었습니다.
 <br>
 <br>
-
 
 <br>
 <br>
