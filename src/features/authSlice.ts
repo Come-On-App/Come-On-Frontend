@@ -1,4 +1,3 @@
-import { deleteTokensfromDB, setTokensToDB } from '@api/token/token';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 /* eslint-disable no-param-reassign */
 import { AuthResponse } from '@type/index';

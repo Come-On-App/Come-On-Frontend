@@ -44,7 +44,7 @@ https://apps.apple.com/kr/app/come-on-%EC%97%AC%EA%B8%B0%EB%A1%9C-%EB%AA%A8%EC%9
 <br>
 <br>
 <h2>제작기간</h2>
-<h3>약 3개월</h3>
+<h3>2022.12.19~2023. 04. 20</h3>
 <br>
 <br>
 <h2>기술스택</h2>
@@ -58,12 +58,55 @@ https://apps.apple.com/kr/app/come-on-%EC%97%AC%EA%B8%B0%EB%A1%9C-%EB%AA%A8%EC%9
 <br>
 <br>
 <h2>목적</h2>
-약속 또는 모임을 관리하고 각자의 일정을 쉽게 공유할 수는 없을까? <br>에서 시작하게 되었습니다.
+
+<p>약속을 잡을때 우리는 보통 메신저로 이야기하며 잡습니다.</p>
+<p>약속 날짜를 잡기위해 많은 채팅을 해야합니다.</p>
+<p>약속 장소등을 확인하기 위해선 채팅방 계속 스크롤을 위로 올려야 합니다.</p>
+<p><b>이런 불편함을 해소하고 약속/모임을 관리하고 정보를 쉽게 공유할 수는 없을까?</b></p> 
+<p>라는 생각에서 시작하게 되었습니다.</p>
 <br>
 <br>
 
 <br>
 <br>
+<div align="left">
+<pre>
+<code>
+src
+  ㄴ api                //용도별로 분류
+      ㄴ auth
+      ㄴ map
+      ㄴ user
+      ㄴ ...
+  ㄴ app
+    ㄴ store.ts
+  ㄴ assets
+  ㄴ components
+    ㄴ button
+    ㄴ calendar
+    ㄴ meetingCard
+    ㄴ ...
+  ㄴ constants          //앱에서 쓰이는 전역 리터럴들을 정리
+    ㄴ theme.ts         //앱에 전역 컬러,폰트스타일 등
+    ㄴ config.ts        //앱에서 쓰이는 문자 리터럴
+  ㄴ features           //리덕스 상태관리 관련 파일
+    ㄴ slices ...
+  ㄴ hooks              //커스텀훅
+    ㄴ query
+    ㄴ redux
+    ㄴ custom hooks...
+  ㄴ navigation
+  ㄴ screens
+    ㄴ bottomTap
+    ㄴ login
+    ㄴ meeting
+    ㄴ ...
+  ㄴ types              //타입 정리
+  ㄴ utils              //유틸함수들
+  App.tsx
+</pre>
+</code>
+</div>
 
 <h2>기능</h2>
 
