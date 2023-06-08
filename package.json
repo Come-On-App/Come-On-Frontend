@@ -8,6 +8,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "storybook": "sb-rn-get-stories && STORYBOOK_ENABLED='true' npx expo start",
+    "storybook:ios": "sb-rn-get-stories && STORYBOOK_ENABLED='true' expo start --ios",
+    "storybook:android": "sb-rn-get-stories && STORYBOOK_ENABLED='true' expo start --android",
     "storybook-watch": "sb-rn-watcher",
     "storybook-generate": "sb-rn-get-stories"
   },
