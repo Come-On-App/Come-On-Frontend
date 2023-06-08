@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Icon from '@shared/components/icon/Icon';
-import { IconName } from '@shared/components/Icon/type';
+import { IconName } from '@shared/components/icon/type';
 import tabBarIcon from './config';
 
 export default function createTabBarIcon(name: IconName) {
