@@ -34,21 +34,18 @@ export default {
 
 export const PretendardRegular: Meta = {
   args: {
-    children: LoremIpsum,
     bold: false,
   },
 };
 
 export const PretendardBold: Meta = {
   args: {
-    children: LoremIpsum,
     bold: true,
   },
 };
 
 export const withStyle: Meta = {
   args: {
-    children: LoremIpsum,
     bold: false,
     style: {
       fontSize: 24,
