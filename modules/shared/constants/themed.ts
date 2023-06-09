@@ -37,27 +37,35 @@ const font = {
   type: {
     title1: {
       fontSize: 26,
+      lineHeight: 34,
     },
     title2: {
       fontSize: 22,
+      lineHeight: 28,
     },
     title3: {
       fontSize: 18,
+      lineHeight: 24,
     },
     title4: {
       fontSize: 16,
+      lineHeight: 22,
     },
     body1: {
       fontSize: 14,
+      lineHeight: 20,
     },
     body2: {
       fontSize: 13,
+      lineHeight: 19,
     },
     body3: {
       fontSize: 12,
+      lineHeight: 18,
     },
     caption: {
       fontSize: 10,
+      lineHeight: 14,
     },
   },
 } as const;
