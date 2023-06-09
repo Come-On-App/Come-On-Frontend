@@ -9,6 +9,7 @@ module.exports = function (api) {
           root: ['.'],
           alias: {
             '@account': './modules/account',
+            '@app': './modules/app',
             '@shared': './modules/shared',
             '@connection': './modules/connection',
             '@post': './modules/post',
