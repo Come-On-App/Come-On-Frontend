@@ -2,7 +2,7 @@ import { ComponentMeta } from '@storybook/react-native';
 
 import Font from './Font';
 import ThemeProvider from '../ThemeProvider';
-import useCachedResources from '@shared/hooks/useCachedResources';
+import useCachedResources from '@app/hooks/useCachedResources';
 
 type Meta = ComponentMeta<typeof Font>;
 
