@@ -24,3 +24,8 @@ export function FontLoader({ children }: { children: ReactNode }) {
 
   return <ThemeProvider>{children}</ThemeProvider>;
 }
+
+/**
+ * 테스트 코드 래퍼 객체
+ */
+export const wrapper = { wrapper: ThemeProvider };
