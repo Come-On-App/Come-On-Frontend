@@ -16,7 +16,11 @@ function DisplayIcon({ name }: IDisplayIcon) {
   );
 }
 
-export default function Display({ name, children, disabled }: IDisplay) {
+export default function Display({
+  name,
+  children,
+  disabled = false,
+}: IDisplay) {
   const { contianer, font } = useStyles(disabled);
 
   return (
