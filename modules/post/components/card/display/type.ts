@@ -9,3 +9,11 @@ export interface IDisplay {
   children: React.ReactNode;
   disabled?: boolean;
 }
+
+export interface IGroupDisplay {
+  people: number;
+}
+
+export interface IDecisionDisplay {
+  isDecided: boolean;
+}

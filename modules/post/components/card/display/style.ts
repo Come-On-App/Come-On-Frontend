@@ -27,4 +27,7 @@ export default makeStyles((theme, hiddenIcon: boolean) => ({
     marginTop: 1,
     marginRight: 2,
   },
+  displayStatus: {
+    flexDirection: 'row',
+  },
 }));
