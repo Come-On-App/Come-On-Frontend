@@ -4,6 +4,9 @@ import { ComponentMeta, ComponentStory } from '@storybook/react-native';
 import Thumbnail from './Thumbnail';
 import { FontLoader } from '@shared/components/ThemeProvider';
 import Display from '../display/Display';
+import GroupDisplay from '../display/GroupDisplay';
+import DecisionDisplay from '../display/DecisionDisplay';
+import { IWithTopComponent } from './type';
 
 const path =
   'https://images.unsplash.com/photo-1682687220067-dced9a881b56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1550&q=80';
@@ -24,6 +27,8 @@ export default {
   ],
   args: {
     uri: path,
+    people: 999,
+    isDecided: true,
   },
 } as Meta;
 
@@ -33,17 +38,13 @@ export const Default: Meta = {
   },
 };
 
-type ThumbnailStory = ComponentStory<typeof Thumbnail>;
-
-// TODO: 자식 컴포넌트화 시키기
-export const WithTopComponent: ThumbnailStory = (args) => (
-  <Thumbnail uri={args.uri}>
-    <View style={{ flexDirection: 'row' }}>
-      <Display name="groups">999명</Display>
-      <Display name="check-circle">확정</Display>
-      <Display name="check-circle" disabled>
-        미확정
-      </Display>
-    </View>
-  </Thumbnail>
-);
+export const WithTopComponent = (args: IWithTopComponent) => {
+  return (
+    <Thumbnail uri={args.uri}>
+      <View style={{ flexDirection: 'row' }}>
+        <GroupDisplay people={args.people} />
+        <DecisionDisplay isDecided={args.isDecided} />
+      </View>
+    </Thumbnail>
+  );
+};
