@@ -8,10 +8,10 @@ import { options } from './modules/app/navigation/config';
 
 describe('<App />', () => {
   describe('앱이 실행된다면 네비게이터가 올바르게 동작해야 한다.', () => {
-    test('두 번째 하단 탭을 클릭하면 모임 입장 스크린으로 네비게이터 되어야 한다.', () => {
+    test('두 번째 하단 탭을 클릭하면 모임 입장 스크린으로 네비게이터 되어야 한다.', async () => {
       render(<App />);
 
-      const BottomTap = screen.getByRole('button', {
+      const BottomTap = await screen.findByRole('button', {
         name: options.TabTwo.tabBarLabel,
       });
 
@@ -20,10 +20,10 @@ describe('<App />', () => {
       expect(screen.getByTestId(TestId.connection.code)).toBeOnTheScreen();
     });
 
-    test('세 번째 하단 탭을 클릭하면 마이페이지 스크린으로 네비게이터 되어야 한다.', () => {
+    test('세 번째 하단 탭을 클릭하면 마이페이지 스크린으로 네비게이터 되어야 한다.', async () => {
       render(<App />);
 
-      const BottomTap = screen.getByRole('button', {
+      const BottomTap = await screen.findByRole('button', {
         name: options.TabThree.tabBarLabel,
       });
 

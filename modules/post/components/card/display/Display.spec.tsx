@@ -4,6 +4,8 @@ import { render, screen } from '@testing-library/react-native';
 import ThemeProvider from '@shared/components/ThemeProvider';
 import Display from './Display';
 
+const wrapper = { wrapper: ThemeProvider };
+
 describe('Display Compoent', () => {
   const children = 'Hello Wrold';
 
@@ -12,18 +14,14 @@ describe('Display Compoent', () => {
       <Display name="check" disabled={false}>
         {children}
       </Display>,
-      {
-        wrapper: ThemeProvider,
-      },
+      wrapper,
     );
 
     expect(screen.getByTestId('RNE__ICON')).toBeOnTheScreen();
   });
 
   test('text 속성을 전달하면 텍스트가 렌더링 되어야 한다.', () => {
-    render(<Display name="check">{children}</Display>, {
-      wrapper: ThemeProvider,
-    });
+    render(<Display name="check">{children}</Display>, wrapper);
 
     expect(screen.getByText(children)).toBeOnTheScreen();
   });
@@ -33,9 +31,7 @@ describe('Display Compoent', () => {
       <Display name="check" disabled>
         {children}
       </Display>,
-      {
-        wrapper: ThemeProvider,
-      },
+      wrapper,
     );
 
     expect(screen.queryByTestId('RNE__ICON')).toBeNull();
@@ -44,9 +40,7 @@ describe('Display Compoent', () => {
       <Display name="check" disabled={false}>
         {children}
       </Display>,
-      {
-        wrapper: ThemeProvider,
-      },
+      wrapper,
     );
 
     expect(screen.getByTestId('RNE__ICON')).toBeOnTheScreen();

@@ -5,7 +5,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import Constants from 'expo-constants';
 
-import ThemeProvider from './modules/shared/components/ThemeProvider';
+import { FontLoader } from './modules/shared/components/ThemeProvider';
 import RootNavigation from './modules/app/navigation/RootNavigation';
 
 /**
@@ -21,9 +21,9 @@ export function App() {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <ThemeProvider>
+      <FontLoader>
         <RootNavigation />
-      </ThemeProvider>
+      </FontLoader>
     </View>
   );
 }

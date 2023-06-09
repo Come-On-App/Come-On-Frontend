@@ -1,7 +1,8 @@
 import { ComponentMeta } from '@storybook/react-native';
+
 import Display from './Display';
-import useCachedResources from '@app/hooks/useCachedResources';
-import ThemeProvider from '@shared/components/ThemeProvider';
+import { FontLoader } from '@shared/components/ThemeProvider';
+import { View } from 'react-native';
 
 type Meta = ComponentMeta<typeof Display>;
 
@@ -9,19 +10,13 @@ export default {
   title: 'Display',
   component: Display,
   decorators: [
-    (Story) => {
-      const isLoadingComplete = useCachedResources();
-
-      if (!isLoadingComplete) {
-        return null;
-      }
-
-      return (
-        <ThemeProvider>
+    (Story) => (
+      <FontLoader>
+        <View style={{ margin: 10 }}>
           <Story />
-        </ThemeProvider>
-      );
-    },
+        </View>
+      </FontLoader>
+    ),
   ],
 } as Meta;
 

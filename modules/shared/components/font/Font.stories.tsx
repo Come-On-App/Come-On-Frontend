@@ -1,8 +1,7 @@
 import { ComponentMeta } from '@storybook/react-native';
 
+import { FontLoader } from '@shared/components/ThemeProvider';
 import Font from './Font';
-import ThemeProvider from '../ThemeProvider';
-import useCachedResources from '@app/hooks/useCachedResources';
 
 type Meta = ComponentMeta<typeof Font>;
 
@@ -13,19 +12,11 @@ export default {
   title: 'Font',
   component: Font,
   decorators: [
-    (Story) => {
-      const isLoadingComplete = useCachedResources();
-
-      if (!isLoadingComplete) {
-        return null;
-      }
-
-      return (
-        <ThemeProvider>
-          <Story />
-        </ThemeProvider>
-      );
-    },
+    (Story) => (
+      <FontLoader>
+        <Story />
+      </FontLoader>
+    ),
   ],
   args: {
     children: LoremIpsum,
