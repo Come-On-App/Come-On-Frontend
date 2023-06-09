@@ -56,6 +56,7 @@ const getStories = () => {
   return {
     "./modules/app/navigation/BottomTabNavigator.stories.tsx": require("../modules/app/navigation/BottomTabNavigator.stories.tsx"),
     "./modules/post/components/card/display/Display.stories.tsx": require("../modules/post/components/card/display/Display.stories.tsx"),
+    "./modules/post/components/card/thumbnail/Thumbnail.stories.tsx": require("../modules/post/components/card/thumbnail/Thumbnail.stories.tsx"),
     "./modules/shared/components/font/Font.stories.tsx": require("../modules/shared/components/font/Font.stories.tsx"),
   };
 };

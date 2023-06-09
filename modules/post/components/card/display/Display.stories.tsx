@@ -7,7 +7,7 @@ import { View } from 'react-native';
 type Meta = ComponentMeta<typeof Display>;
 
 export default {
-  title: 'Display',
+  title: 'Card - Display',
   component: Display,
   decorators: [
     (Story) => (
