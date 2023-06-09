@@ -6,3 +6,9 @@ export interface IThumbnail {
 export interface ICardTopInfo {
   children: React.ReactNode;
 }
+
+export interface IWithTopComponent {
+  uri: string;
+  people: number;
+  isDecided: boolean;
+}
