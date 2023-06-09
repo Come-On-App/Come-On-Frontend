@@ -13,9 +13,7 @@ export default function ThemeProvider({ children }: { children: ReactNode }) {
 }
 
 /**
- * 폰트 헬퍼 컴포넌트
- *
- * 커스텀 스타일 테마 제공.
+ * 커스텀 폰트와 스타일 테마를 제공.
  */
 export function FontLoader({ children }: { children: ReactNode }) {
   const isLoadingComplete = useCachedResources();
