@@ -38,3 +38,8 @@ export interface IBottomHeading {
   title: string;
   subTitle: ISubTitle;
 }
+
+export interface ITopHeading {
+  people: number;
+  isDecided: boolean;
+}

@@ -59,4 +59,15 @@ export default makeStyles((theme, hiddenIcon: boolean) => ({
     color: theme.font.grayscale['300'],
     width: 1,
   },
+  cTopHeading: {
+    flexDirection: 'row',
+  },
+  cTopWrap: {
+    height: 36,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginVertical: 6,
+    marginHorizontal: 12,
+  },
 }));
