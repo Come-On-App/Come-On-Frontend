@@ -1,7 +1,13 @@
+import type { StyleProp, TextStyle } from 'react-native';
+
+export interface IList {
+  name: string;
+  onPress: () => void;
+  fontStyle?: StyleProp<TextStyle>;
+}
+
 export interface IMenu {
   anchor: React.ReactNode;
-  list: {
-    name: string;
-    onPress: () => void;
-  }[];
+  list: IList[];
+  fontAllStyle?: StyleProp<TextStyle>;
 }
