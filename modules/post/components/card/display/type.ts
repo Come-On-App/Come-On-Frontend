@@ -27,8 +27,6 @@ interface IRage {
   endTo: string;
 }
 
-export type IFormatDateRange = IRage;
-
 export interface ISubTitle {
   userName: string;
   range: IRage;

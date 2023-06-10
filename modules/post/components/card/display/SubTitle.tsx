@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import Font from '@shared/components/font/Font';
 import Icon from '@shared/components/icon/Icon';
 import { Divider } from '@rneui/themed';
-import { formatDateRange } from './utils';
+import { formatDateRange } from '@shared/utils/utils';
 import { ISubTitle } from './type';
 import useStyles from './style';
 
