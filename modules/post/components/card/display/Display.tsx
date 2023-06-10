@@ -7,7 +7,7 @@ import { IDisplay, IDisplayIcon } from './type';
 import useStyles from './style';
 
 function DisplayIcon({ name }: IDisplayIcon) {
-  const { icon, iconContainer } = useStyles();
+  const { icon, cIcon: iconContainer } = useStyles();
 
   return (
     <View style={iconContainer}>
@@ -21,7 +21,7 @@ export default function Display({
   children,
   disabled = false,
 }: IDisplay) {
-  const { contianer, font } = useStyles(disabled);
+  const { cDisplay: contianer, font } = useStyles(disabled);
 
   return (
     <View style={contianer}>

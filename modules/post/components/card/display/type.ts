@@ -17,3 +17,19 @@ export interface IGroupDisplay {
 export interface IDecisionDisplay {
   isDecided: boolean;
 }
+
+export interface ITitle {
+  text: string;
+}
+
+interface IRage {
+  startFrom: string;
+  endTo: string;
+}
+
+export type IFormatDateRange = IRage;
+
+export interface ISubTitle {
+  userName: string;
+  range: IRage;
+}

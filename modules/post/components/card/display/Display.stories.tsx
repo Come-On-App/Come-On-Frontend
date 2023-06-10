@@ -4,6 +4,8 @@ import { ComponentMeta, ComponentStory } from '@storybook/react-native';
 import { FontLoader } from '@shared/components/ThemeProvider';
 import Display from './Display';
 import CardMenu from '../menu/Menu';
+import Title from './Title';
+import SubTitle from './SubTitle';
 
 type Meta = ComponentMeta<typeof Display>;
 
@@ -53,4 +55,24 @@ export const MenuDisplay: MenuStory = () => {
       <CardMenu />
     </View>
   );
+};
+
+type TitleStory = ComponentStory<typeof Title>;
+
+export const CardTitle: TitleStory = (arg) => {
+  arg.text = '물개들의 모임';
+
+  return <Title {...arg} />;
+};
+
+type SubTitleStory = ComponentStory<typeof SubTitle>;
+
+export const CardSubTitle: SubTitleStory = (arg) => {
+  arg.userName = '여행 마스터';
+  arg.range = {
+    startFrom: '2023-06-10',
+    endTo: '2023-06-20',
+  };
+
+  return <SubTitle {...arg} />;
 };
