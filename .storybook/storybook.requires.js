@@ -55,8 +55,10 @@ try {
 const getStories = () => {
   return {
     "./modules/app/navigation/BottomTabNavigator.stories.tsx": require("../modules/app/navigation/BottomTabNavigator.stories.tsx"),
+    "./modules/post/components/card/Card.stories.tsx": require("../modules/post/components/card/Card.stories.tsx"),
     "./modules/post/components/card/display/BottomHeading.stories.tsx": require("../modules/post/components/card/display/BottomHeading.stories.tsx"),
     "./modules/post/components/card/display/Display.stories.tsx": require("../modules/post/components/card/display/Display.stories.tsx"),
+    "./modules/post/components/card/display/TopHeading.stories.tsx": require("../modules/post/components/card/display/TopHeading.stories.tsx"),
     "./modules/post/components/card/thumbnail/Thumbnail.stories.tsx": require("../modules/post/components/card/thumbnail/Thumbnail.stories.tsx"),
     "./modules/shared/components/font/Font.stories.tsx": require("../modules/shared/components/font/Font.stories.tsx"),
     "./modules/shared/components/menu/Menu.stories.tsx": require("../modules/shared/components/menu/Menu.stories.tsx"),
