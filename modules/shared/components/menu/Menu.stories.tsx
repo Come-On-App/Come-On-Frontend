@@ -1,26 +1,25 @@
-import { ComponentMeta } from '@storybook/react-native';
-
-import { FontLoader } from '@shared/components/ThemeProvider';
-import Menu from './Menu';
+import { ComponentMeta, ComponentStory } from '@storybook/react-native';
 import { Text, View } from 'react-native';
+
+import Menu from './Menu';
 import Icon from '../icon/Icon';
 
 const list = [
   {
     name: 'Menu Item 1',
-    onPress: () => console.log('click Menu Item 1'),
+    onPress: () => {},
   },
   {
     name: 'Menu Item 2',
-    onPress: () => console.log('click Menu Item 2'),
+    onPress: () => {},
   },
   {
     name: 'Menu Item 3',
-    onPress: () => console.log('click Menu Item 3'),
+    onPress: () => {},
   },
   {
     name: 'Menu Item 4',
-    onPress: () => console.log('click Menu Item 4'),
+    onPress: () => {},
   },
 ];
 
@@ -42,30 +41,19 @@ export default {
     ),
   ],
   component: Menu,
+  args: {
+    list,
+  },
 } as Meta;
 
-export const Default: Meta = {
-  decorators: [
-    (Story) => (
-      <Story
-        args={{
-          list,
-          anchor: <Icon name="more-vert" size={30} color="pink" />,
-        }}
-      />
-    ),
-  ],
+type MenuStory = ComponentStory<typeof Menu>;
+
+export const Default: MenuStory = (args) => {
+  return (
+    <Menu {...args} anchor={<Icon name="more-vert" size={30} color="pink" />} />
+  );
 };
 
-export const WithText: Meta = {
-  decorators: [
-    (Story) => (
-      <Story
-        args={{
-          list,
-          anchor: <Text>Click Me!</Text>,
-        }}
-      />
-    ),
-  ],
+export const WithText: MenuStory = (args) => {
+  return <Menu {...args} anchor={<Text>Click Me!</Text>} />;
 };
