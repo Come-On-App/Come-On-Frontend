@@ -50,7 +50,10 @@ type MenuStory = ComponentStory<typeof Menu>;
 
 export const Default: MenuStory = (args) => {
   return (
-    <Menu {...args} anchor={<Icon name="more-vert" size={30} color="pink" />} />
+    <Menu
+      {...args}
+      anchor={<Icon name="more-vert" size={30} color="black" />}
+    />
   );
 };
 
