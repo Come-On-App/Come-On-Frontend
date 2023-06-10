@@ -1,8 +1,8 @@
 import { View } from 'react-native';
-import { ComponentMeta, ComponentStory } from '@storybook/react-native';
+import { ComponentMeta } from '@storybook/react-native';
 
-import Thumbnail from './Thumbnail';
 import { FontLoader } from '@shared/components/ThemeProvider';
+import Thumbnail from './Thumbnail';
 import GroupDisplay from '../display/GroupDisplay';
 import DecisionDisplay from '../display/DecisionDisplay';
 import { IWithTopComponent } from './type';

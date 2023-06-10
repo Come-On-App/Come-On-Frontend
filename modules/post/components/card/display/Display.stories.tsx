@@ -1,8 +1,8 @@
+import { View } from 'react-native';
 import { ComponentMeta, ComponentStory } from '@storybook/react-native';
 
-import Display from './Display';
 import { FontLoader } from '@shared/components/ThemeProvider';
-import { View } from 'react-native';
+import Display from './Display';
 import CardMenu from '../menu/Menu';
 
 type Meta = ComponentMeta<typeof Display>;

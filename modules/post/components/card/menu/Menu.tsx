@@ -1,8 +1,9 @@
 import React from 'react';
+import { View } from 'react-native';
+
 import Menu from '@shared/components/menu/Menu';
 import { IList } from '@shared/components/menu/type';
 import Icon from '@shared/components/icon/Icon';
-import { View } from 'react-native';
 import useStyle from './style';
 
 export default function CardMenu() {
