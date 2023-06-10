@@ -6,10 +6,10 @@ import Title from './Title';
 
 describe('Title Compoent', () => {
   test('텍스트를 전달하면 올바르게 렌더링 되어야 한다.', () => {
-    const TEXT = 'TITLE';
+    const TITLE = 'TITLE';
 
-    render(<Title text={TEXT} />, wrapper);
+    render(<Title text={TITLE} />, wrapper);
 
-    expect(screen.getByText(TEXT)).toBeOnTheScreen();
+    expect(screen.getByText(TITLE)).toBeOnTheScreen();
   });
 });
