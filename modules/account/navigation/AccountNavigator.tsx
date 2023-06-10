@@ -8,7 +8,7 @@ const { Screen, Navigator } = createNativeStackNavigator<MyPageParamList>();
 
 function AccountNavigator() {
   return (
-    <Navigator initialRouteName="MyPage">
+    <Navigator initialRouteName="MyPage" screenOptions={{ headerShown: false }}>
       <Screen name="MyPage" component={MyPage} />
     </Navigator>
   );

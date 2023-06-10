@@ -9,7 +9,10 @@ const { Screen, Navigator } =
 
 function PostNavigator() {
   return (
-    <Navigator initialRouteName="MeetingPostList">
+    <Navigator
+      initialRouteName="MeetingPostList"
+      screenOptions={{ headerShown: false }}
+    >
       <Screen name="MeetingPostList" component={MeetingPostList} />
     </Navigator>
   );
