@@ -3,6 +3,7 @@ import { Text, View } from 'react-native';
 
 import Menu from './Menu';
 import Icon from '../icon/Icon';
+import { FontLoader } from '../ThemeProvider';
 
 const list = [
   {
@@ -29,15 +30,17 @@ export default {
   title: 'Menu',
   decorators: [
     (Story) => (
-      <View
-        style={{
-          height: '100%',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <Story />
-      </View>
+      <FontLoader>
+        <View
+          style={{
+            height: '100%',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Story />
+        </View>
+      </FontLoader>
     ),
   ],
   component: Menu,
@@ -50,10 +53,7 @@ type MenuStory = ComponentStory<typeof Menu>;
 
 export const Default: MenuStory = (args) => {
   return (
-    <Menu
-      {...args}
-      anchor={<Icon name="more-vert" size={30} color="black" />}
-    />
+    <Menu {...args} anchor={<Icon name="hardware" size={30} color="black" />} />
   );
 };
 

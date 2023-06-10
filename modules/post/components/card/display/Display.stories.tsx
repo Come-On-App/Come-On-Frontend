@@ -1,8 +1,9 @@
-import { ComponentMeta } from '@storybook/react-native';
+import { ComponentMeta, ComponentStory } from '@storybook/react-native';
 
 import Display from './Display';
 import { FontLoader } from '@shared/components/ThemeProvider';
 import { View } from 'react-native';
+import CardMenu from '../menu/Menu';
 
 type Meta = ComponentMeta<typeof Display>;
 
@@ -42,4 +43,14 @@ export const UnConfirmedDisplay: Meta = {
     children: '미확정',
     disabled: true,
   },
+};
+
+type MenuStory = ComponentStory<typeof CardMenu>;
+
+export const MenuDisplay: MenuStory = () => {
+  return (
+    <View style={{ width: 24 }}>
+      <CardMenu />
+    </View>
+  );
 };
