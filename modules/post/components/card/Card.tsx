@@ -1,6 +1,8 @@
 import React from 'react';
 import { Card as RneCard } from '@rneui/themed';
+import { View } from 'react-native';
 
+import TestId from '@shared/constants/testIds';
 import Thumbnail from './thumbnail/Thumbnail';
 import TopHeading from './display/TopHeading';
 import BottomHeading from './display/BottomHeading';
@@ -13,11 +15,13 @@ export default function Card({
   const { cCard } = useStyles();
 
   return (
-    <RneCard containerStyle={cCard}>
-      <Thumbnail uri={uri}>
-        <TopHeading people={people} isDecided={isDecided} />
-      </Thumbnail>
-      <BottomHeading title={title} subTitle={subTitle} />
-    </RneCard>
+    <View testID={TestId.post.card}>
+      <RneCard containerStyle={cCard}>
+        <Thumbnail uri={uri}>
+          <TopHeading people={people} isDecided={isDecided} />
+        </Thumbnail>
+        <BottomHeading title={title} subTitle={subTitle} />
+      </RneCard>
+    </View>
   );
 }

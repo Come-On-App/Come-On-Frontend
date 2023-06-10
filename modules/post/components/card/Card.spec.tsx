@@ -2,6 +2,7 @@ import { describe, expect, test } from '@jest/globals';
 import { render, screen } from '@testing-library/react-native';
 
 import { wrapper } from '@shared/components/ThemeProvider';
+import TestId from '@shared/constants/testIds';
 import Card from './Card';
 
 describe('card Compoent', () => {
@@ -22,6 +23,7 @@ describe('card Compoent', () => {
 
     render(<Card payload={payload} />, wrapper);
 
+    expect(screen.getByTestId(TestId.post.card)).toBeOnTheScreen();
     expect(screen.getByTestId('RNE__Image')).toBeOnTheScreen();
     expect(screen.getByText('30명')).toBeOnTheScreen();
     expect(screen.getByText('확정')).toBeOnTheScreen();

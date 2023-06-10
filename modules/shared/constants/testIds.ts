@@ -7,6 +7,8 @@ const TestId = {
   },
   post: {
     list: 'TestId__post_list',
+    card: 'TestId__post_card',
+    cardList: 'TestId__post_cardList',
   },
 } as const;
 
