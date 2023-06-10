@@ -33,3 +33,8 @@ export interface ISubTitle {
   userName: string;
   range: IRage;
 }
+
+export interface IBottomHeading {
+  title: string;
+  subTitle: ISubTitle;
+}
