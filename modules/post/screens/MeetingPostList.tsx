@@ -7,7 +7,6 @@ function MeetingPostList() {
   return (
     <View testID={TestId.post.list}>
       <Text>MeetingPostList</Text>
-      <Button title="Clear" type="clear" />
     </View>
   );
 }

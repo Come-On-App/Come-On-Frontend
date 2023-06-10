@@ -1,3 +1,4 @@
+import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 import createTabBarIcon from '../components/tabBarIcon/TabBarIcon';
 
 export enum Tab {
@@ -6,7 +7,9 @@ export enum Tab {
   three = 'TabThree',
 }
 
-export const options = {
+export const options: {
+  [key in Tab]: BottomTabNavigationOptions;
+} = {
   [Tab.one]: {
     tabBarLabel: '모임 관리',
     tabBarIcon: createTabBarIcon('groups'),
