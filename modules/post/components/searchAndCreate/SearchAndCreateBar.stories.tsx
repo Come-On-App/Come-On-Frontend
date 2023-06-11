@@ -12,9 +12,7 @@ export default {
   decorators: [
     (Story) => (
       <FontLoader>
-        <View style={{ padding: 10 }}>
-          <Story />
-        </View>
+        <Story />
       </FontLoader>
     ),
   ],

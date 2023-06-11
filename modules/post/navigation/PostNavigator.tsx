@@ -11,7 +11,10 @@ function PostNavigator() {
   return (
     <Navigator
       initialRouteName="MeetingPostList"
-      screenOptions={{ headerShown: false }}
+      screenOptions={{
+        headerShown: false,
+        contentStyle: { backgroundColor: 'white' },
+      }}
     >
       <Screen name="MeetingPostList" component={MeetingDashboard} />
     </Navigator>
