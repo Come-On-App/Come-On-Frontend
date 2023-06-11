@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react-native';
 import { NavigationContainer } from '@react-navigation/native';
 
 import TestId from '@shared/constants/testIds';
+import { wrapper } from '@shared/components/ThemeProvider';
 import PostNavigator from './PostNavigator';
 
 describe('<PostNavigator />', () => {
@@ -13,7 +14,7 @@ describe('<PostNavigator />', () => {
       </NavigationContainer>
     );
 
-    render(Navigation);
+    render(Navigation, wrapper);
 
     const Component = screen.getByTestId(TestId.post.list);
 

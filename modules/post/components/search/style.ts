@@ -3,7 +3,6 @@ import { makeStyles } from '@rneui/themed';
 export default makeStyles((theme) => ({
   cSearchBar: {
     width: '100%',
-    height: 46,
     backgroundColor: theme.font.grayscale['200'],
     borderRadius: 4,
     flexDirection: 'row',
