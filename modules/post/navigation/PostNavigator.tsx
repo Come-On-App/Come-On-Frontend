@@ -2,7 +2,7 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { MeetingPostListParamList } from '@post/navigation/type';
-import MeetingPostList from '@post/screens/MeetingPostList';
+import MeetingDashboard from '@post/screens/MeetingDashboard';
 
 const { Screen, Navigator } =
   createNativeStackNavigator<MeetingPostListParamList>();
@@ -13,7 +13,7 @@ function PostNavigator() {
       initialRouteName="MeetingPostList"
       screenOptions={{ headerShown: false }}
     >
-      <Screen name="MeetingPostList" component={MeetingPostList} />
+      <Screen name="MeetingPostList" component={MeetingDashboard} />
     </Navigator>
   );
 }
