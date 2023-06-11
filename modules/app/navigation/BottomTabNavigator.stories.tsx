@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import { Tab } from './config';
 import BottomTabNavigator from './BottomTabNavigator';
+import { FontLoader } from '@shared/components/ThemeProvider';
 
 type Meta = ComponentMeta<typeof BottomTabNavigator>;
 
@@ -11,9 +12,11 @@ export default {
   component: BottomTabNavigator,
   decorators: [
     (Story) => (
-      <NavigationContainer>
-        <Story />
-      </NavigationContainer>
+      <FontLoader>
+        <NavigationContainer>
+          <Story />
+        </NavigationContainer>
+      </FontLoader>
     ),
   ],
 } as Meta;
