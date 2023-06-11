@@ -7,7 +7,7 @@ import { ICardList } from './type';
 import Card from '../card/Card';
 
 // TODO: key 속성 처리하기
-export default function CardList({ payloads }: ICardList) {
+export default function CardList({ payloads = [] }: ICardList) {
   return (
     <ScrollView testID={TestId.post.cardList}>
       {payloads.map((payload) => {

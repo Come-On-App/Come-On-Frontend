@@ -21,7 +21,7 @@ export default {
   ],
 } as Meta;
 
-export const First: Meta = {
+export const MeetingDashboard: Meta = {
   args: {
     initialRouteName: Tab.one,
   },
