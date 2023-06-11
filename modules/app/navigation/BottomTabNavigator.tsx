@@ -18,7 +18,10 @@ function BottomTabNavigator({ initialRouteName }: { initialRouteName?: Tab }) {
   return (
     <Navigator
       initialRouteName={initialRouteName}
-      screenOptions={{ headerShown: false }}
+      screenOptions={{
+        headerShown: false,
+        tabBarStyle: { marginBottom: 5 },
+      }}
     >
       <Screen
         name={Tab.one}
