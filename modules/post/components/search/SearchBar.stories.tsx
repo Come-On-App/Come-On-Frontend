@@ -3,6 +3,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react-native';
 
 import { FontLoader } from '@shared/components/ThemeProvider';
 import SearchBar from './SearchBar';
+import { height } from '../searchAndCreate/style';
 
 type Meta = ComponentMeta<typeof SearchBar>;
 
@@ -12,7 +13,7 @@ export default {
   decorators: [
     (Story) => (
       <FontLoader>
-        <View style={{ padding: 10 }}>
+        <View style={{ padding: 10, height: 100 }}>
           <Story />
         </View>
       </FontLoader>
