@@ -1,9 +1,21 @@
-import { describe, expect, test } from '@jest/globals';
+import { describe, expect, test, jest } from '@jest/globals';
 import { render, screen } from '@testing-library/react-native';
 
 import TestId from '@shared/constants/testIds';
 import { wrapper } from '@shared/components/ThemeProvider';
 import SearchAndCreateBar from './SearchAndCreateBar';
+
+jest.mock('@react-navigation/native', () => {
+  const actualNav: unknown[] = jest.requireActual('@react-navigation/native');
+
+  return {
+    ...actualNav,
+    useNavigation: () => ({
+      navigate: jest.fn(),
+      dispatch: jest.fn(),
+    }),
+  };
+});
 
 describe('SearchAndCreateBar Compoent', () => {
   test('검색 바와 모임 생성 버튼이 올바르게 렌더링 되어야 한다.', () => {
