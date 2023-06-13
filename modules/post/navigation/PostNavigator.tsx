@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { MeetingPostListParamList } from '@post/navigation/type';
 import MeetingDashboard from '@post/screens/MeetingDashboard';
+import MeetingPostCreator from '@post/screens/MeetingPostCreator';
 
 const { Screen, Navigator } =
   createNativeStackNavigator<MeetingPostListParamList>();
@@ -17,6 +18,7 @@ function PostNavigator() {
       }}
     >
       <Screen name="MeetingPostList" component={MeetingDashboard} />
+      <Screen name="MeetingPostCreation" component={MeetingPostCreator} />
     </Navigator>
   );
 }
