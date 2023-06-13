@@ -8,6 +8,7 @@ const TestId = {
   post: {
     list: 'TestId__post_list',
     card: 'TestId__post_card',
+    creator: 'TestId__post_creator',
     cardList: 'TestId__post_cardList',
     button: {
       create: 'TestId__post_meeting_create_button',
