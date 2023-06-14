@@ -8,7 +8,7 @@ import { FontLoader } from '@shared/components/ThemeProvider';
 type Meta = ComponentMeta<typeof BottomTabNavigator>;
 
 export default {
-  title: 'BottomTab',
+  title: 'Screens',
   component: BottomTabNavigator,
   decorators: [
     (Story) => (
