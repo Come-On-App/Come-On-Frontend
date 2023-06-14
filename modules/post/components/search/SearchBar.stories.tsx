@@ -3,7 +3,6 @@ import { ComponentMeta, ComponentStory } from '@storybook/react-native';
 
 import { FontLoader } from '@shared/components/ThemeProvider';
 import SearchBar from './SearchBar';
-import { height } from '../searchAndCreate/style';
 
 type Meta = ComponentMeta<typeof SearchBar>;
 
