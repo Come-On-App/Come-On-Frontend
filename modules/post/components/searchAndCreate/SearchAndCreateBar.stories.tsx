@@ -12,7 +12,9 @@ const NavigationDecorator = (Story: () => StoryFnReactReturnType) => {
 
   return (
     <NavigationContainer independent={true}>
-      <StoryBookStack.Navigator>
+      <StoryBookStack.Navigator
+        screenOptions={{ contentStyle: { backgroundColor: undefined } }}
+      >
         <StoryBookStack.Screen
           name="MeetingPostCreation"
           component={Screen}
