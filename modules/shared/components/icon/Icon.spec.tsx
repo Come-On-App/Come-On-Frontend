@@ -1,7 +1,7 @@
 import { describe, expect, test } from '@jest/globals';
 import { render, screen } from '@testing-library/react-native';
 import Icon from './Icon';
-import { IconProps } from './type';
+import { Iicon } from './type';
 
 describe('Icon Component', () => {
   test('주어진 속성으로 올바르게 렌더링 해야한다.', () => {
@@ -9,7 +9,7 @@ describe('Icon Component', () => {
       name: 'check',
       color: 'blue',
       size: 30,
-    } as IconProps;
+    } as Iicon;
 
     render(<Icon size={size} name={name} color={color} />);
 
