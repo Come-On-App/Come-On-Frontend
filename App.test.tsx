@@ -12,7 +12,7 @@ describe('<App />', () => {
       render(<App />);
 
       const BottomTap = await screen.findByRole('button', {
-        name: options.TabTwo.tabBarLabel,
+        name: options.TabTwo.tabBarLabel as string,
       });
 
       fireEvent.press(BottomTap);
@@ -24,7 +24,7 @@ describe('<App />', () => {
       render(<App />);
 
       const BottomTap = await screen.findByRole('button', {
-        name: options.TabThree.tabBarLabel,
+        name: options.TabThree.tabBarLabel as string,
       });
 
       fireEvent.press(BottomTap);
