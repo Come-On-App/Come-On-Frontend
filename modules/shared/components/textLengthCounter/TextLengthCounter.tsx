@@ -10,11 +10,10 @@ function formatLength(length: number, max: number) {
 }
 
 export default function TextLengthCounter({
-  text = '',
+  text: { length },
   max,
 }: ItextLengthCounter) {
   const { font } = useStyles();
-  const { length } = text;
 
   return (
     <View>
