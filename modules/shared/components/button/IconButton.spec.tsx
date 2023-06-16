@@ -18,4 +18,25 @@ describe('IconButton Compoent', () => {
 
     expect(mockOnPress).toHaveBeenCalledTimes(1);
   });
+
+  test('누른 상태일때 특정 스타일을 적용해야 한다.', () => {
+    render(
+      <IconButton
+        onPress={jest.fn()}
+        color="red"
+        size={30}
+        name="check"
+        _pressed
+      />,
+    );
+
+    const Button = screen.getByTestId(TestId.shared.button.icon);
+
+    fireEvent.press(Button);
+
+    expect(Button).toHaveStyle({
+      borderRadius: 30,
+      opacity: 0.3,
+    });
+  });
 });

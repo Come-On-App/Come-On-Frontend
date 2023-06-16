@@ -10,10 +10,12 @@ export default function IconButton({
   color,
   size,
   name,
+  _pressed,
 }: IiconButton) {
   return (
     <View style={{ width: size }}>
       <Pressable
+        testOnly_pressed={_pressed}
         onPress={onPress}
         testID={TestId.shared.button.icon}
         style={({ pressed }) => [

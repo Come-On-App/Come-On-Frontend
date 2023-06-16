@@ -5,4 +5,5 @@ export interface IiconButton {
   color: string;
   size: number;
   name: IconName;
+  _pressed?: boolean;
 }
