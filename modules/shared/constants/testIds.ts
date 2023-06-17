@@ -17,6 +17,7 @@ const TestId = {
   },
   shared: {
     button: {
+      default: 'TestId__shared_button_default',
       icon: 'TestId__shared_button_icon',
     },
   },
