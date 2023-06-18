@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { View } from 'react-native';
 import React from 'react';
+
 import Button from '@shared/components/button/Button';
-import useStyles from './style';
+import useStyles from '../card/button/style';
 import { IconfirmCancelButton } from './type';
 
 const CANCEL = '취소';
