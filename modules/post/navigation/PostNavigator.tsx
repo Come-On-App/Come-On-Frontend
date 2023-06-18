@@ -8,19 +8,24 @@ import MeetingPostCreator from '@post/screens/MeetingPostCreator';
 const { Screen, Navigator } =
   createNativeStackNavigator<MeetingPostListParamList>();
 
-function PostNavigator() {
+export function PostNavigator({ children }: { children: React.ReactNode }) {
   return (
     <Navigator
-      initialRouteName="MeetingPostList"
       screenOptions={{
         headerShown: false,
         contentStyle: { backgroundColor: 'white' },
       }}
     >
-      <Screen name="MeetingPostList" component={MeetingDashboard} />
-      <Screen name="MeetingPostCreation" component={MeetingPostCreator} />
+      {children}
     </Navigator>
   );
 }
 
-export default PostNavigator;
+export default function Navigation() {
+  return (
+    <PostNavigator>
+      <Screen name="MeetingPostList" component={MeetingDashboard} />
+      <Screen name="MeetingPostCreation" component={MeetingPostCreator} />
+    </PostNavigator>
+  );
+}
