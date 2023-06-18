@@ -18,8 +18,14 @@ export default {
       </FontLoader>
     ),
   ],
+  argTypes: {
+    onCancelHandler: {
+      action: 'onCancelHandler',
+    },
+    onConfirmlHandler: {
+      action: 'onConfirmlHandler',
+    },
+  },
 } as Meta;
 
-export const Default: Meta = {
-  args: {},
-};
+export const Default: Meta = {};

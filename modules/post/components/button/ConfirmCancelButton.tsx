@@ -10,24 +10,30 @@ const CANCEL = '취소';
 const CONFIRM = '완료';
 
 export default function ConfirmCancelButton({
+  cancelText,
+  confirmText,
   containerStyle,
+  onCancelHandler,
+  onConfirmlHandler,
 }: IconfirmCancelButton) {
   const { area, leftArea, rightArea, leftButton } = useStyles();
-  const onCancelHandler = () => {};
-  const onConfirmlHandler = () => {};
 
   return (
     <View style={[area, containerStyle]}>
       <View style={leftArea}>
         <Button
           bold
-          title={CANCEL}
+          title={cancelText ?? CANCEL}
           onPress={onCancelHandler}
           backgroundColor={leftButton.backgroundColor}
         />
       </View>
       <View style={rightArea}>
-        <Button title={CONFIRM} onPress={onConfirmlHandler} bold />
+        <Button
+          title={confirmText ?? CONFIRM}
+          onPress={onConfirmlHandler}
+          bold
+        />
       </View>
     </View>
   );
