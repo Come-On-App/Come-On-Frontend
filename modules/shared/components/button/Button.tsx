@@ -3,13 +3,7 @@ import React from 'react';
 
 import TestId from '@shared/constants/testIds';
 import useStyle from './style';
-
-interface Ibutton {
-  onPress: () => void;
-  title: string;
-  bold?: boolean;
-  backgroundColor?: string;
-}
+import { Ibutton } from './type';
 
 export default function Button({
   onPress,
