@@ -1,0 +1,25 @@
+import { View } from 'react-native';
+import { ComponentMeta, ComponentStory } from '@storybook/react-native';
+
+import { FontLoader } from '@shared/components/ThemeProvider';
+import ConfirmCancelButton from './ConfirmCancelButton';
+
+type Meta = ComponentMeta<typeof ConfirmCancelButton>;
+
+export default {
+  title: 'Card - ConfirmCancelButton',
+  component: ConfirmCancelButton,
+  decorators: [
+    (Story) => (
+      <FontLoader>
+        <View style={{ margin: 10 }}>
+          <Story />
+        </View>
+      </FontLoader>
+    ),
+  ],
+} as Meta;
+
+export const Default: Meta = {
+  args: {},
+};
