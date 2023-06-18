@@ -1,6 +1,9 @@
 import { makeStyles } from '@rneui/themed';
 
 export default makeStyles((theme) => ({
+  outerContainer: {
+    paddingHorizontal: 0,
+  },
   inputContainer: {
     marginVertical: 5,
     paddingHorizontal: 10,

@@ -4,6 +4,7 @@ import { StyleProp, ViewStyle } from 'react-native';
 export interface Iinput {
   text: string;
   placeholder?: string;
+  onChangeText?: (text: string) => void;
 }
 
 export interface IpressableInput {

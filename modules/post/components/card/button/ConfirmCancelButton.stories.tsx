@@ -7,7 +7,7 @@ import ConfirmCancelButton from './ConfirmCancelButton';
 type Meta = ComponentMeta<typeof ConfirmCancelButton>;
 
 export default {
-  title: 'Card - ConfirmCancelButton',
+  title: 'Creation - ConfirmCancelButton',
   component: ConfirmCancelButton,
   decorators: [
     (Story) => (
