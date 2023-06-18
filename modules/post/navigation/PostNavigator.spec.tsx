@@ -30,16 +30,14 @@ describe('<PostNavigator />', () => {
 
     render(Navigation, wrapper);
 
-    const Button = screen.getByTestId(TestId.shared.button.icon);
-
-    fireEvent.press(Button);
+    fireEvent.press(screen.getByTestId(TestId.shared.button.icon));
 
     const Screen = await screen.findByTestId(TestId.post.creator);
 
     expect(Screen).toBeOnTheScreen();
   });
 
-  test('모임 생성 페이지에서 날짜 투표 컴포넌트를 클릭하면 날짜 범위 선택 스크린으로 네비게이터 돼야 한다.', async () => {
+  test('모임 생성 페이지에서 "날짜 투표" 컴포넌트를 클릭하면, 사용자는 "날짜 범위 선택" 화면으로 이동해야 한다.', async () => {
     const dateSelectorText = '날짜 범위를 선택해 주세요';
     const Navigation = (
       <NavigationContainer>
