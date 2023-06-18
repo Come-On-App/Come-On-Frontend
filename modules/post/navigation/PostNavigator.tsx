@@ -1,18 +1,25 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { MeetingPostListParamList } from '@post/navigation/type';
+import {
+  Inavigation,
+  IpostNavigator,
+  MeetingPostListParamList,
+} from '@post/navigation/type';
 import MeetingDashboard from '@post/screens/MeetingDashboard';
 import MeetingPostCreator from '@post/screens/MeetingPostCreator';
+import MeetingDatePicker from '@post/screens/MeetingDatePicker';
 
 const { Screen, Navigator } =
   createNativeStackNavigator<MeetingPostListParamList>();
 
-export function PostNavigator({ children }: { children: React.ReactNode }) {
+function PostNavigator({ children, initialRouteName }: IpostNavigator) {
   return (
     <Navigator
+      initialRouteName={initialRouteName}
       screenOptions={{
         headerShown: false,
+        headerTitleAlign: 'center',
         contentStyle: { backgroundColor: 'white' },
       }}
     >
@@ -21,11 +28,12 @@ export function PostNavigator({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function Navigation() {
+export default function Navigation({ initialRouteName }: Inavigation) {
   return (
-    <PostNavigator>
+    <PostNavigator initialRouteName={initialRouteName}>
       <Screen name="MeetingPostList" component={MeetingDashboard} />
       <Screen name="MeetingPostCreation" component={MeetingPostCreator} />
+      <Screen name="MeetingDateSelector" component={MeetingDatePicker} />
     </PostNavigator>
   );
 }

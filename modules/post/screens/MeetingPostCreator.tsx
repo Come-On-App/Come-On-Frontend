@@ -16,7 +16,11 @@ export default function MeetingPostCreator() {
       <Uploader containerStyle={cUploader} />
       <MeetingNameInput />
       <VotingTimeRangePicker />
-      <ConfirmCancelButton containerStyle={cConfirmCancelButton} />
+      <ConfirmCancelButton
+        containerStyle={cConfirmCancelButton}
+        onCancelHandler={() => null}
+        onConfirmlHandler={() => null}
+      />
     </ScreenLayout>
   );
 }
