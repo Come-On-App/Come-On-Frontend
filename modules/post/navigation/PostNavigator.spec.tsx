@@ -49,13 +49,9 @@ describe('<PostNavigator />', () => {
 
     render(Navigation, wrapper);
 
-    const Button = screen.getByTestId(TestId.shared.button.icon);
+    fireEvent.press(screen.getByTestId(TestId.shared.button.icon));
 
-    fireEvent.press(Button);
-
-    const Component = await screen.findByText(dateSelectorText);
-
-    fireEvent.press(Component);
+    fireEvent.press(await screen.findByText(dateSelectorText));
 
     const DateSelectorScreen = await screen.findByTestId(
       TestId.post.dateSelector,
