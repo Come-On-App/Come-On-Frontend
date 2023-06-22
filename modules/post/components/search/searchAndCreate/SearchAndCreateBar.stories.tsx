@@ -1,29 +1,10 @@
-import { ComponentMeta, StoryFnReactReturnType } from '@storybook/react-native';
+import { ComponentMeta } from '@storybook/react-native';
 
 import { FontLoader } from '@shared/components/ThemeProvider';
 import SearchAndCreateBar from './SearchAndCreateBar';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NavigationContainer } from '@react-navigation/native';
+import generateNavigationDecorator from '@shared/mocks/StoryBookStack';
 
-const StoryBookStack = createNativeStackNavigator();
-
-const NavigationDecorator = (Story: () => StoryFnReactReturnType) => {
-  const Screen = () => Story();
-
-  return (
-    <NavigationContainer independent={true}>
-      <StoryBookStack.Navigator
-        screenOptions={{ contentStyle: { backgroundColor: undefined } }}
-      >
-        <StoryBookStack.Screen
-          name="MeetingPostCreation"
-          component={Screen}
-          options={{ header: () => null }}
-        />
-      </StoryBookStack.Navigator>
-    </NavigationContainer>
-  );
-};
+const NavigationDecorator = generateNavigationDecorator('MeetingPostCreation');
 
 type Meta = ComponentMeta<typeof SearchAndCreateBar>;
 
