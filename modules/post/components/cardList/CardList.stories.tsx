@@ -1,7 +1,7 @@
 import { ComponentMeta } from '@storybook/react-native';
 
 import { FontLoader } from '@shared/components/ThemeProvider';
-import DB from '@post/screens/mockDB';
+import DB from '@post/mocks/meetingPostLists';
 import CardList from './CardList';
 
 type Meta = ComponentMeta<typeof CardList>;
