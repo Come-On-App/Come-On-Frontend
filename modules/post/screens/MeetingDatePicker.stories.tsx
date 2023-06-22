@@ -22,8 +22,8 @@ export default {
   ],
 } as Meta;
 
-type IconButtonStory = ComponentStory<typeof MeetingDatePicker>;
+type MeetingDatePickerStory = ComponentStory<typeof MeetingDatePicker>;
 
-export const MeetingDateSelector: IconButtonStory = () => {
+export const MeetingDateSelector: MeetingDatePickerStory = () => {
   return <PostNavigator initialRouteName="MeetingDateSelector" />;
 };

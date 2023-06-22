@@ -22,8 +22,8 @@ export default {
   ],
 } as Meta;
 
-type IconButtonStory = ComponentStory<typeof MeetingPostCreator>;
+type MeetingPostCreatorStory = ComponentStory<typeof MeetingPostCreator>;
 
-export const MeetingPostCreation: IconButtonStory = () => {
+export const MeetingPostCreation: MeetingPostCreatorStory = () => {
   return <PostNavigator initialRouteName="MeetingPostCreation" />;
 };
