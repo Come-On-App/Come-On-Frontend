@@ -7,3 +7,10 @@ export interface IiconButton {
   name: IconName;
   _pressed?: boolean;
 }
+
+export interface Ibutton {
+  onPress: () => void;
+  title: string;
+  bold?: boolean;
+  backgroundColor?: string;
+}

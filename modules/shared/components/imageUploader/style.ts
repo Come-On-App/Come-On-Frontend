@@ -13,6 +13,7 @@ export default makeStyles((theme) => ({
   },
   font: {
     color: theme.font.grayscale['500'],
+    fontSize: 14,
   },
   icon: {
     color: theme.font.grayscale['500'],

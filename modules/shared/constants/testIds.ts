@@ -9,6 +9,7 @@ const TestId = {
     list: 'TestId__post_list',
     card: 'TestId__post_card',
     creator: 'TestId__post_creator',
+    dateSelector: 'TestId__post_dateSelector',
     cardList: 'TestId__post_cardList',
     button: {
       create: 'TestId__post_meeting_create_button',
@@ -17,6 +18,7 @@ const TestId = {
   },
   shared: {
     button: {
+      default: 'TestId__shared_button_default',
       icon: 'TestId__shared_button_icon',
     },
   },

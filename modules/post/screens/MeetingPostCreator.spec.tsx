@@ -1,12 +1,25 @@
-import { describe, expect, test } from '@jest/globals';
+import { describe, expect, test, jest } from '@jest/globals';
 import { render, screen } from '@testing-library/react-native';
 
 import TestId from '@shared/constants/testIds';
+import { wrapper } from '@shared/components/ThemeProvider';
 import MeetingPostCreator from './MeetingPostCreator';
+
+jest.mock('@react-navigation/native', () => {
+  const actualNav: unknown[] = jest.requireActual('@react-navigation/native');
+
+  return {
+    ...actualNav,
+    useNavigation: () => ({
+      navigate: jest.fn(),
+      dispatch: jest.fn(),
+    }),
+  };
+});
 
 describe('MeetingPostCreator Compoent', () => {
   test('모임 생성 컴포넌트가 렌더링 되어야 한다.', () => {
-    render(<MeetingPostCreator />);
+    render(<MeetingPostCreator />, wrapper);
 
     expect(screen.getByTestId(TestId.post.creator)).toBeOnTheScreen();
   });

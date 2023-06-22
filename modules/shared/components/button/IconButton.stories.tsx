@@ -4,6 +4,8 @@ import { ComponentMeta, ComponentStory } from '@storybook/react-native';
 import { FontLoader } from '@shared/components/ThemeProvider';
 import IconButton from './IconButton';
 
+type Meta = ComponentMeta<typeof IconButton>;
+
 const IconButtonMeta: ComponentMeta<typeof IconButton> = {
   title: 'IconButton',
   component: IconButton,
@@ -22,6 +24,9 @@ const IconButtonMeta: ComponentMeta<typeof IconButton> = {
       control: {
         type: 'color',
       },
+    },
+    _pressed: {
+      type: 'boolean',
     },
     size: {
       type: 'number',
@@ -45,4 +50,13 @@ export const Default: IconButtonStory = (args) => {
 Default.args = {
   color: '#a819b9',
   size: 50,
+};
+
+export const Pressed: Meta = {
+  args: {
+    name: 'more-vert',
+    _pressed: true,
+    color: '#a819b9',
+    size: 50,
+  },
 };
