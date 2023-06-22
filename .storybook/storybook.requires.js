@@ -70,6 +70,7 @@ const getStories = () => {
     "./modules/post/screens/MeetingDatePicker.stories.tsx": require("../modules/post/screens/MeetingDatePicker.stories.tsx"),
     "./modules/post/screens/MeetingPostCreator.stories.tsx": require("../modules/post/screens/MeetingPostCreator.stories.tsx"),
     "./modules/post/screens/MeetingPostViewer.stories.tsx": require("../modules/post/screens/MeetingPostViewer.stories.tsx"),
+    "./modules/shared/components/avatar/Avatar.stories.tsx": require("../modules/shared/components/avatar/Avatar.stories.tsx"),
     "./modules/shared/components/button/Button.stories.tsx": require("../modules/shared/components/button/Button.stories.tsx"),
     "./modules/shared/components/button/IconButton.stories.tsx": require("../modules/shared/components/button/IconButton.stories.tsx"),
     "./modules/shared/components/font/Font.stories.tsx": require("../modules/shared/components/font/Font.stories.tsx"),
