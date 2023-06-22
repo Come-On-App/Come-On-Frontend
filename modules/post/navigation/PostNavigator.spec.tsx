@@ -57,4 +57,20 @@ describe('<PostNavigator />', () => {
 
     expect(DateSelectorScreen).toBeOnTheScreen();
   });
+
+  test('MeetingPostDetail 네비게이터로 이동하면 모임 게시물 상세조회 컴포넌트를 렌더링 해야한다.', () => {
+    const Navigation = (
+      <NavigationContainer>
+        <PostNavigator initialRouteName="MeetingPostDetail" />
+      </NavigationContainer>
+    );
+
+    render(Navigation, wrapper);
+
+    expect(screen.getByTestId(TestId.post.detail)).toBeOnTheScreen();
+  });
+
+  test.todo(
+    '모임 게시물 카드를 클릭하면 모임 상세페이지로 네비게이터 되어야 한다.',
+  );
 });
