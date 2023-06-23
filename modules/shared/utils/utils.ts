@@ -15,3 +15,20 @@ export function truncateText(maxLength: number) {
     return currentText;
   };
 }
+
+// formatTimeWithAMPM 헬퍼 함수
+function getMeridiemKR(hour: number) {
+  const AM = '오전';
+  const PM = '오후';
+
+  return hour >= 12 ? PM : AM;
+}
+
+export function formatTimeWithAMPM(time: string) {
+  const [hour, minute] = time.split(':');
+  const parsedHour = parseInt(hour, 10);
+  const formattedHour = parsedHour % 12 || 12;
+  const meridiem = getMeridiemKR(parsedHour);
+
+  return `${meridiem} ${formattedHour}:${minute}`;
+}
