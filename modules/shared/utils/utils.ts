@@ -27,7 +27,7 @@ function getMeridiemKR(hour: number) {
 export function formatTimeWithAMPM(time: string) {
   const [hour, minute] = time.split(':');
   const parsedHour = parseInt(hour, 10);
-  const formattedHour = parsedHour % 12 || 12;
+  const formattedHour = parsedHour % 12 || 12; // 오후 18:00 형태가 아닌 오후 6:00 형태로 만들기 위함
   const meridiem = getMeridiemKR(parsedHour);
 
   return `${meridiem} ${formattedHour}:${minute}`;
