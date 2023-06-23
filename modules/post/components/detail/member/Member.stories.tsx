@@ -7,7 +7,7 @@ import Member from './Member';
 type Meta = ComponentMeta<typeof Member>;
 
 const IconButtonMeta: ComponentMeta<typeof Member> = {
-  title: 'Detail - member',
+  title: 'Detail - Member',
   component: Member,
   decorators: [
     (Story) => (

@@ -8,7 +8,7 @@ import mockMembers from '@post/mocks/members';
 type Meta = ComponentMeta<typeof Members>;
 
 const IconButtonMeta: ComponentMeta<typeof Members> = {
-  title: 'Detail - members',
+  title: 'Detail - Members',
   component: Members,
   decorators: [
     (Story) => (
