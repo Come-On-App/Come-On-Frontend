@@ -66,6 +66,7 @@ const getStories = () => {
     "./modules/post/components/creation/uploader/Uploader.stories.tsx": require("../modules/post/components/creation/uploader/Uploader.stories.tsx"),
     "./modules/post/components/creation/votingTimeRangePicker/VotingTimeRangePicker.stories.tsx": require("../modules/post/components/creation/votingTimeRangePicker/VotingTimeRangePicker.stories.tsx"),
     "./modules/post/components/detail/member/Member.stories.tsx": require("../modules/post/components/detail/member/Member.stories.tsx"),
+    "./modules/post/components/detail/memberCount/MemberCount.stories.tsx": require("../modules/post/components/detail/memberCount/MemberCount.stories.tsx"),
     "./modules/post/components/detail/members/Members.stories.tsx": require("../modules/post/components/detail/members/Members.stories.tsx"),
     "./modules/post/components/search/searchAndCreate/SearchAndCreateBar.stories.tsx": require("../modules/post/components/search/searchAndCreate/SearchAndCreateBar.stories.tsx"),
     "./modules/post/components/search/searchBar/SearchBar.stories.tsx": require("../modules/post/components/search/searchBar/SearchBar.stories.tsx"),
