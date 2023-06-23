@@ -6,7 +6,7 @@ import Participants from './ParticipantCard';
 
 type Meta = ComponentMeta<typeof Participants>;
 
-const IconButtonMeta: ComponentMeta<typeof Participants> = {
+export default {
   title: 'Detail - ParticipantCard',
   component: Participants,
   decorators: [
@@ -16,9 +16,7 @@ const IconButtonMeta: ComponentMeta<typeof Participants> = {
       </FontLoader>
     ),
   ],
-};
-
-export default IconButtonMeta;
+} as Meta;
 
 export const Defualt: Meta = {
   args: {

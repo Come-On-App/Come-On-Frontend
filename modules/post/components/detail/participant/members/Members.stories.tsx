@@ -7,7 +7,7 @@ import mockMembers from '@post/mocks/members';
 
 type Meta = ComponentMeta<typeof Members>;
 
-const IconButtonMeta: ComponentMeta<typeof Members> = {
+export default {
   title: 'Detail - Members',
   component: Members,
   decorators: [
@@ -19,9 +19,7 @@ const IconButtonMeta: ComponentMeta<typeof Members> = {
       </FontLoader>
     ),
   ],
-};
-
-export default IconButtonMeta;
+} as Meta;
 
 export const Defualt: Meta = {
   args: {

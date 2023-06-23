@@ -6,7 +6,7 @@ import Member from './Member';
 
 type Meta = ComponentMeta<typeof Member>;
 
-const IconButtonMeta: ComponentMeta<typeof Member> = {
+export default {
   title: 'Detail - Member',
   component: Member,
   decorators: [
@@ -18,9 +18,7 @@ const IconButtonMeta: ComponentMeta<typeof Member> = {
       </FontLoader>
     ),
   ],
-};
-
-export default IconButtonMeta;
+} as Meta;
 
 export const Defualt: Meta = {
   args: {
