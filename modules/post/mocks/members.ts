@@ -1,4 +1,4 @@
-import { Imember } from '@post/components/detail/member/type';
+import { Imember } from '@post/components/detail/participants/member/type';
 
 export default [
   { nickname: 'name1', profileImageUrl: 'https://picsum.photos/200/300' },
