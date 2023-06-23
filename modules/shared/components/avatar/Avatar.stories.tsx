@@ -38,3 +38,9 @@ export const WrongAvatar: Meta = {
     path: 'https://xxx.jpg',
   },
 };
+
+export const EmptyAvatar: Meta = {
+  args: {
+    path: '',
+  },
+};
