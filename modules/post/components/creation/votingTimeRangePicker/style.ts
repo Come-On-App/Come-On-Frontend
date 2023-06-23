@@ -2,6 +2,9 @@ import { makeStyles } from '@rneui/themed';
 import { IconName } from '@shared/components/icon/type';
 
 export default makeStyles((theme) => ({
+  layoutContainer: {
+    minHeight: 113,
+  },
   container: {
     borderWidth: 1,
     borderRadius: 4,

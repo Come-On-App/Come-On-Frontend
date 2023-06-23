@@ -7,7 +7,7 @@ import Members from './Members';
 
 describe('Members Compoent', () => {
   test('인원수에 맞게 렌더링 되어야 한다.', () => {
-    render(<Members users={mockMembers} />, wrapper);
+    render(<Members members={mockMembers} />, wrapper);
 
     expect(screen.getAllByTestId('RNE__Avatar__Image')).toHaveLength(12);
     ['name1', 'name2', 'name3'].forEach((name) => {

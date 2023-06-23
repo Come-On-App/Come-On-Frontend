@@ -7,11 +7,15 @@ import useStyles from './style';
 /**
  * 페이지 스크린 레이아웃
  */
-export default function ScreenLayout({ children, testID }: IscreenLayout) {
+export default function ScreenLayout({
+  children,
+  testID,
+  containerStyle,
+}: IscreenLayout) {
   const { container } = useStyles();
 
   return (
-    <View testID={testID} style={container}>
+    <View testID={testID} style={[container, containerStyle]}>
       {children}
     </View>
   );

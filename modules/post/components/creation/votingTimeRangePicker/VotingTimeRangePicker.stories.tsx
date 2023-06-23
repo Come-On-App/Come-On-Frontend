@@ -4,9 +4,7 @@ import { FontLoader } from '@shared/components/ThemeProvider';
 import VotingTimeRangePicker from './VotingTimeRangePicker';
 import generateNavigationDecorator from '@shared/mocks/StoryBookStack';
 
-const NavigationDecorator = generateNavigationDecorator('MeetingDateSelector', {
-  paddingHorizontal: 15,
-});
+const NavigationDecorator = generateNavigationDecorator('MeetingDateSelector');
 
 type Meta = ComponentMeta<typeof VotingTimeRangePicker>;
 

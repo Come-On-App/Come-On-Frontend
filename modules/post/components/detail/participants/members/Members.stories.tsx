@@ -25,6 +25,6 @@ export default IconButtonMeta;
 
 export const Defualt: Meta = {
   args: {
-    users: mockMembers,
+    members: mockMembers,
   },
 };

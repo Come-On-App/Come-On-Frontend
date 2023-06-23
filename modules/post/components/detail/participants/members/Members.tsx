@@ -3,11 +3,15 @@ import React from 'react';
 import { Imembers } from './type';
 import Member from '../member/Member';
 
-export default function Members({ users }: Imembers) {
+export default function Members({ members }: Imembers) {
   return (
     <ScrollView horizontal>
-      {users.map(({ nickname, profileImageUrl }) => (
-        <Member nickname={nickname} profileImageUrl={profileImageUrl} />
+      {members.map(({ nickname, profileImageUrl }) => (
+        <Member
+          key={nickname + profileImageUrl}
+          nickname={nickname}
+          profileImageUrl={profileImageUrl}
+        />
       ))}
     </ScrollView>
   );
