@@ -4,6 +4,7 @@ export interface Ifont {
   style?: StyleProp<TextStyle>;
   children: React.ReactNode;
   bold?: boolean;
+  numberOfLines?: number;
 }
 
 export interface IscreenFont {
