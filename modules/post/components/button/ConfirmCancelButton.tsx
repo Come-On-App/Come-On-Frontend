@@ -4,7 +4,7 @@ import React from 'react';
 
 import Button from '@shared/components/button/Button';
 import ScreenLayout from '@shared/components/layout/ScreenLayout';
-import useStyles from '../card/button/style';
+import useStyles from './style';
 import { IconfirmCancelButton } from './type';
 
 const CANCEL = '취소';
