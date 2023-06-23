@@ -24,27 +24,21 @@ export default IconButtonMeta;
 
 export const Defualt: Meta = {
   args: {
-    user: {
-      nickname: 'John Doe',
-      profileImageUrl: 'https://picsum.photos/200/300',
-    },
+    nickname: 'John Doe',
+    profileImageUrl: 'https://picsum.photos/200/300',
   },
 };
 
 export const WrongUriAvatar: Meta = {
   args: {
-    user: {
-      nickname: 'John Doe',
-      profileImageUrl: 'https://xxx.jpg',
-    },
+    nickname: 'John Doe',
+    profileImageUrl: 'https://xxx.jpg',
   },
 };
 
 export const EmptyUriAvatar: Meta = {
   args: {
-    user: {
-      nickname: 'John Doe',
-      profileImageUrl: '',
-    },
+    nickname: 'John Doe',
+    profileImageUrl: '',
   },
 };

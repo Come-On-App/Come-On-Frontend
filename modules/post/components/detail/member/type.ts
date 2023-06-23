@@ -1,6 +1,4 @@
 export interface Imember {
-  user: {
-    nickname: string;
-    profileImageUrl: string;
-  };
+  nickname: string;
+  profileImageUrl: string;
 }

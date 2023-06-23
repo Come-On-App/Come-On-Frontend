@@ -6,21 +6,19 @@ import Font from '@shared/components/font/Font';
 import { Imember } from './type';
 import useStyles from './style';
 
-export default function Member({ user }: Imember) {
+export default function Member({ nickname, profileImageUrl }: Imember) {
+  const { container, font } = useStyles();
   const { path, name } = {
-    path: user.profileImageUrl ?? '',
-    name: user.nickname ?? '',
+    path: profileImageUrl ?? '',
+    name: nickname ?? '',
   };
-  const { outterContainer, innerContainer, font } = useStyles();
 
   return (
-    <View style={outterContainer}>
-      <View style={innerContainer}>
-        <Avatar path={path} />
-        <Font style={font} numberOfLines={1}>
-          {name}
-        </Font>
-      </View>
+    <View style={container}>
+      <Avatar path={path} />
+      <Font style={font} numberOfLines={1}>
+        {name}
+      </Font>
     </View>
   );
 }

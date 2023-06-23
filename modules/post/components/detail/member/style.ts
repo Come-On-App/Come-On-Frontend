@@ -1,11 +1,10 @@
 import { makeStyles } from '@rneui/themed';
 
 export default makeStyles((theme) => ({
-  outterContainer: {
-    width: 44,
-  },
-  innerContainer: {
+  container: {
     alignItems: 'center',
+    width: 44,
+    marginRight: 12,
   },
   font: {
     marginVertical: 5,
