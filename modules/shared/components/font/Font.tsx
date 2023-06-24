@@ -6,7 +6,7 @@ import useStyle from './style';
 
 export default function Font({ style, children, bold, numberOfLines }: Ifont) {
   const { defaultStyle } = useStyle();
-  const fontFamily = bold ? 'pretendard-bold' : 'pretendard-regular';
+  const fontFamily = bold ? 'Pretendard-SemiBold' : 'Pretendard-Medium';
 
   return (
     <Text

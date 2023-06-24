@@ -14,7 +14,7 @@ describe('font Compoent', () => {
 
     const fontElement = screen.getByText(children);
 
-    expect(fontElement).toHaveStyle({ fontFamily: 'pretendard-regular' });
+    expect(fontElement).toHaveStyle({ fontFamily: 'Pretendard-Medium' });
     expect(fontElement).toBeOnTheScreen();
   });
 
@@ -23,7 +23,7 @@ describe('font Compoent', () => {
 
     const BoldFontElement = screen.getByText(children);
 
-    expect(BoldFontElement).toHaveStyle({ fontFamily: 'pretendard-bold' });
+    expect(BoldFontElement).toHaveStyle({ fontFamily: 'Pretendard-SemiBold' });
     expect(BoldFontElement).toBeOnTheScreen();
   });
 });
