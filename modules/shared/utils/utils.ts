@@ -1,9 +1,47 @@
-import { IFormatDateRange } from './type';
+import _ from 'lodash/fp';
+import { IFormatDateRange, formatType } from './type';
 
-export function formatDateRange(range: IFormatDateRange) {
-  return Object.values(range)
-    .map((date) => date.split('-').join('.'))
-    .join(' ~ ');
+function joinDate(ymd: string[][]) {
+  const separator = ' ~ ';
+
+  return _.join(separator, ymd);
+}
+
+function spliteDate(date: string) {
+  const separator = '-';
+
+  return _.split(separator, date);
+}
+
+function spliteDateRange(range: IFormatDateRange) {
+  return _.map(spliteDate, Object.values(range));
+}
+
+function formatDate(type?: formatType) {
+  return ([year, month, day]: string[]) => {
+    switch (type) {
+      case 'ko':
+        return `${year}년 ${month}월 ${day}일`;
+      default:
+        return `${year}.${month}.${day}`;
+    }
+  };
+}
+
+function formattedArrayMapper(type?: formatType) {
+  return (ymd: string[]) => _.map(formatDate(type), ymd);
+}
+
+/**
+ * 지정된 포맷 형식으로 날짜 형식을 수정합니다.
+ */
+export function formatDateRange(
+  range: IFormatDateRange,
+  type?: formatType,
+): string {
+  const formattedMapper = formattedArrayMapper(type);
+
+  return _.flow([spliteDateRange, formattedMapper, joinDate])(range);
 }
 
 export function truncateText(maxLength: number) {
