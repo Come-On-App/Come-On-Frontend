@@ -1,25 +1,27 @@
+import { View } from 'react-native';
 import { ComponentMeta } from '@storybook/react-native';
 
 import { FontLoader } from '@shared/components/ThemeProvider';
-import mockMembers from '@post/mocks/members';
-import Component from './ParticipantCard';
+import Component from './MemberCount';
 
 type Meta = ComponentMeta<typeof Component>;
 
 export default {
-  title: 'Detail - Participant',
+  title: 'Detail - Participants',
   component: Component,
   decorators: [
     (Story) => (
       <FontLoader>
-        <Story />
+        <View style={{ margin: 10 }}>
+          <Story />
+        </View>
       </FontLoader>
     ),
   ],
 } as Meta;
 
-export const ParticipantCard: Meta = {
+export const MemberCount: Meta = {
   args: {
-    users: mockMembers,
+    headcount: 1,
   },
 };

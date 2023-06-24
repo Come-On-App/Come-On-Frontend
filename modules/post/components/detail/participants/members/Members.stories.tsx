@@ -8,7 +8,7 @@ import mockMembers from '@post/mocks/members';
 type Meta = ComponentMeta<typeof Component>;
 
 export default {
-  title: 'Detail - Participant',
+  title: 'Detail - Participants',
   component: Component,
   decorators: [
     (Story) => (
