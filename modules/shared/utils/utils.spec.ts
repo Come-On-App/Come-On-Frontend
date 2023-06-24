@@ -20,6 +20,16 @@ describe('utils Test', () => {
 
       expect(formatDateRange(range, 'ko')).toEqual(expected);
     });
+
+    test('날짜 범위가 동일하다면 한개의 날짜 형식만 포맷팅 되어야 한다.', () => {
+      const equalRange = {
+        startFrom: '2023-06-10',
+        endTo: '2023-06-10',
+      };
+      const expected = '2023년 06월 10일';
+
+      expect(formatDateRange(equalRange, 'ko')).toEqual(expected);
+    });
   });
 
   describe('formatTimeWithAMPM Function', () => {
