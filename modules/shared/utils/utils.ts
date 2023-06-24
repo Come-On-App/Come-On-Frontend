@@ -1,8 +1,16 @@
 import _ from 'lodash/fp';
 import { IFormatDateRange, formatType } from './type';
 
+function isEqualDate([first, second]: string[][]) {
+  return _.equals(first, second);
+}
+
 function joinDate(ymd: string[][]) {
   const separator = ' ~ ';
+
+  if (isEqualDate(ymd)) {
+    return ymd[0];
+  }
 
   return _.join(separator, ymd);
 }
