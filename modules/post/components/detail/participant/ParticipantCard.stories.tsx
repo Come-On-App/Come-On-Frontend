@@ -2,13 +2,13 @@ import { ComponentMeta } from '@storybook/react-native';
 
 import { FontLoader } from '@shared/components/ThemeProvider';
 import mockMembers from '@post/mocks/members';
-import Participants from './ParticipantCard';
+import Component from './ParticipantCard';
 
-type Meta = ComponentMeta<typeof Participants>;
+type Meta = ComponentMeta<typeof Component>;
 
 export default {
-  title: 'Detail - ParticipantCard',
-  component: Participants,
+  title: 'Detail - Participant',
+  component: Component,
   decorators: [
     (Story) => (
       <FontLoader>
@@ -18,7 +18,7 @@ export default {
   ],
 } as Meta;
 
-export const Defualt: Meta = {
+export const ParticipantCard: Meta = {
   args: {
     users: mockMembers,
   },
