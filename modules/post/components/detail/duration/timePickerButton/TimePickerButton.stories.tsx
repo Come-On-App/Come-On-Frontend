@@ -28,5 +28,13 @@ export default {
 export const TimePickerButton: Meta = {
   args: {
     time: '12:00:00',
+    isHost: false,
+  },
+};
+
+export const HostTimePickerButton: Meta = {
+  args: {
+    time: '12:00:00',
+    isHost: true,
   },
 };
