@@ -5,6 +5,7 @@ import PressableInput from '@shared/components/input/PressableInput';
 import { useNavigation } from '@react-navigation/native';
 import { postListNavigationProps } from '@post/navigation/type';
 import ScreenLayout from '@shared/components/layout/ScreenLayout';
+import DividerWrapper from '@post/components/detail/DividerWrapper';
 import useStyles from './style';
 
 const TITLE = '투표 기간';
@@ -18,15 +19,17 @@ export default function VotingTimeRangePicker() {
   };
 
   return (
-    <ScreenLayout containerStyle={layoutContainer}>
-      <ScreenTitle>{TITLE}</ScreenTitle>
-      <PressableInput
-        onPress={onPressHandler}
-        text={DESCRIPTION}
-        icon={icon}
-        containerStyle={container}
-        fontColor={font.color}
-      />
-    </ScreenLayout>
+    <DividerWrapper>
+      <ScreenLayout containerStyle={layoutContainer}>
+        <ScreenTitle>{TITLE}</ScreenTitle>
+        <PressableInput
+          onPress={onPressHandler}
+          text={DESCRIPTION}
+          icon={icon}
+          containerStyle={container}
+          fontColor={font.color}
+        />
+      </ScreenLayout>
+    </DividerWrapper>
   );
 }

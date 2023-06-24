@@ -20,6 +20,7 @@ function PostNavigator({ children, initialRouteName }: IpostNavigator) {
       initialRouteName={initialRouteName}
       screenOptions={{
         headerShown: false,
+        headerShadowVisible: false,
         headerTitleAlign: 'center',
         contentStyle: { backgroundColor: 'white' },
       }}

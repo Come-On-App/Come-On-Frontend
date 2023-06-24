@@ -9,7 +9,6 @@ export default makeStyles((theme, isHost?: boolean) => ({
     borderRadius: 4,
     paddingHorizontal: 10,
     paddingVertical: 8,
-    width: 85,
     height: 35,
   },
   font: {

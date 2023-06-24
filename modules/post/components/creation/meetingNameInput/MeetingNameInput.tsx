@@ -6,6 +6,7 @@ import TextLengthCounter from '@shared/components/textLengthCounter/TextLengthCo
 import Input from '@shared/components/input/Input';
 import { truncateText } from '@shared/utils/utils';
 import ScreenLayout from '@shared/components/layout/ScreenLayout';
+import DividerWrapper from '@post/components/detail/DividerWrapper';
 import useStyles from './style';
 
 const TITLE = '모임 이름';
@@ -21,16 +22,18 @@ export default function MeetingNameInput() {
   };
 
   return (
-    <ScreenLayout containerStyle={{ paddingBottom: 0 }}>
-      <View style={top}>
-        <ScreenTitle>{TITLE}</ScreenTitle>
-        <TextLengthCounter text={input} max={LENGTH_MAX} />
-      </View>
-      <Input
-        text={input}
-        placeholder={placeholder}
-        onChangeText={onChnageHandler}
-      />
-    </ScreenLayout>
+    <DividerWrapper>
+      <ScreenLayout containerStyle={{ paddingBottom: 0 }}>
+        <View style={top}>
+          <ScreenTitle>{TITLE}</ScreenTitle>
+          <TextLengthCounter text={input} max={LENGTH_MAX} />
+        </View>
+        <Input
+          text={input}
+          placeholder={placeholder}
+          onChangeText={onChnageHandler}
+        />
+      </ScreenLayout>
+    </DividerWrapper>
   );
 }
