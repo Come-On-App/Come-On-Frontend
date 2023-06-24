@@ -17,7 +17,6 @@ export default function DividerWrapper({ children }: IcontentHeader) {
     <View>
       <Divider width={width} color={color} />
       {children}
-      <Divider width={width} color={color} />
     </View>
   );
 }

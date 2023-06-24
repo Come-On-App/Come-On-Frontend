@@ -9,7 +9,7 @@ describe('TimePickerButton Compoent', () => {
   const expected = '오전 6:00';
 
   test('문자열을 전달하면 화면에 오전/오후 시간 형태로 렌더링 되어야 한다.', () => {
-    render(<TimePickerButton time={time} />, wrapper);
+    render(<TimePickerButton time={time} isHost={false} />, wrapper);
 
     expect(screen.getByText(expected)).toBeOnTheScreen();
   });
