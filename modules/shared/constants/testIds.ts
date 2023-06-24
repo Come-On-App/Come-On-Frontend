@@ -16,6 +16,7 @@ const TestId = {
     button: {
       create: 'TestId__post_meeting_create_button',
       searchBar: 'TestId__post_button_searchBar',
+      addVenue: 'TestId__post_button_addVenue',
     },
   },
   shared: {
