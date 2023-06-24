@@ -1,0 +1,26 @@
+import { ComponentMeta } from '@storybook/react-native';
+
+import { FontLoader } from '@shared/components/ThemeProvider';
+import mockMembers from '@post/mocks/members';
+import Component from './Map';
+import { View } from 'react-native';
+
+type Meta = ComponentMeta<typeof Component>;
+
+export default {
+  title: 'Planner - Map',
+  component: Component,
+  decorators: [
+    (Story) => (
+      <FontLoader>
+        <View style={{ margin: 10 }}>
+          <Story />
+        </View>
+      </FontLoader>
+    ),
+  ],
+} as Meta;
+
+export const Map: Meta = {
+  args: {},
+};

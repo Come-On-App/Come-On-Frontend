@@ -72,6 +72,7 @@ const getStories = () => {
     "./modules/post/components/detail/participants/memberCount/MemberCount.stories.tsx": require("../modules/post/components/detail/participants/memberCount/MemberCount.stories.tsx"),
     "./modules/post/components/detail/participants/members/Members.stories.tsx": require("../modules/post/components/detail/participants/members/Members.stories.tsx"),
     "./modules/post/components/detail/participants/Participants.stories.tsx": require("../modules/post/components/detail/participants/Participants.stories.tsx"),
+    "./modules/post/components/detail/planner/map/Map.stories.tsx": require("../modules/post/components/detail/planner/map/Map.stories.tsx"),
     "./modules/post/components/search/searchAndCreate/SearchAndCreateBar.stories.tsx": require("../modules/post/components/search/searchAndCreate/SearchAndCreateBar.stories.tsx"),
     "./modules/post/components/search/searchBar/SearchBar.stories.tsx": require("../modules/post/components/search/searchBar/SearchBar.stories.tsx"),
     "./modules/post/screens/MeetingDatePicker.stories.tsx": require("../modules/post/screens/MeetingDatePicker.stories.tsx"),

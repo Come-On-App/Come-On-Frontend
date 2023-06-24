@@ -12,6 +12,7 @@ const TestId = {
     dateSelector: 'TestId__post_dateSelector',
     cardList: 'TestId__post_cardList',
     detail: 'TestId__post_detail',
+    map: 'TestId__post_map',
     button: {
       create: 'TestId__post_meeting_create_button',
       searchBar: 'TestId__post_button_searchBar',
