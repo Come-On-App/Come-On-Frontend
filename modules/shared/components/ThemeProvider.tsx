@@ -1,5 +1,8 @@
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { ReactNode } from 'react';
 import { ThemeProvider as Tp } from '@rneui/themed';
+import { RenderOptions, render } from '@testing-library/react-native';
 
 import { theme } from '@shared/constants/themed';
 import useCachedResources from '@app/hooks/useCachedResources';
@@ -29,3 +32,8 @@ export function FontLoader({ children }: { children: ReactNode }) {
  * 테스트 코드 래퍼 객체
  */
 export const wrapper = { wrapper: ThemeProvider };
+
+export const renderWithThemeProvider = (
+  ui: React.ReactElement<unknown, string | React.JSXElementConstructor<any>>,
+  options?: RenderOptions | undefined,
+) => render(ui, { wrapper: ThemeProvider, ...options });
