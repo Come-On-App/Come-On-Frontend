@@ -65,6 +65,7 @@ const getStories = () => {
     "./modules/post/components/creation/meetingNameInput/MeetingNameInput.stories.tsx": require("../modules/post/components/creation/meetingNameInput/MeetingNameInput.stories.tsx"),
     "./modules/post/components/creation/uploader/Uploader.stories.tsx": require("../modules/post/components/creation/uploader/Uploader.stories.tsx"),
     "./modules/post/components/creation/votingTimeRangePicker/VotingTimeRangePicker.stories.tsx": require("../modules/post/components/creation/votingTimeRangePicker/VotingTimeRangePicker.stories.tsx"),
+    "./modules/post/components/detail/duration/Duration.stories.tsx": require("../modules/post/components/detail/duration/Duration.stories.tsx"),
     "./modules/post/components/detail/duration/schedule/Schedule.stories.tsx": require("../modules/post/components/detail/duration/schedule/Schedule.stories.tsx"),
     "./modules/post/components/detail/duration/timePickerButton/TimePickerButton.stories.tsx": require("../modules/post/components/detail/duration/timePickerButton/TimePickerButton.stories.tsx"),
     "./modules/post/components/detail/participant/member/Member.stories.tsx": require("../modules/post/components/detail/participant/member/Member.stories.tsx"),
