@@ -8,7 +8,7 @@ import { View } from 'react-native';
 type Meta = ComponentMeta<typeof Component>;
 
 export default {
-  title: 'Planner - Map',
+  title: 'Detail - Planner',
   component: Component,
   decorators: [
     (Story) => (
