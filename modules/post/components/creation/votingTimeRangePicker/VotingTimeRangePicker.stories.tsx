@@ -1,8 +1,10 @@
-import { View } from 'react-native';
-import { ComponentMeta } from '@storybook/react-native';
+import { ComponentMeta, StoryFnReactReturnType } from '@storybook/react-native';
 
 import { FontLoader } from '@shared/components/ThemeProvider';
 import VotingTimeRangePicker from './VotingTimeRangePicker';
+import generateNavigationDecorator from '@shared/mocks/StoryBookStack';
+
+const NavigationDecorator = generateNavigationDecorator('MeetingDateSelector');
 
 type Meta = ComponentMeta<typeof VotingTimeRangePicker>;
 
@@ -10,16 +12,13 @@ export default {
   title: 'Creation - VotingTimeRangePicker',
   component: VotingTimeRangePicker,
   decorators: [
+    NavigationDecorator,
     (Story) => (
       <FontLoader>
-        <View style={{ paddingHorizontal: 15 }}>
-          <Story />
-        </View>
+        <Story />
       </FontLoader>
     ),
   ],
 } as Meta;
 
-export const Default: Meta = {
-  args: {},
-};
+export const Default: Meta = {};

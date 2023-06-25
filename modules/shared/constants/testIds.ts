@@ -11,9 +11,16 @@ const TestId = {
     creator: 'TestId__post_creator',
     dateSelector: 'TestId__post_dateSelector',
     cardList: 'TestId__post_cardList',
+    detail: 'TestId__post_detail',
+    noteCard: 'TestId__post_noteCard',
+    venue: 'TestId__post_venue',
+    venueList: 'TestId__post_venueList',
+    order: 'TestId__post_order',
+    map: 'TestId__post_map',
     button: {
       create: 'TestId__post_meeting_create_button',
       searchBar: 'TestId__post_button_searchBar',
+      addVenue: 'TestId__post_button_addVenue',
     },
   },
   shared: {

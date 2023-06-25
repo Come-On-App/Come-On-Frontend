@@ -3,7 +3,8 @@ import { View } from 'react-native';
 import React from 'react';
 
 import Button from '@shared/components/button/Button';
-import useStyles from '../card/button/style';
+import ScreenLayout from '@shared/components/layout/ScreenLayout';
+import useStyles from './style';
 import { IconfirmCancelButton } from './type';
 
 const CANCEL = '취소';
@@ -19,22 +20,24 @@ export default function ConfirmCancelButton({
   const { area, leftArea, rightArea, leftButton } = useStyles();
 
   return (
-    <View style={[area, containerStyle]}>
-      <View style={leftArea}>
-        <Button
-          bold
-          title={cancelText ?? CANCEL}
-          onPress={onCancelHandler}
-          backgroundColor={leftButton.backgroundColor}
-        />
+    <ScreenLayout>
+      <View style={[area, containerStyle]}>
+        <View style={leftArea}>
+          <Button
+            bold
+            title={cancelText ?? CANCEL}
+            onPress={onCancelHandler}
+            backgroundColor={leftButton.backgroundColor}
+          />
+        </View>
+        <View style={rightArea}>
+          <Button
+            title={confirmText ?? CONFIRM}
+            onPress={onConfirmlHandler}
+            bold
+          />
+        </View>
       </View>
-      <View style={rightArea}>
-        <Button
-          title={confirmText ?? CONFIRM}
-          onPress={onConfirmlHandler}
-          bold
-        />
-      </View>
-    </View>
+    </ScreenLayout>
   );
 }

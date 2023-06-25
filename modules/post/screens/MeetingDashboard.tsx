@@ -2,9 +2,9 @@ import React from 'react';
 import { View } from 'react-native';
 
 import TestId from '@shared/constants/testIds';
-import SearchAndCreateBar from '@post/components/searchAndCreate/SearchAndCreateBar';
+import SearchAndCreateBar from '@post/components/search/searchAndCreate/SearchAndCreateBar';
 import CardList from '@post/components/cardList/CardList';
-import DB from './mockDB';
+import DB from '../mocks/meetingPostLists';
 
 function MeetingDashboard() {
   return (

@@ -4,8 +4,8 @@ import { View } from 'react-native';
 
 import TestId from '@shared/constants/testIds';
 import Thumbnail from './thumbnail/Thumbnail';
-import TopHeading from './display/TopHeading';
-import BottomHeading from './display/BottomHeading';
+import TopHeading from './info/heading/TopHeading';
+import BottomHeading from './info/heading/BottomHeading';
 import useStyles from './style';
 import { Icard } from './type';
 

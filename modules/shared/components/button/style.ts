@@ -12,7 +12,7 @@ export default makeStyles(
     font: {
       color: theme.font.grayscale['0'],
       fontSize: theme.font.type.title4.fontSize,
-      fontFamily: props.bold ? 'pretendard-bold' : 'pretendard-regular',
+      fontFamily: props.bold ? 'Pretendard-SemiBold' : 'Pretendard-Medium',
     },
   }),
 );

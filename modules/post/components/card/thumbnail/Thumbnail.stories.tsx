@@ -3,11 +3,8 @@ import { ComponentMeta } from '@storybook/react-native';
 
 import { FontLoader } from '@shared/components/ThemeProvider';
 import Thumbnail from './Thumbnail';
-import GroupDisplay from '../display/GroupDisplay';
-import DecisionDisplay from '../display/DecisionDisplay';
 import { IWithTopComponent } from './type';
-import CardMenu from '../menu/Menu';
-import TopHeading from '../display/TopHeading';
+import TopHeading from '../info/heading/TopHeading';
 
 const path =
   'https://images.unsplash.com/photo-1682687220067-dced9a881b56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1550&q=80';

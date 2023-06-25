@@ -5,3 +5,12 @@ export type BottomTabParamList = {
   [Tab.two]: undefined;
   [Tab.three]: undefined;
 };
+
+export interface IbottomTabNavigator {
+  children: React.ReactNode;
+  initialRouteName?: Tab;
+}
+
+export interface Inavigation {
+  initialRouteName?: Tab;
+}

@@ -9,6 +9,7 @@ import {
 import MeetingDashboard from '@post/screens/MeetingDashboard';
 import MeetingPostCreator from '@post/screens/MeetingPostCreator';
 import MeetingDatePicker from '@post/screens/MeetingDatePicker';
+import MeetingPostViewer from '@post/screens/MeetingPostViewer';
 
 const { Screen, Navigator } =
   createNativeStackNavigator<MeetingPostListParamList>();
@@ -19,6 +20,7 @@ function PostNavigator({ children, initialRouteName }: IpostNavigator) {
       initialRouteName={initialRouteName}
       screenOptions={{
         headerShown: false,
+        headerShadowVisible: false,
         headerTitleAlign: 'center',
         contentStyle: { backgroundColor: 'white' },
       }}
@@ -34,6 +36,7 @@ export default function Navigation({ initialRouteName }: Inavigation) {
       <Screen name="MeetingPostList" component={MeetingDashboard} />
       <Screen name="MeetingPostCreation" component={MeetingPostCreator} />
       <Screen name="MeetingDateSelector" component={MeetingDatePicker} />
+      <Screen name="MeetingPostDetail" component={MeetingPostViewer} />
     </PostNavigator>
   );
 }

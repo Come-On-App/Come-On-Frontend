@@ -5,7 +5,7 @@ import _ from 'lodash';
 import TestId from '@shared/constants/testIds';
 import { ICardList } from './type';
 import Card from '../card/Card';
-import { height } from '../searchAndCreate/style';
+import { height } from '../search/searchAndCreate/style';
 
 // TODO: key 속성 처리하기
 export default function CardList({ payloads = [] }: ICardList) {

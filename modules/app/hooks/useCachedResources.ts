@@ -7,8 +7,8 @@ import { vigilAsync } from 'promise-vigilant';
 async function loadFonts() {
   await loadAsync({
     ...FontAwesome.font,
-    'pretendard-regular': require('../../shared/assets/fonts/Pretendard-Regular.ttf'),
-    'pretendard-bold': require('../../shared/assets/fonts/Pretendard-Bold.ttf'),
+    'Pretendard-Medium': require('../../shared/assets/fonts/Pretendard-Medium.ttf'),
+    'Pretendard-SemiBold': require('../../shared/assets/fonts/Pretendard-SemiBold.ttf'),
   });
 }
 
