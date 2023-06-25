@@ -78,6 +78,7 @@ const getStories = () => {
     "./modules/post/components/detail/planner/venue/noteCard/NoteCard.stories.tsx": require("../modules/post/components/detail/planner/venue/noteCard/NoteCard.stories.tsx"),
     "./modules/post/components/detail/planner/venue/order/Order.stories.tsx": require("../modules/post/components/detail/planner/venue/order/Order.stories.tsx"),
     "./modules/post/components/detail/planner/venue/Venue.stories.tsx": require("../modules/post/components/detail/planner/venue/Venue.stories.tsx"),
+    "./modules/post/components/detail/planner/venueList/VenueList.stories.tsx": require("../modules/post/components/detail/planner/venueList/VenueList.stories.tsx"),
     "./modules/post/components/search/searchAndCreate/SearchAndCreateBar.stories.tsx": require("../modules/post/components/search/searchAndCreate/SearchAndCreateBar.stories.tsx"),
     "./modules/post/components/search/searchBar/SearchBar.stories.tsx": require("../modules/post/components/search/searchBar/SearchBar.stories.tsx"),
     "./modules/post/screens/MeetingDatePicker.stories.tsx": require("../modules/post/screens/MeetingDatePicker.stories.tsx"),

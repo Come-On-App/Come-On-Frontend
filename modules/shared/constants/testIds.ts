@@ -13,6 +13,8 @@ const TestId = {
     cardList: 'TestId__post_cardList',
     detail: 'TestId__post_detail',
     noteCard: 'TestId__post_noteCard',
+    venue: 'TestId__post_venue',
+    venueList: 'TestId__post_venueList',
     order: 'TestId__post_order',
     map: 'TestId__post_map',
     button: {
