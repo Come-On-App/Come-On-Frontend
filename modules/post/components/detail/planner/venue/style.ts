@@ -4,6 +4,7 @@ export default makeStyles(() => ({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-around',
+    marginBottom: 12,
   },
   cOrder: {
     justifyContent: 'center',

@@ -23,6 +23,7 @@ export default {
 
 export const Venue: Meta = {
   args: {
-    data: mockData,
+    info: mockData.info,
+    order: mockData.order,
   },
 };
