@@ -13,12 +13,11 @@ export default makeStyles((theme) => ({
     overflow: 'hidden',
   },
   cContent: {
-    maxWidth: '90%',
+    maxWidth: '80%',
     justifyContent: 'center',
   },
   cTitle: {
     flexDirection: 'row',
-    maxWidth: '90%',
   },
   cDescription: {
     marginTop: 4,

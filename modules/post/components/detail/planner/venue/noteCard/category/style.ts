@@ -12,6 +12,6 @@ export default makeStyles((theme) => ({
   },
   font: {
     color: theme.font.grayscale['500'],
-    fontSize: 10,
+    fontSize: theme.font.type.caption.fontSize,
   },
 }));
