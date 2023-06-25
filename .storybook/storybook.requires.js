@@ -74,6 +74,7 @@ const getStories = () => {
     "./modules/post/components/detail/participants/Participants.stories.tsx": require("../modules/post/components/detail/participants/Participants.stories.tsx"),
     "./modules/post/components/detail/planner/addVenue/AddVenue.stories.tsx": require("../modules/post/components/detail/planner/addVenue/AddVenue.stories.tsx"),
     "./modules/post/components/detail/planner/map/Map.stories.tsx": require("../modules/post/components/detail/planner/map/Map.stories.tsx"),
+    "./modules/post/components/detail/planner/venue/category/Category.stories.tsx": require("../modules/post/components/detail/planner/venue/category/Category.stories.tsx"),
     "./modules/post/components/detail/planner/venue/order/Order.stories.tsx": require("../modules/post/components/detail/planner/venue/order/Order.stories.tsx"),
     "./modules/post/components/search/searchAndCreate/SearchAndCreateBar.stories.tsx": require("../modules/post/components/search/searchAndCreate/SearchAndCreateBar.stories.tsx"),
     "./modules/post/components/search/searchBar/SearchBar.stories.tsx": require("../modules/post/components/search/searchBar/SearchBar.stories.tsx"),
