@@ -2,7 +2,8 @@ import { ComponentMeta } from '@storybook/react-native';
 
 import { FontLoader } from '@shared/components/ThemeProvider';
 import Component from './Venue';
-import mockData from '@post/mocks/venue';
+import mockVenueList from '@post/mocks/venueList';
+
 import { View } from 'react-native';
 
 type Meta = ComponentMeta<typeof Component>;
@@ -21,9 +22,11 @@ export default {
   ],
 } as Meta;
 
+const venue = mockVenueList[0];
+
 export const Venue: Meta = {
   args: {
-    info: mockData.info,
-    order: mockData.order,
+    info: venue.info,
+    order: venue.order,
   },
 };

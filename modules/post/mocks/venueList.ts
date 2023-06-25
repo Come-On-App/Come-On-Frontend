@@ -1,4 +1,3 @@
-import { NoteCardInfo } from '@post/components/detail/planner/venue/noteCard/type';
 import { Ivenue } from '@post/components/detail/planner/venue/type';
 
 export default [
