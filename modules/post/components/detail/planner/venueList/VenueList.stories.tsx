@@ -23,6 +23,6 @@ export default {
 
 export const VenueList: Meta = {
   args: {
-    payloads: mockVenueList,
+    data: mockVenueList,
   },
 };

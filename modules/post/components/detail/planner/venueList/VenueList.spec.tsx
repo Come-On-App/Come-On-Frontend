@@ -8,7 +8,7 @@ import VenueList from './VenueList';
 
 describe('VenueList Compoent', () => {
   test('요소의 개수만큼 올바르게 렌더링 되어야 한다.', () => {
-    render(<VenueList payloads={mockVenueList} />, wrapper);
+    render(<VenueList data={mockVenueList} />, wrapper);
 
     expect(screen.getByTestId(TestId.post.venueList)).toBeOnTheScreen();
 

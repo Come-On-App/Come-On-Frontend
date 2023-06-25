@@ -5,7 +5,7 @@ import TestId from '@shared/constants/testIds';
 import Venue from '../venue/Venue';
 import { IvenueList } from './type';
 
-export default function VenueList({ payloads }: IvenueList) {
+export default function VenueList({ data: payloads }: IvenueList) {
   return (
     <View testID={TestId.post.venueList}>
       {payloads.map(({ order, info }) => {
