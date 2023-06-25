@@ -14,6 +14,7 @@ export default makeStyles((theme) => ({
   },
   cContent: {
     maxWidth: '90%',
+    justifyContent: 'center',
   },
   cTitle: {
     flexDirection: 'row',
