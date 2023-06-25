@@ -37,7 +37,9 @@ function formatDate(type?: formatType) {
 }
 
 function formattedArrayMapper(type?: formatType) {
-  return (ymd: string[]) => _.map(formatDate(type), ymd);
+  const dateFormatted = formatDate(type);
+
+  return (ymd: string[]) => _.map(dateFormatted, ymd);
 }
 
 /**
