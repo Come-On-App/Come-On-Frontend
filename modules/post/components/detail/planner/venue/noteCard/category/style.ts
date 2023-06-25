@@ -6,8 +6,9 @@ export default makeStyles((theme) => ({
     paddingVertical: 1,
     paddingHorizontal: 3,
     backgroundColor: theme.font.grayscale['200'],
-    justifyContent: 'center',
-    alignItems: 'center',
+    alignSelf: 'center',
+    marginLeft: 4,
+    height: 15,
   },
   font: {
     color: theme.font.grayscale['500'],
