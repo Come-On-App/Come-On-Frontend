@@ -5,7 +5,7 @@ import useStyles from './style';
 import { ITitle } from './type';
 
 /**
- * 카드 하단 타이틀 컴포넌트
+ * 모임 게시물 카드 하단 타이틀 컴포넌트
  */
 export default function Title({ text }: ITitle) {
   const { titleFont } = useStyles();
