@@ -1,8 +1,8 @@
 import { View } from 'react-native';
 import React from 'react';
 
-import Title from './Title';
-import SubTitle from './SubTitle';
+import Title from '../title/Title';
+import SubTitle from '../title/SubTitle';
 import { IBottomHeading } from './type';
 
 export default function BottomHeading({

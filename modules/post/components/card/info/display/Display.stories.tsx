@@ -3,9 +3,9 @@ import { ComponentMeta, ComponentStory } from '@storybook/react-native';
 
 import { FontLoader } from '@shared/components/ThemeProvider';
 import Display from './Display';
-import CardMenu from '../menu/Menu';
-import Title from './Title';
-import SubTitle from './SubTitle';
+import CardMenu from '../../menu/Menu';
+import Title from '../title/Title';
+import SubTitle from '../title/SubTitle';
 
 type Meta = ComponentMeta<typeof Display>;
 

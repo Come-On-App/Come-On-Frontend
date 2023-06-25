@@ -7,10 +7,10 @@ import { IDisplay, IDisplayIcon } from './type';
 import useStyles from './style';
 
 function DisplayIcon({ name }: IDisplayIcon) {
-  const { icon, cIcon: iconContainer } = useStyles();
+  const { icon, cIcon } = useStyles();
 
   return (
-    <View style={iconContainer}>
+    <View style={cIcon}>
       <Icon name={name} size={icon.size} color={icon.color} />
     </View>
   );
