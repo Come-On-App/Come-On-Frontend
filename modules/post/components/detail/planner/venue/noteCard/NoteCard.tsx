@@ -1,6 +1,7 @@
 import { View } from 'react-native';
 import React from 'react';
 
+import TestId from '@shared/constants/testIds';
 import Title from './text/Title';
 import Category from './category/Category';
 import { InoteCard } from './type';
@@ -13,7 +14,7 @@ export default function NoteCard({ info }: InoteCard) {
   const { container, cTitle, cMenu, cContent, cDescription } = useStyles();
 
   return (
-    <View style={container}>
+    <View style={container} testID={TestId.post.noteCard}>
       <View style={cContent}>
         {/* 카드 상단 */}
         <View style={cTitle}>
