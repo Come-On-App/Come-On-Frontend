@@ -80,3 +80,12 @@ export function formatTimeWithAMPM(time: string) {
 
   return `${meridiem} ${formattedHour}:${minute}`;
 }
+
+/**
+ * 입력값이 숫자와 알파벳 대소문자인지 파악
+ */
+export function validateCode(value: string) {
+  const RegExp = /^[a-zA-Z0-9]+$/;
+
+  return RegExp.test(value);
+}

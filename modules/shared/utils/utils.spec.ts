@@ -1,6 +1,11 @@
 import { describe, expect, test } from '@jest/globals';
 
-import { formatDateRange, formatTimeWithAMPM, truncateText } from './utils';
+import {
+  formatDateRange,
+  formatTimeWithAMPM,
+  truncateText,
+  validateCode,
+} from './utils';
 
 describe('utils Test', () => {
   describe('formatDateRange Function', () => {
@@ -58,5 +63,10 @@ describe('utils Test', () => {
     expect(formatTimeWithAMPM(time1)).toEqual('오전 6:00');
     expect(formatTimeWithAMPM(time2)).toEqual('오후 6:00');
     expect(formatTimeWithAMPM(time3)).toEqual('오후 12:00');
+  });
+
+  test('validateCode 함수는 숫자와 알파벳 대소문자 유효성 체크를 하여 boolean을 반환해야 한다.', () => {
+    expect(validateCode('123ABCabc')).toEqual(true);
+    expect(validateCode('123ABCabc!!')).toEqual(false);
   });
 });
