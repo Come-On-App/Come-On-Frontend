@@ -4,13 +4,13 @@ import React, { useState } from 'react';
 import TestId from '@shared/constants/testIds';
 import CodeField from '@shared/components/input/CodeField';
 import { isZeroLength, validateCode } from '@shared/utils/utils';
-import useStyle from './style';
+import useStyles from './style';
 
 const CELL_COUNT = 6;
 const INIT_CODE = '';
 
 export default function EntranceInput() {
-  const { font, cCodeField } = useStyle();
+  const { font, cCodeField } = useStyles();
   const [code, setCode] = useState(INIT_CODE);
   const onChnageHandler = (currentInput: string) => {
     if (validateCode(currentInput)) {
