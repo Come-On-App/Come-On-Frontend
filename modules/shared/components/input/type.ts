@@ -1,5 +1,4 @@
 import type { IconName } from '@shared/components/icon/type';
-import type { Dispatch, SetStateAction } from 'react';
 import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 export interface Iinput {
@@ -23,7 +22,7 @@ export interface IpressableInput {
 export interface IcodeField {
   value: string;
   cellCount: number;
-  setValue: Dispatch<SetStateAction<string>>;
+  setValue: (arg: string) => void;
   fontStyle?: StyleProp<TextStyle>;
   cursorSymbol?: string;
 }
