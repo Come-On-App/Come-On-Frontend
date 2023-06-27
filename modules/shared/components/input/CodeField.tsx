@@ -15,7 +15,7 @@ export default function CodeField({
   value,
   cellCount,
   setValue,
-  font,
+  fontStyle: font,
   cursorSymbol,
 }: IcodeField) {
   const ref = useBlurOnFulfill({

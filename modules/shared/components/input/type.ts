@@ -24,6 +24,6 @@ export interface IcodeField {
   value: string;
   cellCount: number;
   setValue: Dispatch<SetStateAction<string>>;
-  font?: StyleProp<TextStyle>;
+  fontStyle?: StyleProp<TextStyle>;
   cursorSymbol?: string;
 }
