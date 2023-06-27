@@ -90,6 +90,7 @@ const getStories = () => {
     "./modules/shared/components/button/IconButton.stories.tsx": require("../modules/shared/components/button/IconButton.stories.tsx"),
     "./modules/shared/components/font/Font.stories.tsx": require("../modules/shared/components/font/Font.stories.tsx"),
     "./modules/shared/components/imageUploader/ImageUploader.stories.tsx": require("../modules/shared/components/imageUploader/ImageUploader.stories.tsx"),
+    "./modules/shared/components/input/CodeField.stories.tsx": require("../modules/shared/components/input/CodeField.stories.tsx"),
     "./modules/shared/components/input/Input.stories.tsx": require("../modules/shared/components/input/Input.stories.tsx"),
     "./modules/shared/components/input/PressableInput.stories.tsx": require("../modules/shared/components/input/PressableInput.stories.tsx"),
     "./modules/shared/components/menu/Menu.stories.tsx": require("../modules/shared/components/menu/Menu.stories.tsx"),
