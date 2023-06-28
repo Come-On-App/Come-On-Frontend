@@ -3,11 +3,12 @@ import React, { useState } from 'react';
 
 import TestId from '@shared/constants/testIds';
 import CodeField from '@shared/components/input/CodeField';
-import { isZeroLength, validateCode } from '@shared/utils/utils';
+import { createLengthValidator, validateCode } from '@shared/utils/utils';
 import useStyles from './style';
 
 const CELL_COUNT = 6;
 const INIT_CODE = '';
+const isZeroLength = createLengthValidator(0);
 
 export default function EntranceInput() {
   const { font, cCodeField } = useStyles();

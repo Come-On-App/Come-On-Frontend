@@ -81,8 +81,11 @@ export function formatTimeWithAMPM(time: string) {
   return `${meridiem} ${formattedHour}:${minute}`;
 }
 
-export function isZeroLength(str: string) {
-  return _.size(str) === 0;
+/**
+ * 전달된 길이와 일치하는지 확인하는 함수를 반환
+ */
+export function createLengthValidator(length: number) {
+  return (str: string) => _.size(str) === length;
 }
 
 /**

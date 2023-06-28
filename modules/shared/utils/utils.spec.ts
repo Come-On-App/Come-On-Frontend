@@ -1,6 +1,7 @@
 import { describe, expect, test } from '@jest/globals';
 
 import {
+  createLengthValidator,
   formatDateRange,
   formatTimeWithAMPM,
   truncateText,
@@ -68,5 +69,14 @@ describe('utils Test', () => {
   test('validateCode 함수는 숫자와 알파벳 대소문자 유효성 체크를 하여 boolean을 반환해야 한다.', () => {
     expect(validateCode('123ABCabc')).toEqual(true);
     expect(validateCode('123ABCabc!!')).toEqual(false);
+  });
+
+  test('createLengthValidator 함수는 지정된 길이와 문자열이 일치하는지 확인을 해야한다.', () => {
+    const isZeroLength = createLengthValidator(0);
+    const isTwoLength = createLengthValidator(2);
+
+    expect(isZeroLength('')).toEqual(true);
+    expect(isZeroLength('-')).toEqual(false);
+    expect(isTwoLength('12')).toEqual(true);
   });
 });
