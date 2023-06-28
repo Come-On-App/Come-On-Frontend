@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 
 import TestId from '@shared/constants/testIds';
 import CodeField from '@shared/components/input/CodeField';
@@ -10,17 +10,20 @@ const CELL_COUNT = 6;
 const INIT_CODE = '';
 const isZeroLength = createLengthValidator(0);
 
-export default function EntranceInput() {
+interface IentranceInput {
+  code: string;
+  dispatch: Dispatch<SetStateAction<string>>;
+}
+export default function EntranceInput({ code, dispatch }: IentranceInput) {
   const { font, cCodeField } = useStyles();
-  const [code, setCode] = useState(INIT_CODE);
   const onChnageHandler = (currentInput: string) => {
     if (validateCode(currentInput)) {
-      setCode(currentInput.toUpperCase());
+      dispatch(currentInput.toUpperCase());
     }
 
     // 마지막 텍스트 제거
     if (isZeroLength(currentInput)) {
-      setCode(INIT_CODE);
+      dispatch(INIT_CODE);
     }
   };
 
