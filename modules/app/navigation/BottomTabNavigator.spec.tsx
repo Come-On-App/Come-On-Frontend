@@ -30,7 +30,7 @@ describe('<BottomTabNavigator />', () => {
       </NavigationContainer>
     );
 
-    render(Navigation);
+    render(Navigation, wrapper);
 
     const Component = screen.getByTestId(TestId.connection.code);
 

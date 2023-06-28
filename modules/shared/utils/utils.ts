@@ -43,7 +43,7 @@ function formattedArrayMapper(type?: formatType) {
 }
 
 /**
- * 지정된 포맷 형식으로 날짜 형식을 수정합니다.
+ * 지정된 날짜 포맷 형식으로 날짜 형식을 수정합니다.
  */
 export function formatDateRange(
   range: IFormatDateRange,
@@ -79,4 +79,20 @@ export function formatTimeWithAMPM(time: string) {
   const meridiem = getMeridiemKR(parsedHour);
 
   return `${meridiem} ${formattedHour}:${minute}`;
+}
+
+/**
+ * 전달된 길이와 일치하는지 확인하는 함수를 반환
+ */
+export function createLengthValidator(length: number) {
+  return (str: string) => _.size(str) === length;
+}
+
+/**
+ * 입력값이 숫자와 알파벳 대소문자인지 파악
+ */
+export function validateCode(value: string) {
+  const RegExp = /^[a-zA-Z0-9]+$/;
+
+  return RegExp.test(value);
 }

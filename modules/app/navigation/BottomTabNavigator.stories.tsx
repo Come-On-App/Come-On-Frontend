@@ -27,7 +27,7 @@ export const MeetingDashboard: Meta = {
   },
 };
 
-export const Second: Meta = {
+export const EnterMeeting: Meta = {
   args: {
     initialRouteName: Tab.two,
   },

@@ -4,6 +4,7 @@ const TestId = {
   },
   connection: {
     code: 'TestId__connection_code',
+    codeField: 'TestId__connection_codeField',
   },
   post: {
     list: 'TestId__post_list',
@@ -24,9 +25,16 @@ const TestId = {
     },
   },
   shared: {
+    logo: 'TestId__connection_logo',
     button: {
       default: 'TestId__shared_button_default',
       icon: 'TestId__shared_button_icon',
+    },
+    input: {
+      codeInput: {
+        field: 'TestId__shared_input_codeField',
+        cell: 'TestId__shared_input_codeCell',
+      },
     },
   },
 } as const;

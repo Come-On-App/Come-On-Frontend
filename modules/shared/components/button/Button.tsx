@@ -10,6 +10,7 @@ export default function Button({
   title,
   bold,
   backgroundColor,
+  disabled,
 }: Ibutton) {
   const { defaultStyle, font } = useStyle({ bold, backgroundColor });
 
@@ -20,6 +21,7 @@ export default function Button({
       title={title}
       buttonStyle={[defaultStyle]}
       titleStyle={[font]}
+      disabled={disabled}
     />
   );
 }

@@ -36,4 +36,18 @@ export default makeStyles((theme) => ({
   cPressableInputIcon: {
     marginRight: 10,
   },
+  cCodeField: {
+    backgroundColor: theme.font.grayscale['100'],
+    borderRadius: 4,
+    width: 50,
+    height: 50,
+    marginHorizontal: 2,
+  },
+  codeFieldFont: {
+    fontFamily: 'Pretendard-SemiBold',
+    lineHeight: 50,
+    textAlign: 'center',
+    color: theme.font.grayscale['900'],
+    fontSize: 26,
+  },
 }));
