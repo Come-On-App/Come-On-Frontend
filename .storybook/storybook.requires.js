@@ -58,6 +58,7 @@ const getStories = () => {
     "./modules/connection/components/button/CodeEntryButton.stories.tsx": require("../modules/connection/components/button/CodeEntryButton.stories.tsx"),
     "./modules/connection/components/description/Description.stories.tsx": require("../modules/connection/components/description/Description.stories.tsx"),
     "./modules/connection/components/entranceInput/EntranceInput.stories.tsx": require("../modules/connection/components/entranceInput/EntranceInput.stories.tsx"),
+    "./modules/connection/components/logo/Logo.stories.tsx": require("../modules/connection/components/logo/Logo.stories.tsx"),
     "./modules/post/components/button/ConfirmCancelButton.stories.tsx": require("../modules/post/components/button/ConfirmCancelButton.stories.tsx"),
     "./modules/post/components/card/Card.stories.tsx": require("../modules/post/components/card/Card.stories.tsx"),
     "./modules/post/components/card/info/display/Display.stories.tsx": require("../modules/post/components/card/info/display/Display.stories.tsx"),
@@ -96,6 +97,7 @@ const getStories = () => {
     "./modules/shared/components/input/CodeField.stories.tsx": require("../modules/shared/components/input/CodeField.stories.tsx"),
     "./modules/shared/components/input/Input.stories.tsx": require("../modules/shared/components/input/Input.stories.tsx"),
     "./modules/shared/components/input/PressableInput.stories.tsx": require("../modules/shared/components/input/PressableInput.stories.tsx"),
+    "./modules/shared/components/logo/Logo.stories.tsx": require("../modules/shared/components/logo/Logo.stories.tsx"),
     "./modules/shared/components/menu/Menu.stories.tsx": require("../modules/shared/components/menu/Menu.stories.tsx"),
     "./modules/shared/components/textLengthCounter/TextLengthCounter.stories.tsx": require("../modules/shared/components/textLengthCounter/TextLengthCounter.stories.tsx"),
   };
