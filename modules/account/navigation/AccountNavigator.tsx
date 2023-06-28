@@ -8,7 +8,13 @@ const { Screen, Navigator } = createNativeStackNavigator<MyPageParamList>();
 
 function AccountNavigator() {
   return (
-    <Navigator initialRouteName="MyPage" screenOptions={{ headerShown: false }}>
+    <Navigator
+      initialRouteName="MyPage"
+      screenOptions={{
+        headerShown: false,
+        contentStyle: { backgroundColor: 'white' },
+      }}
+    >
       <Screen name="MyPage" component={MyPage} />
     </Navigator>
   );

@@ -33,7 +33,7 @@ export const EnterMeeting: Meta = {
   },
 };
 
-export const Third: Meta = {
+export const MyPage: Meta = {
   args: {
     initialRouteName: Tab.three,
   },

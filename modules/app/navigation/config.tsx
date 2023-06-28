@@ -1,3 +1,6 @@
+import React from 'react';
+import Avatar from '@shared/components/avatar/Avatar';
+
 import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 import createTabBarIcon from '../components/tabBarIcon/TabBarIcon';
 
@@ -20,5 +23,8 @@ export const options: {
   },
   [Tab.three]: {
     tabBarLabel: '마이페이지',
+    tabBarIcon: ({ size }) => {
+      return <Avatar path="https://picsum.photos/200/300" size={size} />;
+    },
   },
 } as const;
