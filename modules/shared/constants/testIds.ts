@@ -25,6 +25,7 @@ const TestId = {
     },
   },
   shared: {
+    logo: 'TestId__connection_logo',
     button: {
       default: 'TestId__shared_button_default',
       icon: 'TestId__shared_button_icon',
