@@ -1,19 +1,16 @@
 import { View } from 'react-native';
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 
 import TestId from '@shared/constants/testIds';
 import CodeField from '@shared/components/input/CodeField';
 import { createLengthValidator, validateCode } from '@shared/utils/utils';
 import useStyles from './style';
+import { IentranceInput } from './type';
 
 const CELL_COUNT = 6;
 const INIT_CODE = '';
 const isZeroLength = createLengthValidator(0);
 
-interface IentranceInput {
-  code: string;
-  dispatch: Dispatch<SetStateAction<string>>;
-}
 export default function EntranceInput({ code, dispatch }: IentranceInput) {
   const { font, cCodeField } = useStyles();
   const onChnageHandler = (currentInput: string) => {
