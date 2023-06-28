@@ -13,4 +13,5 @@ export interface Ibutton {
   title: string;
   bold?: boolean;
   backgroundColor?: string;
+  disabled?: boolean;
 }
