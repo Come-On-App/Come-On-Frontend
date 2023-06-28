@@ -55,6 +55,7 @@ try {
 const getStories = () => {
   return {
     "./modules/app/navigation/BottomTabNavigator.stories.tsx": require("../modules/app/navigation/BottomTabNavigator.stories.tsx"),
+    "./modules/connection/components/button/CodeEntryButton.stories.tsx": require("../modules/connection/components/button/CodeEntryButton.stories.tsx"),
     "./modules/connection/components/description/Description.stories.tsx": require("../modules/connection/components/description/Description.stories.tsx"),
     "./modules/connection/components/entranceInput/EntranceInput.stories.tsx": require("../modules/connection/components/entranceInput/EntranceInput.stories.tsx"),
     "./modules/post/components/button/ConfirmCancelButton.stories.tsx": require("../modules/post/components/button/ConfirmCancelButton.stories.tsx"),
