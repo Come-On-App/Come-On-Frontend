@@ -5,7 +5,7 @@ import TestId from '@shared/constants/testIds';
 import { wrapper } from '@shared/components/ThemeProvider';
 import EnterMeeting from './EnterMeeting';
 
-describe('<MeetingCode />', () => {
+describe('<EnterMeeting />', () => {
   test('모임 입장 컴포넌트가 렌더링 되어야 한다.', () => {
     render(<EnterMeeting />, wrapper);
 
