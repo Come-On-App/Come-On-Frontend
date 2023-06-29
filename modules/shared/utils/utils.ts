@@ -1,4 +1,5 @@
 import _ from 'lodash/fp';
+import { PixelRatio } from 'react-native';
 import { IFormatDateRange, formatType } from './type';
 
 function isEqualDate([first, second]: string[][]) {
@@ -95,4 +96,26 @@ export function validateCode(value: string) {
   const RegExp = /^[a-zA-Z0-9]+$/;
 
   return RegExp.test(value);
+}
+
+/**
+ * 기기의 너비가 커지면 calculatedPxSize 값도 증가하고, 기기의 너비가 작아지면 calculatedPxSize 값도 감소합니다.
+ *
+ * @param dimension 기준으로 계산될 크기를 전달합니다.
+ * @param REFERENCE_WIDTH 피그마 작업 기준 너비
+ * @returns 상대적인 사이즈 반환
+ *
+ * ```ts
+ * const relativeSizeConverter = convertToRelativeSize(Dimensions.get('window').width);
+ *
+ * relativeSizeConverter(avatarSize.width); // 기기의 너비에 따라 px 크기 계산
+ * ```
+ *
+ */
+export function convertToRelativeSize(
+  dimension: number,
+  REFERENCE_WIDTH = 375,
+) {
+  return (size: number) =>
+    PixelRatio.roundToNearestPixel(size * (dimension / REFERENCE_WIDTH));
 }

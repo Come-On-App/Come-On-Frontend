@@ -1,6 +1,8 @@
 import { describe, expect, test } from '@jest/globals';
 
+import { PixelRatio } from 'react-native';
 import {
+  convertToRelativeSize,
   createLengthValidator,
   formatDateRange,
   formatTimeWithAMPM,
@@ -78,5 +80,28 @@ describe('utils Test', () => {
     expect(isZeroLength('')).toEqual(true);
     expect(isZeroLength('-')).toEqual(false);
     expect(isTwoLength('12')).toEqual(true);
+  });
+
+  describe('convertToRelativeSize Function', () => {
+    // 테스트에 사용할 기기의 너비
+    const deviceWidth = 400;
+
+    test('convertToRelativeSize 함수를 호출하면 함수를 반환해야 한다.', () => {
+      expect(typeof convertToRelativeSize(deviceWidth)).toBe('function');
+    });
+
+    test('convertToRelativeSize 함수는 상대적 사이즈를 올바르게 반환해야 한다.', () => {
+      // 변환할 크기
+      const size = 60;
+      const relativeSizeConverter = convertToRelativeSize(deviceWidth);
+      // 변환 함수를 사용하여 실제 변환 결과 얻기
+      const actualSize = relativeSizeConverter(size);
+      // 예상되는 변환 결과
+      const expectedSize = PixelRatio.roundToNearestPixel(
+        size * (deviceWidth / 375),
+      );
+
+      expect(actualSize).toBe(expectedSize);
+    });
   });
 });
