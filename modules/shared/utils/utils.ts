@@ -1,5 +1,5 @@
 import _ from 'lodash/fp';
-import { PixelRatio } from 'react-native';
+import { Dimensions, PixelRatio } from 'react-native';
 import { IFormatDateRange, formatType } from './type';
 
 function isEqualDate([first, second]: string[][]) {
@@ -44,7 +44,7 @@ function formattedArrayMapper(type?: formatType) {
 }
 
 /**
- * 지정된 날짜 포맷 형식으로 날짜 형식을 수정합니다.
+ * 지정된 날짜 포맷 형식으로 날짜 형식을 수정한다.
  */
 export function formatDateRange(
   range: IFormatDateRange,
@@ -99,12 +99,13 @@ export function validateCode(value: string) {
 }
 
 /**
- * 기기의 너비가 커지면 calculatedPxSize 값도 증가하고, 기기의 너비가 작아지면 calculatedPxSize 값도 감소합니다.
+ * 기기의 너비가 커지면 calculatedPxSize 값도 증가하고, 기기의 너비가 작아지면 calculatedPxSize 값도 감소한다.
  *
- * @param dimension 기준으로 계산될 크기를 전달합니다.
+ * @param dimension 기준으로 계산될 크기를 전달한다. **(기본값은 기기의 너비 값)**
  * @param REFERENCE_WIDTH 피그마 작업 기준 너비
  * @returns 상대적인 사이즈 반환
  *
+ * @example
  * ```ts
  * const relativeSizeConverter = convertToRelativeSize(Dimensions.get('window').width);
  *
@@ -113,9 +114,21 @@ export function validateCode(value: string) {
  *
  */
 export function convertToRelativeSize(
-  dimension: number,
+  dimension = Dimensions.get('window').width,
   REFERENCE_WIDTH = 375,
 ) {
   return (size: number) =>
     PixelRatio.roundToNearestPixel(size * (dimension / REFERENCE_WIDTH));
 }
+
+/**
+ * 디바이스 사이즈에 따라서 상대적으로 크기를 가변시킨다.
+ *
+ * 기기의 너비가 커지면 size 값도 증가하고,
+ *
+ * 기기의 너비가 작아지면 size 값도 감소한다.
+ */
+export const relativeSizeConverter = convertToRelativeSize();
+
+export const applyRelativeSizes = (sizes: number[]) =>
+  sizes.map(relativeSizeConverter);
