@@ -54,6 +54,9 @@ try {
 
 const getStories = () => {
   return {
+    "./modules/account/components/description/Email.stories.tsx": require("../modules/account/components/description/Email.stories.tsx"),
+    "./modules/account/components/description/WelcomeMessage.stories.tsx": require("../modules/account/components/description/WelcomeMessage.stories.tsx"),
+    "./modules/account/components/userAvatar/UserAvatar.stories.tsx": require("../modules/account/components/userAvatar/UserAvatar.stories.tsx"),
     "./modules/app/navigation/BottomTabNavigator.stories.tsx": require("../modules/app/navigation/BottomTabNavigator.stories.tsx"),
     "./modules/connection/components/button/CodeEntryButton.stories.tsx": require("../modules/connection/components/button/CodeEntryButton.stories.tsx"),
     "./modules/connection/components/description/Description.stories.tsx": require("../modules/connection/components/description/Description.stories.tsx"),

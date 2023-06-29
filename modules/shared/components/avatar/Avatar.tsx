@@ -15,19 +15,25 @@ export default function Avatar({
   size = DEFAULT_AVATAR_SIZE,
   path,
   children,
+  containerStyle,
 }: Iavatar) {
   const { defaultStyle } = useStyle(size);
 
   // 빈 문자열인 경우
   if (!path)
     return (
-      <RneAvatar size={size} containerStyle={defaultStyle}>
+      <RneAvatar size={size} containerStyle={[defaultStyle, containerStyle]}>
         {children}
       </RneAvatar>
     );
 
   return (
-    <RneAvatar size={size} rounded source={{ uri: path }}>
+    <RneAvatar
+      size={size}
+      rounded
+      source={{ uri: path }}
+      containerStyle={[defaultStyle, containerStyle]}
+    >
       {children}
     </RneAvatar>
   );
@@ -42,7 +48,11 @@ export function BadgedAvatar({
   const { badgeColor, defaultBadgeStyle } = useStyle();
 
   return (
-    <Avatar path={path} size={size}>
+    <Avatar
+      path={path}
+      size={size}
+      containerStyle={{ backgroundColor: undefined }}
+    >
       <RneAvatar.Accessory
         testID={TestId.shared.avatar.badge}
         size={badgeSize}
