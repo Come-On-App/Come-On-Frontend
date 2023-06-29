@@ -9,6 +9,7 @@ export interface Iinput {
   onChangeText?: (text: string) => void;
   rightIcon?: IconNode;
   label?: ReactNode;
+  maxLength?: number;
 }
 
 export interface IpressableInput {

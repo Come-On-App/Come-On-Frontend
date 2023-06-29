@@ -1,4 +1,7 @@
 import { makeStyles } from '@rneui/themed';
+import { applyRelativeSizes } from '@shared/utils/utils';
+
+const [INPUT_CONTAINER_HEIGHT, INPUT_FONT_SIZE] = applyRelativeSizes([48, 14]);
 
 export default makeStyles((theme) => ({
   outerContainer: {
@@ -9,14 +12,14 @@ export default makeStyles((theme) => ({
     paddingHorizontal: 10,
     borderWidth: 1,
     borderRadius: 4,
-    height: 48,
+    height: INPUT_CONTAINER_HEIGHT,
     borderColor: theme.font.grayscale['200'],
   },
   placeholderText: {
     color: theme.font.grayscale['500'],
   },
   font: {
-    fontSize: 14,
+    fontSize: INPUT_FONT_SIZE,
   },
   cPressableInput: {
     width: '100%',

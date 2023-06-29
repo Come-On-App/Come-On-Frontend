@@ -9,12 +9,14 @@ export default function Input({
   placeholder,
   onChangeText,
   label,
+  maxLength,
   rightIcon,
 }: Iinput) {
   const { outerContainer, inputContainer, placeholderText, font } = useStyles();
 
   return (
     <RnInput
+      maxLength={maxLength}
       label={label}
       rightIcon={rightIcon}
       value={text}
