@@ -117,8 +117,21 @@ export function convertToRelativeSize(
   dimension = Dimensions.get('window').width,
   REFERENCE_WIDTH = 375,
 ) {
-  return (size: number) =>
-    PixelRatio.roundToNearestPixel(size * (dimension / REFERENCE_WIDTH));
+  const cache = new Map();
+
+  return (size: number) => {
+    if (cache.has(size)) {
+      return cache.get(size);
+    }
+
+    const result = PixelRatio.roundToNearestPixel(
+      size * (dimension / REFERENCE_WIDTH),
+    );
+
+    cache.set(size, result);
+
+    return result;
+  };
 }
 
 /**
