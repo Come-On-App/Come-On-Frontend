@@ -1,18 +1,55 @@
 import React from 'react';
 import { Avatar as RneAvatar } from '@rneui/themed';
-import { Iavatar } from './type';
+
+import TestId from '@shared/constants/testIds';
+import { Iavatar, IbadgedAvatar } from './type';
 import useStyle from './style';
 
-const defulatSize = 40;
+const DEFAULT_AVATAR_SIZE = 40;
+const DEFAULT_BADGE_SIZE = 20;
 
 /**
  * 빈 문자열, 잘못된 URI 경로 모두 기본 배경 화면으로 처리된다.
  */
-export default function Avatar({ size = defulatSize, path }: Iavatar) {
+export default function Avatar({
+  size = DEFAULT_AVATAR_SIZE,
+  path,
+  children,
+}: Iavatar) {
   const { defaultStyle } = useStyle(size);
 
   // 빈 문자열인 경우
-  if (!path) return <RneAvatar size={size} containerStyle={defaultStyle} />;
+  if (!path)
+    return (
+      <RneAvatar size={size} containerStyle={defaultStyle}>
+        {children}
+      </RneAvatar>
+    );
 
-  return <RneAvatar size={size} rounded source={{ uri: path }} />;
+  return (
+    <RneAvatar size={size} rounded source={{ uri: path }}>
+      {children}
+    </RneAvatar>
+  );
+}
+
+export function BadgedAvatar({
+  path,
+  size,
+  badgeName,
+  badgeSize = DEFAULT_BADGE_SIZE,
+}: IbadgedAvatar) {
+  const { badgeColor, defaultBadgeStyle } = useStyle();
+
+  return (
+    <Avatar path={path} size={size}>
+      <RneAvatar.Accessory
+        testID={TestId.shared.avatar.badge}
+        size={badgeSize}
+        name={badgeName}
+        color={badgeColor.color}
+        style={defaultBadgeStyle}
+      />
+    </Avatar>
+  );
 }
