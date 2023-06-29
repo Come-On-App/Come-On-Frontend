@@ -6,7 +6,7 @@ import useStyles from './style';
 
 export default function WelcomeMessage({ userName }: IwelcomeMessage) {
   const { welcomeFont } = useStyles();
-  const message = `환영합니다. ${userName}님!`;
+  const message = `어서오세요. ${userName}님!`;
 
   return (
     <Font bold style={welcomeFont}>
