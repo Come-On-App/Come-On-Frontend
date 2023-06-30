@@ -9,6 +9,7 @@ import NickName from '@account/components/nickName/NickName';
 import ScreenLayout from '@shared/components/layout/ScreenLayout';
 import { mockUser } from '@account/mocks/mockUser';
 import DividerWrapper from '@shared/components/layout/DividerWrapper';
+import PolicyVersionList from '@account/components/policyVersionList/PolicyVersionList';
 import useStyles from './style';
 
 function MyPage() {
@@ -29,7 +30,7 @@ function MyPage() {
       </ScreenLayout>
       {/* 약관 및 앱 정보 */}
       <DividerWrapper>
-        <View />
+        <PolicyVersionList />
       </DividerWrapper>
     </View>
   );
