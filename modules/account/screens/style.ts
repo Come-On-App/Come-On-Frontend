@@ -1,4 +1,11 @@
 import { makeStyles } from '@rneui/themed';
+import { applyRelativeSizes } from '@shared/utils/utils';
+
+const [MESSAGE_CONTAINER_MARGIN_TOP, MESSAGE_CONTAINER_BOTTOM] =
+  applyRelativeSizes({
+    marginTop: 4,
+    marginBottom: 16,
+  });
 
 export default makeStyles(() => ({
   userContainer: {
@@ -6,8 +13,8 @@ export default makeStyles(() => ({
   },
   msgContainer: {
     alignItems: 'center',
-    marginTop: 4,
-    marginBottom: 16,
+    marginTop: MESSAGE_CONTAINER_MARGIN_TOP,
+    marginBottom: MESSAGE_CONTAINER_BOTTOM,
   },
   cAccountManagement: {
     flex: 1,

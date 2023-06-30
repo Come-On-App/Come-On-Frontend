@@ -4,7 +4,7 @@ import { applyRelativeSizes } from '@shared/utils/utils';
 export default makeStyles((theme) => {
   const [CONTENT_HEIGHT, FONT_SIZE, ICON_SIZE] = applyRelativeSizes({
     height: 48,
-    font: 16,
+    font: theme.font.type.body1.fontSize,
     iconSize: 20,
   });
 

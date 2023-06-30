@@ -7,12 +7,10 @@ import { applyRelativeSizes } from '@shared/utils/utils';
 import { IuserAvatar } from './type';
 
 const BADGE_NAME = 'photo-camera';
-const [AVATAR_SIZE, AVATAR_BADEG_SIZE] = applyRelativeSizes(
-  Object.values({
-    avatarSize: 60,
-    badgeSize: 20,
-  }),
-);
+const [AVATAR_SIZE, AVATAR_BADEG_SIZE] = applyRelativeSizes({
+  avatarSize: 60,
+  badgeSize: 20,
+});
 
 export default function UserAvatar({ path }: IuserAvatar) {
   return (
