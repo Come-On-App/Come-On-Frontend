@@ -1,6 +1,6 @@
 import _ from 'lodash/fp';
 import { Dimensions, PixelRatio } from 'react-native';
-import { IFormatDateRange, formatType } from './type';
+import { IFormatDateRange, IapplyRelativeSizes, formatType } from './type';
 
 function isEqualDate([first, second]: string[][]) {
   return _.equals(first, second);
@@ -117,11 +117,11 @@ export function convertToRelativeSize(
   dimension = Dimensions.get('window').width,
   REFERENCE_WIDTH = 375,
 ) {
-  const cache = new Map();
+  const cache = new Map<number, number>();
 
   return (size: number) => {
     if (cache.has(size)) {
-      return cache.get(size);
+      return cache.get(size) as number;
     }
 
     const result = PixelRatio.roundToNearestPixel(
@@ -143,5 +143,10 @@ export function convertToRelativeSize(
  */
 export const relativeSizeConverter = convertToRelativeSize();
 
-export const applyRelativeSizes = (sizes: number[]) =>
-  sizes.map(relativeSizeConverter);
+export const applyRelativeSizes: IapplyRelativeSizes = (sizes) => {
+  if (_.isArray(sizes)) {
+    return sizes.map(relativeSizeConverter);
+  }
+
+  return Object.values(sizes).map(relativeSizeConverter);
+};
