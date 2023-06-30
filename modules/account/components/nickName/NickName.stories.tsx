@@ -2,7 +2,7 @@ import { ComponentMeta } from '@storybook/react-native';
 
 import { FontLoader } from '@shared/components/ThemeProvider';
 import NickName from './NickName';
-import { mockUserAvatarImage } from '@account/mocks/userAvatarImage';
+import { mockUserAvatarImage } from '@account/mocks/mockUserAvatarImage';
 import { View } from 'react-native';
 
 type Meta = ComponentMeta<typeof NickName>;

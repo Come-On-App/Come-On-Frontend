@@ -3,7 +3,7 @@ import { screen } from '@testing-library/react-native';
 
 import TestId from '@shared/constants/testIds';
 import { render } from '@shared/components/ThemeProvider';
-import { mockUserAvatarImage } from '@account/mocks/userAvatarImage';
+import { mockUserAvatarImage } from '@account/mocks/mockUserAvatarImage';
 import UserAvatar from './UserAvatar';
 
 describe('UserAvatar Compoent', () => {

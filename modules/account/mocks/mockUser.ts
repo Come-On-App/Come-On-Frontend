@@ -1,4 +1,4 @@
-import { mockUserAvatarImage } from './userAvatarImage';
+import { mockUserAvatarImage } from './mockUserAvatarImage';
 
 export const mockUser = {
   userName: 'jeongbaebang',
