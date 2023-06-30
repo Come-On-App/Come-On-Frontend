@@ -8,7 +8,7 @@ import VenueList from './venueList/VenueList';
 import AddVenue from './addVenue/AddVenue';
 import { Iplanner } from './type';
 import ContentHeader from '../ContentHeader';
-import DividerWrapper from '../DividerWrapper';
+import DividerWrapper from '../../../../shared/components/layout/DividerWrapper';
 import useStyles from './style';
 
 const TITLE = '모임 장소';

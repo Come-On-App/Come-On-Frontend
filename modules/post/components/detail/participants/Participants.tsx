@@ -5,7 +5,7 @@ import ScreenLayout from '@shared/components/layout/ScreenLayout';
 import MemberCount from './memberCount/MemberCount';
 import Members from './members/Members';
 import { Iparticipants } from './type';
-import DividerWrapper from '../DividerWrapper';
+import DividerWrapper from '../../../../shared/components/layout/DividerWrapper';
 import ContentHeader from '../ContentHeader';
 
 const TITLE = '모임 멤버';

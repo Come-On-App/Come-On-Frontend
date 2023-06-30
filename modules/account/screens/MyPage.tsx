@@ -8,7 +8,7 @@ import WelcomeMessage from '@account/components/description/WelcomeMessage';
 import NickName from '@account/components/nickName/NickName';
 import ScreenLayout from '@shared/components/layout/ScreenLayout';
 import { mockUser } from '@account/mocks/mockUser';
-import DividerWrapper from '@post/components/detail/DividerWrapper';
+import DividerWrapper from '@shared/components/layout/DividerWrapper';
 import useStyles from './style';
 
 function MyPage() {

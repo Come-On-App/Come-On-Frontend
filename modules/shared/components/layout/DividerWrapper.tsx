@@ -2,8 +2,8 @@ import React from 'react';
 
 import { Divider } from '@rneui/themed';
 import { View } from 'react-native';
-import { IcontentHeader } from './type';
-import useStyles from './style';
+import { IcontentHeader } from '../../../post/components/detail/type';
+import useStyles from '../../../post/components/detail/style';
 
 /**
  * 스타일 구분선 컴포넌트

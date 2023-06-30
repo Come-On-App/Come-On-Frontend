@@ -3,7 +3,7 @@ import React from 'react';
 import ScreenLayout from '@shared/components/layout/ScreenLayout';
 import { ScreenTitle } from '@shared/components/font/Font';
 import { View } from 'react-native';
-import DividerWrapper from '../DividerWrapper';
+import DividerWrapper from '../../../../shared/components/layout/DividerWrapper';
 import ContentHeader from '../ContentHeader';
 import Schedule from './schedule/Schedule';
 import TimePickerButton from './timePickerButton/TimePickerButton';

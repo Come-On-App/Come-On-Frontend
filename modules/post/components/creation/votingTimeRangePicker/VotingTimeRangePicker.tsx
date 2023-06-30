@@ -5,7 +5,7 @@ import PressableInput from '@shared/components/input/PressableInput';
 import { useNavigation } from '@react-navigation/native';
 import { postListNavigationProps } from '@post/navigation/type';
 import ScreenLayout from '@shared/components/layout/ScreenLayout';
-import DividerWrapper from '@post/components/detail/DividerWrapper';
+import DividerWrapper from '@shared/components/layout/DividerWrapper';
 import useStyles from './style';
 
 const TITLE = '투표 기간';
