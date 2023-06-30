@@ -17,7 +17,13 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "ignorePatterns": ["*.config.*", "*.stories.*", "**/mocks/*", "node_modules"],
+  "ignorePatterns": [
+    "*.config.*",
+    "*.stories.*",
+    "**/mocks/*",
+    "**/jest/*",
+    "node_modules"
+  ],
   "rules": {
     "import/no-unresolved": 0,
     "react/jsx-filename-extension": [
