@@ -25,11 +25,13 @@ export const options: {
   },
   [Tab.three]: {
     tabBarLabel: createTabBarLabel('마이페이지'),
-    tabBarIcon: ({ size }) => {
+    tabBarIcon: () => {
+      const AVATAR_SIZE = 32;
+
       return (
         <Avatar
           path="https://picsum.photos/200/300"
-          size={relativeSizeConverter(size)}
+          size={relativeSizeConverter(AVATAR_SIZE)}
         />
       );
     },

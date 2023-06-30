@@ -7,11 +7,17 @@ export default makeStyles((theme) => {
     INPUT_CONTAINER_HEIGHT,
     INPUT_CONTAINER_MARGIN_VERTICAL,
     INPUT_CONTAINER_PADDING_HORIZONTAL,
+    CONTAINER_CODE_FIELD_WIDTH_HEIGHT,
+    CONTAINER_CODE_FIELD_MARGIN_HORIZONTAL,
+    CODE_FIELD_FONT_SIZE,
   ] = applyRelativeSizes({
     inputFontSize: theme.font.type.body1.fontSize,
     inputContainerHeight: 44,
     inputContainerMarginVertical: 8,
     inputContainerPaddingHorizontal: 10,
+    containerCodeFieldWidthHeigth: 50,
+    containerCodeFieldMarginHorizontal: 2,
+    codeFieldFontSize: theme.font.type.title1.fontSize,
   });
 
   return {
@@ -53,16 +59,16 @@ export default makeStyles((theme) => {
     cCodeField: {
       backgroundColor: theme.font.grayscale['100'],
       borderRadius: 4,
-      width: 50,
-      height: 50,
-      marginHorizontal: 2,
+      width: CONTAINER_CODE_FIELD_WIDTH_HEIGHT,
+      height: CONTAINER_CODE_FIELD_WIDTH_HEIGHT,
+      marginHorizontal: CONTAINER_CODE_FIELD_MARGIN_HORIZONTAL,
     },
     codeFieldFont: {
       fontFamily: 'Pretendard-SemiBold',
-      lineHeight: 50,
+      lineHeight: CONTAINER_CODE_FIELD_WIDTH_HEIGHT,
       textAlign: 'center',
       color: theme.font.grayscale['900'],
-      fontSize: 26,
+      fontSize: CODE_FIELD_FONT_SIZE,
     },
   };
 });
