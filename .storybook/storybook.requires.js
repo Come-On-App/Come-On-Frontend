@@ -54,6 +54,7 @@ try {
 
 const getStories = () => {
   return {
+    "./modules/account/components/accountManagement/AccountManagement.stories.tsx": require("../modules/account/components/accountManagement/AccountManagement.stories.tsx"),
     "./modules/account/components/description/Email.stories.tsx": require("../modules/account/components/description/Email.stories.tsx"),
     "./modules/account/components/description/WelcomeMessage.stories.tsx": require("../modules/account/components/description/WelcomeMessage.stories.tsx"),
     "./modules/account/components/nickName/NickName.stories.tsx": require("../modules/account/components/nickName/NickName.stories.tsx"),
