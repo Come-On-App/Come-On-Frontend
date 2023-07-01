@@ -14,7 +14,7 @@ const placeholder = '모임 이름을 입력해 주세요!';
 const LENGTH_MAX = 30;
 
 export default function MeetingNameInput() {
-  const { top } = useStyles();
+  const { top, screenLayout } = useStyles();
   const [input, setInput] = useState('');
   const textTruncator = truncateText(LENGTH_MAX);
   const onChnageHandler = (text: string) => {
@@ -23,7 +23,7 @@ export default function MeetingNameInput() {
 
   return (
     <DividerWrapper>
-      <ScreenLayout containerStyle={{ paddingBottom: 0 }}>
+      <ScreenLayout containerStyle={screenLayout}>
         <View style={top}>
           <ScreenTitle>{TITLE}</ScreenTitle>
           <TextLengthCounter text={input} max={LENGTH_MAX} />

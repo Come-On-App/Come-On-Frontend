@@ -12,13 +12,12 @@ function formatLength(length: number, max: number) {
 export default function TextLengthCounter({
   text: { length },
   max,
-  fontSize,
 }: ItextLengthCounter) {
-  const { font } = useStyles();
+  const { container, font } = useStyles();
 
   return (
-    <View>
-      <Font style={[font, { fontSize }]}>{formatLength(length, max)}</Font>
+    <View style={container}>
+      <Font style={font}>{formatLength(length, max)}</Font>
     </View>
   );
 }

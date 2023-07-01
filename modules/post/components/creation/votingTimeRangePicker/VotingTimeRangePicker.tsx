@@ -12,7 +12,7 @@ const TITLE = '투표 기간';
 const DESCRIPTION = '날짜 범위를 선택해 주세요';
 
 export default function VotingTimeRangePicker() {
-  const { container, icon, font, layoutContainer } = useStyles();
+  const { container, icon, font } = useStyles();
   const navigation = useNavigation<postListNavigationProps>();
   const onPressHandler = () => {
     navigation.navigate('MeetingDateSelector');
@@ -20,7 +20,7 @@ export default function VotingTimeRangePicker() {
 
   return (
     <DividerWrapper>
-      <ScreenLayout containerStyle={layoutContainer}>
+      <ScreenLayout>
         <ScreenTitle>{TITLE}</ScreenTitle>
         <PressableInput
           onPress={onPressHandler}
