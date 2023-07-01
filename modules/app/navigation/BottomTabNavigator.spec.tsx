@@ -1,9 +1,9 @@
 import { describe, expect, test } from '@jest/globals';
-import { render, screen } from '@testing-library/react-native';
+import { screen } from '@testing-library/react-native';
 import { NavigationContainer } from '@react-navigation/native';
 
 import TestId from '@shared/constants/testIds';
-import { wrapper } from '@shared/components/ThemeProvider';
+import { render, wrapper } from '@shared/components/ThemeProvider';
 import BottomTabNavigator from './BottomTabNavigator';
 import { Tab } from './config';
 

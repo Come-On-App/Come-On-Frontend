@@ -8,6 +8,7 @@ import { Pressable, View } from 'react-native';
 import { vigilAsync } from 'promise-vigilant';
 
 import { IMenu } from './type';
+import useStyles from './style';
 import Font from '../font/Font';
 
 /**
@@ -18,6 +19,7 @@ import Font from '../font/Font';
  * @prop list - 메뉴 항목의 배열
  */
 export default function Menu({ anchor, fontAllStyle, list = [] }: IMenu) {
+  const { cMenuItem, menuDefaultFont } = useStyles();
   const [visible, setVisible] = useState(false);
   const hideMenu = () => setVisible(false);
   const showMenu = () => setVisible(true);
@@ -32,8 +34,13 @@ export default function Menu({ anchor, fontAllStyle, list = [] }: IMenu) {
         {list.map(({ name, onPress, fontStyle }) => {
           return (
             <View key={name}>
-              <MenuItem onPress={() => vigilAsync(hideMenu, [onPress])}>
-                <Font style={[fontAllStyle, fontStyle]}>{name}</Font>
+              <MenuItem
+                onPress={() => vigilAsync(hideMenu, [onPress])}
+                style={cMenuItem}
+              >
+                <Font style={[menuDefaultFont, fontAllStyle, fontStyle]}>
+                  {name}
+                </Font>
               </MenuItem>
               <MenuDivider />
             </View>

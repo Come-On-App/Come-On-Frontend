@@ -2,7 +2,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { ReactNode } from 'react';
 import { ThemeProvider as Tp } from '@rneui/themed';
-import { RenderOptions, render } from '@testing-library/react-native';
+import {
+  RenderOptions,
+  render as testingRender,
+} from '@testing-library/react-native';
 
 import { theme } from '@shared/constants/themed';
 import useCachedResources from '@app/hooks/useCachedResources';
@@ -33,7 +36,10 @@ export function FontLoader({ children }: { children: ReactNode }) {
  */
 export const wrapper = { wrapper: ThemeProvider };
 
-export const renderWithThemeProvider = (
+/**
+ * 커스텀 테스트 랜더 메서드
+ */
+export const render = (
   ui: React.ReactElement<unknown, string | React.JSXElementConstructor<any>>,
   options?: RenderOptions | undefined,
-) => render(ui, { wrapper: ThemeProvider, ...options });
+) => testingRender(ui, { wrapper: ThemeProvider, ...options });

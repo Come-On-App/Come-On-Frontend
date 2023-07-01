@@ -14,7 +14,7 @@ export default function ImageUploader({
   isLoading,
   iconName = 'camera-alt',
 }: IimageUploader) {
-  const { wrap, imageUploader, font, icon } = useStyles();
+  const { imageContainer, imageUploader, font, icon } = useStyles();
 
   if (isLoading) {
     return (
@@ -22,17 +22,17 @@ export default function ImageUploader({
         accessibilityHint="loading"
         source={{ uri: undefined }}
         PlaceholderContent={<ActivityIndicator />}
-        style={wrap}
+        style={imageContainer}
       />
     );
   }
 
   if (!isLoading && uri) {
-    return <Image source={{ uri }} onPress={onPress} style={wrap} />;
+    return <Image source={{ uri }} onPress={onPress} style={imageContainer} />;
   }
 
   return (
-    <Pressable onPress={onPress} style={[wrap, imageUploader]}>
+    <Pressable onPress={onPress} style={[imageContainer, imageUploader]}>
       <Icon name={iconName} size={icon.size} color={icon.color} />
       <Font style={font}>{description}</Font>
     </Pressable>

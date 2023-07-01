@@ -4,3 +4,11 @@ export interface IFormatDateRange {
 }
 
 export type formatType = 'ko';
+
+export type IapplyRelativeSizes = (
+  sizes:
+    | {
+        [styleProps: string]: number;
+      }
+    | number[],
+) => number[];

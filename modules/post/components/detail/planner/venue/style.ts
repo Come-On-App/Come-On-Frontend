@@ -1,10 +1,11 @@
+import { relativeSizeConverter } from '@shared/utils/utils';
 import { makeStyles } from '@rneui/themed';
 
 export default makeStyles(() => ({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginBottom: 12,
+    marginBottom: relativeSizeConverter(12),
   },
   cOrder: {
     justifyContent: 'center',

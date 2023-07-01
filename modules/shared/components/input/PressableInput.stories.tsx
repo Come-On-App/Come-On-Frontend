@@ -49,9 +49,7 @@ export const WithStyle: Meta = {
     containerStyle: {
       borderWidth: 1,
       borderRadius: 4,
-      height: 48,
       borderColor: '#EEEEEE',
-      backgroundColor: 'white',
     },
     fontColor: '#9E9E9E',
   },

@@ -1,53 +1,76 @@
 import { makeStyles } from '@rneui/themed';
 
-export default makeStyles((theme) => ({
-  outerContainer: {
-    paddingHorizontal: 0,
-  },
-  inputContainer: {
-    marginVertical: 5,
-    paddingHorizontal: 10,
-    borderWidth: 1,
+import { SEARCH_ADN_CREATE_HEIGHT } from '@post/components/search/searchAndCreate/style';
+import { applyRelativeSizes } from '@shared/utils/utils';
+
+export default makeStyles((theme) => {
+  const [
+    INPUT_FONT_SIZE,
+    INPUT_CONTAINER_HEIGHT,
+    INPUT_CONTAINER_PADDING_HORIZONTAL,
+    CONTAINER_CODE_FIELD_WIDTH_HEIGHT,
+    CONTAINER_CODE_FIELD_MARGIN_HORIZONTAL,
+    CODE_FIELD_FONT_SIZE,
+    CONTAINER_PRESSABLE_INNER_INPUT_MARGIN_LEFT,
+    CONTAINER_PRESSABLE_INPUT_ICON_MARGIN_RIGHT,
+    BORDER_RADIUS,
+  ] = applyRelativeSizes({
+    inputFontSize: theme.font.type.body1.fontSize,
+    inputContainerHeight: 44,
+    inputContainerPaddingHorizontal: 10,
+    containerCodeFieldWidthHeigth: 50,
+    containerCodeFieldMarginHorizontal: 2,
+    codeFieldFontSize: theme.font.type.title1.fontSize,
+    containerPressableInnerInputMarginLeft: 10,
+    containerPressableInputIconMarginRight: 10,
     borderRadius: 4,
-    height: 48,
-    borderColor: theme.font.grayscale['200'],
-  },
-  placeholderText: {
-    color: theme.font.grayscale['500'],
-  },
-  font: {
-    fontSize: 14,
-  },
-  cPressableInput: {
-    width: '100%',
-    backgroundColor: theme.font.grayscale['200'],
-    borderRadius: 4,
-    flexDirection: 'row',
-    paddingVertical: 8,
-  },
-  cPressableInnerInput: {
-    marginVertical: 4,
-    marginLeft: 10,
-    paddingRight: 4,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
-  cPressableInputIcon: {
-    marginRight: 10,
-  },
-  cCodeField: {
-    backgroundColor: theme.font.grayscale['100'],
-    borderRadius: 4,
-    width: 50,
-    height: 50,
-    marginHorizontal: 2,
-  },
-  codeFieldFont: {
-    fontFamily: 'Pretendard-SemiBold',
-    lineHeight: 50,
-    textAlign: 'center',
-    color: theme.font.grayscale['900'],
-    fontSize: 26,
-  },
-}));
+  });
+
+  return {
+    outerContainer: {
+      paddingHorizontal: 0,
+    },
+    inputContainer: {
+      paddingHorizontal: INPUT_CONTAINER_PADDING_HORIZONTAL,
+      borderWidth: 1,
+      borderRadius: BORDER_RADIUS,
+      height: INPUT_CONTAINER_HEIGHT,
+      borderColor: theme.font.grayscale['200'],
+    },
+    placeholderText: {
+      color: theme.font.grayscale['500'],
+    },
+    font: {
+      fontSize: INPUT_FONT_SIZE,
+    },
+    cPressableInput: {
+      height: SEARCH_ADN_CREATE_HEIGHT,
+      backgroundColor: theme.font.grayscale['200'],
+      borderRadius: BORDER_RADIUS,
+      flexDirection: 'row',
+    },
+    cPressableInnerInput: {
+      marginLeft: CONTAINER_PRESSABLE_INNER_INPUT_MARGIN_LEFT,
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexDirection: 'row',
+    },
+    cPressableInputIcon: {
+      marginRight: CONTAINER_PRESSABLE_INPUT_ICON_MARGIN_RIGHT,
+    },
+    cCodeField: {
+      backgroundColor: theme.font.grayscale['100'],
+      borderRadius: BORDER_RADIUS,
+      width: CONTAINER_CODE_FIELD_WIDTH_HEIGHT,
+      height: CONTAINER_CODE_FIELD_WIDTH_HEIGHT,
+      marginHorizontal: CONTAINER_CODE_FIELD_MARGIN_HORIZONTAL,
+    },
+    codeFieldFont: {
+      fontFamily: 'Pretendard-SemiBold',
+      lineHeight: CONTAINER_CODE_FIELD_WIDTH_HEIGHT,
+      textAlign: 'center',
+      color: theme.font.grayscale['900'],
+      fontSize: CODE_FIELD_FONT_SIZE,
+    },
+  };
+});

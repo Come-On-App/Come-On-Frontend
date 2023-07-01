@@ -1,13 +1,16 @@
 import { View, Pressable } from 'react-native';
 import React from 'react';
 
+import { applyRelativeSizes } from '@shared/utils/utils';
 import useStyles from './style';
 import Icon from '../icon/Icon';
 import Font from '../font/Font';
 import { IpressableInput } from './type';
 
-const defaultIconSize = 20;
-const defaultFontSize = 14;
+const [DEFAULT_ICON_SIZE, DEFAULT_FONT_SIZE] = applyRelativeSizes({
+  defaultIconSize: 20,
+  defaultFontSize: 14,
+});
 
 export default function PressableInput({
   text,
@@ -24,7 +27,7 @@ export default function PressableInput({
   if (icon) {
     IconComponent = (
       <View style={cPressableInputIcon}>
-        <Icon name={icon.name} color={icon.color} size={defaultIconSize} />
+        <Icon name={icon.name} color={icon.color} size={DEFAULT_ICON_SIZE} />
       </View>
     );
   }
@@ -34,7 +37,7 @@ export default function PressableInput({
       <View style={[cPressableInput, containerStyle]}>
         <View style={cPressableInnerInput}>
           {IconComponent}
-          <Font style={{ fontSize: defaultFontSize, color: fontColor }}>
+          <Font style={{ fontSize: DEFAULT_FONT_SIZE, color: fontColor }}>
             {text}
           </Font>
         </View>

@@ -1,7 +1,7 @@
 import { describe, expect, test } from '@jest/globals';
 import { screen } from '@testing-library/react-native';
 
-import { renderWithThemeProvider as render } from '@shared/components/ThemeProvider';
+import { render } from '@shared/components/ThemeProvider';
 import Schedule from './Schedule';
 
 describe('Schedule Compoent', () => {

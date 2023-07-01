@@ -13,10 +13,10 @@ export default function TextLengthCounter({
   text: { length },
   max,
 }: ItextLengthCounter) {
-  const { font } = useStyles();
+  const { container, font } = useStyles();
 
   return (
-    <View>
+    <View style={container}>
       <Font style={font}>{formatLength(length, max)}</Font>
     </View>
   );

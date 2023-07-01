@@ -5,6 +5,7 @@ export interface Ifont {
   children: React.ReactNode;
   bold?: boolean;
   numberOfLines?: number;
+  onPress?: () => void;
 }
 
 export interface IscreenFont {

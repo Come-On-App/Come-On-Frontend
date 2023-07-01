@@ -1,6 +1,7 @@
 const TestId = {
   account: {
     myPage: 'TestId__account_myPage',
+    avatar: 'TestId__account_avatar',
   },
   connection: {
     code: 'TestId__connection_code',
@@ -35,6 +36,9 @@ const TestId = {
         field: 'TestId__shared_input_codeField',
         cell: 'TestId__shared_input_codeCell',
       },
+    },
+    avatar: {
+      badge: 'TestId__shared_avatar_badge',
     },
   },
 } as const;

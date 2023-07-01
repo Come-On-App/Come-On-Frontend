@@ -1,18 +1,27 @@
 import { makeStyles } from '@rneui/themed';
+import { applyRelativeSizes } from '@shared/utils/utils';
 
 export default makeStyles(
-  (theme, props: { bold?: boolean; backgroundColor?: string }) => ({
-    defaultStyle: {
-      height: 48,
+  (theme, props: { bold?: boolean; backgroundColor?: string }) => {
+    const [BUTTON_HEIGHT, FONT_SIZE, BORDER_RADIUS] = applyRelativeSizes({
+      buttonHeight: 48,
+      fontSzie: theme.font.type.title4.fontSize,
       borderRadius: 4,
-      backgroundColor: props.backgroundColor
-        ? props.backgroundColor
-        : theme.colors.primary,
-    },
-    font: {
-      color: theme.font.grayscale['0'],
-      fontSize: theme.font.type.title4.fontSize,
-      fontFamily: props.bold ? 'Pretendard-SemiBold' : 'Pretendard-Medium',
-    },
-  }),
+    });
+
+    return {
+      defaultStyle: {
+        height: BUTTON_HEIGHT,
+        borderRadius: BORDER_RADIUS,
+        backgroundColor: props.backgroundColor
+          ? props.backgroundColor
+          : theme.colors.primary,
+      },
+      font: {
+        color: theme.font.grayscale['0'],
+        fontSize: FONT_SIZE,
+        fontFamily: props.bold ? 'Pretendard-SemiBold' : 'Pretendard-Medium',
+      },
+    };
+  },
 );

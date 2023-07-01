@@ -2,12 +2,12 @@ import React from 'react';
 
 import Icon from '@shared/components/icon/Icon';
 import { IconName } from '@shared/components/icon/type';
-import tabBarIcon from './config';
+import { relativeSizeConverter } from '@shared/utils/utils';
 
 export default function createTabBarIcon(name: IconName) {
-  const { size } = tabBarIcon;
+  const ICON_SIZE = relativeSizeConverter(32);
 
-  return function CodeIcon({ color }: { color: string }) {
-    return <Icon name={name} color={color} size={size} />;
+  return function TabBarIcon({ color }: { color: string }) {
+    return <Icon name={name} color={color} size={ICON_SIZE} />;
   };
 }
