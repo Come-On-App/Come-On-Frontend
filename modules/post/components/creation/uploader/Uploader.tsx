@@ -4,7 +4,7 @@ import { ScreenTitle } from '@shared/components/font/Font';
 import ImageUploader from '@shared/components/imageUploader/ImageUploader';
 import ScreenLayout from '@shared/components/layout/ScreenLayout';
 import DividerWrapper from '@shared/components/layout/DividerWrapper';
-import ContentHeader from '@post/components/detail/ContentHeader';
+import ContentHeader from '@shared/components/layout/ContentHeader';
 
 const TITLE = '사진 등록';
 const DESCRIPTION = '사진을 등록해 주세요';

@@ -7,7 +7,7 @@ import Input from '@shared/components/input/Input';
 import { truncateText } from '@shared/utils/utils';
 import ScreenLayout from '@shared/components/layout/ScreenLayout';
 import DividerWrapper from '@shared/components/layout/DividerWrapper';
-import ContentHeader from '@post/components/detail/ContentHeader';
+import ContentHeader from '@shared/components/layout/ContentHeader';
 import useStyles from './style';
 
 const TITLE = '모임 이름';

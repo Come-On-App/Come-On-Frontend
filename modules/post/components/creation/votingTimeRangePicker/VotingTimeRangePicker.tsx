@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { postListNavigationProps } from '@post/navigation/type';
 import ScreenLayout from '@shared/components/layout/ScreenLayout';
 import DividerWrapper from '@shared/components/layout/DividerWrapper';
-import ContentHeader from '@post/components/detail/ContentHeader';
+import ContentHeader from '@shared/components/layout/ContentHeader';
 import useStyles from './style';
 
 const TITLE = '투표 기간';
