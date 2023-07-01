@@ -3,11 +3,11 @@ import { IconName } from '@shared/components/icon/type';
 import { applyRelativeSizes } from '@shared/utils/utils';
 
 export default makeStyles((theme) => {
-  const [CONTAINER_HEIGHT, CONTAINER_BORDER_RADIUS, CONTAINER_MARGIN_VERTICAL] =
+  const [CONTAINER_HEIGHT, CONTAINER_BORDER_RADIUS, CONTAINER_MARGIN_BOTTOM] =
     applyRelativeSizes({
-      containerHeight: 48,
+      containerHeight: 44,
       containerBorderRadius: 4,
-      containerMarginVertical: 5,
+      marginBottom: 15,
     });
 
   return {
@@ -17,7 +17,7 @@ export default makeStyles((theme) => {
       height: CONTAINER_HEIGHT,
       borderColor: theme.font.grayscale['200'],
       backgroundColor: theme.font.grayscale['0'],
-      marginVertical: CONTAINER_MARGIN_VERTICAL,
+      marginBottom: CONTAINER_MARGIN_BOTTOM,
     },
     icon: {
       name: 'date-range' as IconName,

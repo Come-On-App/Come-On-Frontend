@@ -1,11 +1,20 @@
 import { makeStyles } from '@rneui/themed';
+import { applyRelativeSizes } from '@shared/utils/utils';
 
-export default makeStyles((theme) => ({
-  container: {
-    marginHorizontal: 4,
-  },
-  font: {
+export default makeStyles((theme) => {
+  const [CONTAINER_MARGIN_HORIZONTAL, FONT_SIZE] = applyRelativeSizes({
+    containerMarginHorizontal: 4,
     fontSize: theme.font.type.title4.fontSize,
-    color: theme.colors.primary,
-  },
-}));
+  });
+
+  return {
+    container: {
+      marginHorizontal: CONTAINER_MARGIN_HORIZONTAL,
+      justifyContent: 'center',
+    },
+    font: {
+      fontSize: FONT_SIZE,
+      color: theme.colors.primary,
+    },
+  };
+});

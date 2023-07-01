@@ -8,7 +8,7 @@ export type formatType = 'ko';
 export type IapplyRelativeSizes = (
   sizes:
     | {
-        [s: string]: number;
+        [styleProps: string]: number;
       }
     | number[],
 ) => number[];

@@ -10,8 +10,6 @@ describe('MeetingNameInput Compoent', () => {
 
     expect(screen.getByText('모임 이름')).toBeOnTheScreen();
     expect(screen.getByText('0/30')).toBeOnTheScreen();
-    expect(
-      screen.getByPlaceholderText('모임 이름을 입력해 주세요!'),
-    ).toBeOnTheScreen();
+    expect(screen.getByPlaceholderText('여기로 모여!')).toBeOnTheScreen();
   });
 });

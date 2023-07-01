@@ -5,7 +5,7 @@ export default makeStyles(() => {
   const [CONTAINER_CARD_HEIGHT, CONTAINER_CARD_MARGIN_BOTTOM] =
     applyRelativeSizes({
       containerCardHeight: 255,
-      containerCardMarginBottom: 24,
+      containerCardMarginBottom: 5,
     });
 
   return {

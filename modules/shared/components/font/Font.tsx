@@ -4,6 +4,9 @@ import { Text } from '@rneui/themed';
 import { Ifont, IscreenFont } from './type';
 import useStyle from './style';
 
+/**
+ * 기본 폰트 크기는 14px
+ */
 export default function Font({
   style,
   children,

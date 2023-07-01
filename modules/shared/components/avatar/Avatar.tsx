@@ -2,11 +2,12 @@ import React from 'react';
 import { Avatar as RneAvatar } from '@rneui/themed';
 
 import TestId from '@shared/constants/testIds';
+import { relativeSizeConverter } from '@shared/utils/utils';
 import { Iavatar, IbadgedAvatar } from './type';
 import useStyle from './style';
 
-const DEFAULT_AVATAR_SIZE = 40;
-const DEFAULT_BADGE_SIZE = 20;
+const DEFAULT_AVATAR_SIZE = relativeSizeConverter(40);
+const DEFAULT_BADGE_SIZE = relativeSizeConverter(20);
 
 /**
  * 빈 문자열, 잘못된 URI 경로 모두 기본 배경 화면으로 처리된다.

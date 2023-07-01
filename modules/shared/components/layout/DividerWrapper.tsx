@@ -4,7 +4,7 @@ import { Divider } from '@rneui/themed';
 import { View } from 'react-native';
 
 import useStyles from './style';
-import { IcontentHeader } from './type';
+import { IdividerWrapper } from './type';
 
 /**
  * 스타일 구분선 컴포넌트
@@ -13,7 +13,7 @@ export default function DividerWrapper({
   children,
   width = 12,
   position = 'top',
-}: IcontentHeader) {
+}: IdividerWrapper) {
   const { dividerStyle } = useStyles(width);
   const shouldRenderTopDivider = position === 'top' || position === 'both';
   const shouldRenderBottomDivider =

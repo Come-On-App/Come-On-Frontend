@@ -12,8 +12,7 @@ const NICKNAME_TITLE = '닉네임';
 const MAX_TEXT_LENGTH = 20;
 
 export default function NickName({ name }: InickName) {
-  const { iconButton, nickNameTitleFont, labelContainer, textLengthFont } =
-    useStyles();
+  const { iconButton, nickNameTitleFont, labelContainer } = useStyles();
   const [nickName, setNickName] = useState(name);
   // 아이콘 버튼 이벤트 핸들러
   const onPressHandler = () => {
@@ -42,11 +41,7 @@ export default function NickName({ name }: InickName) {
             <Font bold style={nickNameTitleFont}>
               {NICKNAME_TITLE}
             </Font>
-            <TextLengthCounter
-              fontSize={textLengthFont.fontSize}
-              text={nickName}
-              max={MAX_TEXT_LENGTH}
-            />
+            <TextLengthCounter text={nickName} max={MAX_TEXT_LENGTH} />
           </View>
         }
       />

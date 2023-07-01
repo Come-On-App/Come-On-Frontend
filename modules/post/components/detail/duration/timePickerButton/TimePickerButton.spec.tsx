@@ -14,15 +14,13 @@ describe('TimePickerButton Compoent', () => {
     expect(screen.getByText(expected)).toBeOnTheScreen();
   });
 
-  test('일반 사용자는 호스트와 구분하여 시각적 차이가 나게 렌더링 되어야 한다.', () => {
+  test('일반 사용자는 버튼이 비활성화 되어야 한다.', () => {
     const host = true;
 
     render(<TimePickerButton time={time} isHost={host} />, wrapper);
 
     expect(
       screen.getByAccessibilityHint('TimePickerButtonContainer'),
-    ).toHaveStyle({
-      backgroundColor: '#BDBDBD',
-    });
+    ).toBeDisabled();
   });
 });
