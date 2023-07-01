@@ -1,30 +1,58 @@
 import { makeStyles } from '@rneui/themed';
+import { applyRelativeSizes, relativeSizeConverter } from '@shared/utils/utils';
 
-export default makeStyles((theme, hiddenIcon: boolean) => ({
-  cDisplay: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    backgroundColor: hiddenIcon
-      ? theme.font.grayscale['100']
-      : theme.colors.primary,
-    borderRadius: 2,
-    maxWidth: 64,
-    height: 24,
-    paddingHorizontal: 6,
-    paddingVertical: 3,
-    marginRight: 4,
-  },
-  font: {
-    color: hiddenIcon ? theme.font.grayscale['500'] : theme.font.grayscale['0'],
+export default makeStyles((theme, hiddenIcon: boolean) => {
+  const [
+    DISPLAY_HEIGHT,
+    DISPLAY_PADDING_HORIZONTAL,
+    DISPLAY_PADDING_VERTICAL,
+    DISPLAY_MARGIN_RIGHT,
+    DISPLAY_BORDER_RADIUS,
+    FONT_SIZE,
+    FONT_LINE_HEIGHT,
+    ICON_SIZE,
+    ICON_CONTAINER_MARGIN_TOP,
+    IOCN_CONTAINER_MARGIN_RIGHT,
+  ] = applyRelativeSizes({
+    displayHeight: 24,
+    displayPaddingHorizontal: 6,
+    displayPaddingVertical: 3,
+    displayMarginRight: 4,
+    displayBorderRadius: 2,
     fontSize: theme.font.type.body3.fontSize,
-    lineHeight: theme.font.type.body3.lineHeight,
-  },
-  icon: {
-    color: theme.font.grayscale['0'],
-    size: 16,
-  },
-  cIcon: {
-    marginTop: 1,
-    marginRight: 2,
-  },
-}));
+    fontLineHeight: theme.font.type.body3.lineHeight,
+    iconSize: 16,
+    iconContainerMarginTop: 1,
+    iconContainerMarginRight: 2,
+  });
+
+  return {
+    cDisplay: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      backgroundColor: hiddenIcon
+        ? theme.font.grayscale['100']
+        : theme.colors.primary,
+      borderRadius: DISPLAY_BORDER_RADIUS,
+      height: DISPLAY_HEIGHT,
+      paddingHorizontal: DISPLAY_PADDING_HORIZONTAL,
+      paddingVertical: DISPLAY_PADDING_VERTICAL,
+      marginRight: DISPLAY_MARGIN_RIGHT,
+    },
+    font: {
+      color: hiddenIcon
+        ? theme.font.grayscale['500']
+        : theme.font.grayscale['0'],
+      fontSize: FONT_SIZE,
+      lineHeight: FONT_LINE_HEIGHT,
+    },
+    icon: {
+      color: theme.font.grayscale['0'],
+      size: ICON_SIZE,
+    },
+    cIcon: {
+      marginTop: ICON_CONTAINER_MARGIN_TOP,
+      marginRight: IOCN_CONTAINER_MARGIN_RIGHT,
+    },
+  };
+});

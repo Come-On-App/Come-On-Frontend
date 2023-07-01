@@ -1,16 +1,25 @@
 import { makeStyles } from '@rneui/themed';
+import { applyRelativeSizes } from '@shared/utils/utils';
 
-export default makeStyles((theme) => ({
-  icon: {
-    color: theme.font.grayscale['0'],
-    size: 24,
-  },
-  menuFont: {
-    color: theme.font.grayscale['900'],
-    fontSize: theme.font.type.body2.fontSize,
-  },
-  anchorBackground: {
+export default makeStyles((theme) => {
+  const [ICON_SIZE, MENU_FONT, BORDER_RADIUS] = applyRelativeSizes({
+    iconSize: 24,
+    menuFont: theme.font.type.body2.fontSize,
     borderRadius: 6,
-    backgroundColor: 'rgba(0, 0, 0, 0.4)',
-  },
-}));
+  });
+
+  return {
+    icon: {
+      color: theme.font.grayscale['0'],
+      size: ICON_SIZE,
+    },
+    menuFont: {
+      color: theme.font.grayscale['900'],
+      fontSize: MENU_FONT,
+    },
+    anchorBackground: {
+      borderRadius: BORDER_RADIUS,
+      backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    },
+  };
+});

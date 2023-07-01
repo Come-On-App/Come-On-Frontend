@@ -3,15 +3,16 @@ import { applyRelativeSizes } from '@shared/utils/utils';
 
 export default makeStyles(
   (theme, props: { bold?: boolean; backgroundColor?: string }) => {
-    const [BUTTON_HEIGHT, FONT_SIZE] = applyRelativeSizes({
+    const [BUTTON_HEIGHT, FONT_SIZE, BORDER_RADIUS] = applyRelativeSizes({
       buttonHeight: 48,
       fontSzie: theme.font.type.title4.fontSize,
+      borderRadius: 4,
     });
 
     return {
       defaultStyle: {
         height: BUTTON_HEIGHT,
-        borderRadius: 4,
+        borderRadius: BORDER_RADIUS,
         backgroundColor: props.backgroundColor
           ? props.backgroundColor
           : theme.colors.primary,

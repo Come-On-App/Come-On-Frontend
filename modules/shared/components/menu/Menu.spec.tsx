@@ -1,8 +1,9 @@
 import { describe, expect, test, jest } from '@jest/globals';
-import { fireEvent, render, screen } from '@testing-library/react-native';
+import { fireEvent, screen } from '@testing-library/react-native';
 import { Text } from 'react-native';
 
 import Menu from './Menu';
+import { render } from '../ThemeProvider';
 
 describe('Menu Compoent', () => {
   const MenuName = 'Show menu';

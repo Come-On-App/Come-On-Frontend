@@ -21,10 +21,10 @@ export default function Display({
   children,
   disabled = false,
 }: IDisplay) {
-  const { cDisplay: contianer, font } = useStyles(disabled);
+  const { cDisplay, font } = useStyles(disabled);
 
   return (
-    <View style={contianer}>
+    <View style={cDisplay}>
       {disabled ? null : <DisplayIcon name={name} />}
       <Font style={font} bold>
         {children}
