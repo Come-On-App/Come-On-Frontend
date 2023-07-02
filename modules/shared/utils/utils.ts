@@ -120,15 +120,17 @@ export function convertToRelativeSize(
   const cache = new Map<number, number>();
 
   return (size: number) => {
-    if (cache.has(size)) {
-      return cache.get(size) as number;
+    const validatedSize = _.isNumber(size) ? size : 0;
+
+    if (cache.has(validatedSize)) {
+      return cache.get(validatedSize) as number;
     }
 
     const result = PixelRatio.roundToNearestPixel(
-      size * (dimension / REFERENCE_WIDTH),
+      validatedSize * (dimension / REFERENCE_WIDTH),
     );
 
-    cache.set(size, result);
+    cache.set(validatedSize, Math.trunc(result));
 
     return result;
   };
