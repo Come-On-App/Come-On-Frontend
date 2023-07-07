@@ -1,6 +1,6 @@
 import { describe, expect, test } from '@jest/globals';
 
-import { render } from '@shared/components/ThemeProvider';
+import { render } from '@shared/utils/customRender';
 import { screen } from '@testing-library/react-native';
 import createTabBarLabel from './TabBarLabel';
 

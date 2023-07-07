@@ -1,7 +1,7 @@
 import { describe, expect, test } from '@jest/globals';
 import { fireEvent, screen } from '@testing-library/react-native';
 
-import { render } from '@shared/components/ThemeProvider';
+import { render } from '@shared/utils/customRender';
 import TestId from '@shared/constants/testIds';
 import NickName from './NickName';
 

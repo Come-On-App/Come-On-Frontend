@@ -2,7 +2,7 @@ import { describe, expect, test } from '@jest/globals';
 import { render, screen } from '@testing-library/react-native';
 
 import mockMembers from '@post/mocks/members';
-import { wrapper } from '@shared/components/ThemeProvider';
+import { wrapper } from '@shared/utils/customRender';
 import Members from './Members';
 
 describe('Members Compoent', () => {

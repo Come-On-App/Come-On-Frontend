@@ -1,10 +1,8 @@
 import { describe, expect, test } from '@jest/globals';
-import { render, screen } from '@testing-library/react-native';
+import { screen } from '@testing-library/react-native';
 
-import ThemeProvider from '@shared/components/ThemeProvider';
+import { render } from '@shared/utils/customRender';
 import Display from './Display';
-
-const wrapper = { wrapper: ThemeProvider };
 
 describe('Display Compoent', () => {
   const children = 'Hello Wrold';
@@ -14,14 +12,13 @@ describe('Display Compoent', () => {
       <Display name="check" disabled={false}>
         {children}
       </Display>,
-      wrapper,
     );
 
     expect(screen.getByTestId('RNE__ICON')).toBeOnTheScreen();
   });
 
   test('text 속성을 전달하면 텍스트가 렌더링 되어야 한다.', () => {
-    render(<Display name="check">{children}</Display>, wrapper);
+    render(<Display name="check">{children}</Display>);
 
     expect(screen.getByText(children)).toBeOnTheScreen();
   });
@@ -31,7 +28,6 @@ describe('Display Compoent', () => {
       <Display name="check" disabled>
         {children}
       </Display>,
-      wrapper,
     );
 
     expect(screen.queryByTestId('RNE__ICON')).toBeNull();
@@ -40,7 +36,6 @@ describe('Display Compoent', () => {
       <Display name="check" disabled={false}>
         {children}
       </Display>,
-      wrapper,
     );
 
     expect(screen.getByTestId('RNE__ICON')).toBeOnTheScreen();

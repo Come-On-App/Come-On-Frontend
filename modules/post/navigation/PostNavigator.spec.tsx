@@ -3,7 +3,7 @@ import { fireEvent, screen } from '@testing-library/react-native';
 import { NavigationContainer } from '@react-navigation/native';
 
 import TestId from '@shared/constants/testIds';
-import { render } from '@shared/components/ThemeProvider';
+import { render } from '@shared/utils/customRender';
 import QueryClientProvider from '@shared/provider/QueryClientProvider';
 import PostNavigator from './PostNavigator';
 

@@ -3,7 +3,7 @@ import { screen } from '@testing-library/react-native';
 import { NavigationContainer } from '@react-navigation/native';
 
 import TestId from '@shared/constants/testIds';
-import { render, wrapper } from '@shared/components/ThemeProvider';
+import { render, wrapper } from '@shared/utils/customRender';
 import QueryClientProvider from '@shared/provider/QueryClientProvider';
 import BottomTabNavigator from './BottomTabNavigator';
 import { Tab } from './config';

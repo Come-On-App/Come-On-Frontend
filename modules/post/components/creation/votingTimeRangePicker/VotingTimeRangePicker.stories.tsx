@@ -1,6 +1,6 @@
 import { ComponentMeta, StoryFnReactReturnType } from '@storybook/react-native';
 
-import { FontThemeProvider } from '@shared/components/ThemeProvider';
+import FontThemeProvider from '@shared/provider/FontProvider';
 import VotingTimeRangePicker from './VotingTimeRangePicker';
 import generateNavigationDecorator from '@shared/mocks/StoryBookStack';
 

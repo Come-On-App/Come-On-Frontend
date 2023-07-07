@@ -6,7 +6,7 @@ import { StyleSheet, View } from 'react-native';
 import Constants from 'expo-constants';
 
 import QueryClientProvider from '@shared/provider/QueryClientProvider';
-import { FontThemeProvider } from './modules/shared/components/ThemeProvider';
+import FontThemeProvider from '@shared/provider/FontProvider';
 import RootNavigation from './modules/app/navigation/RootNavigation';
 
 /**

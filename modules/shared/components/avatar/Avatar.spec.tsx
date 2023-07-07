@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react-native';
 
 import TestId from '@shared/constants/testIds';
 import Avatar, { BadgedAvatar } from './Avatar';
-import { wrapper } from '../ThemeProvider';
+import { wrapper } from '../../utils/customRender';
 
 describe('Avatar Component', () => {
   test('주어진 속성으로 올바르게 렌더링 해야한다.', () => {

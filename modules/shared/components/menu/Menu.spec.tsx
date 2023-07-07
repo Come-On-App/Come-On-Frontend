@@ -3,7 +3,7 @@ import { fireEvent, screen } from '@testing-library/react-native';
 import { Text } from 'react-native';
 
 import Menu from './Menu';
-import { render } from '../ThemeProvider';
+import { render } from '../../utils/customRender';
 
 describe('Menu Compoent', () => {
   const MenuName = 'Show menu';

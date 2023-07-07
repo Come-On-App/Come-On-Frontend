@@ -2,7 +2,7 @@ import { describe, expect, test } from '@jest/globals';
 import { render, screen } from '@testing-library/react-native';
 
 import Input from './Input';
-import { wrapper } from '../ThemeProvider';
+import { wrapper } from '../../utils/customRender';
 
 describe('Input Compoent', () => {
   test('빈 문자열 상태에서는 placeholder 텍스트가 렌더링 되어야 한다.', () => {

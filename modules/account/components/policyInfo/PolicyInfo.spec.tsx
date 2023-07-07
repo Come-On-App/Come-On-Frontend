@@ -1,7 +1,7 @@
 import { describe, expect, jest, test } from '@jest/globals';
 import { fireEvent, screen } from '@testing-library/react-native';
 
-import { render } from '@shared/components/ThemeProvider';
+import { render } from '@shared/utils/customRender';
 import PolicyInfo from './PolicyInfo';
 
 describe('PolicyInfo Compoent', () => {

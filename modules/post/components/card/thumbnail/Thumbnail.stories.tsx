@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { ComponentMeta } from '@storybook/react-native';
 
-import { FontThemeProvider } from '@shared/components/ThemeProvider';
+import FontThemeProvider from '@shared/provider/FontProvider';
 import Thumbnail from './Thumbnail';
 import { IWithTopComponent } from './type';
 import TopHeading from '../info/heading/TopHeading';

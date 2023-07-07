@@ -1,7 +1,7 @@
 import { describe, expect, test } from '@jest/globals';
 import { render, screen } from '@testing-library/react-native';
 
-import { wrapper } from '@shared/components/ThemeProvider';
+import { wrapper } from '@shared/utils/customRender';
 import TestId from '@shared/constants/testIds';
 import Card from './Card';
 

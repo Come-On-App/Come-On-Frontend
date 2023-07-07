@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react-native';
 
 import TestId from '@shared/constants/testIds';
 import CodeField from './CodeField';
-import { wrapper } from '../ThemeProvider';
+import { wrapper } from '../../utils/customRender';
 
 describe('CodeField Compoent', () => {
   const CELL_COUNT = 6;

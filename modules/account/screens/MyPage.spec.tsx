@@ -2,7 +2,7 @@ import { describe, expect, test } from '@jest/globals';
 import { screen } from '@testing-library/react-native';
 
 import TestId from '@shared/constants/testIds';
-import { render } from '@shared/components/ThemeProvider';
+import { render } from '@shared/utils/customRender';
 import MyPage from './MyPage';
 
 describe('<MyPage />', () => {

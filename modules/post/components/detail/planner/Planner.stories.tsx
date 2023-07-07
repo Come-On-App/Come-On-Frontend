@@ -1,6 +1,6 @@
 import { ComponentMeta } from '@storybook/react-native';
 
-import { FontThemeProvider } from '@shared/components/ThemeProvider';
+import FontThemeProvider from '@shared/provider/FontProvider';
 import Component from './Planner';
 import mockVenueList from '@post/mocks/venueList';
 import { ScrollView, View } from 'react-native';

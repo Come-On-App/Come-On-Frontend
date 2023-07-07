@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { ComponentMeta, ComponentStory } from '@storybook/react-native';
 
-import { FontThemeProvider } from '@shared/components/ThemeProvider';
+import FontThemeProvider from '@shared/provider/FontProvider';
 import Avatar, { BadgedAvatar as BadgedAvatarComponent } from './Avatar';
 
 const PATH = 'https://picsum.photos/200/300';

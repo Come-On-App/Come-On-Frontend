@@ -3,7 +3,7 @@ import { screen } from '@testing-library/react-native';
 
 import { View } from 'react-native';
 import DividerWrapper from './DividerWrapper';
-import { render } from '../ThemeProvider';
+import { render } from '../../utils/customRender';
 
 describe('DividerWrapper Compoent', () => {
   test('Divider 컴포넌트가 렌더링 되어야 한다.', () => {

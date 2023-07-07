@@ -1,6 +1,6 @@
 import { ComponentMeta } from '@storybook/react-native';
 
-import { FontThemeProvider } from '@shared/components/ThemeProvider';
+import FontThemeProvider from '@shared/provider/FontProvider';
 import AccountManagement from './AccountManagement';
 
 type Meta = ComponentMeta<typeof AccountManagement>;

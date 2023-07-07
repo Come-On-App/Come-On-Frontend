@@ -2,7 +2,7 @@ import { describe, expect, test, jest } from '@jest/globals';
 import { fireEvent, render, screen } from '@testing-library/react-native';
 
 import PressableInput from './PressableInput';
-import { wrapper } from '../ThemeProvider';
+import { wrapper } from '../../utils/customRender';
 import { Iicon } from '../icon/type';
 
 describe('PressableInput Compoent', () => {

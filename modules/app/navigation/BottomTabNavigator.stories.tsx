@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import { Tab } from './config';
 import BottomTabNavigator from './BottomTabNavigator';
-import { FontThemeProvider } from '@shared/components/ThemeProvider';
+import FontThemeProvider from '@shared/provider/FontProvider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import postHandlers from '@post/mocks/handlers';
 

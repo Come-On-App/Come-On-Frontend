@@ -2,7 +2,7 @@ import { describe, expect, test, jest } from '@jest/globals';
 import { fireEvent, render, screen } from '@testing-library/react-native';
 
 import TestId from '@shared/constants/testIds';
-import { wrapper } from '@shared/components/ThemeProvider';
+import { wrapper } from '@shared/utils/customRender';
 import QueryClientProvider from '@shared/provider/QueryClientProvider';
 import MeetingDashboard from './MeetingDashboard';
 

@@ -1,6 +1,6 @@
 import { ComponentMeta } from '@storybook/react-native';
 
-import { FontThemeProvider } from '@shared/components/ThemeProvider';
+import FontThemeProvider from '@shared/provider/FontProvider';
 import UserAvatar from './UserAvatar';
 import { mockUserAvatarImage } from '@account/mocks/mockUserAvatarImage';
 

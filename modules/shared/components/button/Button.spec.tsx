@@ -2,7 +2,7 @@ import { describe, expect, test, jest } from '@jest/globals';
 import { render, screen, fireEvent } from '@testing-library/react-native';
 
 import Button from './Button';
-import { wrapper } from '../ThemeProvider';
+import { wrapper } from '../../utils/customRender';
 
 describe('Button Compoent', () => {
   test('버튼을 눌렀을 때 핸들러가 올바르게 동작해야 한다.', () => {

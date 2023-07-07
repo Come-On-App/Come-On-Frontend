@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react-native';
 import _ from 'lodash';
 
 import TestId from '@shared/constants/testIds';
-import { wrapper } from '@shared/components/ThemeProvider';
+import { wrapper } from '@shared/utils/customRender';
 import CardList from './CardList';
 import { CardInfo } from '../card/type';
 

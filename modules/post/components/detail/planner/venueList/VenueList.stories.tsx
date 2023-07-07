@@ -1,6 +1,6 @@
 import { ComponentMeta } from '@storybook/react-native';
 
-import { FontThemeProvider } from '@shared/components/ThemeProvider';
+import FontThemeProvider from '@shared/provider/FontProvider';
 import Component from './VenueList';
 import mockVenueList from '@post/mocks/venueList';
 import { View } from 'react-native';

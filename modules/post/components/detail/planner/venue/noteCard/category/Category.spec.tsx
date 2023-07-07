@@ -1,7 +1,7 @@
 import { describe, expect, test } from '@jest/globals';
 import { render, screen } from '@testing-library/react-native';
 
-import { wrapper } from '@shared/components/ThemeProvider';
+import { wrapper } from '@shared/utils/customRender';
 import Category from './Category';
 
 describe('Category Compoent', () => {
