@@ -3,20 +3,30 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import { Tab } from './config';
 import BottomTabNavigator from './BottomTabNavigator';
-import { FontLoader } from '@shared/components/ThemeProvider';
+import { FontThemeProvider } from '@shared/components/ThemeProvider';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import postHandlers from '@post/mocks/handlers';
 
 type Meta = ComponentMeta<typeof BottomTabNavigator>;
+const queryClient = new QueryClient();
 
 export default {
   title: 'Screens',
   component: BottomTabNavigator,
+  parameters: {
+    msw: {
+      handlers: [postHandlers],
+    },
+  },
   decorators: [
     (Story) => (
-      <FontLoader>
-        <NavigationContainer>
-          <Story />
-        </NavigationContainer>
-      </FontLoader>
+      <QueryClientProvider client={queryClient}>
+        <FontThemeProvider>
+          <NavigationContainer>
+            <Story />
+          </NavigationContainer>
+        </FontThemeProvider>
+      </QueryClientProvider>
     ),
   ],
 } as Meta;

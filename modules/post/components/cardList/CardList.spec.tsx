@@ -23,7 +23,7 @@ const testCase: CardInfo[] = _.range(4).map(() => ({
 
 describe('CardList Compoent', () => {
   test('요소의 개수만큼 올바르게 렌더링 되어야 한다.', () => {
-    render(<CardList payloads={testCase} />, wrapper);
+    render(<CardList payload={testCase} />, wrapper);
 
     expect(screen.getByTestId(TestId.post.cardList)).toBeOnTheScreen();
     expect(screen.getAllByTestId(TestId.post.card)).toHaveLength(4);

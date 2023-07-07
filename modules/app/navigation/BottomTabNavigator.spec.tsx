@@ -4,15 +4,18 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import TestId from '@shared/constants/testIds';
 import { render, wrapper } from '@shared/components/ThemeProvider';
+import QueryClientProvider from '@shared/provider/QueryClientProvider';
 import BottomTabNavigator from './BottomTabNavigator';
 import { Tab } from './config';
 
 describe('<BottomTabNavigator />', () => {
   test('첫 번째 하단 네비게이터는 모임 리스트 컴포넌트가 렌더링 되어야 한다.', () => {
     const Navigation = (
-      <NavigationContainer>
-        <BottomTabNavigator initialRouteName={Tab.one} />
-      </NavigationContainer>
+      <QueryClientProvider>
+        <NavigationContainer>
+          <BottomTabNavigator initialRouteName={Tab.one} />
+        </NavigationContainer>
+      </QueryClientProvider>
     );
 
     render(Navigation, wrapper);
