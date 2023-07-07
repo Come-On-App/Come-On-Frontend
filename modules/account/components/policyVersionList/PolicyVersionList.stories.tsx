@@ -1,6 +1,6 @@
 import { ComponentMeta } from '@storybook/react-native';
 
-import { FontLoader } from '@shared/components/ThemeProvider';
+import { FontThemeProvider } from '@shared/components/ThemeProvider';
 import PolicyVersionList from './PolicyVersionList';
 import { View } from 'react-native';
 
@@ -11,9 +11,9 @@ const IconButtonMeta: ComponentMeta<typeof PolicyVersionList> = {
   component: PolicyVersionList,
   decorators: [
     (Story) => (
-      <FontLoader>
+      <FontThemeProvider>
         <Story />
-      </FontLoader>
+      </FontThemeProvider>
     ),
   ],
 };

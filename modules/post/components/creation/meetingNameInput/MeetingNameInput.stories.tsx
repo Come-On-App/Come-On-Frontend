@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { ComponentMeta } from '@storybook/react-native';
 
-import { FontLoader } from '@shared/components/ThemeProvider';
+import { FontThemeProvider } from '@shared/components/ThemeProvider';
 import MeetingNameInput from './MeetingNameInput';
 
 type Meta = ComponentMeta<typeof MeetingNameInput>;
@@ -11,9 +11,9 @@ export default {
   component: MeetingNameInput,
   decorators: [
     (Story) => (
-      <FontLoader>
+      <FontThemeProvider>
         <Story />
-      </FontLoader>
+      </FontThemeProvider>
     ),
   ],
 } as Meta;

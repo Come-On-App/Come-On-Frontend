@@ -1,6 +1,6 @@
 import { ComponentMeta } from '@storybook/react-native';
 
-import { FontLoader } from '@shared/components/ThemeProvider';
+import { FontThemeProvider } from '@shared/components/ThemeProvider';
 import mockMembers from '@post/mocks/members';
 import Component from './Participants';
 
@@ -11,9 +11,9 @@ export default {
   component: Component,
   decorators: [
     (Story) => (
-      <FontLoader>
+      <FontThemeProvider>
         <Story />
-      </FontLoader>
+      </FontThemeProvider>
     ),
   ],
 } as Meta;

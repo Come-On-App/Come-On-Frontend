@@ -1,6 +1,6 @@
 import { ComponentMeta } from '@storybook/react-native';
 
-import { FontLoader } from '@shared/components/ThemeProvider';
+import { FontThemeProvider } from '@shared/components/ThemeProvider';
 import AccountManagement from './AccountManagement';
 
 type Meta = ComponentMeta<typeof AccountManagement>;
@@ -10,9 +10,9 @@ const IconButtonMeta: ComponentMeta<typeof AccountManagement> = {
   component: AccountManagement,
   decorators: [
     (Story) => (
-      <FontLoader>
+      <FontThemeProvider>
         <Story />
-      </FontLoader>
+      </FontThemeProvider>
     ),
   ],
 };

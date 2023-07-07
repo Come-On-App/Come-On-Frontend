@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { ComponentMeta } from '@storybook/react-native';
 
-import { FontLoader } from '@shared/components/ThemeProvider';
+import { FontThemeProvider } from '@shared/components/ThemeProvider';
 import ConfirmCancelButton from './ConfirmCancelButton';
 
 type Meta = ComponentMeta<typeof ConfirmCancelButton>;
@@ -11,11 +11,11 @@ export default {
   component: ConfirmCancelButton,
   decorators: [
     (Story) => (
-      <FontLoader>
+      <FontThemeProvider>
         <View style={{ margin: 10 }}>
           <Story />
         </View>
-      </FontLoader>
+      </FontThemeProvider>
     ),
   ],
   argTypes: {

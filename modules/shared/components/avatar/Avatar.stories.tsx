@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { ComponentMeta, ComponentStory } from '@storybook/react-native';
 
-import { FontLoader } from '@shared/components/ThemeProvider';
+import { FontThemeProvider } from '@shared/components/ThemeProvider';
 import Avatar, { BadgedAvatar as BadgedAvatarComponent } from './Avatar';
 
 const PATH = 'https://picsum.photos/200/300';
@@ -13,11 +13,11 @@ const IconButtonMeta: ComponentMeta<typeof Avatar> = {
   component: Avatar,
   decorators: [
     (Story) => (
-      <FontLoader>
+      <FontThemeProvider>
         <View style={{ margin: 10 }}>
           <Story />
         </View>
-      </FontLoader>
+      </FontThemeProvider>
     ),
   ],
   argTypes: {

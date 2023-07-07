@@ -1,6 +1,6 @@
 import { ComponentMeta } from '@storybook/react-native';
 
-import { FontLoader } from '@shared/components/ThemeProvider';
+import { FontThemeProvider } from '@shared/components/ThemeProvider';
 import CodeEntryButton from './CodeEntryButton';
 
 type Meta = ComponentMeta<typeof CodeEntryButton>;
@@ -10,9 +10,9 @@ export default {
   component: CodeEntryButton,
   decorators: [
     (Story) => (
-      <FontLoader>
+      <FontThemeProvider>
         <Story />
-      </FontLoader>
+      </FontThemeProvider>
     ),
   ],
   argTypes: {

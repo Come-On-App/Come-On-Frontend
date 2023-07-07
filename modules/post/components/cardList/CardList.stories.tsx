@@ -1,6 +1,6 @@
 import { ComponentMeta } from '@storybook/react-native';
 
-import { FontLoader } from '@shared/components/ThemeProvider';
+import { FontThemeProvider } from '@shared/components/ThemeProvider';
 import DB from '@post/mocks/meetingPostLists';
 import CardList from './CardList';
 
@@ -11,15 +11,15 @@ export default {
   component: CardList,
   decorators: [
     (Story) => (
-      <FontLoader>
+      <FontThemeProvider>
         <Story />
-      </FontLoader>
+      </FontThemeProvider>
     ),
   ],
 } as Meta;
 
 export const Default: Meta = {
   args: {
-    payloads: DB,
+    payload: DB,
   },
 };

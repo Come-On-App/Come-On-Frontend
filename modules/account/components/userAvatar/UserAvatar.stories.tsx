@@ -1,6 +1,6 @@
 import { ComponentMeta } from '@storybook/react-native';
 
-import { FontLoader } from '@shared/components/ThemeProvider';
+import { FontThemeProvider } from '@shared/components/ThemeProvider';
 import UserAvatar from './UserAvatar';
 import { mockUserAvatarImage } from '@account/mocks/mockUserAvatarImage';
 
@@ -11,9 +11,9 @@ const IconButtonMeta: ComponentMeta<typeof UserAvatar> = {
   component: UserAvatar,
   decorators: [
     (Story) => (
-      <FontLoader>
+      <FontThemeProvider>
         <Story />
-      </FontLoader>
+      </FontThemeProvider>
     ),
   ],
 };

@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { ComponentMeta, ComponentStory } from '@storybook/react-native';
 
-import { FontLoader } from '@shared/components/ThemeProvider';
+import { FontThemeProvider } from '@shared/components/ThemeProvider';
 import IconButton from './IconButton';
 
 type Meta = ComponentMeta<typeof IconButton>;
@@ -11,11 +11,11 @@ const IconButtonMeta: ComponentMeta<typeof IconButton> = {
   component: IconButton,
   decorators: [
     (Story) => (
-      <FontLoader>
+      <FontThemeProvider>
         <View style={{ margin: 10 }}>
           <Story />
         </View>
-      </FontLoader>
+      </FontThemeProvider>
     ),
   ],
   argTypes: {
