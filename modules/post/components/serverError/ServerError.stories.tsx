@@ -1,13 +1,14 @@
 import { ComponentMeta } from '@storybook/react-native';
 
 import FontThemeProvider from '@shared/provider/FontProvider';
-import Logo from './Logo';
+import DB from '@post/mocks/meetingPostLists';
+import ServerError from './ServerError';
 
-type Meta = ComponentMeta<typeof Logo>;
+type Meta = ComponentMeta<typeof ServerError>;
 
 export default {
-  title: 'Connection - Logo',
-  component: Logo,
+  title: 'CardList',
+  component: ServerError,
   decorators: [
     (Story) => (
       <FontThemeProvider>
@@ -17,4 +18,6 @@ export default {
   ],
 } as Meta;
 
-export const Default: Meta = {};
+export const Error: Meta = {
+  args: {},
+};
