@@ -10,7 +10,7 @@ describe('<EnterMeeting />', () => {
     render(<EnterMeeting />, wrapper);
 
     expect(screen.getByTestId(TestId.connection.code)).toBeOnTheScreen();
-    expect(screen.getByTestId(TestId.shared.logo)).toBeOnTheScreen();
+    expect(screen.getByTestId(TestId.shared.logo.defulat)).toBeOnTheScreen();
     expect(
       screen.getByText('공유 받은 입장 코드를 입력해 주세요'),
     ).toBeOnTheScreen();

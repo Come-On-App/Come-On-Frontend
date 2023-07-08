@@ -6,8 +6,13 @@ import TestId from '@shared/constants/testIds';
 import { ICardList } from './type';
 import Card from '../card/Card';
 import { SEARCH_ADN_CREATE_HEIGHT } from '../search/searchAndCreate/style';
+import EmptyCardList from '../emptyCardList/EmptyCardList';
 
 export default function CardList({ payload = [] }: ICardList) {
+  if (_.isEmpty(payload)) {
+    return <EmptyCardList />;
+  }
+
   return (
     <ScrollView
       testID={TestId.post.cardList}

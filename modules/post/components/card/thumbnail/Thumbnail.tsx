@@ -8,7 +8,7 @@ export default function Thumbnail({ uri, children }: IThumbnail) {
   const { ImageContianer } = useStyles();
 
   return (
-    <Card.Image style={ImageContianer} source={{ uri }}>
+    <Card.Image transition style={ImageContianer} source={{ uri }}>
       {children}
     </Card.Image>
   );

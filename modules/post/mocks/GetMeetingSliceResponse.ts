@@ -4,9 +4,9 @@ export default {
   currentSlice: 0,
   sizePerSlice: 3,
   first: true,
-  last: false,
+  last: true,
   hasPrevious: false,
-  hasNext: true,
+  hasNext: false,
   contentsCount: 3,
   contents: [
     {
@@ -23,7 +23,10 @@ export default {
       calendarEndTo: '2023-03-23',
       meetingStartTime: '08:00:00',
       meetingImageUrl: 'https://picsum.photos/500/500',
-      fixedDate: null,
+      fixedDate: {
+        startFrom: '2023-07-10',
+        endTo: '2023-07-11',
+      },
     },
     {
       meetingId: 2,
@@ -41,7 +44,7 @@ export default {
       meetingImageUrl: 'https://picsum.photos/500/500',
       fixedDate: {
         startFrom: '2023-06-10',
-        endTo: '2023-06-20',
+        endTo: '2023-06-10',
       },
     },
     {
@@ -71,10 +74,21 @@ export default {
       myMeetingRole: 'PARTICIPANT',
       meetingName: '음악 감상 모임',
       calendarStartFrom: '2023-05-05',
-      calendarEndTo: '2023-05-06',
+      calendarEndTo: '2023-05-05',
       meetingStartTime: '19:30:00',
       meetingImageUrl: 'https://picsum.photos/500/500',
       fixedDate: null,
     },
   ],
 } as GetMeetingSliceResponse;
+
+export const EmptyResponse: GetMeetingSliceResponse = {
+  currentSlice: 0,
+  sizePerSlice: 3,
+  first: true,
+  last: true,
+  hasPrevious: false,
+  hasNext: false,
+  contentsCount: 0,
+  contents: [],
+};
