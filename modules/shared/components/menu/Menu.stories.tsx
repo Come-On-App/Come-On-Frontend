@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 
 import Menu from './Menu';
 import Icon from '../icon/Icon';
-import { FontThemeProvider } from '../../utils/customRender';
+import FontThemeProvider from '@shared/provider/FontProvider';
 
 const list = [
   {

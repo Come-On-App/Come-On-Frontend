@@ -1,6 +1,6 @@
+import { SEARCH_ADN_CREATE_HEIGHT } from '@post/components/search/searchAndCreate/style';
 import { makeStyles } from '@rneui/themed';
 
-import { SEARCH_ADN_CREATE_HEIGHT } from '@post/components/search/searchAndCreate/style';
 import { applyRelativeSizes } from '@shared/utils/utils';
 
 export default makeStyles((theme) => {
@@ -8,22 +8,24 @@ export default makeStyles((theme) => {
     INPUT_FONT_SIZE,
     INPUT_CONTAINER_HEIGHT,
     INPUT_CONTAINER_PADDING_HORIZONTAL,
-    CONTAINER_CODE_FIELD_WIDTH_HEIGHT,
     CONTAINER_CODE_FIELD_MARGIN_HORIZONTAL,
     CODE_FIELD_FONT_SIZE,
     CONTAINER_PRESSABLE_INNER_INPUT_MARGIN_LEFT,
     CONTAINER_PRESSABLE_INPUT_ICON_MARGIN_RIGHT,
     BORDER_RADIUS,
+    CONTAINER_CODE_FIELD_WIDTH,
+    CONTAINER_CODE_FIELD_HEIGHT,
   ] = applyRelativeSizes({
     inputFontSize: theme.font.type.body1.fontSize,
     inputContainerHeight: 44,
     inputContainerPaddingHorizontal: 10,
-    containerCodeFieldWidthHeigth: 50,
     containerCodeFieldMarginHorizontal: 2,
     codeFieldFontSize: theme.font.type.title1.fontSize,
     containerPressableInnerInputMarginLeft: 10,
     containerPressableInputIconMarginRight: 10,
     borderRadius: 4,
+    containerCodeFieldWidth: 50,
+    containerCodeFieldhHeigth: 58,
   });
 
   return {
@@ -59,15 +61,16 @@ export default makeStyles((theme) => {
       marginRight: CONTAINER_PRESSABLE_INPUT_ICON_MARGIN_RIGHT,
     },
     cCodeField: {
+      overflow: 'hidden',
       backgroundColor: theme.font.grayscale['100'],
       borderRadius: BORDER_RADIUS,
-      width: CONTAINER_CODE_FIELD_WIDTH_HEIGHT,
-      height: CONTAINER_CODE_FIELD_WIDTH_HEIGHT,
+      width: CONTAINER_CODE_FIELD_WIDTH,
+      height: CONTAINER_CODE_FIELD_HEIGHT,
       marginHorizontal: CONTAINER_CODE_FIELD_MARGIN_HORIZONTAL,
     },
     codeFieldFont: {
       fontFamily: 'Pretendard-SemiBold',
-      lineHeight: CONTAINER_CODE_FIELD_WIDTH_HEIGHT,
+      lineHeight: CONTAINER_CODE_FIELD_HEIGHT,
       textAlign: 'center',
       color: theme.font.grayscale['900'],
       fontSize: CODE_FIELD_FONT_SIZE,

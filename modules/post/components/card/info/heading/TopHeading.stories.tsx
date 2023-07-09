@@ -12,7 +12,7 @@ export default {
   decorators: [
     (Story) => (
       <FontThemeProvider>
-        <View style={{ margin: 10, backgroundColor: 'grey', borderRadius: 10 }}>
+        <View style={{ margin: 10, borderRadius: 10 }}>
           <Story />
         </View>
       </FontThemeProvider>

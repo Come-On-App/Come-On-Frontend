@@ -15,7 +15,7 @@ export default {
   decorators: [
     (Story) => (
       <FontThemeProvider>
-        <View style={{ margin: 10 }}>
+        <View style={{ margin: 20 }}>
           <Story />
         </View>
       </FontThemeProvider>
@@ -51,7 +51,7 @@ type MenuStory = ComponentStory<typeof CardMenu>;
 
 export const MenuDisplay: MenuStory = () => {
   return (
-    <View style={{ width: 24 }}>
+    <View style={{ width: '7%' }}>
       <CardMenu />
     </View>
   );
