@@ -1,12 +1,13 @@
-import React from 'react';
 import { ScrollView } from 'react-native';
+import React from 'react';
 
-import TestId from '@shared/constants/testIds';
+import ConfirmCancelButton from '@post/components/button/ConfirmCancelButton';
 import MeetingNameInput from '@post/components/creation/meetingNameInput/MeetingNameInput';
 import Uploader from '@post/components/creation/uploader/Uploader';
 import VotingTimeRangePicker from '@post/components/creation/votingTimeRangePicker/VotingTimeRangePicker';
-import ConfirmCancelButton from '@post/components/button/ConfirmCancelButton';
 import DividerWrapper from '@shared/components/layout/DividerWrapper';
+import ScreenLayout from '@shared/components/layout/ScreenLayout';
+import TestId from '@shared/constants/testIds';
 
 export default function MeetingPostCreator() {
   return (
@@ -15,10 +16,12 @@ export default function MeetingPostCreator() {
       <MeetingNameInput />
       <VotingTimeRangePicker />
       <DividerWrapper>
-        <ConfirmCancelButton
-          onCancelHandler={() => null}
-          onConfirmlHandler={() => null}
-        />
+        <ScreenLayout>
+          <ConfirmCancelButton
+            onCancelHandler={() => null}
+            onConfirmlHandler={() => null}
+          />
+        </ScreenLayout>
       </DividerWrapper>
     </ScrollView>
   );
