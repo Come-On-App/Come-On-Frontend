@@ -6,6 +6,7 @@ import {
   createLengthValidator,
   formatDateRange,
   formatTimeWithAMPM,
+  isExpiry,
   truncateText,
   validateCode,
 } from './utils';
@@ -56,16 +57,16 @@ describe('utils Test', () => {
 
       expect(textTruncator(text)).toEqual('42456');
     });
-  });
 
-  test('formatTimeWithAMPM 함수는 지정된 오전/오후 형태로 포맷팅 되어야 한다.', () => {
-    const time1 = '06:00:00';
-    const time2 = '18:00:00';
-    const time3 = '12:00:00';
+    test('formatTimeWithAMPM 함수는 지정된 오전/오후 형태로 포맷팅 되어야 한다.', () => {
+      const time1 = '06:00:00';
+      const time2 = '18:00:00';
+      const time3 = '12:00:00';
 
-    expect(formatTimeWithAMPM(time1)).toEqual('오전 6:00');
-    expect(formatTimeWithAMPM(time2)).toEqual('오후 6:00');
-    expect(formatTimeWithAMPM(time3)).toEqual('오후 12:00');
+      expect(formatTimeWithAMPM(time1)).toEqual('오전 6:00');
+      expect(formatTimeWithAMPM(time2)).toEqual('오후 6:00');
+      expect(formatTimeWithAMPM(time3)).toEqual('오후 12:00');
+    });
   });
 
   test('validateCode 함수는 숫자와 알파벳 대소문자 유효성 체크를 하여 boolean을 반환해야 한다.', () => {
@@ -103,5 +104,10 @@ describe('utils Test', () => {
 
       expect(actualSize).toBe(expectedSize);
     });
+  });
+
+  test('isExpiry 함수는 전달된 인수가 현재 시간을 기준으로 넘어갔는지 판단하여 반환해야 한다.', () => {
+    expect(isExpiry('2020-08-30 23:11:30')).toBeTruthy();
+    expect(isExpiry('2100-08-30 23:11:30')).toBeFalsy();
   });
 });

@@ -153,3 +153,10 @@ export const applyRelativeSizes: IapplyRelativeSizes = (sizes) => {
 
   return Object.values(sizes).map(relativeSizeConverter);
 };
+
+export function isExpiry(date: string) {
+  const targetDate = new Date(date);
+  const currentDate = new Date();
+
+  return targetDate < currentDate;
+}
