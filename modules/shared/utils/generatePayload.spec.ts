@@ -10,7 +10,7 @@ const initialPayload: Payload = { age: 30, arr: [1, 2, 3] };
 let payload: {
   update: (fn: (previous: Payload) => Partial<Payload>) => void;
   get: () => Payload;
-  observe: (fn: (previous: Payload) => void) => void;
+  observe: (fn: (previous: Payload) => void, id: string) => void;
 };
 
 beforeEach(() => {
@@ -94,7 +94,7 @@ describe('generatePayload()', () => {
     test('observe 함수를 등록하면 변화를 감지하여 호출한다.', () => {
       const mockFn = jest.fn();
 
-      payload.observe(mockFn);
+      payload.observe(mockFn, 'mock_observe');
       payload.update(() => {
         return {
           age: 50,
@@ -102,6 +102,22 @@ describe('generatePayload()', () => {
       });
 
       expect(mockFn).toHaveBeenCalled();
+    });
+
+    test('중복 observe는 등록되지 말아야 한다.', () => {
+      const mockFn = jest.fn();
+
+      payload.observe(jest.fn(), 'mock_observe');
+      payload.observe(mockFn, 'mock_observe');
+      payload.observe(mockFn, 'mock_observe');
+      payload.observe(mockFn, 'mock_observe');
+      payload.update(() => {
+        return {
+          age: 50,
+        };
+      });
+
+      expect(mockFn).not.toHaveBeenCalled();
     });
   });
 });

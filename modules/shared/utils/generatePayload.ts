@@ -15,7 +15,8 @@ import { isEqual, cloneDeep } from 'lodash';
 export default function generatePayload<T extends object>(initialPayload: T) {
   return (function innerFn(init: T) {
     let currentPayload: T = init;
-    const watchers: ((previous: T) => void)[] = [];
+    const watchers = new Set<(previous: T) => void>();
+    const observerId = new Set<string>();
 
     function get() {
       return currentPayload;
@@ -34,8 +35,11 @@ export default function generatePayload<T extends object>(initialPayload: T) {
       }
     }
 
-    function observe(fn: (previous: T) => void) {
-      watchers.push(fn);
+    function observe(fn: (previous: T) => void, id: string) {
+      if (!observerId.has(id)) {
+        watchers.add(fn);
+        observerId.add(id);
+      }
     }
 
     return { update, get, observe };
