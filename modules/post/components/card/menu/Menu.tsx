@@ -1,17 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
 
 import Menu from '@shared/components/menu/Menu';
 import { IList } from '@shared/components/menu/type';
 import Icon from '@shared/components/icon/Icon';
+import Invitation from '@post/components/invitation/Invitation';
 import useStyle from './style';
+import { IcardMenu } from './type';
 
-export default function CardMenu() {
+export default function CardMenu({ id }: IcardMenu) {
   const { icon, menuFont, anchorBackground } = useStyle();
+  const [showModal, setCodeModal] = useState(false);
   const MenuList: IList[] = [
     {
       name: '초대코드 관리',
-      onPress: () => null,
+      onPress: () => setCodeModal(true),
     },
     {
       name: '모임 수정',
@@ -31,14 +34,23 @@ export default function CardMenu() {
   ];
 
   return (
-    <Menu
-      fontAllStyle={menuFont}
-      list={MenuList}
-      anchor={
-        <View style={anchorBackground}>
-          <Icon name="more-vert" size={icon.size} color={icon.color} />
-        </View>
-      }
-    />
+    <View>
+      <Menu
+        fontAllStyle={menuFont}
+        list={MenuList}
+        anchor={
+          <View style={anchorBackground}>
+            <Icon name="more-vert" size={icon.size} color={icon.color} />
+          </View>
+        }
+        modalComponent={
+          <Invitation
+            id={id}
+            showModal={showModal}
+            onClose={() => setCodeModal(false)}
+          />
+        }
+      />
+    </View>
   );
 }

@@ -1,5 +1,5 @@
+import React from 'react';
 import { View } from 'react-native';
-import React, { useEffect, useState } from 'react';
 import { Overlay } from '@rneui/themed';
 
 import TestId from '@shared/constants/testIds';
@@ -16,34 +16,29 @@ export default function InvitationModal({
   code,
   type,
   onPressRight,
+  onPressLeft,
 }: IinvitationModal) {
   const {
     button: { left, right },
     message: { status, subStatus },
   } = config[type];
-  const { container } = useStyles();
-  const [show, setStateModal] = useState(isVisible);
-  const cancelHandler = () => setStateModal(false);
-
-  useEffect(() => {
-    setStateModal(isVisible);
-  }, [isVisible]);
+  const { container, cButton } = useStyles();
 
   return (
     <Overlay
-      onBackdropPress={cancelHandler}
       testID={TestId.post.modal}
-      isVisible={show}
+      isVisible={isVisible}
       overlayStyle={container}
+      onBackdropPress={onPressLeft}
     >
       <Message text={status} />
       <Code value={code} />
       <SubMessage text={subStatus} />
-      <View style={{ width: '100%' }}>
+      <View style={cButton}>
         <ConfirmCancelButton
           cancelText={left.text}
           confirmText={right.text}
-          onCancelHandler={cancelHandler}
+          onCancelHandler={onPressLeft}
           onConfirmlHandler={onPressRight}
           leftButtonColor={left.color}
           leftDisabled={left.disabled}

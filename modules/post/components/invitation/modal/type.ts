@@ -1,4 +1,9 @@
-type ModalStatus = 'Loading' | 'Created' | 'Expired' | 'Copied';
+export type ModalStatus =
+  | 'Loading'
+  | 'Created'
+  | 'Expired'
+  | 'Copied'
+  | 'Failed';
 
 export type ModalType = {
   [Key in ModalStatus]: {
@@ -26,4 +31,5 @@ export interface IinvitationModal {
   code: string;
   type: ModalStatus;
   onPressRight: () => void;
+  onPressLeft: () => void;
 }

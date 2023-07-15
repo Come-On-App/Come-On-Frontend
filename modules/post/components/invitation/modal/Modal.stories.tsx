@@ -1,48 +1,80 @@
-import { ComponentMeta } from '@storybook/react-native';
+import { ComponentMeta, ComponentStory } from '@storybook/react-native';
 
-import FontThemeProvider from '@shared/provider/FontProvider';
 import InvitationModal from './Modal';
 import {
   mockInvitationModal1,
   mockInvitationModal2,
   mockInvitationModal3,
   mockInvitationModal4,
+  mockInvitationModal5,
 } from '@post/mocks/invitationModal';
+import { useState } from 'react';
 
 type Meta = ComponentMeta<typeof InvitationModal>;
 
 export default {
   title: 'Invitation - Modal',
   component: InvitationModal,
-  decorators: [
-    (Story) => (
-      <FontThemeProvider>
-        <Story />
-      </FontThemeProvider>
-    ),
-  ],
 } as Meta;
 
-export const Generating: Meta = {
-  args: {
-    ...mockInvitationModal1,
-  },
+type InvitationModalStory = ComponentStory<typeof InvitationModal>;
+
+export const Loading: InvitationModalStory = () => {
+  const [isVisible, setVisible] = useState(true);
+
+  return (
+    <InvitationModal
+      {...mockInvitationModal1}
+      isVisible={isVisible}
+      onPressLeft={() => setVisible(false)}
+    />
+  );
 };
 
-export const Expiration: Meta = {
-  args: {
-    ...mockInvitationModal2,
-  },
+export const Expiration: InvitationModalStory = () => {
+  const [isVisible, setVisible] = useState(true);
+
+  return (
+    <InvitationModal
+      {...mockInvitationModal2}
+      isVisible={isVisible}
+      onPressLeft={() => setVisible(false)}
+    />
+  );
 };
 
-export const Created: Meta = {
-  args: {
-    ...mockInvitationModal3,
-  },
+export const Created: InvitationModalStory = () => {
+  const [isVisible, setVisible] = useState(true);
+
+  return (
+    <InvitationModal
+      {...mockInvitationModal3}
+      isVisible={isVisible}
+      onPressLeft={() => setVisible(false)}
+    />
+  );
 };
 
-export const Copied: Meta = {
-  args: {
-    ...mockInvitationModal4,
-  },
+export const Copied: InvitationModalStory = () => {
+  const [isVisible, setVisible] = useState(true);
+
+  return (
+    <InvitationModal
+      {...mockInvitationModal4}
+      isVisible={isVisible}
+      onPressLeft={() => setVisible(false)}
+    />
+  );
+};
+
+export const Failed: InvitationModalStory = () => {
+  const [isVisible, setVisible] = useState(true);
+
+  return (
+    <InvitationModal
+      {...mockInvitationModal5}
+      isVisible={isVisible}
+      onPressLeft={() => setVisible(false)}
+    />
+  );
 };

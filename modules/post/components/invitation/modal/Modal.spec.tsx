@@ -13,6 +13,7 @@ describe('Modal Compoent', () => {
       code: '------',
       type: 'Loading',
       onPressRight: () => null,
+      onPressLeft: () => null,
     };
 
     render(
@@ -21,13 +22,16 @@ describe('Modal Compoent', () => {
         code={mockModal.code}
         type={mockModal.type}
         onPressRight={mockModal.onPressRight}
+        onPressLeft={mockModal.onPressLeft}
       />,
     );
 
     expect(screen.queryByTestId(TestId.post.modal)).toBeOnTheScreen();
-    expect(screen.queryByText('초대코드 생성중...')).toBeOnTheScreen();
     expect(
-      screen.queryByText('코드 요청 중입니다 잠시만 기다려주세요'),
+      screen.queryByText('초대 코드를 생성 중입니다...'),
+    ).toBeOnTheScreen();
+    expect(
+      screen.queryByText('코드 요청 중입니다. 잠시만 기다려주세요.'),
     ).toBeOnTheScreen();
     expect(
       screen.queryByRole('button', {
@@ -48,6 +52,7 @@ describe('Modal Compoent', () => {
       isVisible: true,
       code: '1B2C3D',
       type: 'Expired',
+      onPressLeft: () => null,
       onPressRight: () => null,
     };
 
@@ -56,14 +61,15 @@ describe('Modal Compoent', () => {
         isVisible={mockModal.isVisible}
         code={mockModal.code}
         type={mockModal.type}
+        onPressLeft={mockModal.onPressLeft}
         onPressRight={mockModal.onPressRight}
       />,
     );
 
     expect(screen.queryByTestId(TestId.post.modal)).toBeOnTheScreen();
-    expect(screen.queryByText('초대코드가 만료됐습니다!')).toBeOnTheScreen();
+    expect(screen.queryByText('초대 코드가 만료되었습니다.')).toBeOnTheScreen();
     expect(
-      screen.queryByText('갱신하기 버튼을 눌러 코드를 새로 생성하세요'),
+      screen.queryByText('"갱신하기" 버튼을 클릭하여 코드를 생성해주세요.'),
     ).toBeOnTheScreen();
     expect(
       screen.queryByRole('button', {
@@ -84,6 +90,7 @@ describe('Modal Compoent', () => {
       isVisible: true,
       code: '1B2C3D',
       type: 'Created',
+      onPressLeft: () => null,
       onPressRight: () => null,
     };
 
@@ -92,14 +99,15 @@ describe('Modal Compoent', () => {
         isVisible={mockModal.isVisible}
         code={mockModal.code}
         type={mockModal.type}
+        onPressLeft={mockModal.onPressLeft}
         onPressRight={mockModal.onPressRight}
       />,
     );
 
     expect(screen.queryByTestId(TestId.post.modal)).toBeOnTheScreen();
-    expect(screen.queryByText('초대코드가 생성됐습니다!')).toBeOnTheScreen();
+    expect(screen.queryByText('초대 코드가 생성되었습니다!')).toBeOnTheScreen();
     expect(
-      screen.queryByText('복사하기 버튼을 눌러 코드를 복사하세요'),
+      screen.queryByText('"복사하기" 버튼을 클릭하여 코드를 복사해주세요.'),
     ).toBeOnTheScreen();
     expect(
       screen.queryByRole('button', {
@@ -120,6 +128,7 @@ describe('Modal Compoent', () => {
       isVisible: true,
       code: '1B2C3D',
       type: 'Copied',
+      onPressLeft: () => null,
       onPressRight: () => null,
     };
 
@@ -128,13 +137,14 @@ describe('Modal Compoent', () => {
         isVisible={mockModal.isVisible}
         code={mockModal.code}
         type={mockModal.type}
+        onPressLeft={mockModal.onPressLeft}
         onPressRight={mockModal.onPressRight}
       />,
     );
 
-    expect(screen.queryByText('초대코드가 복사되었습니다!')).toBeOnTheScreen();
+    expect(screen.queryByText('초대 코드가 복사되었습니다!')).toBeOnTheScreen();
     expect(
-      screen.queryByText('모임에 참여하도록 다른 사용자에게 공유하세요'),
+      screen.queryByText('다른 사용자에게 모임에 참여하도록 공유해주세요.'),
     ).toBeOnTheScreen();
     expect(
       screen.queryByRole('button', {
