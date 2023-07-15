@@ -4,10 +4,12 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import { Tab } from './config';
 import BottomTabNavigator from './BottomTabNavigator';
-import FontThemeProvider from '@shared/provider/FontProvider';
-import postHandlers from '@post/mocks/handlers';
+import {
+  requestGetEntryCode,
+  requstGetMeetings,
+  requestPostEntryCode,
+} from '@post/mocks/handlers';
 import { BASE_URL } from '@app/api/axiosInstance';
-import QueryClientProvider from '@shared/provider/QueryClientProvider';
 import { EmptyResponse } from '@post/mocks/GetMeetingSliceResponse';
 
 type Meta = ComponentMeta<typeof BottomTabNavigator>;
@@ -17,13 +19,9 @@ export default {
   component: BottomTabNavigator,
   decorators: [
     (Story) => (
-      <QueryClientProvider>
-        <FontThemeProvider>
-          <NavigationContainer>
-            <Story />
-          </NavigationContainer>
-        </FontThemeProvider>
-      </QueryClientProvider>
+      <NavigationContainer>
+        <Story />
+      </NavigationContainer>
     ),
   ],
 } as Meta;
@@ -35,7 +33,7 @@ export const MeetingDashboard: Meta = {
   },
   parameters: {
     msw: {
-      handlers: [postHandlers],
+      handlers: [requstGetMeetings, requestGetEntryCode, requestPostEntryCode],
     },
   },
 };
@@ -48,7 +46,7 @@ export const MeetingDashboardEmpty: Meta = {
   parameters: {
     msw: {
       handlers: [
-        rest.get(`${BASE_URL}/api/v2/meetings`, (req, res, ctx) => {
+        rest.get(`${BASE_URL}/api/v2/meetings`, (_req, res, ctx) => {
           return res(ctx.status(200), ctx.json(EmptyResponse));
         }),
       ],
@@ -64,7 +62,7 @@ export const MeetingDashboardError: Meta = {
   parameters: {
     msw: {
       handlers: [
-        rest.get(`${BASE_URL}/api/v2/meetings`, (req, res, ctx) => {
+        rest.get(`${BASE_URL}/api/v2/meetings`, (_req, res, ctx) => {
           return res(ctx.status(500));
         }),
       ],

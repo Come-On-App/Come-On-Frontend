@@ -10,7 +10,7 @@ export default {
   contentsCount: 3,
   contents: [
     {
-      meetingId: 1,
+      meetingId: 500,
       hostUser: {
         userId: 1,
         nickname: '여행마스터',
@@ -18,7 +18,7 @@ export default {
       },
       memberCount: 2,
       myMeetingRole: 'PARTICIPANT',
-      meetingName: '물개들의 모임',
+      meetingName: '물개들의 모임 (초대코드 관리 에러상태)',
       calendarStartFrom: '2023-03-01',
       calendarEndTo: '2023-03-23',
       meetingStartTime: '08:00:00',
@@ -29,7 +29,7 @@ export default {
       },
     },
     {
-      meetingId: 2,
+      meetingId: 600,
       hostUser: {
         userId: 2,
         nickname: 'banana',
@@ -37,7 +37,7 @@ export default {
       },
       memberCount: 4,
       myMeetingRole: 'HOST',
-      meetingName: '물개들의 모임',
+      meetingName: '물개들의 모임 (초대코드 관리 만료상태)',
       calendarStartFrom: '2023-06-01',
       calendarEndTo: '2023-06-30',
       meetingStartTime: '13:30:00',

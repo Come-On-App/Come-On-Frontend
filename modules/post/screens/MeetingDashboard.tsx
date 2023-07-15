@@ -47,6 +47,7 @@ function renderCardList(data: GetMeetingSliceResponse) {
     const isDecided = !_.isEmpty(response.fixedDate);
 
     return {
+      id: response.meetingId,
       isDecided,
       people: response.memberCount,
       subTitle: {
