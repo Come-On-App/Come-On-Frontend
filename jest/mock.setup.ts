@@ -7,3 +7,6 @@ jest.mock('react-native-maps', () => {
     PROVIDER_GOOGLE: 'google',
   };
 });
+
+jest.mock('expo-font');
+jest.mock('expo-asset');

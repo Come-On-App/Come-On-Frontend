@@ -19,6 +19,7 @@ export default function ImageUploader({
   if (isLoading) {
     return (
       <Image
+        onPress={onPress}
         accessibilityHint="loading"
         source={{ uri: undefined }}
         PlaceholderContent={<ActivityIndicator />}
