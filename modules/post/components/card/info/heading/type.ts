@@ -1,11 +1,12 @@
 import { IsubTitle } from '../title/type';
 
-export interface IBottomHeading {
+export interface IbottomHeading {
   title: string;
   subTitle: IsubTitle;
 }
 
-export interface ITopHeading {
+export interface ItopHeading {
   people: number;
   isDecided: boolean;
+  id: number;
 }

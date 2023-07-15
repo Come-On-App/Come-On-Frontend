@@ -8,6 +8,7 @@ import Card from './Card';
 
 describe('card Compoent', () => {
   const payload: CardInfo = {
+    id: 0,
     uri: '...png',
     people: 30,
     isDecided: true,

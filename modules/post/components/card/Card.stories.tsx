@@ -23,6 +23,7 @@ export default {
 export const Default: Meta = {
   args: {
     payload: {
+      id: 10,
       uri: path,
       people: 30,
       isDecided: false,

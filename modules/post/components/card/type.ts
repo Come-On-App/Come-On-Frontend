@@ -1,4 +1,5 @@
 export interface CardInfo {
+  id: number;
   uri: string;
   people: number;
   isDecided: boolean;

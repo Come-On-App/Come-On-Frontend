@@ -19,7 +19,7 @@ export default function CardList({ payload = [] }: ICardList) {
       contentContainerStyle={{ paddingBottom: SEARCH_ADN_CREATE_HEIGHT }} // 카드 리스트의 하단이 잘리는 이슈 방지
     >
       {payload.map((content) => {
-        return <Card payload={content} key={`${_.uniqueId()}`} />;
+        return <Card payload={content} key={content.id} />;
       })}
     </ScrollView>
   );
