@@ -23,4 +23,14 @@ describe('MeetingPostCreator Compoent', () => {
 
     expect(screen.getByTestId(TestId.post.creator)).toBeOnTheScreen();
   });
+
+  test('초기 상태에는 버튼이 Disabled 처리가 되어야 한다.', () => {
+    render(<MeetingPostCreator />, wrapper);
+
+    expect(
+      screen.getByRole('button', {
+        name: '완료',
+      }),
+    ).toBeDisabled();
+  });
 });

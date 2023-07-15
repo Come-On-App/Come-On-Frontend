@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 
 import { ScreenTitle } from '@shared/components/font/Font';
@@ -6,13 +6,42 @@ import ImageUploader from '@shared/components/imageUploader/ImageUploader';
 import ScreenLayout from '@shared/components/layout/ScreenLayout';
 import DividerWrapper from '@shared/components/layout/DividerWrapper';
 import ContentHeader from '@shared/components/layout/ContentHeader';
+import { postCreatorPayload } from './payload';
 
 const TITLE = '사진 등록';
 const DESCRIPTION = '사진을 등록해 주세요';
 
+export default function Uploader() {
+  const [image, pickImage, isLoading] = useImagePicker();
+
+  useEffect(() => {
+    if (image) {
+      postCreatorPayload.update(() => ({
+        meetingImage: image,
+      }));
+    }
+  }, [image]);
+
+  return (
+    <DividerWrapper>
+      <ScreenLayout>
+        <ContentHeader>
+          <ScreenTitle>{TITLE}</ScreenTitle>
+        </ContentHeader>
+        <ImageUploader
+          isLoading={isLoading}
+          uri={image}
+          description={DESCRIPTION}
+          onPress={pickImage}
+        />
+      </ScreenLayout>
+    </DividerWrapper>
+  );
+}
+
 function useImagePicker(): [string | undefined, () => Promise<void>, boolean] {
   const [image, setImage] = useState<string>();
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const pickImage = async () => {
     setLoading(true);
 
@@ -30,25 +59,5 @@ function useImagePicker(): [string | undefined, () => Promise<void>, boolean] {
     setLoading(false);
   };
 
-  return [image, pickImage, loading];
-}
-
-export default function Uploader() {
-  const [image, pickImage, loading] = useImagePicker();
-
-  return (
-    <DividerWrapper>
-      <ScreenLayout>
-        <ContentHeader>
-          <ScreenTitle>{TITLE}</ScreenTitle>
-        </ContentHeader>
-        <ImageUploader
-          isLoading={loading}
-          uri={image}
-          description={DESCRIPTION}
-          onPress={pickImage}
-        />
-      </ScreenLayout>
-    </DividerWrapper>
-  );
+  return [image, pickImage, isLoading];
 }
