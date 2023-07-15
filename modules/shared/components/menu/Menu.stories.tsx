@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 
 import Menu from './Menu';
 import Icon from '../icon/Icon';
-import { FontLoader } from '../ThemeProvider';
+import FontThemeProvider from '@shared/provider/FontProvider';
 
 const list = [
   {
@@ -30,7 +30,7 @@ export default {
   title: 'Menu',
   decorators: [
     (Story) => (
-      <FontLoader>
+      <FontThemeProvider>
         <View
           style={{
             height: '100%',
@@ -40,7 +40,7 @@ export default {
         >
           <Story />
         </View>
-      </FontLoader>
+      </FontThemeProvider>
     ),
   ],
   component: Menu,

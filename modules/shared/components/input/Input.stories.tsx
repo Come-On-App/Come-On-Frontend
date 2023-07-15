@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { ComponentMeta } from '@storybook/react-native';
 
-import { FontLoader } from '@shared/components/ThemeProvider';
+import FontThemeProvider from '@shared/provider/FontProvider';
 import Input from './Input';
 
 type Meta = ComponentMeta<typeof Input>;
@@ -11,11 +11,11 @@ export default {
   component: Input,
   decorators: [
     (Story) => (
-      <FontLoader>
+      <FontThemeProvider>
         <View style={{ padding: 10 }}>
           <Story />
         </View>
-      </FontLoader>
+      </FontThemeProvider>
     ),
   ],
 } as Meta;

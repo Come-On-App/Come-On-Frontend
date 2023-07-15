@@ -1,9 +1,16 @@
+import { rest } from 'msw';
 import { ComponentMeta } from '@storybook/react-native';
 import { NavigationContainer } from '@react-navigation/native';
 
 import { Tab } from './config';
 import BottomTabNavigator from './BottomTabNavigator';
-import { FontLoader } from '@shared/components/ThemeProvider';
+import {
+  requestGetEntryCode,
+  requstGetMeetings,
+  requestPostEntryCode,
+} from '@post/mocks/handlers';
+import { BASE_URL } from '@app/api/axiosInstance';
+import { EmptyResponse } from '@post/mocks/GetMeetingSliceResponse';
 
 type Meta = ComponentMeta<typeof BottomTabNavigator>;
 
@@ -12,18 +19,54 @@ export default {
   component: BottomTabNavigator,
   decorators: [
     (Story) => (
-      <FontLoader>
-        <NavigationContainer>
-          <Story />
-        </NavigationContainer>
-      </FontLoader>
+      <NavigationContainer>
+        <Story />
+      </NavigationContainer>
     ),
   ],
 } as Meta;
 
 export const MeetingDashboard: Meta = {
+  title: '(API) MeetingDashboard - Success',
   args: {
     initialRouteName: Tab.one,
+  },
+  parameters: {
+    msw: {
+      handlers: [requstGetMeetings, requestGetEntryCode, requestPostEntryCode],
+    },
+  },
+};
+
+export const MeetingDashboardEmpty: Meta = {
+  title: '(API) MeetingDashboard - Empty',
+  args: {
+    initialRouteName: Tab.one,
+  },
+  parameters: {
+    msw: {
+      handlers: [
+        rest.get(`${BASE_URL}/api/v2/meetings`, (_req, res, ctx) => {
+          return res(ctx.status(200), ctx.json(EmptyResponse));
+        }),
+      ],
+    },
+  },
+};
+
+export const MeetingDashboardError: Meta = {
+  title: '(API) MeetingDashboard - Error',
+  args: {
+    initialRouteName: Tab.one,
+  },
+  parameters: {
+    msw: {
+      handlers: [
+        rest.get(`${BASE_URL}/api/v2/meetings`, (_req, res, ctx) => {
+          return res(ctx.status(500));
+        }),
+      ],
+    },
   },
 };
 

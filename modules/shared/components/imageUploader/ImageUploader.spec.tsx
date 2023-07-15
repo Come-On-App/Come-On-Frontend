@@ -1,7 +1,7 @@
 import { describe, expect, jest, test } from '@jest/globals';
 import { fireEvent, render, screen } from '@testing-library/react-native';
 
-import { wrapper } from '@shared/components/ThemeProvider';
+import { wrapper } from '@shared/utils/customRender';
 import ImageUploader from './ImageUploader';
 
 const uri =

@@ -1,7 +1,7 @@
 import { ComponentMeta } from '@storybook/react-native';
 
-import { FontLoader } from '@shared/components/ThemeProvider';
-import Description from './Description';
+import FontThemeProvider from '@shared/provider/FontProvider';
+import Description from './CodeDescription';
 
 type Meta = ComponentMeta<typeof Description>;
 
@@ -10,9 +10,9 @@ export default {
   component: Description,
   decorators: [
     (Story) => (
-      <FontLoader>
+      <FontThemeProvider>
         <Story />
-      </FontLoader>
+      </FontThemeProvider>
     ),
   ],
 } as Meta;

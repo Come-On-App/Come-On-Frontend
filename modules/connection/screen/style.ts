@@ -1,7 +1,7 @@
 import { makeStyles } from '@rneui/themed';
 
 export default makeStyles(() => ({
-  contianer: {
+  container: {
     flex: 1,
     backgroundColor: 'white',
   },

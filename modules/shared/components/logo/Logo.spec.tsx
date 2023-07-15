@@ -8,6 +8,6 @@ describe('Logo Compoent', () => {
   test('로고가 올바르게 렌더링 되야 한다', () => {
     render(<Logo />);
 
-    expect(screen.queryByTestId(TestId.shared.logo)).toBeOnTheScreen();
+    expect(screen.queryByTestId(TestId.shared.logo.defulat)).toBeOnTheScreen();
   });
 });

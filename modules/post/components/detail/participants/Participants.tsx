@@ -2,11 +2,11 @@ import React from 'react';
 
 import { ScreenTitle } from '@shared/components/font/Font';
 import ScreenLayout from '@shared/components/layout/ScreenLayout';
+import DividerWrapper from '@shared/components/layout/DividerWrapper';
+import ContentHeader from '@shared/components/layout/ContentHeader';
 import MemberCount from './memberCount/MemberCount';
 import Members from './members/Members';
 import { Iparticipants } from './type';
-import DividerWrapper from '../../../../shared/components/layout/DividerWrapper';
-import ContentHeader from '../../../../shared/components/layout/ContentHeader';
 
 const TITLE = '모임 멤버';
 

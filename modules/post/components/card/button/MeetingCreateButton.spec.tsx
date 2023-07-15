@@ -2,7 +2,7 @@ import { describe, expect, test, jest } from '@jest/globals';
 import { render, screen } from '@testing-library/react-native';
 
 import TestId from '@shared/constants/testIds';
-import { wrapper } from '@shared/components/ThemeProvider';
+import { wrapper } from '@shared/utils/customRender';
 import MeetingCreateButton from './MeetingCreateButton';
 
 jest.mock('@react-navigation/native', () => {

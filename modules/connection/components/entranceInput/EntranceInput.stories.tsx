@@ -1,6 +1,6 @@
 import { ComponentMeta } from '@storybook/react-native';
 
-import { FontLoader } from '@shared/components/ThemeProvider';
+import FontThemeProvider from '@shared/provider/FontProvider';
 import EntranceInput from './EntranceInput';
 
 type Meta = ComponentMeta<typeof EntranceInput>;
@@ -10,9 +10,9 @@ export default {
   component: EntranceInput,
   decorators: [
     (Story) => (
-      <FontLoader>
+      <FontThemeProvider>
         <Story />
-      </FontLoader>
+      </FontThemeProvider>
     ),
   ],
 } as Meta;

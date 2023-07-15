@@ -10,6 +10,7 @@ const TestId = {
   post: {
     list: 'TestId__post_list',
     card: 'TestId__post_card',
+    skeleton: 'TestId__post_skeleton',
     creator: 'TestId__post_creator',
     dateSelector: 'TestId__post_dateSelector',
     cardList: 'TestId__post_cardList',
@@ -19,6 +20,7 @@ const TestId = {
     venueList: 'TestId__post_venueList',
     order: 'TestId__post_order',
     map: 'TestId__post_map',
+    modal: 'TestId__post_modal',
     button: {
       create: 'TestId__post_meeting_create_button',
       searchBar: 'TestId__post_button_searchBar',
@@ -26,7 +28,11 @@ const TestId = {
     },
   },
   shared: {
-    logo: 'TestId__connection_logo',
+    logo: {
+      defulat: 'TestId__connection_logo_defulat',
+      error: 'TestId__connection_logo_error',
+      robot: 'TestId__connection_logo_robot',
+    },
     button: {
       default: 'TestId__shared_button_default',
       icon: 'TestId__shared_button_icon',

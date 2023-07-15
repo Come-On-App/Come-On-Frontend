@@ -1,6 +1,6 @@
 import { ComponentMeta, StoryFnReactReturnType } from '@storybook/react-native';
 
-import { FontLoader } from '@shared/components/ThemeProvider';
+import FontThemeProvider from '@shared/provider/FontProvider';
 import VotingTimeRangePicker from './VotingTimeRangePicker';
 import generateNavigationDecorator from '@shared/mocks/StoryBookStack';
 
@@ -14,9 +14,9 @@ export default {
   decorators: [
     NavigationDecorator,
     (Story) => (
-      <FontLoader>
+      <FontThemeProvider>
         <Story />
-      </FontLoader>
+      </FontThemeProvider>
     ),
   ],
 } as Meta;

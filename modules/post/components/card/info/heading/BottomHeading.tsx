@@ -3,12 +3,12 @@ import React from 'react';
 
 import Title from '../title/Title';
 import SubTitle from '../title/SubTitle';
-import { IBottomHeading } from './type';
+import { IbottomHeading } from './type';
 
 export default function BottomHeading({
   title,
   subTitle: { userName, range },
-}: IBottomHeading) {
+}: IbottomHeading) {
   return (
     <View>
       <Title text={title} />

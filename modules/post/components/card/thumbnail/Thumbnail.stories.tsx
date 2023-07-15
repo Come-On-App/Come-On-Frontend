@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { ComponentMeta } from '@storybook/react-native';
 
-import { FontLoader } from '@shared/components/ThemeProvider';
+import FontThemeProvider from '@shared/provider/FontProvider';
 import Thumbnail from './Thumbnail';
 import { IWithTopComponent } from './type';
 import TopHeading from '../info/heading/TopHeading';
@@ -16,11 +16,11 @@ export default {
   component: Thumbnail,
   decorators: [
     (Story) => (
-      <FontLoader>
+      <FontThemeProvider>
         <View style={{ margin: 10 }}>
           <Story />
         </View>
-      </FontLoader>
+      </FontThemeProvider>
     ),
   ],
   args: {

@@ -5,6 +5,8 @@ import TestId from '@shared/constants/testIds';
 import useStyle from './style';
 import { Ibutton } from './type';
 
+export const DEFUALT_BUTTON_WIDTH = 192;
+
 export default function Button({
   onPress,
   title,

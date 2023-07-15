@@ -1,7 +1,10 @@
 import { getStorybookUI } from '@storybook/react-native';
 
 import './storybook.requires';
+import { initialize } from './mswDecorator';
 
-const StorybookUIRoot = getStorybookUI();
+initialize();
+
+const StorybookUIRoot = getStorybookUI({});
 
 export default StorybookUIRoot;

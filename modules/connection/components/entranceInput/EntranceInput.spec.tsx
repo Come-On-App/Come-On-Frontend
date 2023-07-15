@@ -9,7 +9,7 @@ import {
 import { fireEvent, render, screen } from '@testing-library/react-native';
 
 import TestId from '@shared/constants/testIds';
-import { wrapper } from '@shared/components/ThemeProvider';
+import { wrapper } from '@shared/utils/customRender';
 import { useState } from 'react';
 import { clearMocks } from 'jest.config';
 import EntranceInput from './EntranceInput';

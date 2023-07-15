@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { ComponentMeta } from '@storybook/react-native';
 
-import { FontLoader } from '@shared/components/ThemeProvider';
+import FontThemeProvider from '@shared/provider/FontProvider';
 import TextLengthCounter from './TextLengthCounter';
 
 type Meta = ComponentMeta<typeof TextLengthCounter>;
@@ -11,11 +11,11 @@ export default {
   component: TextLengthCounter,
   decorators: [
     (Story) => (
-      <FontLoader>
+      <FontThemeProvider>
         <View style={{ padding: 10 }}>
           <Story />
         </View>
-      </FontLoader>
+      </FontThemeProvider>
     ),
   ],
 } as Meta;

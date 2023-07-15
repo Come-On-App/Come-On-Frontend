@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react-native';
 
-import { FontLoader } from '@shared/components/ThemeProvider';
+import FontThemeProvider from '@shared/provider/FontProvider';
 import MeetingDatePicker from './MeetingDatePicker';
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -13,11 +13,11 @@ export default {
   component: MeetingDatePicker,
   decorators: [
     (Story) => (
-      <FontLoader>
+      <FontThemeProvider>
         <NavigationContainer>
           <Story />
         </NavigationContainer>
-      </FontLoader>
+      </FontThemeProvider>
     ),
   ],
 } as Meta;

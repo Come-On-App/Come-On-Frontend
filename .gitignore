@@ -11,6 +11,9 @@ npm-debug.*
 web-build/
 coverage/**/*
 
+# environment
+.env
+
 # macOS
 .DS_Store
 

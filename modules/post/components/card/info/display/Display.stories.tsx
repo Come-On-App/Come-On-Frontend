@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { ComponentMeta, ComponentStory } from '@storybook/react-native';
 
-import { FontLoader } from '@shared/components/ThemeProvider';
+import FontThemeProvider from '@shared/provider/FontProvider';
 import Display from './Display';
 import CardMenu from '../../menu/Menu';
 import Title from '../title/Title';
@@ -14,11 +14,11 @@ export default {
   component: Display,
   decorators: [
     (Story) => (
-      <FontLoader>
-        <View style={{ margin: 10 }}>
+      <FontThemeProvider>
+        <View style={{ margin: 20 }}>
           <Story />
         </View>
-      </FontLoader>
+      </FontThemeProvider>
     ),
   ],
 } as Meta;
@@ -51,7 +51,7 @@ type MenuStory = ComponentStory<typeof CardMenu>;
 
 export const MenuDisplay: MenuStory = () => {
   return (
-    <View style={{ width: 24 }}>
+    <View style={{ width: '7%' }}>
       <CardMenu />
     </View>
   );

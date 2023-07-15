@@ -1,6 +1,6 @@
 import { ComponentMeta } from '@storybook/react-native';
 
-import { FontLoader } from '@shared/components/ThemeProvider';
+import FontThemeProvider from '@shared/provider/FontProvider';
 import Component from './Planner';
 import mockVenueList from '@post/mocks/venueList';
 import { ScrollView, View } from 'react-native';
@@ -12,11 +12,11 @@ export default {
   component: Component,
   decorators: [
     (Story) => (
-      <FontLoader>
+      <FontThemeProvider>
         <ScrollView>
           <Story />
         </ScrollView>
-      </FontLoader>
+      </FontThemeProvider>
     ),
   ],
 } as Meta;

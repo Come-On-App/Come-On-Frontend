@@ -5,9 +5,9 @@ import GroupDisplay from '../display/GroupDisplay';
 import DecisionDisplay from '../display/DecisionDisplay';
 import CardMenu from '../../menu/Menu';
 import useStyles from './style';
-import { ITopHeading } from './type';
+import { ItopHeading } from './type';
 
-export default function TopHeading({ people, isDecided }: ITopHeading) {
+export default function TopHeading({ people, isDecided, id }: ItopHeading) {
   const { cTopHeading, cTopWrap } = useStyles();
 
   return (
@@ -16,7 +16,7 @@ export default function TopHeading({ people, isDecided }: ITopHeading) {
         <GroupDisplay people={people} />
         <DecisionDisplay isDecided={isDecided} />
       </View>
-      <CardMenu />
+      <CardMenu id={id} />
     </View>
   );
 }

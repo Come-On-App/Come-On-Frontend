@@ -2,11 +2,11 @@ import _ from 'lodash/fp';
 import { Dimensions, PixelRatio } from 'react-native';
 import { IFormatDateRange, IapplyRelativeSizes, formatType } from './type';
 
-function isEqualDate([first, second]: string[][]) {
+function isEqualDate([first, second]: string[]) {
   return _.equals(first, second);
 }
 
-function joinDate(ymd: string[][]) {
+function joinDate(ymd: string[]) {
   const separator = ' ~ ';
 
   if (isEqualDate(ymd)) {
@@ -120,17 +120,20 @@ export function convertToRelativeSize(
   const cache = new Map<number, number>();
 
   return (size: number) => {
-    if (cache.has(size)) {
-      return cache.get(size) as number;
+    const validatedSize = _.isNumber(size) ? size : 0;
+
+    if (cache.has(validatedSize)) {
+      return cache.get(validatedSize) as number;
     }
 
     const result = PixelRatio.roundToNearestPixel(
-      size * (dimension / REFERENCE_WIDTH),
+      validatedSize * (dimension / REFERENCE_WIDTH),
     );
+    const calculatedData = Math.trunc(result);
 
-    cache.set(size, result);
+    cache.set(validatedSize, calculatedData);
 
-    return result;
+    return calculatedData;
   };
 }
 
@@ -150,3 +153,10 @@ export const applyRelativeSizes: IapplyRelativeSizes = (sizes) => {
 
   return Object.values(sizes).map(relativeSizeConverter);
 };
+
+export function isExpiry(date: string) {
+  const targetDate = new Date(date);
+  const currentDate = new Date();
+
+  return targetDate < currentDate;
+}

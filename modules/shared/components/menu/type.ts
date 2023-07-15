@@ -10,4 +10,5 @@ export interface IMenu {
   anchor: React.ReactNode;
   list: IList[];
   fontAllStyle?: StyleProp<TextStyle>;
+  modalComponent?: JSX.Element;
 }

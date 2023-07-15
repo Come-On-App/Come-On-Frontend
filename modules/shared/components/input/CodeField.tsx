@@ -15,7 +15,7 @@ export default function CodeField({
   value,
   cellCount,
   setValue,
-  fontStyle: font,
+  fontStyle,
   cursorSymbol,
 }: IcodeField) {
   const ref = useBlurOnFulfill({
@@ -47,7 +47,7 @@ export default function CodeField({
             key={index}
             testID={TestId.shared.input.codeInput.cell}
             onLayout={getCellOnLayoutHandler(index)}
-            style={[cCodeField, codeFieldFont, font]}
+            style={[cCodeField, codeFieldFont, fontStyle]}
           >
             {symbol || cursor}
           </Text>

@@ -1,6 +1,6 @@
 import { ComponentMeta } from '@storybook/react-native';
 
-import { FontLoader } from '@shared/components/ThemeProvider';
+import FontThemeProvider from '@shared/provider/FontProvider';
 import Card from './Card';
 
 const path =
@@ -13,9 +13,9 @@ export default {
   component: Card,
   decorators: [
     (Story) => (
-      <FontLoader>
+      <FontThemeProvider>
         <Story />
-      </FontLoader>
+      </FontThemeProvider>
     ),
   ],
 } as Meta;
@@ -23,6 +23,7 @@ export default {
 export const Default: Meta = {
   args: {
     payload: {
+      id: 10,
       uri: path,
       people: 30,
       isDecided: false,

@@ -1,7 +1,7 @@
 import { ComponentMeta } from '@storybook/react-native';
 
-import { FontLoader } from '@shared/components/ThemeProvider';
 import Font from './Font';
+import FontThemeProvider from '@shared/provider/FontProvider';
 
 type Meta = ComponentMeta<typeof Font>;
 
@@ -13,9 +13,9 @@ export default {
   component: Font,
   decorators: [
     (Story) => (
-      <FontLoader>
+      <FontThemeProvider>
         <Story />
-      </FontLoader>
+      </FontThemeProvider>
     ),
   ],
   args: {

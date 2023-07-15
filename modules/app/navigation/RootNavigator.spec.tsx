@@ -2,19 +2,25 @@ import { describe, expect, test } from '@jest/globals';
 import { render, screen } from '@testing-library/react-native';
 
 import TestId from '@shared/constants/testIds';
-import { wrapper } from '@shared/components/ThemeProvider';
+import { wrapper } from '@shared/utils/customRender';
+import QueryClientProvider from '@shared/provider/QueryClientProvider';
 import RootNavigation from './RootNavigation';
 
 describe('<RootNavigatro />', () => {
-  test('최초에 앱이 실행되면 첫 번째 하단 네비게이터가 활성화돼야 한다.', () => {
-    render(<RootNavigation />, wrapper);
+  const Component = (
+    <QueryClientProvider>
+      <RootNavigation />
+    </QueryClientProvider>
+  );
 
-    const FirstBottomTab = screen.getByRole('button', {
+  test('최초에 앱이 실행되면 첫 번째 하단 네비게이터가 활성화돼야 한다.', async () => {
+    render(Component, wrapper);
+
+    const FirstBottomTab = await screen.findByRole('button', {
       selected: true,
     });
-    const Component = screen.getByTestId(TestId.post.list);
 
-    expect(Component).toBeOnTheScreen();
+    expect(await screen.findByTestId(TestId.post.list)).toBeOnTheScreen();
     expect(FirstBottomTab).toBeTruthy();
   });
 });

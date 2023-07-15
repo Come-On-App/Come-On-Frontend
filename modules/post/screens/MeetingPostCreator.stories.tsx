@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react-native';
 
-import { FontLoader } from '@shared/components/ThemeProvider';
+import FontThemeProvider from '@shared/provider/FontProvider';
 import MeetingPostCreator from './MeetingPostCreator';
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -13,11 +13,11 @@ export default {
   component: MeetingPostCreator,
   decorators: [
     (Story) => (
-      <FontLoader>
+      <FontThemeProvider>
         <NavigationContainer>
           <Story />
         </NavigationContainer>
-      </FontLoader>
+      </FontThemeProvider>
     ),
   ],
 } as Meta;

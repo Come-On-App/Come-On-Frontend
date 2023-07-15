@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { ComponentMeta } from '@storybook/react-native';
 
-import { FontLoader } from '@shared/components/ThemeProvider';
+import FontThemeProvider from '@shared/provider/FontProvider';
 import WelcomeMessage from './WelcomeMessage';
 
 type Meta = ComponentMeta<typeof WelcomeMessage>;
@@ -11,9 +11,9 @@ const IconButtonMeta: ComponentMeta<typeof WelcomeMessage> = {
   component: WelcomeMessage,
   decorators: [
     (Story) => (
-      <FontLoader>
+      <FontThemeProvider>
         <Story />
-      </FontLoader>
+      </FontThemeProvider>
     ),
   ],
 };

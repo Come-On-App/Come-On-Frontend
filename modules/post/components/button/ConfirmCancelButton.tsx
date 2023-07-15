@@ -3,7 +3,6 @@ import { View } from 'react-native';
 import React from 'react';
 
 import Button from '@shared/components/button/Button';
-import ScreenLayout from '@shared/components/layout/ScreenLayout';
 import useStyles from './style';
 import { IconfirmCancelButton } from './type';
 
@@ -16,28 +15,36 @@ export default function ConfirmCancelButton({
   containerStyle,
   onCancelHandler,
   onConfirmlHandler,
+  leftDisabled,
+  rightDisabled,
+  leftButtonColor,
+  rightButtonColor,
 }: IconfirmCancelButton) {
-  const { area, leftArea, rightArea, leftButton } = useStyles();
+  const { area, leftArea, rightArea, leftButton, rightButton } = useStyles({
+    leftButtonColor,
+    rightButtonColor,
+  });
 
   return (
-    <ScreenLayout>
-      <View style={[area, containerStyle]}>
-        <View style={leftArea}>
-          <Button
-            bold
-            title={cancelText ?? CANCEL}
-            onPress={onCancelHandler}
-            backgroundColor={leftButton.backgroundColor}
-          />
-        </View>
-        <View style={rightArea}>
-          <Button
-            title={confirmText ?? CONFIRM}
-            onPress={onConfirmlHandler}
-            bold
-          />
-        </View>
+    <View style={[area, containerStyle]}>
+      <View style={leftArea}>
+        <Button
+          bold
+          disabled={leftDisabled}
+          title={cancelText ?? CANCEL}
+          onPress={onCancelHandler}
+          backgroundColor={leftButton.backgroundColor}
+        />
       </View>
-    </ScreenLayout>
+      <View style={rightArea}>
+        <Button
+          bold
+          disabled={rightDisabled}
+          title={confirmText ?? CONFIRM}
+          onPress={onConfirmlHandler}
+          backgroundColor={rightButton.backgroundColor}
+        />
+      </View>
+    </View>
   );
 }

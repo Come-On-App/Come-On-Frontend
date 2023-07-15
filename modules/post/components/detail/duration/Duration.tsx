@@ -1,10 +1,10 @@
 import React from 'react';
+import { View } from 'react-native';
 
 import ScreenLayout from '@shared/components/layout/ScreenLayout';
 import { ScreenTitle } from '@shared/components/font/Font';
-import { View } from 'react-native';
-import DividerWrapper from '../../../../shared/components/layout/DividerWrapper';
-import ContentHeader from '../../../../shared/components/layout/ContentHeader';
+import DividerWrapper from '@shared/components/layout/DividerWrapper';
+import ContentHeader from '@shared/components/layout/ContentHeader';
 import Schedule from './schedule/Schedule';
 import TimePickerButton from './timePickerButton/TimePickerButton';
 import { Iduration } from './type';

@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { ComponentMeta, ComponentStory } from '@storybook/react-native';
 
-import { FontLoader } from '@shared/components/ThemeProvider';
+import FontThemeProvider from '@shared/provider/FontProvider';
 import BottomHeading from './BottomHeading';
 
 type Meta = ComponentMeta<typeof BottomHeading>;
@@ -11,11 +11,11 @@ export default {
   component: BottomHeading,
   decorators: [
     (Story) => (
-      <FontLoader>
+      <FontThemeProvider>
         <View style={{ margin: 10 }}>
           <Story />
         </View>
-      </FontLoader>
+      </FontThemeProvider>
     ),
   ],
 } as Meta;

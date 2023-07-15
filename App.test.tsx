@@ -16,7 +16,9 @@ describe('<App />', () => {
 
       fireEvent.press(BottomTap);
 
-      expect(screen.getByTestId(TestId.connection.code)).toBeOnTheScreen();
+      expect(
+        await screen.findByTestId(TestId.connection.code),
+      ).toBeOnTheScreen();
     });
 
     test('세 번째 하단 탭을 클릭하면 마이페이지 스크린으로 네비게이터 되어야 한다.', async () => {
@@ -28,7 +30,9 @@ describe('<App />', () => {
 
       fireEvent.press(BottomTap);
 
-      expect(screen.getByTestId(TestId.account.myPage)).toBeOnTheScreen();
+      expect(
+        await screen.findByTestId(TestId.account.myPage),
+      ).toBeOnTheScreen();
     });
   });
 });

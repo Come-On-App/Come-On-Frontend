@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { ComponentMeta, ComponentStory } from '@storybook/react-native';
 
-import { FontLoader } from '@shared/components/ThemeProvider';
+import FontThemeProvider from '@shared/provider/FontProvider';
 import ImageUploader from './ImageUploader';
 
 const uri =
@@ -14,11 +14,11 @@ export default {
   component: ImageUploader,
   decorators: [
     (Story) => (
-      <FontLoader>
+      <FontThemeProvider>
         <View style={{ padding: 10 }}>
           <Story />
         </View>
-      </FontLoader>
+      </FontThemeProvider>
     ),
   ],
   args: {

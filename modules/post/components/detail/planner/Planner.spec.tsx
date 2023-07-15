@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react-native';
 
 import TestId from '@shared/constants/testIds';
 import mockVenueList from '@post/mocks/venueList';
-import { wrapper } from '@shared/components/ThemeProvider';
+import { wrapper } from '@shared/utils/customRender';
 import Planner from './Planner';
 
 describe('Planner Compoent', () => {

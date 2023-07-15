@@ -1,7 +1,7 @@
 import { describe, expect, test, jest } from '@jest/globals';
 import { render, screen, fireEvent } from '@testing-library/react-native';
 
-import { wrapper } from '@shared/components/ThemeProvider';
+import { wrapper } from '@shared/utils/customRender';
 import VotingTimeRangePicker from './VotingTimeRangePicker';
 
 const mockedNavigate = jest.fn();

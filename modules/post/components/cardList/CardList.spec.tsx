@@ -1,9 +1,9 @@
 import { describe, expect, test } from '@jest/globals';
-import { render, screen } from '@testing-library/react-native';
+import { screen } from '@testing-library/react-native';
 import _ from 'lodash';
 
 import TestId from '@shared/constants/testIds';
-import { wrapper } from '@shared/components/ThemeProvider';
+import { render } from '@shared/utils/customRender';
 import CardList from './CardList';
 import { CardInfo } from '../card/type';
 
@@ -23,9 +23,19 @@ const testCase: CardInfo[] = _.range(4).map(() => ({
 
 describe('CardList Compoent', () => {
   test('요소의 개수만큼 올바르게 렌더링 되어야 한다.', () => {
-    render(<CardList payloads={testCase} />, wrapper);
+    render(<CardList payload={testCase} />);
 
     expect(screen.getByTestId(TestId.post.cardList)).toBeOnTheScreen();
     expect(screen.getAllByTestId(TestId.post.card)).toHaveLength(4);
+  });
+
+  test('빈 요소라면 다른 화면을 렌더링 해야 한다.', () => {
+    const TITLE = '모임 등록하러 가기';
+    const DESCRIPTION = '등록된 모임이 없습니다. 모임을 등록해주세요!';
+
+    render(<CardList payload={[]} />);
+
+    expect(screen.getByText(TITLE)).toBeOnTheScreen();
+    expect(screen.getByText(DESCRIPTION)).toBeOnTheScreen();
   });
 });

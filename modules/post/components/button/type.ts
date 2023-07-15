@@ -6,4 +6,8 @@ export interface IconfirmCancelButton {
   confirmText?: string;
   onCancelHandler: () => void;
   onConfirmlHandler: () => void;
+  leftDisabled?: boolean;
+  rightDisabled?: boolean;
+  leftButtonColor?: string;
+  rightButtonColor?: string;
 }
