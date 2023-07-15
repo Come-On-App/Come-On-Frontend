@@ -1,17 +1,10 @@
-import { addDecorator, getStorybookUI } from '@storybook/react-native';
+import { getStorybookUI } from '@storybook/react-native';
 
 import './storybook.requires';
-import { withMsw, initialize } from './mswDecorator';
-import { queryClient } from '../modules/app/api/queryClient';
-
-const StorybookUIRoot = getStorybookUI({});
+import { initialize } from './mswDecorator';
 
 initialize();
-addDecorator(withMsw);
-addDecorator((storyFn) => {
-  queryClient.clear();
 
-  return storyFn();
-});
+const StorybookUIRoot = getStorybookUI({});
 
 export default StorybookUIRoot;
