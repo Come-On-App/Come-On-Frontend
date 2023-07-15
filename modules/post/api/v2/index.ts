@@ -16,9 +16,6 @@ export async function requestGetMeetings(
 ): Promise<GetMeetingSliceResponse> {
   const URL = '/api/v2/meetings';
   const { data } = await comeonApiAxios.get(URL, {
-    headers: {
-      Authorization: 'Bearer',
-    },
     params: {
       ...payload,
       size: 100,
