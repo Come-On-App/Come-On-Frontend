@@ -104,6 +104,7 @@ const getStories = () => {
     "./modules/shared/components/avatar/Avatar.stories.tsx": require("../modules/shared/components/avatar/Avatar.stories.tsx"),
     "./modules/shared/components/button/Button.stories.tsx": require("../modules/shared/components/button/Button.stories.tsx"),
     "./modules/shared/components/button/IconButton.stories.tsx": require("../modules/shared/components/button/IconButton.stories.tsx"),
+    "./modules/shared/components/calendar/Calendar.stories.tsx": require("../modules/shared/components/calendar/Calendar.stories.tsx"),
     "./modules/shared/components/description/Description.stories.tsx": require("../modules/shared/components/description/Description.stories.tsx"),
     "./modules/shared/components/font/Font.stories.tsx": require("../modules/shared/components/font/Font.stories.tsx"),
     "./modules/shared/components/imageUploader/ImageUploader.stories.tsx": require("../modules/shared/components/imageUploader/ImageUploader.stories.tsx"),

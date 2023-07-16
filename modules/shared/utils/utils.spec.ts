@@ -6,6 +6,7 @@ import {
   createLengthValidator,
   formatDateRange,
   formatTimeWithAMPM,
+  getDatesInRange,
   isExpiry,
   truncateText,
   validateCode,
@@ -109,5 +110,13 @@ describe('utils Test', () => {
   test('isExpiry 함수는 전달된 인수가 현재 시간을 기준으로 넘어갔는지 판단하여 반환해야 한다.', () => {
     expect(isExpiry('2020-08-30 23:11:30')).toBeTruthy();
     expect(isExpiry('2100-08-30 23:11:30')).toBeFalsy();
+  });
+
+  test('getDatesInRange 함수는 전달된 날짜 범위를 반환해야 한다.', () => {
+    expect(getDatesInRange('2023-07-12', '2023-07-16')).toEqual([
+      '2023-07-13',
+      '2023-07-14',
+      '2023-07-15',
+    ]);
   });
 });

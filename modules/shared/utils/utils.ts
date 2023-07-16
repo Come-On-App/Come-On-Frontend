@@ -160,3 +160,18 @@ export function isExpiry(date: string) {
 
   return targetDate < currentDate;
 }
+
+export function getDatesInRange(startDate: string, endDate: string) {
+  const dates = [];
+  const currentDate = new Date(startDate);
+  const lastDate = new Date(endDate);
+
+  currentDate.setDate(currentDate.getDate() + 1); // 시작 날짜를 다음 날짜로 설정
+
+  while (currentDate < lastDate) {
+    dates.push(currentDate.toISOString().split('T')[0]);
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  return dates;
+}
