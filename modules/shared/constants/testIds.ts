@@ -46,6 +46,7 @@ const TestId = {
     avatar: {
       badge: 'TestId__shared_avatar_badge',
     },
+    calender: 'TestId__shared_calender',
   },
 } as const;
 
