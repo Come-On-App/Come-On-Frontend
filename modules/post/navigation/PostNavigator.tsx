@@ -35,7 +35,11 @@ export default function Navigation({ initialRouteName }: Inavigation) {
     <PostNavigator initialRouteName={initialRouteName}>
       <Screen name="MeetingPostList" component={MeetingDashboard} />
       <Screen name="MeetingPostCreation" component={MeetingPostCreator} />
-      <Screen name="MeetingDateSelector" component={MeetingDatePicker} />
+      <Screen
+        name="MeetingDateSelector"
+        component={MeetingDatePicker}
+        options={{ presentation: 'modal' }}
+      />
       <Screen name="MeetingPostDetail" component={MeetingPostViewer} />
     </PostNavigator>
   );

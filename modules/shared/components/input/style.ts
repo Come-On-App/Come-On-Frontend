@@ -1,7 +1,7 @@
 import { SEARCH_ADN_CREATE_HEIGHT } from '@post/components/search/searchAndCreate/style';
 import { makeStyles } from '@rneui/themed';
 
-import { applyRelativeSizes } from '@shared/utils/utils';
+import { applyRelativeSizes } from '@shared/utils';
 
 export default makeStyles((theme) => {
   const [

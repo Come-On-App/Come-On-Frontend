@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Font from '@shared/components/font/Font';
-import { relativeSizeConverter } from '@shared/utils/utils';
+import { relativeSizeConverter } from '@shared/utils';
 import { ItabBarLabel } from './type';
 
 export default function createTabBarLabel(labelText: string) {

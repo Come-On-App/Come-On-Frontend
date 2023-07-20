@@ -1,4 +1,4 @@
-import { relativeSizeConverter } from '@shared/utils/utils';
+import { relativeSizeConverter } from '@shared/utils';
 import { makeStyles } from '@rneui/themed';
 
 export default makeStyles(() => ({

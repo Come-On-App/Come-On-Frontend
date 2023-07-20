@@ -2,7 +2,7 @@ import React from 'react';
 import Avatar from '@shared/components/avatar/Avatar';
 
 import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
-import { relativeSizeConverter } from '@shared/utils/utils';
+import { relativeSizeConverter } from '@shared/utils';
 import createTabBarLabel from '@app/components/tabBarLabel/TabBarLabel';
 import createTabBarIcon from '../components/tabBarIcon/TabBarIcon';
 

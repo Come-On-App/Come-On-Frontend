@@ -1,7 +1,7 @@
 import { MarkedDates } from 'react-native-calendars/src/types';
 import _ from 'lodash';
 
-import { getDatesInRange } from '@shared/utils/utils';
+import { getDatesInRange } from '@shared/utils';
 import { SelectedDates } from '../components/calendar/type';
 import { customTextStyle } from '../components/calendar/style';
 

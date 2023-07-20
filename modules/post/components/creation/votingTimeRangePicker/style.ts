@@ -1,6 +1,6 @@
 import { makeStyles } from '@rneui/themed';
 import { IconName } from '@shared/components/icon/type';
-import { applyRelativeSizes } from '@shared/utils/utils';
+import { applyRelativeSizes } from '@shared/utils';
 
 export default makeStyles((theme) => {
   const [CONTAINER_HEIGHT, CONTAINER_BORDER_RADIUS, CONTAINER_MARGIN_BOTTOM] =

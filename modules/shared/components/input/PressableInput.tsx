@@ -1,7 +1,7 @@
 import { View, Pressable } from 'react-native';
 import React from 'react';
 
-import { applyRelativeSizes } from '@shared/utils/utils';
+import { applyRelativeSizes } from '@shared/utils';
 import useStyles from './style';
 import Icon from '../icon/Icon';
 import Font from '../font/Font';

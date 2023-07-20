@@ -7,7 +7,7 @@ import { vigilAsync } from 'promise-vigilant';
 
 import { QueryKeys } from '@app/api/type';
 import { requestGetEntryCode, requestPostEntryCode } from '@post/api/v1';
-import { isExpiry } from '@shared/utils/utils';
+import { isExpiry } from '@shared/utils';
 import { PostEntryCodeResponse } from '@post/api/v1/type';
 import InvitationModal from './modal/Modal';
 import { ModalStatus } from './modal/type';

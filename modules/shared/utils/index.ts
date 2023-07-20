@@ -43,6 +43,14 @@ function formattedArrayMapper(type?: formatType) {
   return (ymd: string[]) => _.map(dateFormatted, ymd);
 }
 
+export function formattedArrayProcessor(
+  type?: formatType,
+): (range: IFormatDateRange) => string[] {
+  const formattedMapper = formattedArrayMapper(type);
+
+  return _.flow([spliteDateRange, formattedMapper]);
+}
+
 /**
  * 지정된 날짜 포맷 형식으로 날짜 형식을 수정한다.
  */
@@ -50,9 +58,9 @@ export function formatDateRange(
   range: IFormatDateRange,
   type?: formatType,
 ): string {
-  const formattedMapper = formattedArrayMapper(type);
+  const formattedMapper = formattedArrayProcessor(type);
 
-  return _.flow([spliteDateRange, formattedMapper, joinDate])(range);
+  return _.flow([formattedMapper, joinDate])(range);
 }
 
 export function truncateText(maxLength: number) {

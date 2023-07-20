@@ -12,5 +12,5 @@ export type DateInfo = DateData | null;
 
 export interface Icalendar {
   current?: string;
-  onDayPress?: (arg0: DateInfo, arg1: DateInfo) => void;
+  onDayPress?: (startingDay: DateInfo, endingDay: DateInfo) => void;
 }

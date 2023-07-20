@@ -1,5 +1,5 @@
 import { makeStyles } from '@rneui/themed';
-import { applyRelativeSizes, relativeSizeConverter } from '@shared/utils/utils';
+import { applyRelativeSizes, relativeSizeConverter } from '@shared/utils';
 
 export default makeStyles((theme) => {
   const [

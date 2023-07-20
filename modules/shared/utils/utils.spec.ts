@@ -10,7 +10,7 @@ import {
   isExpiry,
   truncateText,
   validateCode,
-} from './utils';
+} from '.';
 
 describe('utils Test', () => {
   describe('formatDateRange Function', () => {

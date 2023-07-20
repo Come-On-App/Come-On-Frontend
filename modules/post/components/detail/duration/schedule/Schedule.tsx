@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import React from 'react';
 
-import { formatDateRange } from '@shared/utils/utils';
+import { formatDateRange } from '@shared/utils';
 import Font from '@shared/components/font/Font';
 import { Ischedule } from './type';
 import useStyles from './style';

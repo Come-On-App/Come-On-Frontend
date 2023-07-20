@@ -1,5 +1,5 @@
 import { makeStyles } from '@rneui/themed';
-import { applyRelativeSizes } from '@shared/utils/utils';
+import { applyRelativeSizes } from '@shared/utils';
 
 export default makeStyles((theme, isFixed: boolean) => {
   const [DIVIDER_WIDTH, DIVIDER_HEIGHT, BORDER_RADIUS, BORDER_MARGIN_RIGHT] =

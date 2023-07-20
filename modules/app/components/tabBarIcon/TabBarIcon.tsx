@@ -2,7 +2,7 @@ import React from 'react';
 
 import Icon from '@shared/components/icon/Icon';
 import { IconName } from '@shared/components/icon/type';
-import { relativeSizeConverter } from '@shared/utils/utils';
+import { relativeSizeConverter } from '@shared/utils';
 
 export default function createTabBarIcon(name: IconName) {
   const ICON_SIZE = relativeSizeConverter(32);

@@ -2,7 +2,7 @@ import React from 'react';
 import { Avatar as RneAvatar } from '@rneui/themed';
 
 import TestId from '@shared/constants/testIds';
-import { relativeSizeConverter } from '@shared/utils/utils';
+import { relativeSizeConverter } from '@shared/utils';
 import { Iavatar, IbadgedAvatar } from './type';
 import useStyle from './style';
 

@@ -1,6 +1,6 @@
 import { makeStyles } from '@rneui/themed';
 import { theme } from '@shared/constants/themed';
-import { applyRelativeSizes } from '@shared/utils/utils';
+import { applyRelativeSizes } from '@shared/utils';
 import { StyleProp, TextStyle } from 'react-native';
 
 const [
