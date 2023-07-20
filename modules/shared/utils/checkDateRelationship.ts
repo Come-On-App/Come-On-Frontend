@@ -1,4 +1,4 @@
-import { DateData } from 'react-native-calendars';
+import type { DateData } from 'react-native-calendars';
 
 const checkDateRelationship = (
   endingDay: DateData | null,

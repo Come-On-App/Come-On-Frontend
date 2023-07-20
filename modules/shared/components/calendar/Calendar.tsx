@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useState } from 'react';
+import React, { memo, useEffect, useMemo, useState } from 'react';
 import { View } from 'react-native';
 import {
   Calendar as RNcalendar,
@@ -8,19 +8,20 @@ import {
 import * as Haptics from 'expo-haptics';
 
 import TestId from '@shared/constants/testIds';
+import markedDate from '@shared/utils/markedDate';
+import checkDateRelationship from '@shared/utils/checkDateRelationship';
 import calendarConfig from './confing';
 import useStyles, { calendarTheme } from './style';
-import markedDate from './utils/markedDate';
-import checkDateRelationship from './utils/checkDateRelationship';
+import { DateInfo, Icalendar } from './type';
 
 LocaleConfig.locales.kr = calendarConfig.locales;
 
 LocaleConfig.defaultLocale = 'kr';
 
-function Calendar({ current }: { current?: string }) {
+function Calendar({ current, onDayPress = () => null }: Icalendar) {
   const { wrap, cCalendar } = useStyles();
-  const [startingDay, setStartingDay] = useState<DateData | null>(null);
-  const [endingDay, setEndingDay] = useState<DateData | null>(null);
+  const [startingDay, setStartingDay] = useState<DateInfo>(null);
+  const [endingDay, setEndingDay] = useState<DateInfo>(null);
   const markedDates = useMemo(() => {
     if (!startingDay) {
       return {};
@@ -28,6 +29,10 @@ function Calendar({ current }: { current?: string }) {
 
     return markedDate(startingDay.dateString, endingDay?.dateString ?? null);
   }, [startingDay, endingDay]);
+
+  useEffect(() => {
+    onDayPress(startingDay, endingDay);
+  }, [onDayPress, startingDay, endingDay]);
 
   return (
     <View style={wrap}>
