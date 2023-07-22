@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 
 import Font from '@shared/components/font/Font';
-import RobotIcon from '@post/components/emptyCardList/logo/RobotIcon';
+import RobotLogo from '@shared/components/logo/RobotLogo';
 import { IvoteGuideRobot } from './type';
 import useStyles from './style';
 
@@ -15,7 +15,7 @@ export default function VoteGuideRobot({
   return (
     <View style={wrap}>
       <View style={robot}>
-        <RobotIcon />
+        <RobotLogo />
       </View>
       <View style={cMessage}>{VoteDateMessage(startingDate, endingDate)}</View>
     </View>

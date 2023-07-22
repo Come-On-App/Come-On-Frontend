@@ -1,5 +1,5 @@
-import { describe, expect, test } from '@jest/globals';
-import { screen } from '@testing-library/react-native';
+import { describe, expect, jest, test } from '@jest/globals';
+import { fireEvent, screen } from '@testing-library/react-native';
 import _ from 'lodash';
 
 import TestId from '@shared/constants/testIds';
@@ -7,7 +7,21 @@ import { render } from '@shared/utils/customRender';
 import CardList from './CardList';
 import { CardInfo } from '../card/type';
 
+const mockedNavigate = jest.fn();
+
+jest.mock('@react-navigation/native', () => {
+  const actualNav: unknown[] = jest.requireActual('@react-navigation/native');
+
+  return {
+    ...actualNav,
+    useNavigation: () => ({
+      navigate: mockedNavigate,
+    }),
+  };
+});
+
 const testCase: CardInfo[] = _.range(4).map(() => ({
+  id: 1,
   uri: 'path',
   people: 30,
   isDecided: false,
@@ -37,5 +51,17 @@ describe('CardList Compoent', () => {
 
     expect(screen.getByText(TITLE)).toBeOnTheScreen();
     expect(screen.getByText(DESCRIPTION)).toBeOnTheScreen();
+  });
+
+  test('MeetingPostCreation 컴포넌트로 네비게이터 되는 버튼이 있어야 한다.', () => {
+    render(<CardList payload={[]} />);
+
+    const Button = screen.getByRole('button', {
+      name: '모임 등록하러 가기',
+    });
+
+    fireEvent.press(Button);
+
+    expect(mockedNavigate).toHaveBeenCalledWith('MeetingPostCreation');
   });
 });

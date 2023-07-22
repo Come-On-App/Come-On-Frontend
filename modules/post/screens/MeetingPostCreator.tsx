@@ -21,7 +21,7 @@ export default function MeetingPostCreator() {
   useEffect(() => {
     postCreatorPayload.observe(
       (payload) => {
-        setDisabled(!checkMeetingData(payload));
+        setDisabled(!checkIsReadySubmit(payload));
       },
       'post_observe_isReadySubmit',
       OVERWRITE,
@@ -51,7 +51,7 @@ export default function MeetingPostCreator() {
 }
 
 // 날짜 확인 유틸 함수
-function checkMeetingData({
+function checkIsReadySubmit({
   meetingImage,
   meetingName,
   meetingDateRange,
