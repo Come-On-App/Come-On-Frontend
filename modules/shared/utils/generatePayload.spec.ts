@@ -10,7 +10,12 @@ const initialPayload: Payload = { age: 30, arr: [1, 2, 3] };
 let payload: {
   update: (fn: (previous: Payload) => Partial<Payload>) => void;
   get: () => Payload;
-  observe: (fn: (previous: Payload) => void, id: string) => void;
+  init: () => void;
+  observe: (
+    fn: (previous: Payload) => void,
+    id: string,
+    overwrite?: boolean,
+  ) => void;
 };
 
 beforeEach(() => {
@@ -22,9 +27,9 @@ describe('generatePayload()', () => {
     expect(typeof payload).toBe('object');
   });
 
-  test('반환 객체는 3개의 메소드를 가지고 있다.', () => {
-    expect(Object.keys(payload).length).toBe(3);
-    expect(Object.keys(payload)).toEqual(['update', 'get', 'observe']);
+  test('반환 객체는 4개의 메소드를 가지고 있다.', () => {
+    expect(Object.keys(payload).length).toBe(4);
+    expect(Object.keys(payload)).toEqual(['update', 'get', 'init', 'observe']);
   });
 
   test('get 메소드는 상태값을 가져온다.', () => {
@@ -90,6 +95,18 @@ describe('generatePayload()', () => {
     });
   });
 
+  test('init 메소드는 값을 초기화 시킨다.', () => {
+    payload.update(() => {
+      return {
+        age: 40,
+      };
+    });
+
+    payload.init();
+
+    expect(payload.get().age).toBe(30);
+  });
+
   describe('observe 메소드는 변화를 감지한다.', () => {
     test('observe 함수를 등록하면 변화를 감지하여 호출한다.', () => {
       const mockFn = jest.fn();
@@ -118,6 +135,36 @@ describe('generatePayload()', () => {
       });
 
       expect(mockFn).not.toHaveBeenCalled();
+    });
+
+    test('중복 observe는 등록되지 말아야 한다.', () => {
+      const mockFn = jest.fn();
+
+      payload.observe(jest.fn(), 'mock_observe');
+      payload.observe(mockFn, 'mock_observe');
+      payload.observe(mockFn, 'mock_observe');
+      payload.observe(mockFn, 'mock_observe');
+      payload.update(() => {
+        return {
+          age: 50,
+        };
+      });
+
+      expect(mockFn).not.toHaveBeenCalled();
+    });
+
+    test('세번째 인자에 true를 전달하면 ID를 지우고 다시 등록되어야 한다.', () => {
+      const mockFn = jest.fn();
+
+      payload.observe(jest.fn(), 'mock_observe');
+      payload.observe(mockFn, 'mock_observe', true);
+      payload.update(() => {
+        return {
+          age: 50,
+        };
+      });
+
+      expect(mockFn).toHaveBeenCalled();
     });
   });
 });
