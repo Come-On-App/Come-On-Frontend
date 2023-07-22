@@ -10,5 +10,6 @@ describe('MeetingDatePicker Compoent', () => {
     render(<MeetingDatePicker />, wrapper);
 
     expect(screen.getByTestId(TestId.post.dateSelector)).toBeOnTheScreen();
+    expect(screen.getByTestId(TestId.shared.calender)).toBeOnTheScreen();
   });
 });

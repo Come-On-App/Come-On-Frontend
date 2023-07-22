@@ -10,7 +10,7 @@ import {
   isExpiry,
   truncateText,
   validateCode,
-} from '.';
+} from './index';
 
 describe('utils Test', () => {
   describe('formatDateRange Function', () => {
@@ -20,9 +20,11 @@ describe('utils Test', () => {
     };
 
     test('formatDateRange는 날짜 범위의 서식을 올바르게 포맷팅 해야한다.', () => {
-      const expected = '2023.06.10 ~ 2023.06.20';
+      expect(formatDateRange(range)).toEqual('2023.06.10 ~ 2023.06.20');
 
-      expect(formatDateRange(range)).toEqual(expected);
+      expect(formatDateRange({ startFrom: '2023-06-10' })).toEqual(
+        '2023.06.10',
+      );
     });
 
     test('두 번째 매개변수를 전달한다면 지정된 포맷 형식으로 포맷팅 되어야 한다.', () => {

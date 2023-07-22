@@ -18,7 +18,7 @@ LocaleConfig.locales.kr = calendarConfig.locales;
 
 LocaleConfig.defaultLocale = 'kr';
 
-function Calendar({ current, onDayPress = () => null }: Icalendar) {
+function Calendar({ current, onDayPress = () => null, onLoad }: Icalendar) {
   const { wrap, cCalendar } = useStyles();
   const [startingDay, setStartingDay] = useState<DateInfo>(null);
   const [endingDay, setEndingDay] = useState<DateInfo>(null);
@@ -29,6 +29,16 @@ function Calendar({ current, onDayPress = () => null }: Icalendar) {
 
     return markedDate(startingDay.dateString, endingDay?.dateString ?? null);
   }, [startingDay, endingDay]);
+
+  // 기존 선택 날짜가 존재한다면 불러온다
+  useEffect(() => {
+    if (!onLoad) return;
+
+    const { startFrom, endTo } = onLoad();
+
+    setStartingDay(startFrom);
+    setEndingDay(endTo);
+  }, [onLoad]);
 
   useEffect(() => {
     onDayPress(startingDay, endingDay);

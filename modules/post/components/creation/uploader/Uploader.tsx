@@ -6,7 +6,7 @@ import ImageUploader from '@shared/components/imageUploader/ImageUploader';
 import ScreenLayout from '@shared/components/layout/ScreenLayout';
 import DividerWrapper from '@shared/components/layout/DividerWrapper';
 import ContentHeader from '@shared/components/layout/ContentHeader';
-import { postCreatorPayload } from './payload';
+import { postCreatorPayload } from '@post/payload/creatorPayload';
 
 const TITLE = '사진 등록';
 const DESCRIPTION = '사진을 등록해 주세요';

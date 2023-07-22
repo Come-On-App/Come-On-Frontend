@@ -8,8 +8,8 @@ import { truncateText } from '@shared/utils';
 import ScreenLayout from '@shared/components/layout/ScreenLayout';
 import DividerWrapper from '@shared/components/layout/DividerWrapper';
 import ContentHeader from '@shared/components/layout/ContentHeader';
+import { postCreatorPayload } from '@post/payload/creatorPayload';
 import useStyles from './style';
-import { postCreatorPayload } from '../uploader/payload';
 
 const TITLE = '모임 이름';
 const PLACEHOLDER = '여기로 모여!';

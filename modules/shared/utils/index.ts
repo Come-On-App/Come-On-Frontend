@@ -43,6 +43,8 @@ function formattedArrayMapper(type?: formatType) {
   return (ymd: string[]) => _.map(dateFormatted, ymd);
 }
 
+export const koFormattedDate = formattedArrayProcessor('ko');
+
 export function formattedArrayProcessor(
   type?: formatType,
 ): (range: IFormatDateRange) => string[] {
