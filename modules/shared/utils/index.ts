@@ -1,6 +1,13 @@
 import _ from 'lodash/fp';
 import { Dimensions, PixelRatio } from 'react-native';
-import { IFormatDateRange, IapplyRelativeSizes, formatType } from './type';
+import { ImagePickerAsset } from 'expo-image-picker';
+import {
+  AssetState,
+  IFormatDateRange,
+  IapplyRelativeSizes,
+  IisMeetingDataValid,
+  formatType,
+} from './type';
 
 function isEqualDate([first, second]: string[]) {
   return _.equals(first, second);
@@ -184,4 +191,66 @@ export function getDatesInRange(startDate: string, endDate: string) {
   }
 
   return dates;
+}
+
+function getFileName(uri: string) {
+  const emptyFileName = 'noname.jpg';
+  const fileName = uri.split('/').pop();
+
+  return fileName ?? emptyFileName;
+}
+
+function inferTypeImage(fileName: string) {
+  const match = /\.(\w+)$/.exec(fileName);
+  const imageType = match ? `image/${match[1]}` : `image`;
+
+  return imageType;
+}
+
+export function getAssetState(assets: ImagePickerAsset): AssetState {
+  const imageURI = assets.uri;
+  const fileName = getFileName(imageURI);
+  const imageType = inferTypeImage(fileName);
+
+  return {
+    name: fileName,
+    type: imageType,
+    uri: imageURI,
+  };
+}
+
+function createFormData(key: string) {
+  return (value: string | Blob) => {
+    const fromData = new FormData();
+
+    fromData.append(key, value);
+
+    return fromData;
+  };
+}
+
+export function createImageFormData(imageFormData: string | Blob): FormData {
+  const KEY = 'image';
+  const formData = createFormData(KEY);
+
+  return formData(imageFormData);
+}
+
+export function getImageUrl(item: { imageUrl: string }) {
+  return item.imageUrl;
+}
+
+export function isMeetingFormValid({
+  meetingImage,
+  meetingName,
+  meetingDateRange,
+}: IisMeetingDataValid) {
+  const hasImage = meetingImage !== null;
+  const hasName = meetingName.length > 0;
+  const hasDateRange =
+    meetingDateRange !== null &&
+    (meetingDateRange.startFrom || meetingDateRange.endTo);
+
+  // 모든 속성 값이 존재하는지 여부를 반환
+  return hasImage && hasName && hasDateRange;
 }

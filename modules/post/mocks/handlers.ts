@@ -64,11 +64,22 @@ export const requestPostEntryCode = rest.post(
 
 export const requestCreateMeetings = rest.post(
   `${BASE_URL}/api/v1/meetings`,
-  (req, res, ctx) => {
+  (_req, res, ctx) => {
     return res(
       ctx.delay(3000),
       ctx.json({
         meetingId: 28,
+      })
+    );
+  }
+);
+
+export const requestUploadImage = rest.post(
+  `${BASE_URL}/api/v1/image`,
+  (_req, res, ctx) => {
+    return res(
+      ctx.json({
+        imageUrl: 'https://picsum.photos/200/300',
       })
     );
   }
@@ -79,4 +90,5 @@ export default [
   requestGetEntryCode,
   requestPostEntryCode,
   requestCreateMeetings,
+  requestUploadImage,
 ];

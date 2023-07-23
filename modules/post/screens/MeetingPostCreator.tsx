@@ -1,5 +1,8 @@
 import { ScrollView } from 'react-native';
 import React, { useEffect, useState } from 'react';
+import { vigilAsync } from 'promise-vigilant';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useNavigation } from '@react-navigation/native';
 
 import ConfirmCancelButton from '@post/components/button/ConfirmCancelButton';
 import MeetingNameInput from '@post/components/creation/meetingNameInput/MeetingNameInput';
@@ -8,21 +11,34 @@ import VotingTimeRangePicker from '@post/components/creation/votingTimeRangePick
 import DividerWrapper from '@shared/components/layout/DividerWrapper';
 import ScreenLayout from '@shared/components/layout/ScreenLayout';
 import TestId from '@shared/constants/testIds';
-import {
-  MeetingDateRange,
-  postCreatorPayload,
-} from '@post/payload/creatorPayload';
+import { postCreatorPayload } from '@post/payload/creatorPayload';
+import { requestCreateMeetings, requestImageUpload } from '@post/api/v1';
+import { postListNavigationProps } from '@post/navigation/type';
+import { isMeetingFormValid } from '@shared/utils';
+import { QueryKeys } from '@app/api/type';
 
 const OVERWRITE = true;
+const CONFIRM_TEXT = '모임 만들기';
+const LOADING_TEXT = '모임 생성중...';
 
 export default function MeetingPostCreator() {
+  const queryClient = useQueryClient();
   const [isDisabled, setDisabled] = useState(true);
+  const navigation = useNavigation<postListNavigationProps>();
+  const { mutate, status } = useMutation({
+    mutationFn: requestCreateMeetings,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QueryKeys.meetings] });
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'MeetingPostList' }],
+      });
+    },
+  });
 
   useEffect(() => {
     postCreatorPayload.observe(
-      (payload) => {
-        setDisabled(!checkIsReadySubmit(payload));
-      },
+      (payload) => setDisabled(!isMeetingFormValid(payload)),
       'post_observe_isReadySubmit',
       OVERWRITE,
     );
@@ -41,32 +57,36 @@ export default function MeetingPostCreator() {
         <ScreenLayout>
           <ConfirmCancelButton
             rightDisabled={isDisabled}
-            onCancelHandler={() => null}
-            onConfirmlHandler={() => null}
+            onCancelHandler={() => navigation.goBack()}
+            onConfirmlHandler={() => {
+              const {
+                meetingImage,
+                meetingName,
+                meetingDateRange: { startFrom, endTo },
+              } = postCreatorPayload.get();
+
+              if (!startFrom || meetingImage == null) {
+                throw new Error('Required properties not passed.');
+              }
+
+              // 이미지 변환후 모임 생성
+              vigilAsync([
+                meetingImage,
+                requestImageUpload,
+                (imageUrl: string) =>
+                  mutate({
+                    meetingName,
+                    meetingImageUrl: imageUrl,
+                    calendarStartFrom: startFrom.dateString,
+                    calendarEndTo:
+                      endTo === null ? startFrom.dateString : endTo.dateString, // 당일 날짜만 존재할 때는 시작 날짜를 넣어준다.
+                  }),
+              ]);
+            }}
+            confirmText={status === 'loading' ? LOADING_TEXT : CONFIRM_TEXT}
           />
         </ScreenLayout>
       </DividerWrapper>
     </ScrollView>
   );
-}
-
-// 날짜 확인 유틸 함수
-function checkIsReadySubmit({
-  meetingImage,
-  meetingName,
-  meetingDateRange,
-}: {
-  meetingImage: string;
-  meetingName: string;
-  meetingDateRange: MeetingDateRange;
-}) {
-  // 모든 속성 값이 존재하는지 확인
-  const hasImage = meetingImage.length > 0;
-  const hasName = meetingName.length > 0;
-  const hasDateRange =
-    meetingDateRange !== null &&
-    (meetingDateRange.startFrom || meetingDateRange.endTo);
-
-  // 모든 속성 값이 존재하는지 여부를 반환
-  return hasImage && hasName && hasDateRange;
 }

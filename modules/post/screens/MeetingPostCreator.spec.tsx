@@ -37,12 +37,12 @@ describe('MeetingPostCreator Compoent', () => {
 
     expect(
       screen.getByRole('button', {
-        name: '생성',
+        name: '모임 만들기',
       }),
     ).toBeDisabled();
   });
 
-  test('취소 버튼을 클릭하면 goBack 함수가 호출되어야 한다.s', () => {
+  test('취소 버튼을 클릭하면 goBack 함수가 호출되어야 한다.', () => {
     render(Component);
 
     const CancelButton = screen.getByRole('button', {

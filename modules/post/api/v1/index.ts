@@ -1,4 +1,7 @@
 import { comeonApiAxios } from '@app/api/axiosInstance';
+import { ImagePickerAsset } from 'expo-image-picker';
+import { vigilAsync } from 'promise-vigilant';
+import { createImageFormData, getAssetState, getImageUrl } from '@shared/utils';
 import {
   GetEntryCodePayload,
   GetEntryCodeResponse,
@@ -6,6 +9,8 @@ import {
   PostEntryCodeResponse,
   PostMeetingPayload,
   PostMeetingResponse,
+  PostUploadImagePayload,
+  PostUploadImageResponse,
 } from './type';
 
 /**
@@ -54,4 +59,34 @@ export async function requestCreateMeetings(
   const { data } = await comeonApiAxios.post(URL, payload);
 
   return data;
+}
+
+/**
+ * POST /api/v1/image 이미지 업로드
+ * @requires Authorization Bearer {access-token}
+ * @param payload 업로드할 이미지 파일
+ * @returns 업로드된 이미지의 URL
+ */
+async function requestUploadImage(
+  payload: PostUploadImagePayload,
+): Promise<PostUploadImageResponse> {
+  const URL = '/api/v1/image';
+  const { data } = await comeonApiAxios.post(URL, payload, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+
+  return data;
+}
+
+export async function requestImageUpload(
+  imagePickerAsset: ImagePickerAsset,
+): Promise<string> {
+  return vigilAsync(imagePickerAsset, [
+    getAssetState,
+    createImageFormData,
+    requestUploadImage,
+    getImageUrl,
+  ]);
 }

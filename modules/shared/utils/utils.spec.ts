@@ -1,11 +1,13 @@
 import { describe, expect, test } from '@jest/globals';
 
 import { PixelRatio } from 'react-native';
+import { ImagePickerAsset } from 'expo-image-picker';
 import {
   convertToRelativeSize,
   createLengthValidator,
   formatDateRange,
   formatTimeWithAMPM,
+  getAssetState,
   getDatesInRange,
   isExpiry,
   truncateText,
@@ -120,5 +122,26 @@ describe('utils Test', () => {
       '2023-07-14',
       '2023-07-15',
     ]);
+  });
+
+  test('getAssetState 함수는 이미지 정보 객체를 반환해야 한다.', () => {
+    const mockAssets: ImagePickerAsset = {
+      assetId: 'AAF91AA8-3745-4111-9859-8D5B3DAA6845/L0/001',
+      base64: null,
+      duration: null,
+      exif: null,
+      fileName: 'IMG_0428.jpg',
+      fileSize: 4735978,
+      height: 3025,
+      type: 'image',
+      uri: 'file:///var/mobile/Containers/Data/Application/765B13C9-8464-43FD-A639-4A598E8A49A7/Library/Caches/ExponentExperienceData/%2540anonymous%252FCome-On-Frontend-7980b774-ba88-4342-aef4-ce4ec8bb5e40/ImagePicker/C36C3D02-A385-41EE-A04A-07702668ABF7.jpg',
+      width: 3024,
+    };
+
+    expect(getAssetState(mockAssets)).toEqual({
+      name: 'C36C3D02-A385-41EE-A04A-07702668ABF7.jpg',
+      type: 'image/jpg',
+      uri: 'file:///var/mobile/Containers/Data/Application/765B13C9-8464-43FD-A639-4A598E8A49A7/Library/Caches/ExponentExperienceData/%2540anonymous%252FCome-On-Frontend-7980b774-ba88-4342-aef4-ce4ec8bb5e40/ImagePicker/C36C3D02-A385-41EE-A04A-07702668ABF7.jpg',
+    });
   });
 });

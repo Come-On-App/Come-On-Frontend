@@ -30,3 +30,11 @@ export interface PostMeetingPayload {
 export interface PostMeetingResponse {
   meetingId: number;
 }
+
+// POST /api/v1/image (payload)
+export type PostUploadImagePayload = FormData;
+
+// POST /api/v1/image (response)
+export interface PostUploadImageResponse {
+  imageUrl: string;
+}
