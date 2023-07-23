@@ -22,6 +22,7 @@ const TestId = {
     map: 'TestId__post_map',
     modal: {
       invitation: 'TestId__post_modal_invitation',
+      deletion: 'TestId__post_modal_deletion',
     },
     button: {
       create: 'TestId__post_meeting_create_button',

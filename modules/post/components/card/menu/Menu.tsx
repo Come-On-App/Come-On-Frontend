@@ -5,12 +5,15 @@ import Menu from '@shared/components/menu/Menu';
 import { IList } from '@shared/components/menu/type';
 import Icon from '@shared/components/icon/Icon';
 import Invitation from '@post/components/invitation/Invitation';
+import { Overlay } from '@rneui/themed';
+import TestId from '@shared/constants/testIds';
 import useStyle from './style';
 import { IcardMenu } from './type';
 
 export default function CardMenu({ id }: IcardMenu) {
   const { icon, menuFont, anchorBackground } = useStyle();
   const [showCodeModal, setCodeModal] = useState(false);
+  const [showDeletionModal, setDeletionModal] = useState(false);
   const MenuList: IList[] = [
     {
       name: '초대코드 관리',
@@ -26,7 +29,7 @@ export default function CardMenu({ id }: IcardMenu) {
     },
     {
       name: '모임 탈퇴',
-      onPress: () => null,
+      onPress: () => setDeletionModal(true),
       fontStyle: {
         color: 'red',
       },
@@ -49,6 +52,12 @@ export default function CardMenu({ id }: IcardMenu) {
               id={id}
               showModal={showCodeModal}
               onClose={() => setCodeModal(false)}
+            />
+            {/* PostDeletionModal */}
+            <Overlay
+              testID={TestId.post.modal.deletion}
+              onBackdropPress={() => setDeletionModal(false)}
+              isVisible={showDeletionModal}
             />
           </View>
         }
