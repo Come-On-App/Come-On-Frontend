@@ -17,3 +17,16 @@ export interface PostEntryCodeResponse {
   entryCode: string;
   expiredAt: string;
 }
+
+// POST /api/v1/meetings (payalod)
+export interface PostMeetingPayload {
+  meetingName: string;
+  meetingImageUrl: string;
+  calendarStartFrom: string;
+  calendarEndTo: string;
+}
+
+// POST /api/v1/meetings (response)
+export interface PostMeetingResponse {
+  meetingId: number;
+}

@@ -62,4 +62,21 @@ export const requestPostEntryCode = rest.post(
   }
 );
 
-export default [requstGetMeetings, requestGetEntryCode, requestPostEntryCode];
+export const requestCreateMeetings = rest.post(
+  `${BASE_URL}/api/v1/meetings`,
+  (req, res, ctx) => {
+    return res(
+      ctx.delay(3000),
+      ctx.json({
+        meetingId: 28,
+      })
+    );
+  }
+);
+
+export default [
+  requstGetMeetings,
+  requestGetEntryCode,
+  requestPostEntryCode,
+  requestCreateMeetings,
+];

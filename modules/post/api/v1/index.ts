@@ -4,6 +4,8 @@ import {
   GetEntryCodeResponse,
   PostEntryCodePayalod,
   PostEntryCodeResponse,
+  PostMeetingPayload,
+  PostMeetingResponse,
 } from './type';
 
 /**
@@ -23,6 +25,7 @@ export async function requestGetEntryCode(
 }
 
 /**
+ * @see https://api.come-on.me/docs/meeting/index.html#entry-code-renew
  * POST /api/v1/meetings/{meeting-id}/entry-code 모임 입장 코드 갱신
  * @requires Authorization Bearer {access-token}
  * @param payload 입장 코드를 조회할 모임의 식별값
@@ -33,6 +36,22 @@ export async function requestPostEntryCode(
 ): Promise<PostEntryCodeResponse> {
   const URL = `/api/v1/meetings/${payload}/entry-code`;
   const { data } = await comeonApiAxios.post(URL);
+
+  return data;
+}
+
+/**
+ * @see https://api.come-on.me/docs/meeting/index.html#meeting-add
+ * POST /api/v1/meetings 모임 등록
+ * @requires Authorization Bearer {access-token}
+ * @param payload 모임 생성에 필요한 정보를 전달한다.
+ * @returns 생성된 모임의 식별값
+ */
+export async function requestCreateMeetings(
+  payload: PostMeetingPayload,
+): Promise<PostMeetingResponse> {
+  const URL = '/api/v1/meetings';
+  const { data } = await comeonApiAxios.post(URL, payload);
 
   return data;
 }
