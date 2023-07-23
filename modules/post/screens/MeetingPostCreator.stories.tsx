@@ -5,6 +5,7 @@ import MeetingPostCreator from './MeetingPostCreator';
 import { NavigationContainer } from '@react-navigation/native';
 
 import PostNavigator from '@post/navigation/PostNavigator';
+import { requestCreateMeetings } from '@post/mocks/handlers';
 
 type Meta = ComponentMeta<typeof MeetingPostCreator>;
 
@@ -13,11 +14,9 @@ export default {
   component: MeetingPostCreator,
   decorators: [
     (Story) => (
-      <FontThemeProvider>
-        <NavigationContainer>
-          <Story />
-        </NavigationContainer>
-      </FontThemeProvider>
+      <NavigationContainer>
+        <Story />
+      </NavigationContainer>
     ),
   ],
 } as Meta;
