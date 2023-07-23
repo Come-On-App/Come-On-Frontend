@@ -10,7 +10,7 @@ import { IcardMenu } from './type';
 
 export default function CardMenu({ id }: IcardMenu) {
   const { icon, menuFont, anchorBackground } = useStyle();
-  const [showModal, setCodeModal] = useState(false);
+  const [showCodeModal, setCodeModal] = useState(false);
   const MenuList: IList[] = [
     {
       name: '초대코드 관리',
@@ -44,11 +44,13 @@ export default function CardMenu({ id }: IcardMenu) {
           </View>
         }
         modalComponent={
-          <Invitation
-            id={id}
-            showModal={showModal}
-            onClose={() => setCodeModal(false)}
-          />
+          <View>
+            <Invitation
+              id={id}
+              showModal={showCodeModal}
+              onClose={() => setCodeModal(false)}
+            />
+          </View>
         }
       />
     </View>

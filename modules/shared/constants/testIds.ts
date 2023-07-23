@@ -20,7 +20,9 @@ const TestId = {
     venueList: 'TestId__post_venueList',
     order: 'TestId__post_order',
     map: 'TestId__post_map',
-    modal: 'TestId__post_modal',
+    modal: {
+      invitation: 'TestId__post_modal_invitation',
+    },
     button: {
       create: 'TestId__post_meeting_create_button',
       searchBar: 'TestId__post_button_searchBar',

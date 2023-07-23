@@ -26,7 +26,7 @@ export default function InvitationModal({
 
   return (
     <Overlay
-      testID={TestId.post.modal}
+      testID={TestId.post.modal.invitation}
       isVisible={isVisible}
       overlayStyle={container}
       onBackdropPress={onPressLeft}
