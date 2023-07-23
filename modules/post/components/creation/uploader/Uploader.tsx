@@ -30,7 +30,7 @@ export default function Uploader() {
         </ContentHeader>
         <ImageUploader
           isLoading={isLoading}
-          uri={image}
+          uri={image?.uri}
           description={DESCRIPTION}
           onPress={pickImage}
         />
@@ -39,8 +39,12 @@ export default function Uploader() {
   );
 }
 
-function useImagePicker(): [string | undefined, () => Promise<void>, boolean] {
-  const [image, setImage] = useState<string>();
+function useImagePicker(): [
+  ImagePicker.ImagePickerAsset | null,
+  () => Promise<void>,
+  boolean,
+] {
+  const [image, setImage] = useState<ImagePicker.ImagePickerAsset | null>(null);
   const [isLoading, setLoading] = useState(false);
   const pickImage = async () => {
     setLoading(true);
@@ -53,7 +57,7 @@ function useImagePicker(): [string | undefined, () => Promise<void>, boolean] {
     });
 
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      setImage(result.assets[0]);
     }
 
     setLoading(false);
