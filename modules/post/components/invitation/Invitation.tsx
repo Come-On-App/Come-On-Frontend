@@ -21,6 +21,7 @@ export default function Invitation({ id, showModal, onClose }: Iinvitation) {
   const { data, status } = useQuery({
     queryKey: [QueryKeys.code, id],
     queryFn: () => requestGetEntryCode(id),
+    enabled: showModal,
   });
 
   useEffect(() => {
@@ -36,6 +37,9 @@ export default function Invitation({ id, showModal, onClose }: Iinvitation) {
 
   // 모달 응답 타입에 따라 핸들러 분기
   function onPressRightHandler(type: ModalStatus) {
+    const setInitCode = () => setCode(INIT_CODE);
+    const setLoadingModalType = () => setModalType('Loading');
+    const requestCode = () => requestPostEntryCode(id);
     const copyAndHaptic = async () => {
       vigilAsync([() => Clipboard.setStringAsync(code)], {
         onSuccess: () => {
@@ -52,20 +56,13 @@ export default function Invitation({ id, showModal, onClose }: Iinvitation) {
         return copyAndHaptic;
       case 'Expired':
         return () =>
-          vigilAsync(
-            [
-              () => setCode(INIT_CODE),
-              () => setModalType('Loading'),
-              () => requestPostEntryCode(id),
-            ],
-            {
-              onSuccess: ({ entryCode }: PostEntryCodeResponse) => {
-                setModalType('Created');
-                setCode(entryCode);
-              },
-              onError: () => setModalType('Failed'),
+          vigilAsync([setInitCode, setLoadingModalType, requestCode], {
+            onSuccess: ({ entryCode }: PostEntryCodeResponse) => {
+              setModalType('Created');
+              setCode(entryCode);
             },
-          );
+            onError: () => setModalType('Failed'),
+          });
       default:
         return () => {
           return new ReferenceError('should have a handle');
