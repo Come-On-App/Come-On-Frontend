@@ -85,10 +85,23 @@ export const requestUploadImage = rest.post(
   }
 );
 
+export const requestDeleteMeeting = rest.delete(
+  `${BASE_URL}/api/v1/meetings/:meetingId/members/me`,
+
+  (_req, res, ctx) => {
+    return res(
+      ctx.json({
+        success: true,
+      })
+    );
+  }
+);
+
 export default [
   requstGetMeetings,
   requestGetEntryCode,
   requestPostEntryCode,
   requestCreateMeetings,
   requestUploadImage,
+  requestDeleteMeeting,
 ];

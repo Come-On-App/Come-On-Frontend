@@ -3,6 +3,8 @@ import { ImagePickerAsset } from 'expo-image-picker';
 import { vigilAsync } from 'promise-vigilant';
 import { createImageFormData, getAssetState, getImageUrl } from '@shared/utils';
 import {
+  DeleteMeetingPayload,
+  DeleteMeetingResponse,
   GetEntryCodePayload,
   GetEntryCodeResponse,
   PostEntryCodePayalod,
@@ -89,4 +91,19 @@ export async function requestImageUpload(
     requestUploadImage,
     getImageUrl,
   ]);
+}
+
+/**
+ * DELETE /api/v1/meetings/{meeting-id}/members/me 모임 탈퇴
+ * @requires Authorization Bearer {access-token}
+ * @param payload 탈퇴할 모임의 식별값
+ * @returns 요청 처리 성공 여부
+ */
+export async function requestDeleteMeeting(
+  payload: DeleteMeetingPayload,
+): Promise<DeleteMeetingResponse> {
+  const URL = `/api/v1/meetings/${payload}/members/me`;
+  const { data } = await comeonApiAxios.delete(URL);
+
+  return data;
 }

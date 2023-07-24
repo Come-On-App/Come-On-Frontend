@@ -38,3 +38,11 @@ export type PostUploadImagePayload = FormData;
 export interface PostUploadImageResponse {
   imageUrl: string;
 }
+
+// DELETE /api/v1/meetings/{meeting-id}/members/me (payload)
+export type DeleteMeetingPayload = number;
+
+// DELETE /api/v1/meetings/{meeting-id}/members/me (response)
+export interface DeleteMeetingResponse {
+  success: boolean;
+}
