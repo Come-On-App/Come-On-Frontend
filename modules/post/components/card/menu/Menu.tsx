@@ -5,8 +5,7 @@ import Menu from '@shared/components/menu/Menu';
 import { IList } from '@shared/components/menu/type';
 import Icon from '@shared/components/icon/Icon';
 import Invitation from '@post/components/invitation/Invitation';
-import { Overlay } from '@rneui/themed';
-import TestId from '@shared/constants/testIds';
+import Deletion from '@post/components/deletion/Deletion';
 import useStyle from './style';
 import { IcardMenu } from './type';
 
@@ -53,11 +52,10 @@ export default function CardMenu({ id }: IcardMenu) {
               showModal={showCodeModal}
               onClose={() => setCodeModal(false)}
             />
-            {/* PostDeletionModal */}
-            <Overlay
-              testID={TestId.post.modal.deletion}
-              onBackdropPress={() => setDeletionModal(false)}
-              isVisible={showDeletionModal}
+            <Deletion
+              id={id}
+              showModal={showDeletionModal}
+              onClose={() => setDeletionModal(false)}
             />
           </View>
         }
