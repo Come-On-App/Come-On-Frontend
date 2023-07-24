@@ -4,10 +4,10 @@ import { View } from 'react-native';
 import TestId from '@shared/constants/testIds';
 import ConfirmCancelButton from '@post/components/button/ConfirmCancelButton';
 import Modal from '@shared/components/modal/Modal';
+import Message from '@shared/components/modal/display/Message';
+import SubMessage from '@shared/components/modal/display/SubMessage';
 import useStyles from './style';
-import Message from '../display/Message';
 import Code from '../code/Code';
-import SubMessage from '../display/SubMessage';
 import config from './config';
 import { IinvitationModal } from './type';
 
