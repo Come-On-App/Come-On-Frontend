@@ -6,7 +6,7 @@ import ScreenLayout from '@shared/components/layout/ScreenLayout';
 import { koFormattedDate } from '@shared/utils';
 import { DateInfo } from '@shared/components/calendar/type';
 import { postCreatorPayload } from '@post/payload/creatorPayload';
-import VoteGuideRobot from '@post/components/creation/voteDateMessage/VoteDateMessage';
+import VoteGuideRobot from '@post/components/voteDateMessage/VoteDateMessage';
 
 export default function MeetingDatePicker() {
   const [startingDate, setStartingDate] = useState<string | null>(null);
