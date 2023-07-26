@@ -72,6 +72,9 @@ export function formatDateRange(
   return _.flow([formattedMapper, joinDate])(range);
 }
 
+/**
+ * 글자 길이 유효성 검사를 해준다.
+ */
 export function truncateText(maxLength: number) {
   return (currentText: string) => {
     if (currentText.length > maxLength) {

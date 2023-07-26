@@ -8,40 +8,38 @@ import { truncateText } from '@shared/utils';
 import ScreenLayout from '@shared/components/layout/ScreenLayout';
 import DividerWrapper from '@shared/components/layout/DividerWrapper';
 import ContentHeader from '@shared/components/layout/ContentHeader';
-import { postCreatorPayload } from '@post/payload/creatorPayload';
 import useStyles from './style';
+import { ImeetingNameInput } from './type';
 
-const TITLE = '모임 이름';
-const PLACEHOLDER = '여기로 모여!';
-const LENGTH_MAX = 20;
-
-export default function MeetingNameInput() {
+export default function MeetingNameInput({
+  title,
+  placeholder,
+  lengthMax,
+  onInput,
+}: ImeetingNameInput) {
   const { top, screenLayout } = useStyles();
   const [input, setInput] = useState('');
-  const textTruncator = truncateText(LENGTH_MAX);
+  const textTruncator = truncateText(lengthMax);
   const onChnageHandler = (text: string) => {
     setInput(textTruncator(text));
   };
 
   useEffect(() => {
-    postCreatorPayload.update(() => ({
-      meetingName: input,
-    }));
-  }, [input]);
+    onInput(input);
+  }, [onInput, input]);
 
   return (
     <DividerWrapper>
       <ScreenLayout containerStyle={screenLayout}>
         <ContentHeader>
           <View style={top}>
-            <ScreenTitle>{TITLE}</ScreenTitle>
-            <TextLengthCounter text={input} max={LENGTH_MAX} />
+            <ScreenTitle>{title}</ScreenTitle>
+            <TextLengthCounter text={input} max={lengthMax} />
           </View>
         </ContentHeader>
-
         <Input
           text={input}
-          placeholder={PLACEHOLDER}
+          placeholder={placeholder}
           onChangeText={onChnageHandler}
         />
       </ScreenLayout>

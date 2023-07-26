@@ -5,7 +5,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigation } from '@react-navigation/native';
 
 import ConfirmCancelButton from '@post/components/button/ConfirmCancelButton';
-import MeetingNameInput from '@post/components/creation/meetingNameInput/MeetingNameInput';
 import Uploader from '@post/components/creation/uploader/Uploader';
 import VotingTimeRangePicker from '@post/components/creation/votingTimeRangePicker/VotingTimeRangePicker';
 import DividerWrapper from '@shared/components/layout/DividerWrapper';
@@ -16,6 +15,7 @@ import { requestCreateMeetings, requestImageUpload } from '@post/api/v1';
 import { postListNavigationProps } from '@post/navigation/type';
 import { isMeetingFormValid } from '@shared/utils';
 import { QueryKeys } from '@app/api/type';
+import MeetingNameInput from '@post/components/creation/meetingName/MeetingName';
 
 const OVERWRITE = true;
 const CONFIRM_TEXT = '모임 만들기';

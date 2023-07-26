@@ -1,4 +1,3 @@
-import { View } from 'react-native';
 import { ComponentMeta } from '@storybook/react-native';
 
 import FontThemeProvider from '@shared/provider/FontProvider';
