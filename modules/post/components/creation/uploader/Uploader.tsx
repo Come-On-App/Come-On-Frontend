@@ -1,67 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import * as ImagePicker from 'expo-image-picker';
+import React from 'react';
 
-import { ScreenTitle } from '@shared/components/font/Font';
-import ImageUploader from '@shared/components/imageUploader/ImageUploader';
-import ScreenLayout from '@shared/components/layout/ScreenLayout';
-import DividerWrapper from '@shared/components/layout/DividerWrapper';
-import ContentHeader from '@shared/components/layout/ContentHeader';
 import { postCreatorPayload } from '@post/payload/creatorPayload';
+import PostUploader from '@post/components/postUploader/PostUploader';
 
 const TITLE = '사진 등록';
 const DESCRIPTION = '사진을 등록해 주세요';
 
 export default function Uploader() {
-  const [image, pickImage, isLoading] = useImagePicker();
-
-  useEffect(() => {
-    if (image) {
-      postCreatorPayload.update(() => ({
-        meetingImage: image,
-      }));
-    }
-  }, [image]);
-
   return (
-    <DividerWrapper>
-      <ScreenLayout>
-        <ContentHeader>
-          <ScreenTitle>{TITLE}</ScreenTitle>
-        </ContentHeader>
-        <ImageUploader
-          isLoading={isLoading}
-          uri={image?.uri}
-          description={DESCRIPTION}
-          onPress={pickImage}
-        />
-      </ScreenLayout>
-    </DividerWrapper>
+    <PostUploader
+      title={TITLE}
+      description={DESCRIPTION}
+      onImage={(image) =>
+        postCreatorPayload.update(() => ({
+          meetingImage: image,
+        }))
+      }
+    />
   );
-}
-
-function useImagePicker(): [
-  ImagePicker.ImagePickerAsset | null,
-  () => Promise<void>,
-  boolean,
-] {
-  const [image, setImage] = useState<ImagePicker.ImagePickerAsset | null>(null);
-  const [isLoading, setLoading] = useState(false);
-  const pickImage = async () => {
-    setLoading(true);
-
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      setImage(result.assets[0]);
-    }
-
-    setLoading(false);
-  };
-
-  return [image, pickImage, isLoading];
 }
