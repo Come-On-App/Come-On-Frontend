@@ -23,7 +23,8 @@ export default function CardMenu({ id }: IcardMenu) {
     },
     {
       name: '모임 수정',
-      onPress: () => {
+      onPress: (hideMenu) => {
+        hideMenu();
         navigation.navigate('MeetingPostModification', { id });
       },
     },

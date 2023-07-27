@@ -3,7 +3,7 @@ import {
   MenuDivider,
   MenuItem,
 } from 'react-native-material-menu';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Pressable, View } from 'react-native';
 
 import _ from 'lodash';
@@ -39,11 +39,9 @@ export default function Menu({
       >
         <View>{modalComponent}</View>
         {list.map(({ name, onPress, fontStyle }) => {
-          const hideAndPressHandler = _.flow([hideMenu, onPress]);
-
           return (
             <View key={name}>
-              <MenuItem onPress={hideAndPressHandler} style={cMenuItem}>
+              <MenuItem onPress={() => onPress(hideMenu)} style={cMenuItem}>
                 <Font style={[menuDefaultFont, fontAllStyle, fontStyle]}>
                   {name}
                 </Font>
