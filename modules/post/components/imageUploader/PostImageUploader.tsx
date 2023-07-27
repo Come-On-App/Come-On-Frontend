@@ -15,7 +15,7 @@ export interface IpostUploader {
   onImage: (image: ImagePicker.ImagePickerAsset) => void;
 }
 
-export default function PostUploader({
+export default function PostImageUploader({
   title,
   description,
   prevImage,
