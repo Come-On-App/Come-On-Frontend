@@ -18,3 +18,9 @@ export const postCreatorPayload = generatePayload<Icreator>({
   meetingImage: null,
   meetingDateRange: { startFrom: null, endTo: null },
 });
+
+export const postModifierPayload = generatePayload<Icreator>({
+  meetingName: '',
+  meetingImage: null,
+  meetingDateRange: { startFrom: null, endTo: null },
+});

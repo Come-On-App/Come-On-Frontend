@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { postCreatorPayload } from '@post/payload/creatorPayload';
+import { postCreatorPayload } from '@post/payload/postPayload';
 import PostUploader from '@post/components/imageUploader/PostImageUploader';
 
 const TITLE = '사진 등록';

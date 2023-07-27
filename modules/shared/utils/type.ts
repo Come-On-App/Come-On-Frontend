@@ -1,4 +1,4 @@
-import type { MeetingDateRange } from '@post/payload/creatorPayload';
+import type { MeetingDateRange } from '@post/payload/postPayload';
 import type { ImagePickerAsset } from 'expo-image-picker';
 
 export interface IFormatDateRange {

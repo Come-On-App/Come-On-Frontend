@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { postCreatorPayload } from '@post/payload/creatorPayload';
+import { postCreatorPayload } from '@post/payload/postPayload';
 import MeetingNameInput from '@post/components/meetingNameInput/MeetingNameInput';
 
 const TITLE = '모임 이름';

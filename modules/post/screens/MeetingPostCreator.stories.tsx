@@ -1,11 +1,9 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react-native';
 
-import FontThemeProvider from '@shared/provider/FontProvider';
 import MeetingPostCreator from './MeetingPostCreator';
 import { NavigationContainer } from '@react-navigation/native';
 
 import PostNavigator from '@post/navigation/PostNavigator';
-import { requestCreateMeetings } from '@post/mocks/handlers';
 
 type Meta = ComponentMeta<typeof MeetingPostCreator>;
 

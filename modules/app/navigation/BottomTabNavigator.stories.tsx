@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { Tab } from './config';
 import BottomTabNavigator from './BottomTabNavigator';
 import { BASE_URL } from '@app/api/axiosInstance';
-import { EmptyResponse } from '@post/mocks/GetMeetingSliceResponse';
+import { EmptyResponse } from '@post/mocks/getMeetingsSliceResponse';
 
 type Meta = ComponentMeta<typeof BottomTabNavigator>;
 

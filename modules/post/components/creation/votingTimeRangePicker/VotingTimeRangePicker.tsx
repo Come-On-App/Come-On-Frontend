@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { formatDateRange } from '@shared/utils';
-import { postCreatorPayload } from '@post/payload/creatorPayload';
+import { postCreatorPayload } from '@post/payload/postPayload';
 import TimeRange from '@post/components/timeRange/TimeRange';
 
 const TITLE = '투표 기간';

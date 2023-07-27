@@ -1,4 +1,4 @@
-import { MeetingDateRange } from '@post/payload/creatorPayload';
+import { MeetingDateRange } from '@post/payload/postPayload';
 import type { DateData } from 'react-native-calendars';
 
 type Selected = {

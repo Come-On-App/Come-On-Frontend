@@ -1,19 +1,33 @@
-import { Text, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import React from 'react';
 
 import TestId from '@shared/constants/testIds';
 import { MeetingPostListParamList } from '@post/navigation/type';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useQuery } from '@tanstack/react-query';
+import { QueryKeys } from '@app/api/type';
+import { requestGetMeetingDetail } from '@post/api/v2';
+import Uploader from '@post/components/modification/uploader/Uploader';
 
 export default function MeetingPostModifier({
-  route,
+  route: {
+    params: { id },
+  },
 }: NativeStackScreenProps<
   MeetingPostListParamList,
   'MeetingPostModification'
 >) {
+  const { data, isLoading } = useQuery({
+    queryKey: [QueryKeys.post, id],
+    queryFn: ({ signal }) => requestGetMeetingDetail(id, signal),
+  });
+
   return (
     <ScrollView testID={TestId.post.modifier} bounces={false}>
-      <Text>MeetingPostModifier</Text>
+      <Uploader
+        imageUrl={data?.meetingMetaData.thumbnailImageUrl}
+        isLoad={isLoading}
+      />
     </ScrollView>
   );
 }

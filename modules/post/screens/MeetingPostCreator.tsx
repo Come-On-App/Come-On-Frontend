@@ -10,7 +10,7 @@ import VotingTimeRangePicker from '@post/components/creation/votingTimeRangePick
 import DividerWrapper from '@shared/components/layout/DividerWrapper';
 import ScreenLayout from '@shared/components/layout/ScreenLayout';
 import TestId from '@shared/constants/testIds';
-import { postCreatorPayload } from '@post/payload/creatorPayload';
+import { postCreatorPayload } from '@post/payload/postPayload';
 import { requestCreateMeetings, requestImageUpload } from '@post/api/v1';
 import { postListNavigationProps } from '@post/navigation/type';
 import { isMeetingFormValid } from '@shared/utils';

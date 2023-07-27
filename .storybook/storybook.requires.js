@@ -95,6 +95,7 @@ const getStories = () => {
     "./modules/post/components/invitation/modal/Modal.stories.tsx": require("../modules/post/components/invitation/modal/Modal.stories.tsx"),
     "./modules/post/components/loadingCardList/LoadingCardList.stories.tsx": require("../modules/post/components/loadingCardList/LoadingCardList.stories.tsx"),
     "./modules/post/components/meetingNameInput/MeetingNameInput.stories.tsx": require("../modules/post/components/meetingNameInput/MeetingNameInput.stories.tsx"),
+    "./modules/post/components/modification/uploader/Uploader.stories.tsx": require("../modules/post/components/modification/uploader/Uploader.stories.tsx"),
     "./modules/post/components/search/searchAndCreate/SearchAndCreateBar.stories.tsx": require("../modules/post/components/search/searchAndCreate/SearchAndCreateBar.stories.tsx"),
     "./modules/post/components/search/searchBar/SearchBar.stories.tsx": require("../modules/post/components/search/searchBar/SearchBar.stories.tsx"),
     "./modules/post/components/serverError/ServerError.stories.tsx": require("../modules/post/components/serverError/ServerError.stories.tsx"),

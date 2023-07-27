@@ -1,17 +1,18 @@
 import { BASE_URL } from '@app/api/axiosInstance';
 import { GetMeetingResponse } from '@post/api/v2/type';
 import { rest } from 'msw';
-import response from './GetMeetingSliceResponse';
+import meetingsSliceResponse from './getMeetingsSliceResponse';
+import meetingDetailResponse from './getMeetingDetailResponse';
 import { GetEntryCodeResponse } from '@post/api/v1/type';
 
-export const requstGetMeetings = rest.get<GetMeetingResponse>(
+const requstGetMeetings = rest.get<GetMeetingResponse>(
   `${BASE_URL}/api/v2/meetings`,
   (_req, res, ctx) => {
-    return res(ctx.json(response));
+    return res(ctx.json(meetingsSliceResponse));
   }
 );
 
-export const requestGetEntryCode = rest.get<GetEntryCodeResponse>(
+const requestGetEntryCode = rest.get<GetEntryCodeResponse>(
   `${BASE_URL}/api/v1/meetings/:meetingId/entry-code`,
   (req, res, ctx) => {
     const { meetingId } = req.params;
@@ -49,7 +50,7 @@ export const requestGetEntryCode = rest.get<GetEntryCodeResponse>(
   }
 );
 
-export const requestPostEntryCode = rest.post(
+const requestPostEntryCode = rest.post(
   `${BASE_URL}/api/v1/meetings/:meetingId/entry-code`,
   (_req, res, ctx) => {
     return res(
@@ -62,7 +63,7 @@ export const requestPostEntryCode = rest.post(
   }
 );
 
-export const requestCreateMeetings = rest.post(
+const requestCreateMeetings = rest.post(
   `${BASE_URL}/api/v1/meetings`,
   (_req, res, ctx) => {
     return res(
@@ -74,7 +75,7 @@ export const requestCreateMeetings = rest.post(
   }
 );
 
-export const requestUploadImage = rest.post(
+const requestUploadImage = rest.post(
   `${BASE_URL}/api/v1/image`,
   (_req, res, ctx) => {
     return res(
@@ -85,13 +86,38 @@ export const requestUploadImage = rest.post(
   }
 );
 
-export const requestDeleteMeeting = rest.delete(
+const requestDeleteMeeting = rest.delete(
   `${BASE_URL}/api/v1/meetings/:meetingId/members/me`,
 
   (_req, res, ctx) => {
     return res(
       ctx.json({
         success: true,
+      })
+    );
+  }
+);
+
+const requestGetMeetingDetail = rest.get(
+  `${BASE_URL}/api/v2/meetings/:meetingId`,
+  (req, res, ctx) => {
+    return res(
+      ctx.delay(2000),
+      ctx.json({
+        ...meetingDetailResponse,
+        meetingMetaData: {
+          ...meetingDetailResponse.meetingMetaData,
+          meetingId: req.params.meetingId,
+          meetingName: '예시 모임 제목#1',
+          calendar: {
+            startFrom: '2023-07-01',
+            endTo: '2023-07-31',
+          },
+          fixedDate: {
+            startFrom: '2023-07-11',
+            endTo: '2023-07-11',
+          },
+        },
       })
     );
   }
@@ -104,4 +130,5 @@ export default [
   requestCreateMeetings,
   requestUploadImage,
   requestDeleteMeeting,
+  requestGetMeetingDetail,
 ];
