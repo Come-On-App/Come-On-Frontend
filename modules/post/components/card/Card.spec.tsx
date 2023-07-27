@@ -1,10 +1,21 @@
-import { describe, expect, test } from '@jest/globals';
+import { describe, expect, jest, test } from '@jest/globals';
 import { screen } from '@testing-library/react-native';
 
 import { render } from '@shared/utils/customRender';
 import TestId from '@shared/constants/testIds';
 import { CardInfo } from './type';
 import Card from './Card';
+
+jest.mock('@react-navigation/native', () => {
+  const actualNav: unknown[] = jest.requireActual('@react-navigation/native');
+
+  return {
+    ...actualNav,
+    useNavigation: () => ({
+      navigate: jest.fn(),
+    }),
+  };
+});
 
 describe('card Compoent', () => {
   const payload: CardInfo = {

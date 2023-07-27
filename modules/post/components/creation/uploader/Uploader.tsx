@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { postCreatorPayload } from '@post/payload/creatorPayload';
-import PostUploader from '@post/components/postUploader/PostUploader';
+import PostUploader from '@post/components/imageUploader/PostImageUploader';
 
 const TITLE = '사진 등록';
 const DESCRIPTION = '사진을 등록해 주세요';

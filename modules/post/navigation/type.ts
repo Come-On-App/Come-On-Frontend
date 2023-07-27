@@ -6,6 +6,9 @@ export type MeetingPostListParamList = {
   MeetingPostCreation: undefined;
   MeetingDateSelector: undefined;
   MeetingPostDetail: undefined;
+  MeetingPostModification: {
+    id: number;
+  };
 };
 
 export type postListNavigationProps =

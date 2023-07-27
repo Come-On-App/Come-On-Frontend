@@ -12,6 +12,7 @@ const TestId = {
     card: 'TestId__post_card',
     skeleton: 'TestId__post_skeleton',
     creator: 'TestId__post_creator',
+    modifier: 'TestId__post_modifier',
     dateSelector: 'TestId__post_dateSelector',
     cardList: 'TestId__post_cardList',
     detail: 'TestId__post_detail',

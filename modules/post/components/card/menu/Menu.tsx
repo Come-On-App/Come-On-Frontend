@@ -6,6 +6,8 @@ import { IList } from '@shared/components/menu/type';
 import Icon from '@shared/components/icon/Icon';
 import Invitation from '@post/components/invitation/Invitation';
 import Deletion from '@post/components/deletion/Deletion';
+import { useNavigation } from '@react-navigation/native';
+import { postListNavigationProps } from '@post/navigation/type';
 import useStyle from './style';
 import { IcardMenu } from './type';
 
@@ -13,6 +15,7 @@ export default function CardMenu({ id }: IcardMenu) {
   const { icon, menuFont, anchorBackground } = useStyle();
   const [showCodeModal, setCodeModal] = useState(false);
   const [showDeletionModal, setDeletionModal] = useState(false);
+  const navigation = useNavigation<postListNavigationProps>();
   const MenuList: IList[] = [
     {
       name: '초대코드 관리',
@@ -20,7 +23,9 @@ export default function CardMenu({ id }: IcardMenu) {
     },
     {
       name: '모임 수정',
-      onPress: () => null,
+      onPress: () => {
+        navigation.navigate('MeetingPostModification', { id });
+      },
     },
     {
       name: '게시물 신고',
