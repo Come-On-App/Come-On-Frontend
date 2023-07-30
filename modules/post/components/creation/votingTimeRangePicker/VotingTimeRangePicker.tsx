@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { formatDateRange } from '@shared/utils';
 import { postCreatorPayload } from '@post/payload/postPayload';
 import TimeRange from '@post/components/timeRange/TimeRange';
+import updateDateRange from '@post/components/modification/util/updateDateRange';
 
 const TITLE = '투표 기간';
 const DESCRIPTION = '날짜 범위를 선택해 주세요';
@@ -16,32 +16,7 @@ export default function VotingTimeRangePicker() {
       description={DESCRIPTION}
       onPressDay={(setRange) => {
         postCreatorPayload.observe(
-          ({ meetingDateRange: { startFrom, endTo } }) => {
-            if (!startFrom) {
-              setRange(null);
-
-              return;
-            }
-
-            // startFrom이 존재하는 경우, startFrom.dateString을 포맷하여 범위 설정
-            if (startFrom) {
-              const formattedStartDate = formatDateRange({
-                startFrom: startFrom.dateString,
-              });
-
-              setRange(formattedStartDate);
-            }
-
-            // startFrom과 endTo가 모두 존재하는 경우, 두 날짜를 포맷하여 범위 설정
-            if (startFrom && endTo) {
-              const formatedDate = formatDateRange({
-                startFrom: startFrom.dateString,
-                endTo: endTo.dateString,
-              });
-
-              setRange(formatedDate);
-            }
-          },
+          ({ meetingDateRange }) => updateDateRange(meetingDateRange, setRange),
           'post_observe_range',
           OVERWRITE,
         );

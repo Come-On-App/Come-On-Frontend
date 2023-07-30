@@ -20,7 +20,7 @@ export default function MeetingNameInput({
   prevMeetingName = '',
 }: ImeetingNameInput) {
   const { top, screenLayout } = useStyles();
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState(prevMeetingName);
   const textTruncator = truncateText(lengthMax);
   const onChnageHandler = (text: string) => {
     setInput(textTruncator(text));

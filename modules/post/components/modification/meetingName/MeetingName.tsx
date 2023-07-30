@@ -18,7 +18,7 @@ export default function MeetingName({ meetingName, isLoad }: ImeetingName) {
       lengthMax={LENGTH_MAX}
       onInput={(input) =>
         postModifierPayload.update(() => ({
-          meetingName: input,
+          meetingName: input === meetingName ? '' : input,
         }))
       }
     />

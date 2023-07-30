@@ -9,6 +9,7 @@ import DividerWrapper from '@shared/components/layout/DividerWrapper';
 import ContentHeader from '@shared/components/layout/ContentHeader';
 import useStyles from './style';
 import { ItimeRange } from './type';
+import updateDateRange from '../modification/util/updateDateRange';
 
 export default function TimeRange({
   title,
@@ -16,6 +17,7 @@ export default function TimeRange({
   onPressDay,
   disabled,
   payloadType,
+  prevRange,
 }: ItimeRange) {
   const [range, setRange] = useState<string | null>(null);
   const { container, icon, font } = useStyles();
@@ -27,6 +29,12 @@ export default function TimeRange({
   useEffect(() => {
     onPressDay(setRange);
   }, [onPressDay]);
+
+  useEffect(() => {
+    if (!disabled && prevRange) {
+      updateDateRange(prevRange, setRange);
+    }
+  }, [disabled, prevRange]);
 
   return (
     <DividerWrapper>
