@@ -23,6 +23,7 @@ export interface IpressableInput {
   containerStyle?: StyleProp<ViewStyle>;
   fontColor?: string;
   onPress?: () => void;
+  disabled?: boolean;
 }
 
 export interface IcodeField {

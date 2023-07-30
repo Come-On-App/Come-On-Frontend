@@ -5,15 +5,30 @@ import Calendar from '@shared/components/calendar/Calendar';
 import ScreenLayout from '@shared/components/layout/ScreenLayout';
 import { koFormattedDate } from '@shared/utils';
 import { DateInfo } from '@shared/components/calendar/type';
-import { postCreatorPayload } from '@post/payload/postPayload';
+import {
+  postCreatorPayload,
+  postModifierPayload,
+} from '@post/payload/postPayload';
 import VoteGuideRobot from '@post/components/voteDateMessage/VoteDateMessage';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { MeetingPostListParamList } from '@post/navigation/type';
 
-export default function MeetingDatePicker() {
+const postPayload = {
+  creator: postCreatorPayload,
+  modifier: postModifierPayload,
+};
+
+export default function MeetingDatePicker({
+  route: {
+    params: { payloadType },
+  },
+}: NativeStackScreenProps<MeetingPostListParamList, 'MeetingDateSelector'>) {
   const [startingDate, setStartingDate] = useState<string | null>(null);
   const [endingDate, setEndingDate] = useState<string | null>(null);
+  const payload = postPayload[payloadType];
   const setFormattedDateRange = useCallback(
     (starting: DateInfo, ending: DateInfo) => {
-      postCreatorPayload.update(() => ({
+      payload.update(() => ({
         meetingDateRange: {
           startFrom: starting,
           endTo: ending,
@@ -39,11 +54,11 @@ export default function MeetingDatePicker() {
       setStartingDate(formattedStart);
       setEndingDate(ending ? null : ending);
     },
-    [],
+    [payload],
   );
   const getPrevDateRange = useCallback(
-    () => postCreatorPayload.get().meetingDateRange,
-    [],
+    () => payload.get().meetingDateRange,
+    [payload],
   );
 
   return (

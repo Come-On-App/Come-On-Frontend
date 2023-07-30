@@ -13,6 +13,7 @@ const [DEFAULT_ICON_SIZE, DEFAULT_FONT_SIZE] = applyRelativeSizes({
 });
 
 export default function PressableInput({
+  disabled,
   text,
   icon,
   testID,
@@ -33,7 +34,7 @@ export default function PressableInput({
   }
 
   return (
-    <Pressable testID={testID} onPress={onPress}>
+    <Pressable testID={testID} onPress={onPress} disabled={disabled}>
       <View style={[cPressableInput, containerStyle]}>
         <View style={cPressableInnerInput}>
           {IconComponent}

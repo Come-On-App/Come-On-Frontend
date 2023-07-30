@@ -1,21 +1,42 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { formatDateRange } from '@shared/utils';
-import { postCreatorPayload } from '@post/payload/postPayload';
+import {
+  MeetingDateRange,
+  postModifierPayload,
+} from '@post/payload/postPayload';
 import TimeRange from '@post/components/timeRange/TimeRange';
 
-const TITLE = '투표 기간';
-const DESCRIPTION = '날짜 범위를 선택해 주세요';
+const TITLE = '투표 기간 수정';
+const DESCRIPTION = '날짜 범위 불러오는중...';
+const DESCRIPTION2 = '날짜 범위를 선택해 주세요';
 const OVERWRITE = true;
 
-export default function VotingTimeRangePicker() {
+export interface IvotingTimeRangePicker {
+  isLoad: boolean;
+  prevRange: MeetingDateRange;
+}
+
+export default function VotingTimeRangePicker({
+  isLoad,
+  prevRange,
+}: IvotingTimeRangePicker) {
+  useEffect(() => {
+    if (!isLoad) {
+      postModifierPayload.update(() => ({
+        meetingDateRange: prevRange,
+      }));
+    }
+  }, [isLoad, prevRange]);
+
   return (
     <TimeRange
-      payloadType="creator"
+      payloadType="modifier"
+      disabled={isLoad}
       title={TITLE}
-      description={DESCRIPTION}
+      description={isLoad ? DESCRIPTION : DESCRIPTION2}
       onPressDay={(setRange) => {
-        postCreatorPayload.observe(
+        postModifierPayload.observe(
           ({ meetingDateRange: { startFrom, endTo } }) => {
             if (!startFrom) {
               setRange(null);

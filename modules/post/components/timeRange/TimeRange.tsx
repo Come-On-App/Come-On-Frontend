@@ -11,16 +11,17 @@ import useStyles from './style';
 import { ItimeRange } from './type';
 
 export default function TimeRange({
-  prevRange,
   title,
   description,
   onPressDay,
+  disabled,
+  payloadType,
 }: ItimeRange) {
-  const [range, setRange] = useState<string | null>(prevRange);
+  const [range, setRange] = useState<string | null>(null);
   const { container, icon, font } = useStyles();
   const navigation = useNavigation<postListNavigationProps>();
   const onPressHandler = () => {
-    navigation.navigate('MeetingDateSelector');
+    navigation.navigate('MeetingDateSelector', { payloadType });
   };
 
   useEffect(() => {
@@ -34,6 +35,7 @@ export default function TimeRange({
           <ScreenTitle>{title}</ScreenTitle>
         </ContentHeader>
         <PressableInput
+          disabled={disabled}
           onPress={onPressHandler}
           text={range ?? description}
           icon={icon}

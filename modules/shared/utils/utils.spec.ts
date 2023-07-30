@@ -3,6 +3,7 @@ import { describe, expect, test } from '@jest/globals';
 import { PixelRatio } from 'react-native';
 import { ImagePickerAsset } from 'expo-image-picker';
 import {
+  convertStringToDateInfo,
   convertToRelativeSize,
   createLengthValidator,
   formatDateRange,
@@ -142,6 +143,16 @@ describe('utils Test', () => {
       name: 'C36C3D02-A385-41EE-A04A-07702668ABF7.jpg',
       type: 'image/jpg',
       uri: 'file:///var/mobile/Containers/Data/Application/765B13C9-8464-43FD-A639-4A598E8A49A7/Library/Caches/ExponentExperienceData/%2540anonymous%252FCome-On-Frontend-7980b774-ba88-4342-aef4-ce4ec8bb5e40/ImagePicker/C36C3D02-A385-41EE-A04A-07702668ABF7.jpg',
+    });
+  });
+
+  test('convertStringToDateInfo 함수는 문자열 형태의 날짜를 전달하면 타임 객체를 반환해야 한다.', () => {
+    expect(convertStringToDateInfo('2023-07-31')).toEqual({
+      dateString: '2023-07-31',
+      day: 31,
+      month: 7,
+      timestamp: 1690761600000,
+      year: 2023,
     });
   });
 });

@@ -9,6 +9,8 @@ import { QueryKeys } from '@app/api/type';
 import { requestGetMeetingDetail } from '@post/api/v2';
 import Uploader from '@post/components/modification/uploader/Uploader';
 import MeetingName from '@post/components/modification/meetingName/MeetingName';
+import VotingTimeRangePicker from '@post/components/modification/votingTimeRangePicker/VotingTimeRangePicker';
+import { convertDateRangeToDateInfo } from '@shared/utils';
 
 export default function MeetingPostModifier({
   route: {
@@ -32,6 +34,10 @@ export default function MeetingPostModifier({
       <MeetingName
         isLoad={isLoading}
         meetingName={data?.meetingMetaData.meetingName}
+      />
+      <VotingTimeRangePicker
+        isLoad={isLoading}
+        prevRange={convertDateRangeToDateInfo(data?.meetingMetaData.calendar)}
       />
     </ScrollView>
   );

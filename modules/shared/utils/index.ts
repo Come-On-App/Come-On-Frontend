@@ -1,10 +1,12 @@
 import _ from 'lodash/fp';
 import { Dimensions, PixelRatio } from 'react-native';
 import { ImagePickerAsset } from 'expo-image-picker';
+import { DateInfo } from '@shared/components/calendar/type';
 import {
   AssetState,
   IFormatDateRange,
   IapplyRelativeSizes,
+  IconvertStringToDateInfos,
   IisMeetingDataValid,
   formatType,
 } from './type';
@@ -256,4 +258,30 @@ export function isMeetingFormValid({
 
   // 모든 속성 값이 존재하는지 여부를 반환
   return hasImage && hasName && hasDateRange;
+}
+
+export function convertStringToDateInfo(dateString = ''): DateInfo {
+  const date = new Date(dateString);
+  const dateInfo: DateInfo = {
+    dateString,
+    day: date.getDate(),
+    month: date.getMonth() + 1, // 월은 0부터 시작하므로 1을 더해준다.
+    timestamp: date.getTime(),
+    year: date.getFullYear(),
+  };
+
+  return dateInfo;
+}
+
+export function convertDateRangeToDateInfo(
+  dateRange: IconvertStringToDateInfos,
+) {
+  const [startFrom, endTo] = Object.values(dateRange ?? []).map(
+    convertStringToDateInfo,
+  );
+
+  return {
+    startFrom,
+    endTo,
+  };
 }

@@ -1,10 +1,12 @@
-/* eslint-disable dot-notation */
+import { PayloadType } from '@post/components/timeRange/type';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 export type MeetingPostListParamList = {
   MeetingPostList: undefined;
   MeetingPostCreation: undefined;
-  MeetingDateSelector: undefined;
+  MeetingDateSelector: {
+    payloadType: PayloadType;
+  };
   MeetingPostDetail: undefined;
   MeetingPostModification: {
     id: number;

@@ -19,6 +19,6 @@ export default {
 
 export const Default: Meta = {
   args: {
-    isLoading: false,
+    isLoad: false,
   },
 };

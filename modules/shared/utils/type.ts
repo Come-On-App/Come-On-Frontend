@@ -6,6 +6,13 @@ export interface IFormatDateRange {
   endTo?: string;
 }
 
+export type IconvertStringToDateInfos =
+  | {
+      startFrom: string;
+      endTo: string;
+    }
+  | undefined;
+
 export type formatType = 'ko';
 
 export type IapplyRelativeSizes = (
