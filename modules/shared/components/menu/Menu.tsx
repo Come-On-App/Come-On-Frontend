@@ -6,7 +6,6 @@ import {
 import React, { useState } from 'react';
 import { Pressable, View } from 'react-native';
 
-import _ from 'lodash';
 import { IMenu } from './type';
 import useStyles from './style';
 import Font from '../font/Font';

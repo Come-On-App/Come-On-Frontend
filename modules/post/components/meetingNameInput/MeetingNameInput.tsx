@@ -16,6 +16,8 @@ export default function MeetingNameInput({
   placeholder,
   lengthMax,
   onInput,
+  isLoad,
+  prevMeetingName = '',
 }: ImeetingNameInput) {
   const { top, screenLayout } = useStyles();
   const [input, setInput] = useState('');
@@ -28,6 +30,10 @@ export default function MeetingNameInput({
     onInput(input);
   }, [onInput, input]);
 
+  useEffect(() => {
+    if (prevMeetingName) setInput(prevMeetingName);
+  }, [prevMeetingName]);
+
   return (
     <DividerWrapper>
       <ScreenLayout containerStyle={screenLayout}>
@@ -38,6 +44,7 @@ export default function MeetingNameInput({
           </View>
         </ContentHeader>
         <Input
+          disabled={isLoad}
           text={input}
           placeholder={placeholder}
           onChangeText={onChnageHandler}

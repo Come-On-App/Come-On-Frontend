@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { QueryKeys } from '@app/api/type';
 import { requestGetMeetingDetail } from '@post/api/v2';
 import Uploader from '@post/components/modification/uploader/Uploader';
+import MeetingName from '@post/components/modification/meetingName/MeetingName';
 
 export default function MeetingPostModifier({
   route: {
@@ -25,8 +26,12 @@ export default function MeetingPostModifier({
   return (
     <ScrollView testID={TestId.post.modifier} bounces={false}>
       <Uploader
-        imageUrl={data?.meetingMetaData.thumbnailImageUrl}
         isLoad={isLoading}
+        imageUrl={data?.meetingMetaData.thumbnailImageUrl}
+      />
+      <MeetingName
+        isLoad={isLoading}
+        meetingName={data?.meetingMetaData.meetingName}
       />
     </ScrollView>
   );

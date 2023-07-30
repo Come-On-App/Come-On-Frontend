@@ -101,6 +101,7 @@ const getStories = () => {
     "./modules/post/components/serverError/ServerError.stories.tsx": require("../modules/post/components/serverError/ServerError.stories.tsx"),
     "./modules/post/screens/MeetingDatePicker.stories.tsx": require("../modules/post/screens/MeetingDatePicker.stories.tsx"),
     "./modules/post/screens/MeetingPostCreator.stories.tsx": require("../modules/post/screens/MeetingPostCreator.stories.tsx"),
+    "./modules/post/screens/MeetingPostModifier.stories.tsx": require("../modules/post/screens/MeetingPostModifier.stories.tsx"),
     "./modules/post/screens/MeetingPostViewer.stories.tsx": require("../modules/post/screens/MeetingPostViewer.stories.tsx"),
     "./modules/shared/components/avatar/Avatar.stories.tsx": require("../modules/shared/components/avatar/Avatar.stories.tsx"),
     "./modules/shared/components/button/Button.stories.tsx": require("../modules/shared/components/button/Button.stories.tsx"),

@@ -10,6 +10,7 @@ export interface Iinput {
   rightIcon?: IconNode;
   label?: ReactNode;
   maxLength?: number;
+  disabled?: boolean;
 }
 
 export interface IpressableInput {
