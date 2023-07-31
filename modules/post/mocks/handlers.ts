@@ -17,7 +17,7 @@ const requestGetEntryCode = rest.get<GetEntryCodeResponse>(
   (req, res, ctx) => {
     const { meetingId } = req.params;
 
-    // 서버에러 코드
+    // 서버에러 상태
     if (meetingId === '500') {
       return res(
         ctx.status(500),
@@ -29,7 +29,7 @@ const requestGetEntryCode = rest.get<GetEntryCodeResponse>(
       );
     }
 
-    // 코드만료
+    // 코드만료 상태
     if (meetingId === '600') {
       return res(
         ctx.json({
@@ -123,6 +123,13 @@ const requestGetMeetingDetail = rest.get(
   }
 );
 
+const requestPatchMeetings = rest.patch(
+  `${BASE_URL}/api/v1/meetings/:meetingId`,
+  (_req, res, ctx) => {
+    return res(ctx.delay(3000), ctx.json({ success: true }));
+  }
+);
+
 export default [
   requstGetMeetings,
   requestGetEntryCode,
@@ -131,4 +138,5 @@ export default [
   requestUploadImage,
   requestDeleteMeeting,
   requestGetMeetingDetail,
+  requestPatchMeetings,
 ];

@@ -46,3 +46,15 @@ export type DeleteMeetingPayload = number;
 export interface DeleteMeetingResponse {
   success: boolean;
 }
+
+// PATCH /api/v1/meetings/{meetingId} (payalod)
+// 같이 사용하니까 Post 타입 사용
+export interface PatchMeetingPayload {
+  meetingId: number;
+  payload: Partial<PostMeetingPayload>;
+}
+
+// PATCH /api/v1/meetings/{meeting-id} (response)
+export interface PatchMeetingResponse {
+  success: boolean;
+}

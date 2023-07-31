@@ -7,6 +7,8 @@ import {
   DeleteMeetingResponse,
   GetEntryCodePayload,
   GetEntryCodeResponse,
+  PatchMeetingPayload,
+  PatchMeetingResponse,
   PostEntryCodePayalod,
   PostEntryCodeResponse,
   PostMeetingPayload,
@@ -82,6 +84,9 @@ async function requestUploadImage(
   return data;
 }
 
+/**
+ * 이미지를 form 형식에 맞게 변환 후 유효한 URL을 요청한다.
+ */
 export async function requestImageUpload(
   imagePickerAsset: ImagePickerAsset,
 ): Promise<string> {
@@ -104,6 +109,22 @@ export async function requestDeleteMeeting(
 ): Promise<DeleteMeetingResponse> {
   const URL = `/api/v1/meetings/${payload}/members/me`;
   const { data } = await comeonApiAxios.delete(URL);
+
+  return data;
+}
+
+/**
+ * PATCH  /api/v1/meetings/{meeting-id} 모임 수정
+ * @requires Authorization Bearer {access-token}
+ * @param payload 수정할 모임정보
+ * @returns slice Response 형식 응답값
+ */
+export async function requestPatchMeetings({
+  meetingId,
+  payload,
+}: PatchMeetingPayload): Promise<PatchMeetingResponse> {
+  const URL = `/api/v1/meetings/${meetingId}`;
+  const { data } = await comeonApiAxios.patch(URL, payload);
 
   return data;
 }
