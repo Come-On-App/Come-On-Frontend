@@ -12,7 +12,7 @@ export interface IpostUploader {
   title: string;
   description: string;
   prevImage?: string;
-  isLoad?: boolean;
+  isDataLoading?: boolean;
   onImage: (image: ImagePicker.ImagePickerAsset) => void;
 }
 
@@ -21,9 +21,9 @@ export default function PostImageUploader({
   description,
   prevImage,
   onImage,
-  isLoad,
+  isDataLoading,
 }: IpostUploader) {
-  const [image, pickImage, isLoading] = useImagePicker();
+  const [image, pickImage, isImageLoading] = useImagePicker();
 
   useEffect(() => {
     if (image) {
@@ -38,7 +38,7 @@ export default function PostImageUploader({
           <ScreenTitle>{title}</ScreenTitle>
         </ContentHeader>
         <ImageUploader
-          isLoading={isLoad || isLoading}
+          isLoading={isDataLoading || isImageLoading}
           uri={image?.uri ?? prevImage}
           description={description}
           onPress={pickImage}

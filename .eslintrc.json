@@ -89,8 +89,15 @@
       "rules": {
         "react/react-in-jsx-scope": "off",
         "react/jsx-filename-extension": "off",
-        "import/no-extraneous-dependencies": "off"
+        "import/no-extraneous-dependencies": "off",
+        "@typescript-eslint/no-explicit-any": "off"
       }
+    },
+    {
+      // feel free to replace with your preferred file pattern - eg. 'src/**/*Slice.ts'
+      "files": ["modules/**/*.slice.ts"],
+      // avoid state param assignment
+      "rules": { "no-param-reassign": ["error", { "props": false }] }
     }
   ]
 }

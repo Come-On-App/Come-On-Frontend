@@ -3,6 +3,6 @@ export interface ImeetingNameInput {
   placeholder: string;
   lengthMax: number;
   onInput: (text: string) => void;
-  prevMeetingName?: string;
-  isLoad?: boolean;
+  prevMeetingName?: string | null;
+  isDataLoading?: boolean;
 }

@@ -1,4 +1,4 @@
-import { describe, expect, test } from '@jest/globals';
+import { describe, expect, jest, test } from '@jest/globals';
 import { fireEvent, screen } from '@testing-library/react-native';
 
 import { render } from '@shared/utils/customRender';
@@ -13,7 +13,7 @@ describe('Calendar Compoent', () => {
   const endDayTestID = `${testID}.day_${'2023-07-21'}`;
 
   test('기존의 선택된 날짜가 존재하지 않는다면 시작 지점을 표시하여 렌더딩 해야 한다.', async () => {
-    render(<Calendar current={CURRENT} />);
+    render(<Calendar current={CURRENT} onDayPress={jest.fn()} />);
 
     fireEvent.press(screen.getByTestId(startDayTestID));
 
@@ -23,7 +23,7 @@ describe('Calendar Compoent', () => {
   });
 
   test('동일한 Day를 다시 클릭한다면 시작 지점 표시가 없어져야 한다.', () => {
-    render(<Calendar current={CURRENT} />);
+    render(<Calendar current={CURRENT} onDayPress={jest.fn()} />);
 
     fireEvent.press(screen.getByTestId(startDayTestID));
 
@@ -34,7 +34,7 @@ describe('Calendar Compoent', () => {
   });
 
   test('시작 지점을 선택하고 다음 클릭 이벤트는 끝나는 지점을 표시하여 렌더링 해야 한다.', async () => {
-    render(<Calendar current={CURRENT} />);
+    render(<Calendar current={CURRENT} onDayPress={jest.fn()} />);
 
     fireEvent.press(screen.getByTestId(startDayTestID));
 
@@ -50,7 +50,7 @@ describe('Calendar Compoent', () => {
     const targetDay2 = `${testID}.day_${'2023-07-22'}`;
     const targetDay3 = `${testID}.day_${'2023-08-31'}`;
 
-    render(<Calendar current={CURRENT} />);
+    render(<Calendar current={CURRENT} onDayPress={jest.fn()} />);
     fireEvent.press(screen.getByTestId(startDayTestID));
     fireEvent.press(screen.getByTestId(endDayTestID));
 
@@ -80,7 +80,7 @@ describe('Calendar Compoent', () => {
     const targetDay1 = `${testID}.day_${'2023-07-16'}`;
     const targetDay2 = `${testID}.day_${'2023-06-14'}`;
 
-    render(<Calendar current={CURRENT} />);
+    render(<Calendar current={CURRENT} onDayPress={jest.fn()} />);
     fireEvent.press(screen.getByTestId(startDayTestID));
     fireEvent.press(screen.getByTestId(endDayTestID));
 
@@ -101,7 +101,7 @@ describe('Calendar Compoent', () => {
   });
 
   test('범위가 지정된 상태에서 시작 지점을 다시 클릭한다면 끝나는 지점 표시가 없어져야 한다.', () => {
-    render(<Calendar current={CURRENT} />);
+    render(<Calendar current={CURRENT} onDayPress={jest.fn()} />);
     fireEvent.press(screen.getByTestId(startDayTestID));
     fireEvent.press(screen.getByTestId(endDayTestID));
 
@@ -111,7 +111,7 @@ describe('Calendar Compoent', () => {
   });
 
   test('범위가 지정된 상태에서 끝나는 지점을 다시 클릭한다면 시작 지점 표시가 없어져야 한다.', () => {
-    render(<Calendar current={CURRENT} />);
+    render(<Calendar current={CURRENT} onDayPress={jest.fn()} />);
     fireEvent.press(screen.getByTestId(startDayTestID));
     fireEvent.press(screen.getByTestId(endDayTestID));
 

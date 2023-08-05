@@ -1,4 +1,4 @@
-import { MeetingPostListParamList } from '@post/navigation/type';
+import { PostStackParamList } from '@post/navigation/type';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StoryFnReactReturnType } from '@storybook/react-native';
@@ -10,7 +10,7 @@ const StoryBookStack = createNativeStackNavigator();
  * 스토리북에서 mock 네비게이터를 활성화
  */
 function generateNavigationDecorator(
-  name: keyof MeetingPostListParamList,
+  name: keyof PostStackParamList,
   contentStyle?: StyleProp<ViewStyle>
 ) {
   return function NavigationDecorator(Story: () => StoryFnReactReturnType) {

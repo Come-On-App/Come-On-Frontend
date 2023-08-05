@@ -17,4 +17,8 @@ export default {
   ],
 } as Meta;
 
-export const Default: Meta = {};
+export const Default: Meta = {
+  args: {
+    onDayPress: () => null,
+  },
+};

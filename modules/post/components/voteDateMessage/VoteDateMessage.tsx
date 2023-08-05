@@ -3,13 +3,15 @@ import { View } from 'react-native';
 
 import Font from '@shared/components/font/Font';
 import RobotLogo from '@shared/components/logo/RobotLogo';
-import { IvoteGuideRobot } from './type';
+import { koFormattedDate } from '@shared/utils';
+import { DateRange } from '@post/features/post/type';
 import useStyles from './style';
 
 export default function VoteGuideRobot({
-  startingDate,
-  endingDate,
-}: IvoteGuideRobot) {
+  dateRange,
+}: {
+  dateRange: DateRange;
+}) {
   const { wrap, robot, cMessage } = useStyles();
 
   return (
@@ -17,22 +19,27 @@ export default function VoteGuideRobot({
       <View style={robot}>
         <RobotLogo />
       </View>
-      <View style={cMessage}>{VoteDateMessage(startingDate, endingDate)}</View>
+      <View style={cMessage}>
+        <VoteDateMessage dateRange={dateRange} />
+      </View>
     </View>
   );
 }
 
-function VoteDateMessage(
-  startingDate: string | null,
-  endingDate: string | null,
-) {
+function VoteDateMessage({ dateRange }: { dateRange: DateRange }) {
   const { messageFont } = useStyles();
+  const { startingDay, endingDay } = dateRange;
 
-  if (!startingDate && !endingDate) {
+  if (!startingDay && !endingDay) {
     return <Font style={messageFont}>모임 투표 범위를 지정해주세요.</Font>;
   }
 
-  if (startingDate && endingDate) {
+  if (startingDay && endingDay) {
+    const [startingDate, endingDate] = koFormattedDate({
+      startFrom: startingDay.dateString,
+      endTo: endingDay.dateString,
+    });
+
     return (
       <>
         <Font style={messageFont}>현재 모임의 투표 가능한 날짜는</Font>
@@ -46,7 +53,11 @@ function VoteDateMessage(
     );
   }
 
-  if (startingDate) {
+  if (startingDay) {
+    const [startingDate] = koFormattedDate({
+      startFrom: startingDay.dateString,
+    });
+
     return (
       <>
         <Font style={messageFont}>현재 모임의 투표 가능한 날짜는</Font>

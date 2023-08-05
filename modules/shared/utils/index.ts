@@ -1,15 +1,23 @@
 import _ from 'lodash/fp';
 import { Dimensions, PixelRatio } from 'react-native';
 import { ImagePickerAsset } from 'expo-image-picker';
-import { DateInfo } from '@shared/components/calendar/type';
+import type { DateData } from 'react-native-calendars';
+
+import { DateRange, PostState } from '@post/features/post/type';
 import {
   AssetState,
   IFormatDateRange,
   IapplyRelativeSizes,
   IconvertStringToDateInfos,
-  IisMeetingDataValid,
   formatType,
 } from './type';
+
+/**
+ * boolean 타입을 반전시킨다.
+ */
+export const invert = (value: boolean) => !value;
+
+export const EMPTY_STRING = '';
 
 function isEqualDate([first, second]: string[]) {
   return _.equals(first, second);
@@ -241,28 +249,32 @@ export function createImageFormData(imageFormData: string | Blob): FormData {
   return formData(imageFormData);
 }
 
-export function getImageUrl(item: { imageUrl: string }) {
-  return item.imageUrl;
-}
-
-export function isMeetingFormValid({
-  meetingImage,
-  meetingName,
-  meetingDateRange,
-}: IisMeetingDataValid) {
-  const hasImage = meetingImage !== null;
-  const hasName = meetingName.length > 0;
+export function isPostFormValid({ image, name, dateRange }: PostState) {
+  const hasImage = image.asset !== null || image.uri !== null;
+  const hasName = name !== null;
   const hasDateRange =
-    meetingDateRange !== null &&
-    (meetingDateRange.startFrom || meetingDateRange.endTo);
+    dateRange !== null && (dateRange.startingDay || dateRange.endingDay);
 
   // 모든 속성 값이 존재하는지 여부를 반환
-  return hasImage && hasName && hasDateRange;
+  return Boolean(hasImage && hasName && hasDateRange);
 }
 
-export function convertStringToDateInfo(dateString = ''): DateInfo {
+/**
+ * 주어진 인자 속성이 서로 다르면 true를 반환한다.
+ */
+export function isPostFormEqual(prevState: PostState, nextState: PostState) {
+  const equalName = prevState.name === nextState.name;
+  const equalImage = _.isEqual(prevState.image, nextState.image);
+  const equalDateRange = _.isEqual(prevState.dateRange, nextState.dateRange);
+
+  return [equalName, equalImage, equalDateRange].some(
+    (value) => value === false,
+  );
+}
+
+export function convertStringToDateInfo(dateString = ''): DateData {
   const date = new Date(dateString);
-  const dateInfo: DateInfo = {
+  const dateInfo: DateData = {
     dateString,
     day: date.getDate(),
     month: date.getMonth() + 1, // 월은 0부터 시작하므로 1을 더해준다.
@@ -276,12 +288,34 @@ export function convertStringToDateInfo(dateString = ''): DateInfo {
 export function convertDateRangeToDateInfo(
   dateRange: IconvertStringToDateInfos,
 ) {
-  const [startFrom, endTo] = Object.values(dateRange ?? []).map(
+  const [startingDay, endingDay] = Object.values(dateRange ?? []).map(
     convertStringToDateInfo,
   );
 
   return {
-    startFrom,
-    endTo,
+    startingDay,
+    endingDay,
   };
+}
+
+/**
+ * 날짜 객체를 지정된 날짜 포맷 형식으로 날짜 형식을 수정한다.
+ */
+export function getFormattedDateRange({ startingDay, endingDay }: DateRange) {
+  if (!startingDay) {
+    return '';
+  }
+
+  // startFrom과 endTo가 모두 존재하는 경우, 두 날짜를 포맷하여 범위 설정
+  if (startingDay && endingDay) {
+    return formatDateRange({
+      startFrom: startingDay.dateString,
+      endTo: endingDay.dateString,
+    });
+  }
+
+  // startFrom이 존재하는 경우, startFrom.dateString을 포맷하여 범위 설정
+  return formatDateRange({
+    startFrom: startingDay.dateString,
+  });
 }

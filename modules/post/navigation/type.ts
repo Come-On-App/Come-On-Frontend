@@ -1,11 +1,11 @@
-import { PayloadType } from '@post/components/timeRange/type';
+import { DateRange } from '@post/features/post/type';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-export type MeetingPostListParamList = {
+export type PostStackParamList = {
   MeetingPostList: undefined;
   MeetingPostCreation: undefined;
   MeetingDateSelector: {
-    payloadType: PayloadType;
+    prevDateRange: DateRange;
   };
   MeetingPostDetail: undefined;
   MeetingPostModification: {
@@ -13,16 +13,21 @@ export type MeetingPostListParamList = {
   };
 };
 
-export type postListNavigationProps =
-  NativeStackScreenProps<MeetingPostListParamList>['navigation'];
+type PostRouteNames = keyof PostStackParamList;
 
-type InitialRouteName = keyof MeetingPostListParamList;
+export type PostNativeStack<T extends PostRouteNames> = NativeStackScreenProps<
+  PostStackParamList,
+  T
+>;
+
+export type PostListNavigation =
+  PostNativeStack<'MeetingPostList'>['navigation'];
 
 export interface IpostNavigator {
   children: React.ReactNode;
-  initialRouteName?: InitialRouteName;
+  initialRouteName?: PostRouteNames;
 }
 
 export interface Inavigation {
-  initialRouteName?: InitialRouteName;
+  initialRouteName?: PostRouteNames;
 }

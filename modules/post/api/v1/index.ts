@@ -1,7 +1,7 @@
 import { comeonApiAxios } from '@app/api/axiosInstance';
 import { ImagePickerAsset } from 'expo-image-picker';
-import { vigilAsync } from 'promise-vigilant';
-import { createImageFormData, getAssetState, getImageUrl } from '@shared/utils';
+import { goAsync } from 'promise-vigilant';
+import { createImageFormData, getAssetState } from '@shared/utils';
 import {
   DeleteMeetingPayload,
   DeleteMeetingResponse,
@@ -85,16 +85,14 @@ async function requestUploadImage(
 }
 
 /**
- * 이미지를 form 형식에 맞게 변환 후 유효한 URL을 요청한다.
+ * 이미지 에셋을 유효한 이미지 URL 주소로 변환 요청한다.
  */
-export async function requestImageUpload(
-  imagePickerAsset: ImagePickerAsset,
-): Promise<string> {
-  return vigilAsync(imagePickerAsset, [
+export function requestImageURL(asset: ImagePickerAsset): Promise<string> {
+  return goAsync(asset, [
     getAssetState,
     createImageFormData,
     requestUploadImage,
-    getImageUrl,
+    (response: PostUploadImageResponse) => response.imageUrl,
   ]);
 }
 

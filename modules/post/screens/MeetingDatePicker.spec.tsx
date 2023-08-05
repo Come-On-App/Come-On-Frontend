@@ -11,7 +11,11 @@ import MeetingDatePicker from './MeetingDatePicker';
 describe('MeetingDatePicker Compoent', () => {
   test('모임 날짜 범위 컴포넌트가 렌더링 되어야 한다. ', () => {
     render(
-      <MeetingDatePicker route={{ params: { payloadType: 'creator' } }} />,
+      <MeetingDatePicker
+        route={{
+          params: { prevDateRange: { startingDay: null, endingDay: null } },
+        }}
+      />,
       wrapper,
     );
 

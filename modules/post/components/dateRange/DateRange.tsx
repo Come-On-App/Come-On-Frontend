@@ -1,40 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 import { ScreenTitle } from '@shared/components/font/Font';
 import PressableInput from '@shared/components/input/PressableInput';
-import { useNavigation } from '@react-navigation/native';
-import { postListNavigationProps } from '@post/navigation/type';
+import { PostListNavigation } from '@post/navigation/type';
 import ScreenLayout from '@shared/components/layout/ScreenLayout';
 import DividerWrapper from '@shared/components/layout/DividerWrapper';
 import ContentHeader from '@shared/components/layout/ContentHeader';
+import { getFormattedDateRange } from '@shared/utils';
 import useStyles from './style';
 import { ItimeRange } from './type';
-import updateDateRange from '../modification/util/updateDateRange';
 
-export default function TimeRange({
+export default function DateRange({
   title,
   description,
-  onPressDay,
   disabled,
-  payloadType,
-  prevRange,
+  dateRange,
 }: ItimeRange) {
-  const [range, setRange] = useState<string | null>(null);
   const { container, icon, font } = useStyles();
-  const navigation = useNavigation<postListNavigationProps>();
-  const onPressHandler = () => {
-    navigation.navigate('MeetingDateSelector', { payloadType });
-  };
-
-  useEffect(() => {
-    onPressDay(setRange);
-  }, [onPressDay]);
-
-  useEffect(() => {
-    if (!disabled && prevRange) {
-      updateDateRange(prevRange, setRange);
-    }
-  }, [disabled, prevRange]);
+  const navigation = useNavigation<PostListNavigation>();
 
   return (
     <DividerWrapper>
@@ -44,8 +28,12 @@ export default function TimeRange({
         </ContentHeader>
         <PressableInput
           disabled={disabled}
-          onPress={onPressHandler}
-          text={range ?? description}
+          onPress={() =>
+            navigation.navigate('MeetingDateSelector', {
+              prevDateRange: dateRange,
+            })
+          }
+          text={getFormattedDateRange(dateRange) || description}
           icon={icon}
           containerStyle={container}
           fontColor={font.color}

@@ -126,6 +126,7 @@ const requestGetMeetingDetail = rest.get(
 const requestPatchMeetings = rest.patch(
   `${BASE_URL}/api/v1/meetings/:meetingId`,
   (_req, res, ctx) => {
+    console.log(_req);
     return res(ctx.delay(3000), ctx.json({ success: true }));
   }
 );

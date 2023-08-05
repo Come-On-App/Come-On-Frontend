@@ -1,29 +1,27 @@
 import { describe, expect, test, jest } from '@jest/globals';
 import { fireEvent, screen } from '@testing-library/react-native';
+import { NavigationContainer } from '@react-navigation/native';
 
 import TestId from '@shared/constants/testIds';
 import { render } from '@shared/utils/customRender';
 import QueryClientProvider from '@shared/provider/QueryClientProvider';
 import MeetingPostCreator from './MeetingPostCreator';
 
-const mockedGoBack = jest.fn();
-
-jest.mock('@react-navigation/native', () => {
-  const actualNav: unknown[] = jest.requireActual('@react-navigation/native');
-
-  return {
-    ...actualNav,
-    useNavigation: () => ({
-      goBack: mockedGoBack,
-    }),
-  };
-});
-
 describe('MeetingPostCreator Compoent', () => {
+  const mockedGoBack = jest.fn();
   const Component = (
-    <QueryClientProvider>
-      <MeetingPostCreator />
-    </QueryClientProvider>
+    <NavigationContainer>
+      <QueryClientProvider>
+        <MeetingPostCreator
+          navigation={
+            {
+              goBack: mockedGoBack,
+            } as any
+          }
+          route={jest.fn() as any}
+        />
+      </QueryClientProvider>
+    </NavigationContainer>
   );
 
   test('모임 생성 컴포넌트가 렌더링 되어야 한다.', () => {

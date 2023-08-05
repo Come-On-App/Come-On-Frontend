@@ -1,9 +1,6 @@
-import type { MeetingDateRange } from '@post/payload/postPayload';
-import type { ImagePickerAsset } from 'expo-image-picker';
-
 export interface IFormatDateRange {
-  startFrom: string;
-  endTo?: string;
+  startFrom: string | null;
+  endTo?: string | null;
 }
 
 export type IconvertStringToDateInfos =
@@ -28,9 +25,3 @@ export type AssetState = {
   type: string;
   uri: string;
 };
-
-export interface IisMeetingDataValid {
-  meetingImage: ImagePickerAsset | null;
-  meetingName: string;
-  meetingDateRange: MeetingDateRange;
-}

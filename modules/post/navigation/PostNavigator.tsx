@@ -1,19 +1,14 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import {
-  Inavigation,
-  IpostNavigator,
-  MeetingPostListParamList,
-} from '@post/navigation/type';
+import { Inavigation, IpostNavigator, PostStackParamList } from '@post/navigation/type';
 import MeetingDashboard from '@post/screens/MeetingDashboard';
 import MeetingPostCreator from '@post/screens/MeetingPostCreator';
 import MeetingDatePicker from '@post/screens/MeetingDatePicker';
 import MeetingPostViewer from '@post/screens/MeetingPostViewer';
 import MeetingPostModifier from '@post/screens/MeetingPostModifier';
 
-const { Screen, Navigator } =
-  createNativeStackNavigator<MeetingPostListParamList>();
+const { Screen, Navigator } = createNativeStackNavigator<PostStackParamList>();
 
 function PostNavigator({ children, initialRouteName }: IpostNavigator) {
   return (

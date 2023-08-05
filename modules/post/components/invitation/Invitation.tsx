@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import * as Clipboard from 'expo-clipboard';
 import * as Haptics from 'expo-haptics';
-import { vigilAsync } from 'promise-vigilant';
+import { goAsync } from 'promise-vigilant';
 
 import { QueryKeys } from '@app/api/type';
 import { requestGetEntryCode, requestPostEntryCode } from '@post/api/v1';
@@ -41,7 +41,7 @@ export default function Invitation({ id, showModal, onClose }: Iinvitation) {
     const setLoadingModalType = () => setModalType('Loading');
     const requestCode = () => requestPostEntryCode(id);
     const copyAndHaptic = async () => {
-      vigilAsync([() => Clipboard.setStringAsync(code)], {
+      goAsync([() => Clipboard.setStringAsync(code)], {
         onSuccess: () => {
           Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
           setModalType('Copied');
@@ -56,7 +56,7 @@ export default function Invitation({ id, showModal, onClose }: Iinvitation) {
         return copyAndHaptic;
       case 'Expired':
         return () =>
-          vigilAsync([setInitCode, setLoadingModalType, requestCode], {
+          goAsync([setInitCode, setLoadingModalType, requestCode], {
             onSuccess: ({ entryCode }: PostEntryCodeResponse) => {
               setModalType('Created');
               setCode(entryCode);

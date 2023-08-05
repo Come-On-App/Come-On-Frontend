@@ -1,4 +1,4 @@
 export interface ImeetingName {
-  isLoad: boolean;
-  meetingName: string | undefined;
+  isDataLoading: boolean;
+  prevMeetingName: string | undefined;
 }

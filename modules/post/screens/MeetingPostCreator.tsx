@@ -1,8 +1,6 @@
 import { ScrollView } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { vigilAsync } from 'promise-vigilant';
+import React, { useEffect } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useNavigation } from '@react-navigation/native';
 
 import ConfirmCancelButton from '@post/components/button/ConfirmCancelButton';
 import Uploader from '@post/components/creation/uploader/Uploader';
@@ -10,23 +8,25 @@ import VotingTimeRangePicker from '@post/components/creation/votingTimeRangePick
 import DividerWrapper from '@shared/components/layout/DividerWrapper';
 import ScreenLayout from '@shared/components/layout/ScreenLayout';
 import TestId from '@shared/constants/testIds';
-import { postCreatorPayload } from '@post/payload/postPayload';
-import { requestCreateMeetings, requestImageUpload } from '@post/api/v1';
-import { postListNavigationProps } from '@post/navigation/type';
-import { isMeetingFormValid } from '@shared/utils';
+import { requestCreateMeetings, requestImageURL } from '@post/api/v1';
+import { PostNativeStack } from '@post/navigation/type';
+import { isPostFormValid } from '@shared/utils';
 import { QueryKeys } from '@app/api/type';
 import MeetingNameInput from '@post/components/creation/meetingName/MeetingName';
+import usePostManagement from '@post/hooks/usePostManagement';
+import type { ValidatedPostState, PostState } from '@post/features/post/type';
+import { PostMeetingPayload } from '@post/api/v1/type';
+import { goAsync } from 'promise-vigilant';
 
-const OVERWRITE = true;
 const CONFIRM_TEXT = '모임 만들기';
 const LOADING_TEXT = '모임 생성중...';
 
-export default function MeetingPostCreator() {
+export default function MeetingPostCreator({
+  navigation,
+}: PostNativeStack<'MeetingPostCreation'>) {
   const queryClient = useQueryClient();
-  const [isDisabled, setDisabled] = useState(true);
-  const navigation = useNavigation<postListNavigationProps>();
-  const { mutate, status } = useMutation({
-    mutationFn: requestCreateMeetings,
+  const { initPostState, postState } = usePostManagement();
+  const { mutate, isLoading } = useMutation(requestCreateMeetings, {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QueryKeys.meetings] });
       navigation.reset({
@@ -37,16 +37,10 @@ export default function MeetingPostCreator() {
   });
 
   useEffect(() => {
-    postCreatorPayload.observe(
-      (payload) => setDisabled(!isMeetingFormValid(payload)),
-      'post_observe_isReadySubmit',
-      OVERWRITE,
-    );
-
     return () => {
-      postCreatorPayload.init();
+      initPostState();
     };
-  }, []);
+  }, [initPostState]);
 
   return (
     <ScrollView testID={TestId.post.creator} bounces={false}>
@@ -56,37 +50,65 @@ export default function MeetingPostCreator() {
       <DividerWrapper>
         <ScreenLayout>
           <ConfirmCancelButton
-            rightDisabled={isDisabled}
+            leftDisabled={isLoading}
+            rightDisabled={!isPostFormValid(postState) || isLoading}
             onCancelHandler={() => navigation.goBack()}
+            confirmText={isLoading ? LOADING_TEXT : CONFIRM_TEXT}
             onConfirmlHandler={() => {
-              const {
-                meetingImage,
-                meetingName,
-                meetingDateRange: { startFrom, endTo },
-              } = postCreatorPayload.get();
-
-              if (!startFrom || meetingImage == null) {
-                throw new Error('Required properties not passed.');
-              }
-
-              // 이미지 변환후 모임 생성
-              vigilAsync([
-                meetingImage,
-                requestImageUpload,
-                (imageUrl: string) =>
-                  mutate({
-                    meetingName,
-                    meetingImageUrl: imageUrl,
-                    calendarStartFrom: startFrom.dateString,
-                    calendarEndTo:
-                      endTo === null ? startFrom.dateString : endTo.dateString, // 당일 날짜만 존재할 때는 시작 날짜를 넣어준다.
-                  }),
-              ]);
+              goAsync([postState, generatePostPayload, mutate]);
             }}
-            confirmText={status === 'loading' ? LOADING_TEXT : CONFIRM_TEXT}
           />
         </ScreenLayout>
       </DividerWrapper>
     </ScrollView>
   );
 }
+
+/**
+ * [헬퍼 함수]
+ * 객체의 유효성 체크를 진행한다.
+ */
+function validatePostState({
+  image,
+  dateRange,
+  name,
+}: PostState): ValidatedPostState {
+  if (dateRange.startingDay === null || image.asset === null || name === null) {
+    throw new Error('Required properties not passed.');
+  }
+
+  return {
+    name,
+    dateRange: {
+      startingDay: dateRange.startingDay,
+      endingDay: null,
+    },
+    image: {
+      asset: image.asset,
+    },
+  };
+}
+
+/**
+ * [헬퍼 함수]
+ * 서버에 요청할 올바른 페이로드 객체를 반환한다.
+ *
+ * - 이미지 객체가 존재한다면 이미지 변환 API를 요청한다.
+ */
+const generatePostPayload = async (
+  postState: PostState,
+): Promise<PostMeetingPayload> => {
+  const {
+    dateRange: { startingDay, endingDay },
+    image,
+    name,
+  } = validatePostState(postState);
+
+  return {
+    meetingName: name,
+    meetingImageUrl: await requestImageURL(image.asset),
+    calendarStartFrom: startingDay.dateString,
+    calendarEndTo:
+      endingDay === null ? startingDay.dateString : endingDay.dateString, // 당일 날짜만 존재할 때는 시작 날짜를 넣어준다.
+  };
+};
