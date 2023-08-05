@@ -1,7 +1,8 @@
 import { ScrollView } from 'react-native';
 import React, { useEffect } from 'react';
+import _ from 'lodash';
 
-import { convertDateRangeToDateInfo, isPostFormEqual } from '@shared/utils';
+import { convertDateRangeToDateInfo, hasPostStateChanged } from '@shared/utils';
 import TestId from '@shared/constants/testIds';
 import { PostNativeStack } from '@post/navigation/type';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -47,10 +48,10 @@ export default function MeetingPostModifier({
       });
     },
   });
-  const shouldShowLoader = isLoading || isSubmit;
+  const isProcessing = isLoading || isSubmit;
   // 게시물 수정사항이 존재한다면 ture를 반환한다.
   const hasFormChanged =
-    isSuccess && !isPostFormEqual(generatePostData(response), postState);
+    isSuccess && !hasPostStateChanged(generatePostData(response), postState);
 
   useEffect(() => {
     if (isSuccess) {
@@ -74,7 +75,12 @@ export default function MeetingPostModifier({
         <ScreenLayout>
           <ConfirmCancelButton
             leftDisabled={isSubmit}
-            rightDisabled={hasFormChanged || shouldShowLoader}
+            rightDisabled={
+              _.isNull(postState.dateRange.startingDay) ||
+              _.isEmpty(postState.name) ||
+              hasFormChanged ||
+              isProcessing
+            }
             onCancelHandler={() => navigation.goBack()}
             confirmText={isSubmit ? LOADING_TEXT : CONFIRM_TEXT}
             onConfirmlHandler={() => {

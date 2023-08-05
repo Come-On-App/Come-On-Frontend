@@ -262,7 +262,10 @@ export function isPostFormValid({ image, name, dateRange }: PostState) {
 /**
  * 주어진 인자 속성이 서로 다르면 true를 반환한다.
  */
-export function isPostFormEqual(prevState: PostState, nextState: PostState) {
+export function hasPostStateChanged(
+  prevState: PostState,
+  nextState: PostState,
+) {
   const equalName = prevState.name === nextState.name;
   const equalImage = _.isEqual(prevState.image, nextState.image);
   const equalDateRange = _.isEqual(prevState.dateRange, nextState.dateRange);
@@ -303,7 +306,7 @@ export function convertDateRangeToDateInfo(
  */
 export function getFormattedDateRange({ startingDay, endingDay }: DateRange) {
   if (!startingDay) {
-    return '';
+    return EMPTY_STRING;
   }
 
   // startFrom과 endTo가 모두 존재하는 경우, 두 날짜를 포맷하여 범위 설정

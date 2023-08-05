@@ -11,6 +11,7 @@ import {
   getAssetState,
   getDatesInRange,
   isExpiry,
+  hasPostStateChanged,
   truncateText,
   validateCode,
 } from './index';
@@ -154,5 +155,69 @@ describe('utils Test', () => {
       timestamp: 1690761600000,
       year: 2023,
     });
+  });
+
+  test('isPostFormEqual 함수는 주어진 인자 속성이 서로 다르면 true를 반환한다.', () => {
+    const prevState = {
+      dateRange: {
+        endingDay: {
+          dateString: '2023-07-31',
+          day: 31,
+          month: 7,
+          timestamp: 1690761600000,
+          year: 2023,
+        },
+        startingDay: {
+          dateString: '2023-07-01',
+          day: 1,
+          month: 7,
+          timestamp: 1688169600000,
+          year: 2023,
+        },
+      },
+      image: { asset: null, uri: 'https://picsum.photos/200/300' },
+      name: '예시 모임 제목#1',
+    };
+    const nextState = {
+      dateRange: {
+        endingDay: {
+          dateString: '2023-07-31',
+          day: 31,
+          month: 7,
+          timestamp: 1690761600000,
+          year: 2023,
+        },
+        startingDay: {
+          dateString: '2023-07-01',
+          day: 1,
+          month: 7,
+          timestamp: 1688169600000,
+          year: 2023,
+        },
+      },
+      image: { asset: null, uri: 'https://picsum.photos/200/300' },
+      name: '예시 모임 제목#1',
+    };
+
+    expect(hasPostStateChanged(prevState, nextState)).toBeFalsy();
+
+    // 빈 문자열
+    expect(
+      hasPostStateChanged(prevState, {
+        ...nextState,
+        name: '',
+      }),
+    ).toBeTruthy();
+
+    // 빈 날짜범위
+    expect(
+      hasPostStateChanged(prevState, {
+        ...nextState,
+        dateRange: {
+          startingDay: null,
+          endingDay: null,
+        },
+      }),
+    ).toBeTruthy();
   });
 });
