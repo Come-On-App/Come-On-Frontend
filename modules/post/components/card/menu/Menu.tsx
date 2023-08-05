@@ -30,7 +30,10 @@ export default function CardMenu({ id }: IcardMenu) {
     },
     {
       name: '게시물 신고',
-      onPress: () => null,
+      onPress: (hideMenu) => {
+        hideMenu();
+        navigation.navigate('MeetingPostReport', { id });
+      },
     },
     {
       name: '모임 탈퇴',
