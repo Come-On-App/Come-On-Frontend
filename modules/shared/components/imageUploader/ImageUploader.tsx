@@ -1,9 +1,10 @@
 import React from 'react';
-import { ActivityIndicator, Pressable } from 'react-native';
+import { Pressable } from 'react-native';
 
 import Icon from '@shared/components/icon/Icon';
 import Font from '@shared/components/font/Font';
 import { Image } from '@rneui/themed';
+import { ImageSkeleton } from '@post/components/card/skeleton/Skeleton';
 import useStyles from './style';
 import { IimageUploader } from './type';
 
@@ -17,14 +18,7 @@ export default function ImageUploader({
   const { imageContainer, imageUploader, font, icon } = useStyles();
 
   if (isLoading) {
-    return (
-      <Image
-        accessibilityHint="loading"
-        source={{ uri: undefined }}
-        PlaceholderContent={<ActivityIndicator />}
-        style={imageContainer}
-      />
-    );
+    return <ImageSkeleton />;
   }
 
   if (!isLoading && uri) {

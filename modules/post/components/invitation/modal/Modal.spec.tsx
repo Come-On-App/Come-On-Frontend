@@ -26,7 +26,9 @@ describe('Modal Compoent', () => {
       />,
     );
 
-    expect(screen.queryByTestId(TestId.post.modal)).toBeOnTheScreen();
+    expect(
+      screen.queryByTestId(TestId.post.modal.invitation),
+    ).toBeOnTheScreen();
     expect(
       screen.queryByText('초대 코드를 생성 중입니다...'),
     ).toBeOnTheScreen();
@@ -66,7 +68,9 @@ describe('Modal Compoent', () => {
       />,
     );
 
-    expect(screen.queryByTestId(TestId.post.modal)).toBeOnTheScreen();
+    expect(
+      screen.queryByTestId(TestId.post.modal.invitation),
+    ).toBeOnTheScreen();
     expect(screen.queryByText('초대 코드가 만료되었습니다.')).toBeOnTheScreen();
     expect(
       screen.queryByText('"갱신하기" 버튼을 클릭하여 코드를 생성해주세요.'),
@@ -104,7 +108,9 @@ describe('Modal Compoent', () => {
       />,
     );
 
-    expect(screen.queryByTestId(TestId.post.modal)).toBeOnTheScreen();
+    expect(
+      screen.queryByTestId(TestId.post.modal.invitation),
+    ).toBeOnTheScreen();
     expect(screen.queryByText('초대 코드가 생성되었습니다!')).toBeOnTheScreen();
     expect(
       screen.queryByText('"복사하기" 버튼을 클릭하여 코드를 복사해주세요.'),

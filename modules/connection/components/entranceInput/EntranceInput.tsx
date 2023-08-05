@@ -3,7 +3,7 @@ import React from 'react';
 
 import TestId from '@shared/constants/testIds';
 import CodeField from '@shared/components/input/CodeField';
-import { createLengthValidator, validateCode } from '@shared/utils/utils';
+import { createLengthValidator, validateCode } from '@shared/utils';
 import useStyles from './style';
 import { IentranceInput } from './type';
 

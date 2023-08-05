@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 
 import Button from '@shared/components/button/Button';
-import { createLengthValidator } from '@shared/utils/utils';
+import { createLengthValidator } from '@shared/utils';
 import useStyles from './style';
 
 const TITLE = '입장하기';

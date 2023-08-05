@@ -4,13 +4,8 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import { Tab } from './config';
 import BottomTabNavigator from './BottomTabNavigator';
-import {
-  requestGetEntryCode,
-  requstGetMeetings,
-  requestPostEntryCode,
-} from '@post/mocks/handlers';
 import { BASE_URL } from '@app/api/axiosInstance';
-import { EmptyResponse } from '@post/mocks/GetMeetingSliceResponse';
+import { EmptyResponse } from '@post/mocks/getMeetingsSliceResponse';
 
 type Meta = ComponentMeta<typeof BottomTabNavigator>;
 
@@ -30,11 +25,6 @@ export const MeetingDashboard: Meta = {
   title: '(API) MeetingDashboard - Success',
   args: {
     initialRouteName: Tab.one,
-  },
-  parameters: {
-    msw: {
-      handlers: [requstGetMeetings, requestGetEntryCode, requestPostEntryCode],
-    },
   },
 };
 

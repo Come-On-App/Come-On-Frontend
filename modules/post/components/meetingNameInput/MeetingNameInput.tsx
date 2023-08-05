@@ -1,38 +1,49 @@
 import { View } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { ScreenTitle } from '@shared/components/font/Font';
 import TextLengthCounter from '@shared/components/textLengthCounter/TextLengthCounter';
 import Input from '@shared/components/input/Input';
-import { truncateText } from '@shared/utils/utils';
+import { EMPTY_STRING, truncateText } from '@shared/utils';
 import ScreenLayout from '@shared/components/layout/ScreenLayout';
 import DividerWrapper from '@shared/components/layout/DividerWrapper';
 import ContentHeader from '@shared/components/layout/ContentHeader';
 import useStyles from './style';
+import { ImeetingNameInput } from './type';
 
-const TITLE = '모임 이름';
-const placeholder = '여기로 모여!';
-const LENGTH_MAX = 30;
-
-export default function MeetingNameInput() {
+export default function MeetingNameInput({
+  title,
+  placeholder,
+  lengthMax,
+  onInput,
+  isDataLoading,
+  prevMeetingName,
+}: ImeetingNameInput) {
   const { top, screenLayout } = useStyles();
-  const [input, setInput] = useState('');
-  const textTruncator = truncateText(LENGTH_MAX);
+  const [input, setInput] = useState(EMPTY_STRING);
+  const textTruncator = truncateText(lengthMax);
   const onChnageHandler = (text: string) => {
-    setInput(textTruncator(text));
+    const truncatedText = textTruncator(text);
+
+    setInput(truncatedText);
+    onInput(truncatedText);
   };
+
+  useEffect(() => {
+    if (prevMeetingName) setInput(prevMeetingName);
+  }, [prevMeetingName]);
 
   return (
     <DividerWrapper>
       <ScreenLayout containerStyle={screenLayout}>
         <ContentHeader>
           <View style={top}>
-            <ScreenTitle>{TITLE}</ScreenTitle>
-            <TextLengthCounter text={input} max={LENGTH_MAX} />
+            <ScreenTitle>{title}</ScreenTitle>
+            <TextLengthCounter text={input} max={lengthMax} />
           </View>
         </ContentHeader>
-
         <Input
+          disabled={isDataLoading}
           text={input}
           placeholder={placeholder}
           onChangeText={onChnageHandler}

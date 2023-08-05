@@ -1,15 +1,19 @@
 import { describe, expect, test } from '@jest/globals';
 
 import { PixelRatio } from 'react-native';
+import { ImagePickerAsset } from 'expo-image-picker';
 import {
+  convertStringToDateInfo,
   convertToRelativeSize,
   createLengthValidator,
   formatDateRange,
   formatTimeWithAMPM,
+  getAssetState,
+  getDatesInRange,
   isExpiry,
   truncateText,
   validateCode,
-} from './utils';
+} from './index';
 
 describe('utils Test', () => {
   describe('formatDateRange Function', () => {
@@ -19,9 +23,11 @@ describe('utils Test', () => {
     };
 
     test('formatDateRange는 날짜 범위의 서식을 올바르게 포맷팅 해야한다.', () => {
-      const expected = '2023.06.10 ~ 2023.06.20';
+      expect(formatDateRange(range)).toEqual('2023.06.10 ~ 2023.06.20');
 
-      expect(formatDateRange(range)).toEqual(expected);
+      expect(formatDateRange({ startFrom: '2023-06-10' })).toEqual(
+        '2023.06.10',
+      );
     });
 
     test('두 번째 매개변수를 전달한다면 지정된 포맷 형식으로 포맷팅 되어야 한다.', () => {
@@ -109,5 +115,44 @@ describe('utils Test', () => {
   test('isExpiry 함수는 전달된 인수가 현재 시간을 기준으로 넘어갔는지 판단하여 반환해야 한다.', () => {
     expect(isExpiry('2020-08-30 23:11:30')).toBeTruthy();
     expect(isExpiry('2100-08-30 23:11:30')).toBeFalsy();
+  });
+
+  test('getDatesInRange 함수는 전달된 날짜 범위를 반환해야 한다.', () => {
+    expect(getDatesInRange('2023-07-12', '2023-07-16')).toEqual([
+      '2023-07-13',
+      '2023-07-14',
+      '2023-07-15',
+    ]);
+  });
+
+  test('getAssetState 함수는 이미지 정보 객체를 반환해야 한다.', () => {
+    const mockAssets: ImagePickerAsset = {
+      assetId: 'AAF91AA8-3745-4111-9859-8D5B3DAA6845/L0/001',
+      base64: null,
+      duration: null,
+      exif: null,
+      fileName: 'IMG_0428.jpg',
+      fileSize: 4735978,
+      height: 3025,
+      type: 'image',
+      uri: 'file:///var/mobile/Containers/Data/Application/765B13C9-8464-43FD-A639-4A598E8A49A7/Library/Caches/ExponentExperienceData/%2540anonymous%252FCome-On-Frontend-7980b774-ba88-4342-aef4-ce4ec8bb5e40/ImagePicker/C36C3D02-A385-41EE-A04A-07702668ABF7.jpg',
+      width: 3024,
+    };
+
+    expect(getAssetState(mockAssets)).toEqual({
+      name: 'C36C3D02-A385-41EE-A04A-07702668ABF7.jpg',
+      type: 'image/jpg',
+      uri: 'file:///var/mobile/Containers/Data/Application/765B13C9-8464-43FD-A639-4A598E8A49A7/Library/Caches/ExponentExperienceData/%2540anonymous%252FCome-On-Frontend-7980b774-ba88-4342-aef4-ce4ec8bb5e40/ImagePicker/C36C3D02-A385-41EE-A04A-07702668ABF7.jpg',
+    });
+  });
+
+  test('convertStringToDateInfo 함수는 문자열 형태의 날짜를 전달하면 타임 객체를 반환해야 한다.', () => {
+    expect(convertStringToDateInfo('2023-07-31')).toEqual({
+      dateString: '2023-07-31',
+      day: 31,
+      month: 7,
+      timestamp: 1690761600000,
+      year: 2023,
+    });
   });
 });

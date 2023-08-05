@@ -2,7 +2,7 @@ import TestId from '@shared/constants/testIds';
 import React, { memo } from 'react';
 import Svg, { G, Path, Defs, ClipPath } from 'react-native-svg';
 
-function RobotIcon() {
+function RobotLogo() {
   return (
     <Svg viewBox="0 0 53 75" fill="none" testID={TestId.shared.logo.robot}>
       <G clipPath="url(#prefix__clip0_3532_6365)">
@@ -39,4 +39,4 @@ function RobotIcon() {
   );
 }
 
-export default memo(RobotIcon);
+export default memo(RobotLogo);

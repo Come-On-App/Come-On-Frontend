@@ -1,4 +1,4 @@
-import { describe, expect, test, jest } from '@jest/globals';
+import { describe, expect, jest, test } from '@jest/globals';
 import { render, screen } from '@testing-library/react-native';
 
 import TestId from '@shared/constants/testIds';
@@ -12,7 +12,6 @@ jest.mock('@react-navigation/native', () => {
     ...actualNav,
     useNavigation: () => ({
       navigate: jest.fn(),
-      dispatch: jest.fn(),
     }),
   };
 });

@@ -1,8 +1,19 @@
-import { describe, expect, test } from '@jest/globals';
+import { describe, expect, jest, test } from '@jest/globals';
 import { screen } from '@testing-library/react-native';
 
 import { render } from '@shared/utils/customRender';
 import EmptyCardList from './EmptyCardList';
+
+jest.mock('@react-navigation/native', () => {
+  const actualNav: unknown[] = jest.requireActual('@react-navigation/native');
+
+  return {
+    ...actualNav,
+    useNavigation: () => ({
+      navigate: jest.fn(),
+    }),
+  };
+});
 
 describe('EmptyCardList Compoent', () => {
   test('빈 상태의 컨텐츠를 올바르게 렌더링 해야한다.', () => {

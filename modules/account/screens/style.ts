@@ -1,5 +1,5 @@
 import { makeStyles } from '@rneui/themed';
-import { applyRelativeSizes } from '@shared/utils/utils';
+import { applyRelativeSizes } from '@shared/utils';
 
 const [MESSAGE_CONTAINER_MARGIN_TOP, MESSAGE_CONTAINER_BOTTOM] =
   applyRelativeSizes({

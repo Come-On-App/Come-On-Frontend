@@ -2,7 +2,7 @@ import { View } from 'react-native';
 import React from 'react';
 import _ from 'lodash';
 
-import { formatDateRange } from '@shared/utils/utils';
+import { formatDateRange } from '@shared/utils';
 import TestId from '@shared/constants/testIds';
 import PressableInput from '@shared/components/input/PressableInput';
 import useStyles from './style';

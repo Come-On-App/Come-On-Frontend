@@ -1,22 +1,23 @@
 import { BASE_URL } from '@app/api/axiosInstance';
 import { GetMeetingResponse } from '@post/api/v2/type';
 import { rest } from 'msw';
-import response from './GetMeetingSliceResponse';
+import meetingsSliceResponse from './getMeetingsSliceResponse';
+import meetingDetailResponse from './getMeetingDetailResponse';
 import { GetEntryCodeResponse } from '@post/api/v1/type';
 
-export const requstGetMeetings = rest.get<GetMeetingResponse>(
+const requstGetMeetings = rest.get<GetMeetingResponse>(
   `${BASE_URL}/api/v2/meetings`,
   (_req, res, ctx) => {
-    return res(ctx.json(response));
+    return res(ctx.json(meetingsSliceResponse));
   }
 );
 
-export const requestGetEntryCode = rest.get<GetEntryCodeResponse>(
+const requestGetEntryCode = rest.get<GetEntryCodeResponse>(
   `${BASE_URL}/api/v1/meetings/:meetingId/entry-code`,
   (req, res, ctx) => {
     const { meetingId } = req.params;
 
-    // 서버에러 코드
+    // 서버에러 상태
     if (meetingId === '500') {
       return res(
         ctx.status(500),
@@ -28,7 +29,7 @@ export const requestGetEntryCode = rest.get<GetEntryCodeResponse>(
       );
     }
 
-    // 코드만료
+    // 코드만료 상태
     if (meetingId === '600') {
       return res(
         ctx.json({
@@ -49,7 +50,7 @@ export const requestGetEntryCode = rest.get<GetEntryCodeResponse>(
   }
 );
 
-export const requestPostEntryCode = rest.post(
+const requestPostEntryCode = rest.post(
   `${BASE_URL}/api/v1/meetings/:meetingId/entry-code`,
   (_req, res, ctx) => {
     return res(
@@ -62,4 +63,81 @@ export const requestPostEntryCode = rest.post(
   }
 );
 
-export default [requstGetMeetings, requestGetEntryCode, requestPostEntryCode];
+const requestCreateMeetings = rest.post(
+  `${BASE_URL}/api/v1/meetings`,
+  (_req, res, ctx) => {
+    return res(
+      ctx.delay(3000),
+      ctx.json({
+        meetingId: 28,
+      })
+    );
+  }
+);
+
+const requestUploadImage = rest.post(
+  `${BASE_URL}/api/v1/image`,
+  (_req, res, ctx) => {
+    return res(
+      ctx.json({
+        imageUrl: 'https://picsum.photos/200/300',
+      })
+    );
+  }
+);
+
+const requestDeleteMeeting = rest.delete(
+  `${BASE_URL}/api/v1/meetings/:meetingId/members/me`,
+
+  (_req, res, ctx) => {
+    return res(
+      ctx.json({
+        success: true,
+      })
+    );
+  }
+);
+
+const requestGetMeetingDetail = rest.get(
+  `${BASE_URL}/api/v2/meetings/:meetingId`,
+  (req, res, ctx) => {
+    return res(
+      ctx.delay(2000),
+      ctx.json({
+        ...meetingDetailResponse,
+        meetingMetaData: {
+          ...meetingDetailResponse.meetingMetaData,
+          meetingId: req.params.meetingId,
+          meetingName: '예시 모임 제목#1',
+          calendar: {
+            startFrom: '2023-07-01',
+            endTo: '2023-07-31',
+          },
+          fixedDate: {
+            startFrom: '2023-07-11',
+            endTo: '2023-07-11',
+          },
+        },
+      })
+    );
+  }
+);
+
+const requestPatchMeetings = rest.patch(
+  `${BASE_URL}/api/v1/meetings/:meetingId`,
+  (_req, res, ctx) => {
+    console.log(_req);
+    return res(ctx.delay(3000), ctx.json({ success: true }));
+  }
+);
+
+export default [
+  requstGetMeetings,
+  requestGetEntryCode,
+  requestPostEntryCode,
+  requestCreateMeetings,
+  requestUploadImage,
+  requestDeleteMeeting,
+  requestGetMeetingDetail,
+  requestPatchMeetings,
+];

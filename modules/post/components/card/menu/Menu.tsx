@@ -5,12 +5,17 @@ import Menu from '@shared/components/menu/Menu';
 import { IList } from '@shared/components/menu/type';
 import Icon from '@shared/components/icon/Icon';
 import Invitation from '@post/components/invitation/Invitation';
+import Deletion from '@post/components/deletion/Deletion';
+import { useNavigation } from '@react-navigation/native';
+import { PostListNavigation } from '@post/navigation/type';
 import useStyle from './style';
 import { IcardMenu } from './type';
 
 export default function CardMenu({ id }: IcardMenu) {
   const { icon, menuFont, anchorBackground } = useStyle();
-  const [showModal, setCodeModal] = useState(false);
+  const [showCodeModal, setCodeModal] = useState(false);
+  const [showDeletionModal, setDeletionModal] = useState(false);
+  const navigation = useNavigation<PostListNavigation>();
   const MenuList: IList[] = [
     {
       name: '초대코드 관리',
@@ -18,7 +23,10 @@ export default function CardMenu({ id }: IcardMenu) {
     },
     {
       name: '모임 수정',
-      onPress: () => null,
+      onPress: (hideMenu) => {
+        hideMenu();
+        navigation.navigate('MeetingPostModification', { id });
+      },
     },
     {
       name: '게시물 신고',
@@ -26,7 +34,7 @@ export default function CardMenu({ id }: IcardMenu) {
     },
     {
       name: '모임 탈퇴',
-      onPress: () => null,
+      onPress: () => setDeletionModal(true),
       fontStyle: {
         color: 'red',
       },
@@ -44,11 +52,18 @@ export default function CardMenu({ id }: IcardMenu) {
           </View>
         }
         modalComponent={
-          <Invitation
-            id={id}
-            showModal={showModal}
-            onClose={() => setCodeModal(false)}
-          />
+          <View>
+            <Invitation
+              id={id}
+              showModal={showCodeModal}
+              onClose={() => setCodeModal(false)}
+            />
+            <Deletion
+              id={id}
+              showModal={showDeletionModal}
+              onClose={() => setDeletionModal(false)}
+            />
+          </View>
         }
       />
     </View>

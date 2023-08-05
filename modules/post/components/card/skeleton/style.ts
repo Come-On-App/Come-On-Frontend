@@ -1,25 +1,25 @@
 import { makeStyles } from '@rneui/themed';
-import { applyRelativeSizes, relativeSizeConverter } from '@shared/utils/utils';
+import { applyRelativeSizes, relativeSizeConverter } from '@shared/utils';
 
 export default makeStyles((theme) => {
   const [
     IMAGE_HEIGHT,
-    IMAGE_MARGIN_BOTTOM,
     IMAGE_BORDER_RADIUS,
     TITLE_LINE_HEIGHT,
     SUB_TITLE_LINE_HEIGHT,
     CONTAINER_CARD_HEIGHT,
     CONTAINER_CARD_MARGIN_BOTTOM,
     SPACING,
+    IMAGE_CONTAINDER_MARGIN_VERTICAL,
   ] = applyRelativeSizes({
     imageHeight: 200,
-    imageMarginBottom: 8,
     imageBorderRadius: 8,
     titleLineHeight: theme.font.type.title3.lineHeight,
     subTitleLineHeight: theme.font.type.body2.lineHeight,
     containerCardHeight: 255,
     containerCardMarginBottom: 5,
     titleSpacing: 5,
+    imageContainerMarginVertical: 5,
   });
 
   return {
@@ -31,7 +31,7 @@ export default makeStyles((theme) => {
     thumbnail: {
       borderRadius: IMAGE_BORDER_RADIUS,
       height: IMAGE_HEIGHT,
-      marginBottom: IMAGE_MARGIN_BOTTOM,
+      marginVertical: IMAGE_CONTAINDER_MARGIN_VERTICAL,
     },
     title: {
       height: TITLE_LINE_HEIGHT,

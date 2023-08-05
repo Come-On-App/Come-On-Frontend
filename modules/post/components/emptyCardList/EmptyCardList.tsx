@@ -1,9 +1,9 @@
 import { View } from 'react-native';
 import React from 'react';
 
+import RobotLogo from '@shared/components/logo/RobotLogo';
 import useStyles from './style';
 import EmptyDescription from './description/EmptyDescription';
-import RobotIcon from './logo/RobotIcon';
 import CreationButton from './button/CreationButton';
 import { SEARCH_ADN_CREATE_HEIGHT } from '../search/searchAndCreate/style';
 
@@ -13,7 +13,7 @@ export default function EmptyCardList() {
   return (
     <View style={[container, { paddingBottom: SEARCH_ADN_CREATE_HEIGHT }]}>
       <View style={iconContainer}>
-        <RobotIcon />
+        <RobotLogo />
       </View>
       <CreationButton />
       <EmptyDescription />

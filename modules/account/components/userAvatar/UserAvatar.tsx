@@ -3,7 +3,7 @@ import React from 'react';
 
 import { BadgedAvatar } from '@shared/components/avatar/Avatar';
 import TestId from '@shared/constants/testIds';
-import { applyRelativeSizes } from '@shared/utils/utils';
+import { applyRelativeSizes } from '@shared/utils';
 import { IuserAvatar } from './type';
 
 const BADGE_NAME = 'photo-camera';

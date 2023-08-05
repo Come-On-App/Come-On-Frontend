@@ -1,5 +1,5 @@
 import { makeStyles } from '@rneui/themed';
-import { applyRelativeSizes } from '@shared/utils/utils';
+import { applyRelativeSizes } from '@shared/utils';
 
 export default makeStyles(() => {
   const [TOP_WRAP_HEIGHT, TOP_WRAP_MARGIN_TOP, TOP_WRAP_MARGIN_HORIZONTAL] =

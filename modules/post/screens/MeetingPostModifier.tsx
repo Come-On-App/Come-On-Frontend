@@ -1,0 +1,131 @@
+import { ScrollView } from 'react-native';
+import React, { useEffect } from 'react';
+
+import { convertDateRangeToDateInfo, isPostFormEqual } from '@shared/utils';
+import TestId from '@shared/constants/testIds';
+import { PostNativeStack } from '@post/navigation/type';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { QueryKeys } from '@app/api/type';
+import { requestGetMeetingDetail } from '@post/api/v2';
+import Uploader from '@post/components/modification/uploader/Uploader';
+import MeetingName from '@post/components/modification/meetingName/MeetingName';
+import VotingTimeRangePicker from '@post/components/modification/votingTimeRangePicker/VotingTimeRangePicker';
+import usePostManagement from '@post/hooks/usePostManagement';
+import DividerWrapper from '@shared/components/layout/DividerWrapper';
+import ScreenLayout from '@shared/components/layout/ScreenLayout';
+import ConfirmCancelButton from '@post/components/button/ConfirmCancelButton';
+import { requestImageURL, requestPatchMeeting } from '@post/api/v1';
+import { PostState } from '@post/features/post/type';
+import { GetMeetingDetailResponse } from '@post/api/v2/type';
+import { PatchMeetingPayload } from '@post/api/v1/type';
+import { goAsync } from 'promise-vigilant';
+
+const CONFIRM_TEXT = '모임 수정하기';
+const LOADING_TEXT = '모임 수정중...';
+
+export default function MeetingPostModifier({
+  navigation,
+  route: { params },
+}: PostNativeStack<'MeetingPostModification'>) {
+  const queryClient = useQueryClient();
+  const { dispatch, initPostState, postState } = usePostManagement();
+  const {
+    data: response,
+    isLoading,
+    isSuccess,
+  } = useQuery({
+    queryKey: [QueryKeys.post, params.id],
+    queryFn: ({ signal }) => requestGetMeetingDetail(params.id, signal),
+  });
+  const { mutate, isLoading: isSubmit } = useMutation({
+    mutationFn: requestPatchMeeting,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QueryKeys.post, params.id] });
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'MeetingPostList' }],
+      });
+    },
+  });
+  const shouldShowLoader = isLoading || isSubmit;
+  // 게시물 수정사항이 존재한다면 ture를 반환한다.
+  const hasFormChanged =
+    isSuccess && !isPostFormEqual(generatePostData(response), postState);
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(generatePostData(response));
+    }
+
+    return () => {
+      initPostState();
+    };
+  }, [response, isSuccess, dispatch, initPostState]);
+
+  return (
+    <ScrollView testID={TestId.post.modifier} bounces={false}>
+      <Uploader isDataLoading={isLoading} />
+      <MeetingName
+        isDataLoading={isLoading}
+        prevMeetingName={response?.meetingMetaData.meetingName}
+      />
+      <VotingTimeRangePicker isDataLoading={isLoading} />
+      <DividerWrapper>
+        <ScreenLayout>
+          <ConfirmCancelButton
+            leftDisabled={isSubmit}
+            rightDisabled={hasFormChanged || shouldShowLoader}
+            onCancelHandler={() => navigation.goBack()}
+            confirmText={isSubmit ? LOADING_TEXT : CONFIRM_TEXT}
+            onConfirmlHandler={() => {
+              goAsync([generatePostPayload(params.id, postState), mutate]);
+            }}
+          />
+        </ScreenLayout>
+      </DividerWrapper>
+    </ScrollView>
+  );
+}
+
+/**
+ * [헬퍼 함수]
+ * 형식에 맞는 객체를 반환한다.
+ */
+const generatePostData = (
+  meetingDetail: GetMeetingDetailResponse,
+): PostState => {
+  const { meetingMetaData } = meetingDetail;
+  const { thumbnailImageUrl, meetingName, calendar } = meetingMetaData;
+
+  return {
+    image: { asset: null, uri: thumbnailImageUrl },
+    name: meetingName,
+    dateRange: convertDateRangeToDateInfo(calendar),
+  };
+};
+/**
+ * [헬퍼 함수]
+ * 서버에 요청할 올바른 페이로드 객체를 반환한다.
+ *
+ * - 이미지 객체가 존재한다면 이미지 변환 API를 요청한다.
+ */
+const generatePostPayload = async (
+  targetId: number,
+  postState: PostState,
+): Promise<PatchMeetingPayload> => {
+  const {
+    dateRange: { startingDay, endingDay },
+    image: { asset },
+    name,
+  } = postState;
+
+  return {
+    meetingId: targetId,
+    payload: {
+      meetingImageUrl: asset ? await requestImageURL(asset) : undefined,
+      meetingName: name ?? undefined,
+      calendarStartFrom: startingDay?.dateString,
+      calendarEndTo: endingDay?.dateString,
+    },
+  };
+};

@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MyPageNavigator from '@account/navigation/AccountNavigator';
 import EnterMeeting from '@connection/screen/EnterMeeting';
 import PostNavigator from '@post/navigation/PostNavigator';
-import { applyRelativeSizes } from '@shared/utils/utils';
+import { applyRelativeSizes } from '@shared/utils';
 import { Tab, options } from './config';
 import { BottomTabParamList, IbottomTabNavigator, Inavigation } from './type';
 

@@ -2,7 +2,7 @@ import type { StyleProp, TextStyle } from 'react-native';
 
 export interface IList {
   name: string;
-  onPress: () => void;
+  onPress: (hideMenuHandler: () => void) => void;
   fontStyle?: StyleProp<TextStyle>;
 }
 

@@ -1,5 +1,5 @@
 import { makeStyles } from '@rneui/themed';
-import { applyRelativeSizes } from '@shared/utils/utils';
+import { applyRelativeSizes } from '@shared/utils';
 
 export default makeStyles(() => {
   const [CONTAINER_BUTTON_WIDHT, BUTTON_ICON_SIZE] = applyRelativeSizes({

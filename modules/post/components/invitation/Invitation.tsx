@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import * as Clipboard from 'expo-clipboard';
 import * as Haptics from 'expo-haptics';
-import { vigilAsync } from 'promise-vigilant';
+import { goAsync } from 'promise-vigilant';
 
 import { QueryKeys } from '@app/api/type';
 import { requestGetEntryCode, requestPostEntryCode } from '@post/api/v1';
-import { isExpiry } from '@shared/utils/utils';
+import { isExpiry } from '@shared/utils';
 import { PostEntryCodeResponse } from '@post/api/v1/type';
 import InvitationModal from './modal/Modal';
 import { ModalStatus } from './modal/type';
@@ -21,6 +21,7 @@ export default function Invitation({ id, showModal, onClose }: Iinvitation) {
   const { data, status } = useQuery({
     queryKey: [QueryKeys.code, id],
     queryFn: () => requestGetEntryCode(id),
+    enabled: showModal,
   });
 
   useEffect(() => {
@@ -36,8 +37,11 @@ export default function Invitation({ id, showModal, onClose }: Iinvitation) {
 
   // 모달 응답 타입에 따라 핸들러 분기
   function onPressRightHandler(type: ModalStatus) {
+    const setInitCode = () => setCode(INIT_CODE);
+    const setLoadingModalType = () => setModalType('Loading');
+    const requestCode = () => requestPostEntryCode(id);
     const copyAndHaptic = async () => {
-      vigilAsync([() => Clipboard.setStringAsync(code)], {
+      goAsync([() => Clipboard.setStringAsync(code)], {
         onSuccess: () => {
           Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
           setModalType('Copied');
@@ -52,20 +56,13 @@ export default function Invitation({ id, showModal, onClose }: Iinvitation) {
         return copyAndHaptic;
       case 'Expired':
         return () =>
-          vigilAsync(
-            [
-              () => setCode(INIT_CODE),
-              () => setModalType('Loading'),
-              () => requestPostEntryCode(id),
-            ],
-            {
-              onSuccess: ({ entryCode }: PostEntryCodeResponse) => {
-                setModalType('Created');
-                setCode(entryCode);
-              },
-              onError: () => setModalType('Failed'),
+          goAsync([setInitCode, setLoadingModalType, requestCode], {
+            onSuccess: ({ entryCode }: PostEntryCodeResponse) => {
+              setModalType('Created');
+              setCode(entryCode);
             },
-          );
+            onError: () => setModalType('Failed'),
+          });
       default:
         return () => {
           return new ReferenceError('should have a handle');

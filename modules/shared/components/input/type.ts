@@ -10,6 +10,7 @@ export interface Iinput {
   rightIcon?: IconNode;
   label?: ReactNode;
   maxLength?: number;
+  disabled?: boolean;
 }
 
 export interface IpressableInput {
@@ -22,6 +23,7 @@ export interface IpressableInput {
   containerStyle?: StyleProp<ViewStyle>;
   fontColor?: string;
   onPress?: () => void;
+  disabled?: boolean;
 }
 
 export interface IcodeField {

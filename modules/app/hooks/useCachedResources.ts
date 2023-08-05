@@ -2,7 +2,7 @@ import { loadAsync } from 'expo-font';
 import { useEffect, useState } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
 import { hideAsync, preventAutoHideAsync } from 'expo-splash-screen';
-import { vigilAsync } from 'promise-vigilant';
+import { goAsync } from 'promise-vigilant';
 
 async function loadFonts() {
   await loadAsync({
@@ -15,17 +15,17 @@ async function loadFonts() {
 export default function useCachedResources() {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
 
-  // Load any resources or data that we need prior to rendering the app
-  useEffect(() => {
-    function loadResourcesAndDataAsync() {
-      vigilAsync(preventAutoHideAsync, [loadFonts], {
-        onSuccess: () => {
-          setLoadingComplete(true);
-          hideAsync();
-        },
-      });
-    }
+  function loadResourcesAndDataAsync() {
+    goAsync([preventAutoHideAsync, loadFonts], {
+      onSuccess: () => {
+        setLoadingComplete(true);
+        hideAsync();
+      },
+    });
+  }
 
+  useEffect(() => {
+    // 앱을 렌더링하기 전에 필요한 리소스나 데이터를 로드한다.
     loadResourcesAndDataAsync();
   }, []);
 

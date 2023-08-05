@@ -1,5 +1,5 @@
 import { makeStyles } from '@rneui/themed';
-import { applyRelativeSizes } from '@shared/utils/utils';
+import { applyRelativeSizes } from '@shared/utils';
 
 export default makeStyles((theme) => {
   const [TITLE_FONT_SIZE, SUB_FONT_SIZE] = applyRelativeSizes({

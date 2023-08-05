@@ -30,6 +30,8 @@ describe('VotingTimeRangePicker Compoent', () => {
 
     fireEvent.press(screen.getByText('날짜 범위를 선택해 주세요'));
 
-    expect(mockedNavigate).toHaveBeenCalledWith('MeetingDateSelector');
+    expect(mockedNavigate).toHaveBeenCalledWith('MeetingDateSelector', {
+      prevDateRange: { endingDay: null, startingDay: null },
+    });
   });
 });

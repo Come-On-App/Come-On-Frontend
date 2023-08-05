@@ -9,6 +9,7 @@ export default function Input({
   placeholder,
   onChangeText,
   label,
+  disabled,
   maxLength,
   rightIcon,
 }: Iinput) {
@@ -16,6 +17,7 @@ export default function Input({
 
   return (
     <RnInput
+      disabled={disabled}
       maxLength={maxLength}
       label={label}
       rightIcon={rightIcon}

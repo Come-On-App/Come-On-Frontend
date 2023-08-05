@@ -1,13 +1,13 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Overlay } from '@rneui/themed';
 
 import TestId from '@shared/constants/testIds';
 import ConfirmCancelButton from '@post/components/button/ConfirmCancelButton';
+import Modal from '@shared/components/modal/Modal';
+import Message from '@shared/components/modal/display/Message';
+import SubMessage from '@shared/components/modal/display/SubMessage';
 import useStyles from './style';
-import Message from '../display/Message';
 import Code from '../code/Code';
-import SubMessage from '../display/SubMessage';
 import config from './config';
 import { IinvitationModal } from './type';
 
@@ -22,13 +22,12 @@ export default function InvitationModal({
     button: { left, right },
     message: { status, subStatus },
   } = config[type];
-  const { container, cButton } = useStyles();
+  const { cButton } = useStyles();
 
   return (
-    <Overlay
-      testID={TestId.post.modal}
+    <Modal
+      testID={TestId.post.modal.invitation}
       isVisible={isVisible}
-      overlayStyle={container}
       onBackdropPress={onPressLeft}
     >
       <Message text={status} />
@@ -46,6 +45,6 @@ export default function InvitationModal({
           rightDisabled={right.disabled}
         />
       </View>
-    </Overlay>
+    </Modal>
   );
 }

@@ -1,5 +1,5 @@
 import { makeStyles } from '@rneui/themed';
-import { relativeSizeConverter } from '@shared/utils/utils';
+import { relativeSizeConverter } from '@shared/utils';
 
 export const SEARCH_ADN_CREATE_HEIGHT = relativeSizeConverter(44);
 

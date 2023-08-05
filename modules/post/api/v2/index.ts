@@ -1,7 +1,12 @@
 /* eslint-disable import/prefer-default-export */
 
 import { comeonApiAxios } from '@app/api/axiosInstance';
-import { GetMeetingPayload, GetMeetingSliceResponse } from './type';
+import {
+  GetMeetingDetailPayload,
+  GetMeetingDetailResponse,
+  GetMeetingPayload,
+  GetMeetingSliceResponse,
+} from './type';
 
 /**
  * @see https://api.come-on.me/docs/meeting/index.html#meeting-list-v2
@@ -22,6 +27,22 @@ export async function requestGetMeetings(
     },
     signal,
   });
+
+  return data;
+}
+
+/**
+ * GET /api/v2/meetings/{meeting-id} 모임 상세 조회
+ * @requires Authorization Bearer {access-token}
+ * @param payload 조회할 모임의 식별값
+ * @returns 모임 상세 정보
+ */
+export async function requestGetMeetingDetail(
+  payload: GetMeetingDetailPayload,
+  signal?: AbortSignal,
+): Promise<GetMeetingDetailResponse> {
+  const URL = `/api/v2/meetings/${payload}`;
+  const { data } = await comeonApiAxios.get(URL, { signal });
 
   return data;
 }

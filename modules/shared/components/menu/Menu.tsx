@@ -40,7 +40,7 @@ export default function Menu({
         {list.map(({ name, onPress, fontStyle }) => {
           return (
             <View key={name}>
-              <MenuItem onPress={onPress} style={cMenuItem}>
+              <MenuItem onPress={() => onPress(hideMenu)} style={cMenuItem}>
                 <Font style={[menuDefaultFont, fontAllStyle, fontStyle]}>
                   {name}
                 </Font>

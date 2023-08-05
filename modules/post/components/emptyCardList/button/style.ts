@@ -1,6 +1,6 @@
 import { makeStyles } from '@rneui/themed';
 import { DEFUALT_BUTTON_WIDTH } from '@shared/components/button/Button';
-import { relativeSizeConverter } from '@shared/utils/utils';
+import { relativeSizeConverter } from '@shared/utils';
 
 export default makeStyles(() => ({
   container: {
