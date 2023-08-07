@@ -18,6 +18,15 @@ LocaleConfig.locales.kr = calendarConfig.locales;
 
 LocaleConfig.defaultLocale = 'kr';
 
+/**
+ * 날짜 범위 선택이 가능한 캘린더 컴포넌트
+ *
+ * current 속성을 통해서 캘린더는 전달된 날짜를 기준으로 렌더링 된다.
+ *
+ * onDayPress 속성을 통해서 사용자 이벤트 데이터에 접근이 가능.
+ *
+ * loadPreviousDate 속성을 전달하면 기존 날짜 범위로 업데이트 가능.
+ */
 function Calendar({ current, onDayPress, loadPreviousDate }: Icalendar) {
   const { wrap, cCalendar } = useStyles();
   const [isFirstLoad, setFirstLoad] = useState(true);
