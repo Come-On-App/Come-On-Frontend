@@ -8,6 +8,7 @@ const TestId = {
     codeField: 'TestId__connection_codeField',
   },
   post: {
+    report: 'TestId__post_report',
     list: 'TestId__post_list',
     card: 'TestId__post_card',
     skeleton: 'TestId__post_skeleton',

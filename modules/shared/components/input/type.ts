@@ -3,14 +3,17 @@ import type { IconName } from '@shared/components/icon/type';
 import type { ReactNode } from 'react';
 import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
+export type OnChangeText = (text: string) => void;
+
 export interface Iinput {
   text: string;
   placeholder?: string;
-  onChangeText?: (text: string) => void;
+  onChangeText?: OnChangeText;
   rightIcon?: IconNode;
   label?: ReactNode;
   maxLength?: number;
   disabled?: boolean;
+  multiline?: boolean;
 }
 
 export interface IpressableInput {

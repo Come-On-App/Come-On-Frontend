@@ -1,8 +1,11 @@
+import { OnChangeText } from '@shared/components/input/type';
+
 export interface ImeetingNameInput {
   title: string;
   placeholder: string;
   lengthMax: number;
-  onInput: (text: string) => void;
+  onInput: OnChangeText;
   prevMeetingName?: string | null;
   isDataLoading?: boolean;
+  multiline?: boolean;
 }

@@ -11,12 +11,13 @@ import ContentHeader from '@shared/components/layout/ContentHeader';
 import useStyles from './style';
 import { ImeetingNameInput } from './type';
 
-export default function MeetingNameInput({
+export default function PostInput({
   title,
   placeholder,
   lengthMax,
   onInput,
   isDataLoading,
+  multiline,
   prevMeetingName,
 }: ImeetingNameInput) {
   const { top, screenLayout } = useStyles();
@@ -43,6 +44,7 @@ export default function MeetingNameInput({
           </View>
         </ContentHeader>
         <Input
+          multiline={multiline}
           disabled={isDataLoading}
           text={input}
           placeholder={placeholder}

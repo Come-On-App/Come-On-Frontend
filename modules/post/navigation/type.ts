@@ -8,6 +8,9 @@ export type PostStackParamList = {
     prevDateRange: DateRange;
   };
   MeetingPostDetail: undefined;
+  MeetingPostReport: {
+    id: number;
+  };
   MeetingPostModification: {
     id: number;
   };

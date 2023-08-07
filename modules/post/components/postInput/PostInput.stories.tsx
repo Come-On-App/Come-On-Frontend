@@ -1,13 +1,13 @@
 import { ComponentMeta } from '@storybook/react-native';
 
 import FontThemeProvider from '@shared/provider/FontProvider';
-import MeetingNameInput from './MeetingNameInput';
+import PostInput from './PostInput';
 
-type Meta = ComponentMeta<typeof MeetingNameInput>;
+type Meta = ComponentMeta<typeof PostInput>;
 
 export default {
-  title: 'Creation - MeetingNameInput',
-  component: MeetingNameInput,
+  title: 'PostInput',
+  component: PostInput,
   decorators: [
     (Story) => (
       <FontThemeProvider>
@@ -18,5 +18,11 @@ export default {
 } as Meta;
 
 export const Default: Meta = {
-  args: {},
+  args: {
+    title: '제목',
+    lengthMax: 10,
+    multiline: false,
+    placeholder: 'placeholder',
+    onInput: console.log,
+  },
 };

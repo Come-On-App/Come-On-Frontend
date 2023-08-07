@@ -1,6 +1,7 @@
-import { ScrollView } from 'react-native';
+import { Keyboard, ScrollView } from 'react-native';
 import React, { useEffect } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { goAsync } from 'promise-vigilant';
 
 import ConfirmCancelButton from '@post/components/button/ConfirmCancelButton';
 import Uploader from '@post/components/creation/uploader/Uploader';
@@ -16,7 +17,6 @@ import MeetingNameInput from '@post/components/creation/meetingName/MeetingName'
 import usePostManagement from '@post/hooks/usePostManagement';
 import type { ValidatedPostState, PostState } from '@post/features/post/type';
 import { PostMeetingPayload } from '@post/api/v1/type';
-import { goAsync } from 'promise-vigilant';
 
 const CONFIRM_TEXT = '모임 만들기';
 const LOADING_TEXT = '모임 생성중...';
@@ -43,7 +43,11 @@ export default function MeetingPostCreator({
   }, [initPostState]);
 
   return (
-    <ScrollView testID={TestId.post.creator} bounces={false}>
+    <ScrollView
+      testID={TestId.post.creator}
+      bounces={false}
+      keyboardShouldPersistTaps="handled"
+    >
       <Uploader />
       <MeetingNameInput />
       <VotingTimeRangePicker />
@@ -55,7 +59,11 @@ export default function MeetingPostCreator({
             onCancelHandler={() => navigation.goBack()}
             confirmText={isLoading ? LOADING_TEXT : CONFIRM_TEXT}
             onConfirmlHandler={() => {
-              goAsync([postState, generatePostPayload, mutate]);
+              goAsync([
+                Keyboard.dismiss,
+                generatePostPayload(postState),
+                mutate,
+              ]);
             }}
           />
         </ScreenLayout>

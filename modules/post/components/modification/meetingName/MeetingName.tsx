@@ -1,6 +1,6 @@
 import React from 'react';
 
-import MeetingNameInput from '@post/components/meetingNameInput/MeetingNameInput';
+import PostInput from '@post/components/postInput/PostInput';
 import usePostManagement from '@post/hooks/usePostManagement';
 import { ImeetingName } from './type';
 
@@ -18,7 +18,7 @@ export default function MeetingName({
   } = usePostManagement();
 
   return (
-    <MeetingNameInput
+    <PostInput
       isDataLoading={isDataLoading}
       title={TITLE}
       placeholder={prevMeetingName || PLACEHOLDER}

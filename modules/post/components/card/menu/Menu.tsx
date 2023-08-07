@@ -11,7 +11,7 @@ import { PostListNavigation } from '@post/navigation/type';
 import useStyle from './style';
 import { IcardMenu } from './type';
 
-export default function CardMenu({ id }: IcardMenu) {
+export default function CardMenu({ id = 0 }: IcardMenu) {
   const { icon, menuFont, anchorBackground } = useStyle();
   const [showCodeModal, setCodeModal] = useState(false);
   const [showDeletionModal, setDeletionModal] = useState(false);
@@ -30,7 +30,10 @@ export default function CardMenu({ id }: IcardMenu) {
     },
     {
       name: '게시물 신고',
-      onPress: () => null,
+      onPress: (hideMenu) => {
+        hideMenu();
+        navigation.navigate('MeetingPostReport', { id });
+      },
     },
     {
       name: '모임 탈퇴',
