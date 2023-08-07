@@ -1,6 +1,6 @@
 import React from 'react';
 
-import MeetingNameInput from '@post/components/meetingNameInput/MeetingNameInput';
+import PostInput from '@post/components/postInput/PostInput';
 import usePostManagement from '@post/hooks/usePostManagement';
 
 const TITLE = '모임 이름';
@@ -11,7 +11,7 @@ export default function MeetingName() {
   const { dispatchName } = usePostManagement();
 
   return (
-    <MeetingNameInput
+    <PostInput
       title={TITLE}
       placeholder={PLACEHOLDER}
       lengthMax={LENGTH_MAX}

@@ -13,6 +13,8 @@ import {
   PostEntryCodeResponse,
   PostMeetingPayload,
   PostMeetingResponse,
+  PostReportMeetingPayload,
+  PostReportMeetingResponse,
   PostUploadImagePayload,
   PostUploadImageResponse,
 } from './type';
@@ -123,6 +125,21 @@ export async function requestPatchMeeting({
 }: PatchMeetingPayload): Promise<PatchMeetingResponse> {
   const URL = `/api/v1/meetings/${meetingId}`;
   const { data } = await comeonApiAxios.patch(URL, payload);
+
+  return data;
+}
+
+/**
+ * POST /api/v1/report/meeting 모임 신고
+ * @requires Authorization Bearer {access-token}
+ * @param payload 신고할 모임의 관련 정보
+ * @returns 생성된 신고 게시물의 식별값
+ */
+export async function requestPostReportMeeting(
+  payload: PostReportMeetingPayload,
+): Promise<PostReportMeetingResponse> {
+  const URL = `/api/v1/report/meeting`;
+  const { data } = await comeonApiAxios.post(URL, payload);
 
   return data;
 }

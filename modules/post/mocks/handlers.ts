@@ -126,8 +126,14 @@ const requestGetMeetingDetail = rest.get(
 const requestPatchMeetings = rest.patch(
   `${BASE_URL}/api/v1/meetings/:meetingId`,
   (_req, res, ctx) => {
-    console.log(_req);
     return res(ctx.delay(3000), ctx.json({ success: true }));
+  }
+);
+
+const requestPostReportMeeting = rest.post(
+  `${BASE_URL}/api/v1/report/meeting`,
+  (_req, res, ctx) => {
+    return res(ctx.delay(3000), ctx.json({ reportId: 33 }));
   }
 );
 
@@ -140,4 +146,5 @@ export default [
   requestDeleteMeeting,
   requestGetMeetingDetail,
   requestPatchMeetings,
+  requestPostReportMeeting,
 ];

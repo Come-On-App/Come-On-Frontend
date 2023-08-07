@@ -12,11 +12,14 @@ export default function Input({
   disabled,
   maxLength,
   rightIcon,
+  multiline,
 }: Iinput) {
-  const { outerContainer, inputContainer, placeholderText, font } = useStyles();
+  const { outerContainer, inputContainer, placeholderText, font } =
+    useStyles(multiline);
 
   return (
     <RnInput
+      multiline={multiline}
       disabled={disabled}
       maxLength={maxLength}
       label={label}

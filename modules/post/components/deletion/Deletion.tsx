@@ -17,8 +17,8 @@ export default function Deletion({ id, showModal, onClose }: Ideletion) {
       // Updates from Mutation Responses
       queryClient.setQueryData<GetMeetingSliceResponse>(
         [QueryKeys.meetings],
-        (oldData) =>
-          oldData
+        (oldData) => {
+          return oldData
             ? {
                 ...oldData,
                 contentsCount: oldData.contentsCount - 1,
@@ -26,7 +26,8 @@ export default function Deletion({ id, showModal, onClose }: Ideletion) {
                   ({ meetingId }) => meetingId !== id,
                 ),
               }
-            : oldData,
+            : oldData;
+        },
       );
     },
   });

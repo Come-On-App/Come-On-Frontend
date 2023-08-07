@@ -9,7 +9,7 @@ import { PostStackParamList } from '@post/navigation/type';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 export default function MeetingDatePicker({
-  route: { params },
+  route: { params = { prevDateRange: { startingDay: null, endingDay: null } } },
 }: NativeStackScreenProps<PostStackParamList, 'MeetingDateSelector'>) {
   const { dispatchDateRange, postState } = usePostManagement();
   const onloadPreviousDate = useCallback(() => {

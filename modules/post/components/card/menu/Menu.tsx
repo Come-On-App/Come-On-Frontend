@@ -11,7 +11,7 @@ import { PostListNavigation } from '@post/navigation/type';
 import useStyle from './style';
 import { IcardMenu } from './type';
 
-export default function CardMenu({ id }: IcardMenu) {
+export default function CardMenu({ id = 0 }: IcardMenu) {
   const { icon, menuFont, anchorBackground } = useStyle();
   const [showCodeModal, setCodeModal] = useState(false);
   const [showDeletionModal, setDeletionModal] = useState(false);

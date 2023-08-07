@@ -3,7 +3,7 @@ import { makeStyles } from '@rneui/themed';
 
 import { applyRelativeSizes } from '@shared/utils';
 
-export default makeStyles((theme) => {
+export default makeStyles((theme, multiline: boolean) => {
   const [
     INPUT_FONT_SIZE,
     INPUT_CONTAINER_HEIGHT,
@@ -17,7 +17,7 @@ export default makeStyles((theme) => {
     CONTAINER_CODE_FIELD_HEIGHT,
   ] = applyRelativeSizes({
     inputFontSize: theme.font.type.body1.fontSize,
-    inputContainerHeight: 44,
+    inputContainerHeight: multiline === true ? 100 : 44,
     inputContainerPaddingHorizontal: 10,
     containerCodeFieldMarginHorizontal: 2,
     codeFieldFontSize: theme.font.type.title1.fontSize,
@@ -43,6 +43,7 @@ export default makeStyles((theme) => {
       color: theme.font.grayscale['500'],
     },
     font: {
+      height: multiline === true ? 100 : 44,
       fontSize: INPUT_FONT_SIZE,
     },
     cPressableInput: {

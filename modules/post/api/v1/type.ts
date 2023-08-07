@@ -58,3 +58,16 @@ export interface PatchMeetingPayload {
 export interface PatchMeetingResponse {
   success: boolean;
 }
+
+// POST /api/v1/report/meeting (payload)
+export interface PostReportMeetingPayload {
+  meetingId: number;
+  title: string;
+  content: string;
+  reportImageUrl?: string;
+}
+
+// POST /api/v1/report/meeting (payload)
+export interface PostReportMeetingResponse {
+  reportId: number;
+}

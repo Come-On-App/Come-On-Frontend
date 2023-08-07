@@ -52,7 +52,7 @@ type MenuStory = ComponentStory<typeof CardMenu>;
 export const MenuDisplay: MenuStory = () => {
   return (
     <View style={{ width: '7%' }}>
-      <CardMenu />
+      <CardMenu id={0} />
     </View>
   );
 };

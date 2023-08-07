@@ -1,4 +1,4 @@
-import { ScrollView } from 'react-native';
+import { Keyboard, ScrollView } from 'react-native';
 import React, { useEffect } from 'react';
 import _ from 'lodash';
 
@@ -64,7 +64,11 @@ export default function MeetingPostModifier({
   }, [response, isSuccess, dispatch, initPostState]);
 
   return (
-    <ScrollView testID={TestId.post.modifier} bounces={false}>
+    <ScrollView
+      testID={TestId.post.modifier}
+      bounces={false}
+      keyboardShouldPersistTaps="handled"
+    >
       <Uploader isDataLoading={isLoading} />
       <MeetingName
         isDataLoading={isLoading}
@@ -84,7 +88,11 @@ export default function MeetingPostModifier({
             onCancelHandler={() => navigation.goBack()}
             confirmText={isSubmit ? LOADING_TEXT : CONFIRM_TEXT}
             onConfirmlHandler={() => {
-              goAsync([generatePostPayload(params.id, postState), mutate]);
+              goAsync([
+                Keyboard.dismiss,
+                generatePostPayload(params.id, postState),
+                mutate,
+              ]);
             }}
           />
         </ScreenLayout>
