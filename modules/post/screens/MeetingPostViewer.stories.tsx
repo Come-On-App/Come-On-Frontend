@@ -1,7 +1,6 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react-native';
 
 import FontThemeProvider from '@shared/provider/FontProvider';
-import { NavigationContainer } from '@react-navigation/native';
 
 import PostNavigator from '@post/navigation/PostNavigator';
 import MeetingPostViewer from './MeetingPostViewer';
@@ -14,9 +13,7 @@ export default {
   decorators: [
     (Story) => (
       <FontThemeProvider>
-        <NavigationContainer>
-          <Story />
-        </NavigationContainer>
+        <Story />
       </FontThemeProvider>
     ),
   ],

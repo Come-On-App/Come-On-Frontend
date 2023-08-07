@@ -1,6 +1,5 @@
 import { rest } from 'msw';
 import { ComponentMeta } from '@storybook/react-native';
-import { NavigationContainer } from '@react-navigation/native';
 
 import { Tab } from './config';
 import BottomTabNavigator from './BottomTabNavigator';
@@ -12,13 +11,7 @@ type Meta = ComponentMeta<typeof BottomTabNavigator>;
 export default {
   title: 'Screens',
   component: BottomTabNavigator,
-  decorators: [
-    (Story) => (
-      <NavigationContainer>
-        <Story />
-      </NavigationContainer>
-    ),
-  ],
+  decorators: [(Story) => <Story />],
 } as Meta;
 
 export const MeetingDashboard: Meta = {
