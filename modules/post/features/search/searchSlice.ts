@@ -4,7 +4,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import type { SearchState } from './type';
 import { DateRange } from '../post/type';
 
-const initialState: SearchState = {
+export const initialSearchState: SearchState = {
   dateRange: {
     startingDay: null,
     endingDay: null,
@@ -13,17 +13,17 @@ const initialState: SearchState = {
 
 export const searchSlice = createSlice({
   name: 'search',
-  initialState,
+  initialState: initialSearchState,
   reducers: {
-    updateSearchRange: (state, action: PayloadAction<DateRange>) => {
+    updateDateRange: (state, action: PayloadAction<DateRange>) => {
       state.dateRange = action.payload;
     },
     init: () => {
-      return initialState;
+      return initialSearchState;
     },
   },
 });
 
-export const { updateSearchRange, init } = searchSlice.actions;
+export const { updateDateRange, init } = searchSlice.actions;
 
 export default searchSlice.reducer;

@@ -33,7 +33,7 @@ export default function SearchBar() {
         testID={TestId.post.button.searchBar}
         onPress={() => setModalState(true)}
       />
-      <CalendarModal isOpen={showModal} dispatch={setModalState} />
+      <CalendarModal isOpen={showModal} dispatchModalState={setModalState} />
     </View>
   );
 }

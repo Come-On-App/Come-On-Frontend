@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '@app/hooks/useAppRedux';
 
 import { DateInfo } from '@shared/components/calendar/type';
-import { updateSearchRange, init } from '@post/features/search/searchSlice';
+import { updateDateRange, init } from '@post/features/search/searchSlice';
 
 /**
  * [redux] search 상태, 디스패치를 반환한다.
@@ -17,7 +17,7 @@ export default function useSearchManagement() {
         endingDay,
       };
 
-      dispatch(updateSearchRange(newPayload));
+      dispatch(updateDateRange(newPayload));
     },
     [dispatch],
   );

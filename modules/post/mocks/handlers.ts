@@ -1,13 +1,18 @@
 import { BASE_URL } from '@app/api/axiosInstance';
 import { GetMeetingResponse } from '@post/api/v2/type';
 import { rest } from 'msw';
-import meetingsSliceResponse from './getMeetingsSliceResponse';
+import meetingsSliceResponse, {
+  EmptyResponse,
+} from './getMeetingsSliceResponse';
 import meetingDetailResponse from './getMeetingDetailResponse';
 import { GetEntryCodeResponse } from '@post/api/v1/type';
 
 const requstGetMeetings = rest.get<GetMeetingResponse>(
   `${BASE_URL}/api/v2/meetings`,
-  (_req, res, ctx) => {
+  (req, res, ctx) => {
+    if (req.url.searchParams.get('dateFrom'))
+      return res(ctx.delay(3000), ctx.json(EmptyResponse));
+
     return res(ctx.json(meetingsSliceResponse));
   }
 );
