@@ -1,4 +1,6 @@
+import { DateRange } from '@post/features/post/type';
+
 export interface IvoteGuideRobot {
-  startingDate: string | null;
-  endingDate: string | null;
+  type?: 'search' | 'default';
+  dateRange: DateRange;
 }
