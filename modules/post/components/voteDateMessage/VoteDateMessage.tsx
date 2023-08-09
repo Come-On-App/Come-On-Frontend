@@ -5,7 +5,7 @@ import Font from '@shared/components/font/Font';
 import RobotLogo from '@shared/components/logo/RobotLogo';
 import { koFormattedDate } from '@shared/utils';
 import useStyles from './style';
-import noName from './config';
+import content from './config';
 import { IvoteGuideRobot } from './type';
 
 export default function VoteGuideRobot({ type, dateRange }: IvoteGuideRobot) {
@@ -26,7 +26,7 @@ export default function VoteGuideRobot({ type, dateRange }: IvoteGuideRobot) {
 function VoteDateMessage({ type = 'default', dateRange }: IvoteGuideRobot) {
   const { messageFont } = useStyles();
   const { startingDay, endingDay } = dateRange;
-  const { description, empty } = noName[type];
+  const { description, empty } = content[type];
 
   if (!startingDay && !endingDay) {
     return <Font style={messageFont}>{empty}</Font>;

@@ -72,6 +72,8 @@ export function formattedArrayProcessor(
 
 /**
  * 지정된 날짜 포맷 형식으로 날짜 형식을 수정한다.
+ *
+ * [변경 예정]
  */
 export function formatDateRange(
   range: IFormatDateRange,
