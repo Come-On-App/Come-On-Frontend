@@ -4,14 +4,11 @@ import { View } from 'react-native';
 import Font from '@shared/components/font/Font';
 import RobotLogo from '@shared/components/logo/RobotLogo';
 import { koFormattedDate } from '@shared/utils';
-import { DateRange } from '@post/features/post/type';
 import useStyles from './style';
+import content from './config';
+import { IvoteGuideRobot } from './type';
 
-export default function VoteGuideRobot({
-  dateRange,
-}: {
-  dateRange: DateRange;
-}) {
+export default function VoteGuideRobot({ type, dateRange }: IvoteGuideRobot) {
   const { wrap, robot, cMessage } = useStyles();
 
   return (
@@ -20,18 +17,19 @@ export default function VoteGuideRobot({
         <RobotLogo />
       </View>
       <View style={cMessage}>
-        <VoteDateMessage dateRange={dateRange} />
+        <VoteDateMessage dateRange={dateRange} type={type} />
       </View>
     </View>
   );
 }
 
-function VoteDateMessage({ dateRange }: { dateRange: DateRange }) {
+function VoteDateMessage({ type = 'default', dateRange }: IvoteGuideRobot) {
   const { messageFont } = useStyles();
   const { startingDay, endingDay } = dateRange;
+  const { description, empty } = content[type];
 
   if (!startingDay && !endingDay) {
-    return <Font style={messageFont}>모임 투표 범위를 지정해주세요.</Font>;
+    return <Font style={messageFont}>{empty}</Font>;
   }
 
   if (startingDay && endingDay) {
@@ -42,7 +40,7 @@ function VoteDateMessage({ dateRange }: { dateRange: DateRange }) {
 
     return (
       <>
-        <Font style={messageFont}>현재 모임의 투표 가능한 날짜는</Font>
+        <Font style={messageFont}>{description}</Font>
         <Font bold style={messageFont}>
           {startingDate}부터
         </Font>
@@ -60,9 +58,9 @@ function VoteDateMessage({ dateRange }: { dateRange: DateRange }) {
 
     return (
       <>
-        <Font style={messageFont}>현재 모임의 투표 가능한 날짜는</Font>
+        <Font style={messageFont}>{description}</Font>
         <Font bold style={messageFont}>
-          {startingDate} 당일입니다.
+          {startingDate} 입니다.
         </Font>
       </>
     );

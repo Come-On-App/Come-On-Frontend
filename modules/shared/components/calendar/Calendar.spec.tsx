@@ -1,13 +1,22 @@
-import { describe, expect, jest, test } from '@jest/globals';
+import { afterAll, describe, expect, jest, test } from '@jest/globals';
 import { fireEvent, screen } from '@testing-library/react-native';
+import { advanceTo, clear } from 'jest-date-mock';
 
 import { render } from '@shared/utils/customRender';
 import TestId from '@shared/constants/testIds';
 import Calendar from './Calendar';
 
+afterAll(() => {
+  clear();
+});
+
 const testID = TestId.shared.calender;
 
 describe('Calendar Compoent', () => {
+  const july = 6;
+
+  advanceTo(new Date(2023, july));
+
   const CURRENT = '2023-7-17';
   const startDayTestID = `${testID}.day_${'2023-07-17'}`;
   const endDayTestID = `${testID}.day_${'2023-07-21'}`;

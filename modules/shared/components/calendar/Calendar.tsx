@@ -18,7 +18,22 @@ LocaleConfig.locales.kr = calendarConfig.locales;
 
 LocaleConfig.defaultLocale = 'kr';
 
-function Calendar({ current, onDayPress, loadPreviousDate }: Icalendar) {
+/**
+ * 날짜 범위 선택이 가능한 캘린더 컴포넌트
+ *
+ * current 속성을 통해서 캘린더는 전달된 날짜를 기준으로 렌더링 된다.
+ *
+ * onDayPress 속성을 통해서 사용자 이벤트 데이터에 접근이 가능.
+ *
+ * loadPreviousDate 속성을 전달하면 기존 날짜 범위로 업데이트 가능.
+ */
+function Calendar({
+  current,
+  onDayPress,
+  loadPreviousDate,
+  calendarStyle,
+  containerStyle,
+}: Icalendar) {
   const { wrap, cCalendar } = useStyles();
   const [isFirstLoad, setFirstLoad] = useState(true);
   const [startingDay, setStartingDay] = useState<DateInfo>(null);
@@ -154,13 +169,13 @@ function Calendar({ current, onDayPress, loadPreviousDate }: Icalendar) {
   );
 
   return (
-    <View style={wrap}>
+    <View style={[wrap, containerStyle]}>
       <RNcalendar
         enableSwipeMonths
         testID={TestId.shared.calender}
         onDayPress={localOnDayPress}
         current={current}
-        style={cCalendar}
+        style={[cCalendar, calendarStyle]}
         theme={calendarTheme}
         markingType="period"
         markedDates={markedDates}

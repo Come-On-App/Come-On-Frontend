@@ -5,20 +5,29 @@ import _ from 'lodash';
 import TestId from '@shared/constants/testIds';
 import { useQuery } from '@tanstack/react-query';
 import { requestGetMeetings } from '@post/api/v2';
-
 import { GetMeetingResponse, GetMeetingSliceResponse } from '@post/api/v2/type';
 import { CardInfo } from '@post/components/card/type';
 import { QueryKeys } from '@app/api/type';
-
 import SearchAndCreateBar from '@post/components/search/searchAndCreate/SearchAndCreateBar';
 import CardList from '@post/components/cardList/CardList';
 import ServerError from '@post/components/serverError/ServerError';
 import LoadingCardList from '@post/components/loadingCardList/LoadingCardList';
+import useSearchManagement from '@post/hooks/useSearchManagement';
+import EmptyCardList from '@post/components/emptyCardList/EmptyCardList';
 
-function MeetingDashboard() {
+export default function MeetingDashboard() {
+  const {
+    searchState: {
+      dateRange: { startingDay, endingDay },
+    },
+  } = useSearchManagement();
+  const paramater = {
+    dateFrom: startingDay?.dateString,
+    dateTo: endingDay?.dateString,
+  };
   const { data, status } = useQuery({
-    queryKey: [QueryKeys.meetings],
-    queryFn: () => requestGetMeetings(),
+    queryKey: [QueryKeys.meetings, paramater],
+    queryFn: ({ signal }) => requestGetMeetings(paramater, signal),
   });
   let Content = <View />;
 
@@ -31,7 +40,9 @@ function MeetingDashboard() {
   }
 
   if (data && status === 'success') {
-    Content = renderCardList(data);
+    const isDateRangeSearched = Boolean(paramater.dateFrom);
+
+    Content = renderCardList(data, isDateRangeSearched);
   }
 
   return (
@@ -42,34 +53,45 @@ function MeetingDashboard() {
   );
 }
 
-function renderCardList(data: GetMeetingSliceResponse) {
-  const createCardListPayload = (response: GetMeetingResponse): CardInfo => {
-    const isDecided = !_.isEmpty(response.fixedDate);
-
-    return {
-      id: response.meetingId,
-      isDecided,
-      people: response.memberCount,
-      subTitle: {
-        range: isDecided
-          ? // 정렬 알고리즘 구현하거나 순서를 startFrom, endTo 형태로 배치할것
-            {
-              startFrom: response.fixedDate?.startFrom as string,
-              endTo: response.fixedDate?.endTo as string,
-            }
-          : {
-              startFrom: response.calendarStartFrom,
-              endTo: response.calendarEndTo,
-            },
-        userName: response.hostUser.nickname,
-      },
-      title: response.meetingName,
-      uri: response.meetingImageUrl,
-    };
-  };
+function renderCardList(
+  data: GetMeetingSliceResponse,
+  isDateRangeSearched: boolean,
+) {
   const cardListPayload = data.contents.map(createCardListPayload);
+
+  // 특정 범위의 게시물이 없는 경우
+  if (_.isEmpty(cardListPayload) && isDateRangeSearched) {
+    return <EmptyCardList type="search" />;
+  }
 
   return <CardList payload={cardListPayload} />;
 }
 
-export default MeetingDashboard;
+/**
+ * [헬퍼 함수]
+ * 서버에 요청할 올바른 페이로드 객체를 반환한다.
+ */
+const createCardListPayload = (response: GetMeetingResponse): CardInfo => {
+  const isDecided = !_.isEmpty(response.fixedDate);
+
+  return {
+    id: response.meetingId,
+    isDecided,
+    people: response.memberCount,
+    subTitle: {
+      range: isDecided
+        ? // 정렬 알고리즘 구현하거나 순서를 startFrom, endTo 형태로 배치할것
+          {
+            startFrom: response.fixedDate?.startFrom as string,
+            endTo: response.fixedDate?.endTo as string,
+          }
+        : {
+            startFrom: response.calendarStartFrom,
+            endTo: response.calendarEndTo,
+          },
+      userName: response.hostUser.nickname,
+    },
+    title: response.meetingName,
+    uri: response.meetingImageUrl,
+  };
+};

@@ -1,7 +1,6 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react-native';
 
 import MeetingPostModifier from './MeetingPostModifier';
-import { NavigationContainer } from '@react-navigation/native';
 import { rest } from 'msw';
 import { BASE_URL } from '@app/api/axiosInstance';
 import PostNavigator from '@post/navigation/PostNavigator';
@@ -11,13 +10,7 @@ type Meta = ComponentMeta<typeof MeetingPostModifier>;
 export default {
   title: 'Screens',
   component: MeetingPostModifier,
-  decorators: [
-    (Story) => (
-      <NavigationContainer>
-        <Story />
-      </NavigationContainer>
-    ),
-  ],
+  decorators: [(Story) => <Story />],
 } as Meta;
 
 type MeetingPostCreatorStory = ComponentStory<typeof MeetingPostModifier>;

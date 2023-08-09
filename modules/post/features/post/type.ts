@@ -1,12 +1,9 @@
-import type { DateData } from 'react-native-calendars';
-
 import type { ImagePickerAsset } from 'expo-image-picker';
-
-export type DateInfo = DateData;
+import { DateInfo } from '@shared/components/calendar/type';
 
 export type DateRange = {
-  startingDay: DateData | null;
-  endingDay: DateData | null;
+  startingDay: DateInfo;
+  endingDay: DateInfo;
 };
 
 type Uri = string | null;
@@ -32,7 +29,7 @@ export type ValidatedPostState = {
   };
   name: string;
   dateRange: {
-    startingDay: DateData;
-    endingDay: DateData | null;
+    startingDay: NonNullable<DateInfo>;
+    endingDay: DateInfo;
   };
 };

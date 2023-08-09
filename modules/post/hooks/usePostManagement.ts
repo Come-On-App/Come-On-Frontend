@@ -9,7 +9,8 @@ import {
   update,
 } from '@post/features/post/postSlice';
 
-import { PostState, DateInfo } from '@post/features/post/type';
+import type { PostState } from '@post/features/post/type';
+import type { DateInfo } from '@shared/components/calendar/type';
 
 /**
  * [redux] post 상태, 디스패치를 반환한다.

@@ -18,5 +18,13 @@ export default {
 } as Meta;
 
 export const Empty: Meta = {
-  args: {},
+  args: {
+    type: 'empty',
+  },
+};
+
+export const NoSearchResults: Meta = {
+  args: {
+    type: 'search',
+  },
 };

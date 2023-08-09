@@ -8,6 +8,7 @@ export default function Modal({
   testID,
   isVisible,
   children,
+  modalStyle,
   onBackdropPress,
 }: Imodal) {
   const { container } = useStyles();
@@ -16,7 +17,7 @@ export default function Modal({
     <Overlay
       testID={testID}
       isVisible={isVisible}
-      overlayStyle={container}
+      overlayStyle={[container, modalStyle]}
       onBackdropPress={onBackdropPress}
     >
       {children}
