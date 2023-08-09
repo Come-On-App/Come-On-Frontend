@@ -23,6 +23,7 @@ const TestId = {
     order: 'TestId__post_order',
     map: 'TestId__post_map',
     modal: {
+      calender: 'TestId__post_modal_calender',
       invitation: 'TestId__post_modal_invitation',
       deletion: 'TestId__post_modal_deletion',
     },

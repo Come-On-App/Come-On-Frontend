@@ -37,11 +37,15 @@ export const calendarTheme = {
 };
 
 export default makeStyles(() => {
+  const [CALENDAR_WRAP_HEIGHT] = applyRelativeSizes({
+    wrapCalendar: 325,
+  });
+
   return {
     wrap: {
       alignSelf: 'center',
       width: '90%',
-      height: 400,
+      height: CALENDAR_WRAP_HEIGHT,
     },
     cCalendar: {
       borderRadius: CONTAINER_BORDER_RADIUS,

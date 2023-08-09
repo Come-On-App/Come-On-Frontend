@@ -27,7 +27,13 @@ LocaleConfig.defaultLocale = 'kr';
  *
  * loadPreviousDate 속성을 전달하면 기존 날짜 범위로 업데이트 가능.
  */
-function Calendar({ current, onDayPress, loadPreviousDate }: Icalendar) {
+function Calendar({
+  current,
+  onDayPress,
+  loadPreviousDate,
+  calendarStyle,
+  containerStyle,
+}: Icalendar) {
   const { wrap, cCalendar } = useStyles();
   const [isFirstLoad, setFirstLoad] = useState(true);
   const [startingDay, setStartingDay] = useState<DateInfo>(null);
@@ -163,13 +169,13 @@ function Calendar({ current, onDayPress, loadPreviousDate }: Icalendar) {
   );
 
   return (
-    <View style={wrap}>
+    <View style={[wrap, containerStyle]}>
       <RNcalendar
         enableSwipeMonths
         testID={TestId.shared.calender}
         onDayPress={localOnDayPress}
         current={current}
-        style={cCalendar}
+        style={[cCalendar, calendarStyle]}
         theme={calendarTheme}
         markingType="period"
         markedDates={markedDates}
