@@ -30,7 +30,7 @@ describe('Search Compoent', () => {
     expect(screen.getByText(initText)).toBeOnTheScreen();
   });
 
-  test('컴포넌트 범위에 터치한다면 액션 이벤트가 발생해야 한다.', () => {
+  test('컴포넌트 범위에 터치한다면 액션 이벤트가 발생해야 한다.', async () => {
     render(<SearchBar />);
 
     fireEvent.press(screen.getByTestId('TestId__post_button_searchBar'));
@@ -38,6 +38,8 @@ describe('Search Compoent', () => {
     fireEvent.press(screen.getByTestId(startDayTestID)); // 시작 날짜 선택
     fireEvent.press(screen.getByTestId(endDayTestID)); // 끝 날짜 선택
 
-    expect(screen.getByText(expected)).toBeOnTheScreen();
+    fireEvent.press(screen.getByTestId('RNE__Overlay__backdrop')); // onBackdropPress 이벤트 발생
+
+    expect(await screen.findByText(expected)).toBeOnTheScreen();
   });
 });
