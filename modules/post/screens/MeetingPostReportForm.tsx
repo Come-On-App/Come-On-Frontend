@@ -64,8 +64,8 @@ export default function MeetingPostReportForm({
             rightDisabled={isSubmit || hasChanged}
             rightButtonColor={theme.lightColors?.warning}
             confirmText={isSubmit ? LOADING_TEXT : CONFIRM_TEXT}
-            onCancelHandler={() => navigation.goBack()}
-            onConfirmlHandler={() => {
+            onPressLeft={() => navigation.goBack()}
+            onPressRight={() => {
               goAsync([
                 Keyboard.dismiss,
                 generateReportPayload(params.id, state),

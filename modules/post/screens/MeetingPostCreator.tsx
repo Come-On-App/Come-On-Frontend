@@ -56,9 +56,9 @@ export default function MeetingPostCreator({
           <ConfirmCancelButton
             leftDisabled={isLoading}
             rightDisabled={!isPostFormValid(postState) || isLoading}
-            onCancelHandler={() => navigation.goBack()}
+            onPressLeft={() => navigation.goBack()}
             confirmText={isLoading ? LOADING_TEXT : CONFIRM_TEXT}
-            onConfirmlHandler={() => {
+            onPressRight={() => {
               goAsync([
                 Keyboard.dismiss,
                 generatePostPayload(postState),

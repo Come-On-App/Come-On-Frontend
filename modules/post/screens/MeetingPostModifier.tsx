@@ -85,9 +85,9 @@ export default function MeetingPostModifier({
               hasFormChanged ||
               isProcessing
             }
-            onCancelHandler={() => navigation.goBack()}
+            onPressLeft={() => navigation.goBack()}
             confirmText={isSubmit ? LOADING_TEXT : CONFIRM_TEXT}
-            onConfirmlHandler={() => {
+            onPressRight={() => {
               goAsync([
                 Keyboard.dismiss,
                 generatePostPayload(params.id, postState),

@@ -13,8 +13,8 @@ export default function ConfirmCancelButton({
   cancelText,
   confirmText,
   containerStyle,
-  onCancelHandler,
-  onConfirmlHandler,
+  onPressLeft,
+  onPressRight,
   leftDisabled,
   rightDisabled,
   leftButtonColor,
@@ -32,7 +32,7 @@ export default function ConfirmCancelButton({
           bold
           disabled={leftDisabled}
           title={cancelText ?? CANCEL}
-          onPress={onCancelHandler}
+          onPress={onPressLeft}
           backgroundColor={leftButton.backgroundColor}
         />
       </View>
@@ -41,7 +41,7 @@ export default function ConfirmCancelButton({
           bold
           disabled={rightDisabled}
           title={confirmText ?? CONFIRM}
-          onPress={onConfirmlHandler}
+          onPress={onPressRight}
           backgroundColor={rightButton.backgroundColor}
         />
       </View>

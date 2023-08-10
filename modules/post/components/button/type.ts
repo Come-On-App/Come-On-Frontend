@@ -4,8 +4,8 @@ export interface IconfirmCancelButton {
   containerStyle?: StyleProp<ViewStyle>;
   cancelText?: string;
   confirmText?: string;
-  onCancelHandler: () => void;
-  onConfirmlHandler: () => void;
+  onPressLeft: () => void;
+  onPressRight: () => void;
   leftDisabled?: boolean;
   rightDisabled?: boolean;
   leftButtonColor?: string;

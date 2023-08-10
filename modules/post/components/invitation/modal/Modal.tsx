@@ -37,8 +37,8 @@ export default function InvitationModal({
         <ConfirmCancelButton
           cancelText={left.text}
           confirmText={right.text}
-          onCancelHandler={onPressLeft}
-          onConfirmlHandler={onPressRight}
+          onPressLeft={onPressLeft}
+          onPressRight={onPressRight}
           leftButtonColor={left.color}
           leftDisabled={left.disabled}
           rightButtonColor={right.color}
