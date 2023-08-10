@@ -2,8 +2,10 @@ import { Button as RneButton } from '@rneui/themed';
 import React from 'react';
 
 import TestId from '@shared/constants/testIds';
-import useStyle from './style';
-import { Ibutton } from './type';
+import { Pressable, View } from 'react-native';
+import useStyles from './style';
+import { IappleButton, Ibutton } from './type';
+import Font from '../font/Font';
 
 export const DEFUALT_BUTTON_WIDTH = 192;
 
@@ -14,7 +16,7 @@ export default function Button({
   backgroundColor,
   disabled,
 }: Ibutton) {
-  const { defaultStyle, font } = useStyle({ bold, backgroundColor });
+  const { defaultStyle, font } = useStyles({ bold, backgroundColor });
 
   return (
     <RneButton
@@ -25,5 +27,31 @@ export default function Button({
       titleStyle={[font]}
       disabled={disabled}
     />
+  );
+}
+
+export function LoginButton({
+  buttonStyle,
+  fontStyle,
+  Icon,
+  title,
+}: IappleButton) {
+  const { loginButtonContainer, loginButtonPressed, loginFont, loginIcon } =
+    useStyles();
+
+  return (
+    <Pressable
+      style={(button) => [
+        loginButtonContainer,
+        buttonStyle,
+        button.pressed && loginButtonPressed,
+      ]}
+    >
+      <View style={loginIcon}>{Icon}</View>
+      <Font bold style={[loginFont, fontStyle]}>
+        {title}
+      </Font>
+      <View style={loginIcon} />
+    </Pressable>
   );
 }

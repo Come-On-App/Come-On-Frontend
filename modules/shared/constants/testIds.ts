@@ -2,6 +2,10 @@ const TestId = {
   account: {
     myPage: 'TestId__account_myPage',
     avatar: 'TestId__account_avatar',
+    logo: {
+      apple: 'TestId__connection_logo_apple',
+      google: 'TestId__connection_logo_googlee',
+    },
   },
   connection: {
     code: 'TestId__connection_code',

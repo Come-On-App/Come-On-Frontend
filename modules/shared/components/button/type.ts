@@ -1,3 +1,6 @@
+import { ReactNode } from 'react';
+import { StyleProp, TextStyle, ViewStyle } from 'react-native';
+
 import { IconName } from '../icon/type';
 
 export interface IiconButton {
@@ -14,4 +17,13 @@ export interface Ibutton {
   bold?: boolean;
   backgroundColor?: string;
   disabled?: boolean;
+  Icon?: ReactNode;
+}
+
+export interface IappleButton {
+  buttonStyle?: StyleProp<ViewStyle>;
+  fontStyle?: StyleProp<TextStyle>;
+  title: string;
+  Icon: ReactNode;
+  onPress: () => void;
 }
