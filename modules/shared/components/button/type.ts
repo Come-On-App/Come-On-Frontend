@@ -25,5 +25,6 @@ export interface IappleButton {
   fontStyle?: StyleProp<TextStyle>;
   title: string;
   Icon: ReactNode;
+  disabled?: boolean;
   onPress: () => void;
 }

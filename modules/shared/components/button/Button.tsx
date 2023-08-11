@@ -34,13 +34,17 @@ export function LoginButton({
   buttonStyle,
   fontStyle,
   Icon,
+  disabled,
   title,
+  onPress,
 }: IappleButton) {
   const { loginButtonContainer, loginButtonPressed, loginFont, loginIcon } =
     useStyles();
 
   return (
     <Pressable
+      onPress={onPress}
+      disabled={disabled}
       style={(button) => [
         loginButtonContainer,
         buttonStyle,

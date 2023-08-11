@@ -13,6 +13,7 @@ export default makeStyles(
       CONTAINER_HEIGHT,
       CONTAINER_BORDER_RADIUS,
       CONTAINER_PADDING_HORIZONTAL,
+      CONTAINER_PADDING_MARGIN_TOP,
     ] = applyRelativeSizes({
       buttonHeight: 48,
       fontSzie: theme.font.type.title4.fontSize,
@@ -23,6 +24,7 @@ export default makeStyles(
       containerHeight: 56,
       containerBorderRadius: 8,
       containerPaddingHorizontal: 23,
+      marginTop: 16,
     });
 
     return {
@@ -47,6 +49,7 @@ export default makeStyles(
         fontSize: LOGIN_BUTTON_FONT_SIZE,
       },
       loginButtonContainer: {
+        marginTop: CONTAINER_PADDING_MARGIN_TOP,
         width: CONTAINER_WIDTH,
         height: CONTAINER_HEIGHT,
         backgroundColor: theme.colors.primary,
