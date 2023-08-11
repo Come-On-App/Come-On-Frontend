@@ -6,17 +6,26 @@ import * as Haptics from 'expo-haptics';
 import { QueryKeys } from '@app/api/type';
 import { requestDeleteMeeting } from '@post/api/v1';
 import { GetMeetingSliceResponse } from '@post/api/v2/type';
+import useSearchManagement from '@post/hooks/useSearchManagement';
 import PostDeletionModal from './modal/Modal';
 import { Ideletion } from './type';
 
 export default function Deletion({ id, showModal, onClose }: Ideletion) {
+  const {
+    searchState: { dateRange },
+  } = useSearchManagement();
+  // 검색 API 요청 파라미터
+  const paramater = {
+    dateFrom: dateRange.startingDay?.dateString,
+    dateTo: dateRange.endingDay?.dateString,
+  };
   const queryClient = useQueryClient();
   const mutate = useMutation(requestDeleteMeeting, {
     onSuccess: () => {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       // Updates from Mutation Responses
       queryClient.setQueryData<GetMeetingSliceResponse>(
-        [QueryKeys.meetings],
+        [QueryKeys.meetings, paramater],
         (oldData) => {
           return oldData
             ? {
