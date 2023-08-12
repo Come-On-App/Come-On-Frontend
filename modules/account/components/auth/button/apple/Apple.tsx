@@ -91,6 +91,10 @@ const createAppleAuthPayload = (
       : createName(credential.fullName),
   };
 };
+/**
+ * [헬퍼 함수]
+ * Apple 로그인 API 요청 함수
+ */
 const requestAppleAuthentication = () => {
   return signInAsync({
     requestedScopes: [
