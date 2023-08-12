@@ -53,7 +53,7 @@ export default function Apple() {
               dispatchUserToken(payload);
             },
             onError: (error: AppleErrorCode) => {
-              if (error.code !== 'ERR_REQUEST_CANCELED') {
+              if (error?.code !== 'ERR_REQUEST_CANCELED') {
                 dispatchErrorStatus(true);
 
                 throw error;

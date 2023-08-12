@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import { comeonApiAxios } from '@app/api/axiosInstance';
+import { serverAPI } from '@app/api/axiosInstance';
 import {
   PostAppleAuthPayload,
   PostAppleAuthResponse,
@@ -17,7 +17,7 @@ export async function requestPostGoogleAuth(
   payload: PostGoogleAuthPayload,
 ): Promise<PostGoogleAuthResponse> {
   const URL = `/api/v1/oauth/google`;
-  const { data } = await comeonApiAxios.post(URL, payload);
+  const { data } = await serverAPI.post(URL, payload);
 
   return data;
 }
@@ -32,7 +32,7 @@ export async function requestPostAppleAuth(
   payload: PostAppleAuthPayload,
 ): Promise<PostAppleAuthResponse> {
   const URL = `/api/v1/oauth/apple`;
-  const { data } = await comeonApiAxios.post(URL, payload);
+  const { data } = await serverAPI.post(URL, payload);
 
   return data;
 }

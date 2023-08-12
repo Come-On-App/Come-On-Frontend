@@ -1,4 +1,4 @@
-import { comeonApiAxios } from '@app/api/axiosInstance';
+import { serverAPI } from '@app/api/axiosInstance';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { goAsync } from 'promise-vigilant';
 import { createImageFormData, getAssetState } from '@shared/utils';
@@ -30,7 +30,7 @@ export async function requestGetEntryCode(
   payload: GetEntryCodePayload,
 ): Promise<GetEntryCodeResponse> {
   const URL = `/api/v1/meetings/${payload}/entry-code`;
-  const { data } = await comeonApiAxios.get(URL);
+  const { data } = await serverAPI.get(URL);
 
   return data;
 }
@@ -46,7 +46,7 @@ export async function requestPostEntryCode(
   payload: PostEntryCodePayalod,
 ): Promise<PostEntryCodeResponse> {
   const URL = `/api/v1/meetings/${payload}/entry-code`;
-  const { data } = await comeonApiAxios.post(URL);
+  const { data } = await serverAPI.post(URL);
 
   return data;
 }
@@ -62,7 +62,7 @@ export async function requestCreateMeetings(
   payload: PostMeetingPayload,
 ): Promise<PostMeetingResponse> {
   const URL = '/api/v1/meetings';
-  const { data } = await comeonApiAxios.post(URL, payload);
+  const { data } = await serverAPI.post(URL, payload);
 
   return data;
 }
@@ -77,7 +77,7 @@ async function requestUploadImage(
   payload: PostUploadImagePayload,
 ): Promise<PostUploadImageResponse> {
   const URL = '/api/v1/image';
-  const { data } = await comeonApiAxios.post(URL, payload, {
+  const { data } = await serverAPI.post(URL, payload, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
@@ -108,7 +108,7 @@ export async function requestDeleteMeeting(
   payload: DeleteMeetingPayload,
 ): Promise<DeleteMeetingResponse> {
   const URL = `/api/v1/meetings/${payload}/members/me`;
-  const { data } = await comeonApiAxios.delete(URL);
+  const { data } = await serverAPI.delete(URL);
 
   return data;
 }
@@ -124,7 +124,7 @@ export async function requestPatchMeeting({
   payload,
 }: PatchMeetingPayload): Promise<PatchMeetingResponse> {
   const URL = `/api/v1/meetings/${meetingId}`;
-  const { data } = await comeonApiAxios.patch(URL, payload);
+  const { data } = await serverAPI.patch(URL, payload);
 
   return data;
 }
@@ -139,7 +139,7 @@ export async function requestPostReportMeeting(
   payload: PostReportMeetingPayload,
 ): Promise<PostReportMeetingResponse> {
   const URL = `/api/v1/report/meeting`;
-  const { data } = await comeonApiAxios.post(URL, payload);
+  const { data } = await serverAPI.post(URL, payload);
 
   return data;
 }
