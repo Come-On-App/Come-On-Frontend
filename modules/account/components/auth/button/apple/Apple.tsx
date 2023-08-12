@@ -29,20 +29,20 @@ export default function Apple() {
     dispatchErrorStatus,
     dispatchUserToken,
   } = useAuthManagement();
-  const title = useLoadingText(BUTTON_TITLE, isLoading.apple);
   const { button, font } = useStyles();
-  const isAnyLoading = isLoading.apple || isLoading.google;
+  const buttonTitle = useLoadingText(BUTTON_TITLE, isLoading.apple);
 
   return (
     <LoginButton
-      disabled={isAnyLoading}
+      disabled={isLoading.apple || isLoading.google}
       Icon={<AppleLogo />}
       fontStyle={font}
       buttonStyle={button}
-      title={title}
+      title={buttonTitle}
       onPress={() =>
         goAsync(
           [
+            isError && dispatchErrorStatus(false),
             dispatchAppleStatus(true),
             requestAppleAuthentication,
             createAppleAuthPayload,
@@ -50,9 +50,6 @@ export default function Apple() {
           ],
           {
             onSuccess: (payload: PostAppleAuthResponse) => {
-              // 기존 에러 상태 제거
-              if (isError) dispatchErrorStatus(false);
-
               dispatchUserToken(payload);
             },
             onError: (error: AppleErrorCode) => {
