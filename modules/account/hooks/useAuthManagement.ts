@@ -5,9 +5,8 @@ import {
   updateAppleLoadingStatus,
   updateErrorStatus,
   updateGoogleLoadingStatus,
-  updateUserToken,
+  updateUserLoginStatus,
 } from '@account/features/auth/authSlice';
-import { UserToken } from '@account/features/auth/type';
 
 /**
  * [redux] auth 상태, 디스패치를 반환한다.
@@ -27,18 +26,18 @@ export default function useAuthManagement() {
     (paylaod: boolean) => dispatch(updateErrorStatus(paylaod)),
     [dispatch],
   );
-  const dispatchUserToken = useCallback(
-    (paylaod: UserToken) => dispatch(updateUserToken(paylaod)),
+  const dispatchUserLoginStatus = useCallback(
+    (paylaod: boolean) => dispatch(updateUserLoginStatus(paylaod)),
     [dispatch],
   );
-  const initPostState = useCallback(() => dispatch(init()), [dispatch]);
+  const initAuthState = useCallback(() => dispatch(init()), [dispatch]);
 
   return {
     authState,
     dispatchAppleStatus,
     dispatchGoogleStatus,
-    dispatchUserToken,
+    dispatchUserLoginStatus,
     dispatchErrorStatus,
-    initPostState,
+    initAuthState,
   };
 }

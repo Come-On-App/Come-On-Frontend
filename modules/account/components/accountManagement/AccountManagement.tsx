@@ -4,6 +4,8 @@ import { View } from 'react-native';
 
 import Font from '@shared/components/font/Font';
 import useAuthManagement from '@account/hooks/useAuthManagement';
+import { asyncWave } from 'async-wave';
+import { requestPostUserLogout } from '@account/api/v1';
 import useStyles from './style';
 
 const LEFT_BUTTON_TITLE = '로그아웃';
@@ -11,9 +13,9 @@ const RIGHT_BUTTON_TITLE = '회원탈퇴';
 
 export default function AccountManagement() {
   const { container, font } = useStyles();
-  const { initPostState } = useAuthManagement();
+  const { initAuthState } = useAuthManagement();
   const onLogout = () => {
-    initPostState();
+    asyncWave([initAuthState, requestPostUserLogout]);
   };
   const onAccountDeletion = () => {};
 

@@ -2,7 +2,7 @@ import { Keyboard, ScrollView } from 'react-native';
 import React, { useRef } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import _ from 'lodash';
-import { goAsync } from 'promise-vigilant';
+import { asyncWave } from 'async-wave';
 
 import Uploader from '@post/components/report/uploader/Uploader';
 import Content from '@post/components/report/input/Content';
@@ -66,7 +66,7 @@ export default function MeetingPostReportForm({
             confirmText={isSubmit ? LOADING_TEXT : CONFIRM_TEXT}
             onPressLeft={() => navigation.goBack()}
             onPressRight={() => {
-              goAsync([
+              asyncWave([
                 Keyboard.dismiss,
                 generateReportPayload(params.id, state),
                 mutate,

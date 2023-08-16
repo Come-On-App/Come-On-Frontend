@@ -1,6 +1,6 @@
 import { serverAPI } from '@app/api/axiosInstance';
 import { ImagePickerAsset } from 'expo-image-picker';
-import { goAsync } from 'promise-vigilant';
+import { asyncWave } from 'async-wave';
 import { createImageFormData, getAssetState } from '@shared/utils';
 import {
   DeleteMeetingPayload,
@@ -20,7 +20,6 @@ import {
 } from './type';
 
 /**
- * @see https://api.come-on.me/docs/meeting/index.html#entry-code-details
  * GET /api/v1/meetings/{meeting-id}/entry-code 모임 입장 코드 조회
  * @requires Authorization Bearer {access-token}
  * @param payload 입장 코드를 조회할 모임의 식별값
@@ -36,7 +35,6 @@ export async function requestGetEntryCode(
 }
 
 /**
- * @see https://api.come-on.me/docs/meeting/index.html#entry-code-renew
  * POST /api/v1/meetings/{meeting-id}/entry-code 모임 입장 코드 갱신
  * @requires Authorization Bearer {access-token}
  * @param payload 입장 코드를 조회할 모임의 식별값
@@ -52,7 +50,6 @@ export async function requestPostEntryCode(
 }
 
 /**
- * @see https://api.come-on.me/docs/meeting/index.html#meeting-add
  * POST /api/v1/meetings 모임 등록
  * @requires Authorization Bearer {access-token}
  * @param payload 모임 생성에 필요한 정보를 전달한다.
@@ -90,7 +87,7 @@ async function requestUploadImage(
  * 이미지 에셋을 유효한 이미지 URL 주소로 변환 요청한다.
  */
 export function requestImageURL(asset: ImagePickerAsset): Promise<string> {
-  return goAsync(asset, [
+  return asyncWave(asset, [
     getAssetState,
     createImageFormData,
     requestUploadImage,

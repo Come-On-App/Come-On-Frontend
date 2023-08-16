@@ -1,10 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-import { AuthState, UserToken } from './type';
+import { asyncWave } from 'async-wave';
+import { deleteUserTokenFromStore } from '@shared/utils/secureStore';
+import { AuthState } from './type';
 
 const initialState: AuthState = {
-  userToken: null,
+  isLogin: false,
   isLoading: {
     apple: false,
     google: false,
@@ -29,11 +31,20 @@ export const authSlice = createSlice({
     updateErrorStatus: (state, action: PayloadAction<boolean>) => {
       state.isError = action.payload;
     },
-    updateUserToken: (state, action: PayloadAction<UserToken>) => {
-      state.userToken = action.payload;
+    updateUserLoginStatus: (state, action: PayloadAction<boolean>) => {
+      state.isLogin = action.payload;
     },
-    init: () => {
-      return initialState;
+    init: {
+      reducer: () => {
+        return initialState;
+      },
+      prepare: (shouldRemoveTokenFromStore?: boolean) => {
+        if (shouldRemoveTokenFromStore) {
+          asyncWave([deleteUserTokenFromStore]);
+        }
+
+        return { payload: undefined };
+      },
     },
   },
 });
@@ -42,7 +53,7 @@ export const {
   updateAppleLoadingStatus,
   updateGoogleLoadingStatus,
   updateReissueStatus,
-  updateUserToken,
+  updateUserLoginStatus,
   updateErrorStatus,
   init,
 } = authSlice.actions;

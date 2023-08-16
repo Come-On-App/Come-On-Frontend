@@ -1,21 +1,32 @@
 import { AuthState } from '@account/features/auth/type';
+import { isExpiry } from '@shared/utils';
 
 export const mockUserAuthToken = {
   accessToken: {
-    token:
-      'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBVEsiLCJpc3MiOiJjb21lb24tYmFja2VuZCIsImlhdCI6MTY4MTE3ODkxMCwiZXhwIjoxNjgxMTc4OTIwLCJ1aWQiOjEyMywibmlrIjoidXNlcl8xMjMiLCJhdXQiOiJST0xFX1VTRVIifQ.9aoaHywtps2ZQ5ux8TkWtcQ7VF9BgPscCDebnm8BC_U',
-    expiry: 1681178920000,
+    token: 'newAccessToken',
+    expiry: 4121747756000,
     userId: 123,
   },
   refreshToken: {
-    token:
-      'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJSVEsiLCJpc3MiOiJjb21lb24tYmFja2VuZCIsImlhdCI6MTY4MTE3ODkxMCwiZXhwIjoxNjgxMTc4OTQwLCJ1aWQiOjEyM30.qTwWGlhwPjWCjsWz9faqfQ3-G1803b8IOZfVP2P81Yw',
-    expiry: 1681178940000,
+    token: 'newRefreshToken',
+    expiry: 4121747756000,
+  },
+};
+
+export const mockExpiredUserAuthToken = {
+  accessToken: {
+    token: 'expiredAccessToken',
+    expiry: 412174775,
+    userId: 123,
+  },
+  refreshToken: {
+    token: 'expiredRefreshToken',
+    expiry: 412174775,
   },
 };
 
 export const mockUserAuthState = {
-  userToken: mockUserAuthToken,
+  isLogin: mockUserAuthToken,
   isLoading: {
     apple: false,
     google: false,

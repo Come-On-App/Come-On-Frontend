@@ -2,7 +2,7 @@ import { ComponentMeta } from '@storybook/react-native';
 
 import SignInComponent from './SignIn';
 import { rest } from 'msw';
-import { BASE_URL } from '@app/api/axiosInstance';
+import { BASE_URL } from '@app/api/config';
 
 type Meta = ComponentMeta<typeof SignInComponent>;
 

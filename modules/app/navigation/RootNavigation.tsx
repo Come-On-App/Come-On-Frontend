@@ -11,20 +11,19 @@ const { Navigator, Screen } = createNativeStackNavigator<RootStackParamList>();
 
 export function RootNavigator() {
   const { authState } = useAuthManagement();
-  const isUserTokenNull = authState.userToken === null;
 
   return (
     <Navigator initialRouteName="SignIn" screenOptions={{ headerShown: false }}>
-      {isUserTokenNull ? (
+      {authState.isLogin ? (
+        <Screen name="Home" component={BottomTabNavigator} />
+      ) : (
         <Screen
           name="SignIn"
           component={SignIn}
           options={{
-            animationTypeForReplace: isUserTokenNull ? 'pop' : 'push',
+            animationTypeForReplace: authState.isLogin ? 'push' : 'pop',
           }}
         />
-      ) : (
-        <Screen name="Home" component={BottomTabNavigator} />
       )}
     </Navigator>
   );

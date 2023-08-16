@@ -9,7 +9,6 @@ import {
 } from './type';
 
 /**
- * @see https://api.come-on.me/docs/meeting/index.html#meeting-list-v2
  * GET /api/v2/meetings 모임 리스트 조회
  * @requires Authorization Bearer {access-token}
  * @param payload 모임 리스트 필터링 옵션 (필수값 X)

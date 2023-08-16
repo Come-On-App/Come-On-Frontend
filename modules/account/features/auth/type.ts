@@ -11,7 +11,7 @@ export type LoginStatus = {
 };
 
 export interface AuthState {
-  userToken: UserToken | null;
+  isLogin: boolean;
   isLoading: LoginStatus;
   isReissue: boolean;
   isError: boolean;

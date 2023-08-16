@@ -3,12 +3,12 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
-import Constants from 'expo-constants';
 
 import QueryClientProvider from '@shared/provider/QueryClientProvider';
 import FontThemeProvider from '@shared/provider/FontProvider';
 import ReduxProvider from '@app/redux/Provider';
 import RootNavigation from '@app/navigation/RootNavigation';
+import isStorybookEnabled from '@shared/utils/isStorybookEnabled';
 
 export function App() {
   return (
@@ -37,7 +37,7 @@ let AppEntryPoint = App;
  * @see docs https://github.com/storybookjs/react-native#hideshow-storybook
  */
 
-if (Constants.expoConfig?.extra?.storybookEnabled === 'true') {
+if (isStorybookEnabled()) {
   AppEntryPoint = require('./.storybook').default;
 }
 

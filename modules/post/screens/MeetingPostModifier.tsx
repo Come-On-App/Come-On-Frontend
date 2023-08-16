@@ -19,7 +19,7 @@ import { requestImageURL, requestPatchMeeting } from '@post/api/v1';
 import { PostState } from '@post/features/post/type';
 import { GetMeetingDetailResponse } from '@post/api/v2/type';
 import { PatchMeetingPayload } from '@post/api/v1/type';
-import { goAsync } from 'promise-vigilant';
+import { asyncWave } from 'async-wave';
 
 const CONFIRM_TEXT = '모임 수정하기';
 const LOADING_TEXT = '모임 수정중...';
@@ -88,7 +88,7 @@ export default function MeetingPostModifier({
             onPressLeft={() => navigation.goBack()}
             confirmText={isSubmit ? LOADING_TEXT : CONFIRM_TEXT}
             onPressRight={() => {
-              goAsync([
+              asyncWave([
                 Keyboard.dismiss,
                 generatePostPayload(params.id, postState),
                 mutate,

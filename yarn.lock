@@ -3877,6 +3877,18 @@ async-limiter@~1.0.0:
   resolved "https://registry.yarnpkg.com/async-limiter/-/async-limiter-1.0.1.tgz#dd379e94f0db8310b08291f9d64c3209766617fd"
   integrity sha512-csOlWGAcRFJaI6m+F2WKdnMKr4HhdhFVBk0H/QbJFMCr+uO2kwohwXQPxw/9OCxp05r5ghVBFSyioixx3gfkNQ==
 
+async-wave@^1.5.4:
+  version "1.5.4"
+  resolved "https://registry.yarnpkg.com/async-wave/-/async-wave-1.5.4.tgz#8b874bae8f72d63ce9fd675a7499e76d43815a85"
+  integrity sha512-S4xYwUbSxjssDceraA0/IyPRl+aBzaERoTAzXO1k/Wmu0B8/j5QvaITNaxoHzJdfqSaw1545jY6Ej+FK188ReQ==
+  dependencies:
+    is-promise "^4.0.0"
+    lodash.add "^3.7.0"
+    lodash.clonedeep "^4.5.0"
+    lodash.isequal "^4.5.0"
+    lodash.isfunction "^3.0.9"
+    lodash.size "^4.2.0"
+
 async@^3.2.2:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/async/-/async-3.2.4.tgz#2d22e00f8cddeb5fde5dd33522b56d1cf569a81c"
@@ -6282,6 +6294,11 @@ expo-modules-core@1.5.9:
     compare-versions "^3.4.0"
     invariant "^2.2.4"
 
+expo-secure-store@~12.3.1:
+  version "12.3.1"
+  resolved "https://registry.yarnpkg.com/expo-secure-store/-/expo-secure-store-12.3.1.tgz#7e5ba94f6e7374f132108c9feb5cc811568f3db6"
+  integrity sha512-XLIgWDiIuiR0c+AA4NCWWibAMHCZUyRcy+lQBU49U6rvG+xmd3YrBJfQjfqAPyLroEqnLPGTWUX57GyRsfDOQw==
+
 expo-splash-screen@~0.20.5:
   version "0.20.5"
   resolved "https://registry.yarnpkg.com/expo-splash-screen/-/expo-splash-screen-0.20.5.tgz#ebeba3e3977606830f74f506ab2cc25042bb7efd"
@@ -6294,7 +6311,7 @@ expo-status-bar@~1.6.0:
   resolved "https://registry.yarnpkg.com/expo-status-bar/-/expo-status-bar-1.6.0.tgz#e79ffdb9a84d2e0ec9a0dc7392d9ab364fefa9cf"
   integrity sha512-e//Oi2WPdomMlMDD3skE4+1ZarKCJ/suvcB4Jo/nO427niKug5oppcPNYO+csR6y3ZglGuypS+3pp/hJ+Xp6fQ==
 
-expo@^49.0.6:
+expo@^49.0.7:
   version "49.0.7"
   resolved "https://registry.yarnpkg.com/expo/-/expo-49.0.7.tgz#b8fdc9550757f2a848fd08d3e9e7382b74b29ac4"
   integrity sha512-KGyZMuU83LNnWbfzdFrC45AhUDDAYKir7MawZJ7N8pBmHbLF8txlKq+KeZcwavD8fZREFYhSGJdTgfKPiXQymg==
@@ -10432,18 +10449,6 @@ promise-inflight@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/promise-inflight/-/promise-inflight-1.0.1.tgz#98472870bf228132fcbdd868129bad12c3c029e3"
   integrity sha512-6zWPyEOFaQBJYcGMHBKTKJ3u6TBsnMFOIZSa6ce1e/ZrrsOlnHRHbabMjLiBYKp+n44X9eUI6VUPaukCXHuG4g==
-
-promise-vigilant@^1.5.1:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/promise-vigilant/-/promise-vigilant-1.5.1.tgz#6f9ece8ce18da5a0d2bf6f194cc1236f97232fad"
-  integrity sha512-SA8XOd5frG+jYTYcS/XVOSctQVgQgeq4o46WhIsnteE9opTg4iakozZY6sGcJdNjj/+AzjkqdW2ypy28QOL4RQ==
-  dependencies:
-    is-promise "^4.0.0"
-    lodash.add "^3.7.0"
-    lodash.clonedeep "^4.5.0"
-    lodash.isequal "^4.5.0"
-    lodash.isfunction "^3.0.9"
-    lodash.size "^4.2.0"
 
 promise.allsettled@^1.0.0:
   version "1.0.6"

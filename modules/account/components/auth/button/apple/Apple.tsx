@@ -5,8 +5,7 @@ import {
   AppleAuthenticationScope,
   signInAsync,
 } from 'expo-apple-authentication';
-import _ from 'lodash';
-import { goAsync } from 'promise-vigilant';
+import { asyncWave } from 'async-wave';
 
 import {
   PostAppleAuthPayload,
@@ -17,6 +16,7 @@ import { LoginButton } from '@shared/components/button/Button';
 import useLoadingText from '@account/hooks/useLoadingText';
 import useAuthManagement from '@account/hooks/useAuthManagement';
 import { requestPostAppleAuth } from '@account/api/v1';
+import { handleUserTokenUpdate } from '@app/api/axiosInstance';
 import useStyles from './style';
 import { AppleErrorCode } from './type';
 
@@ -27,7 +27,7 @@ export default function Apple() {
     authState: { isLoading, isError },
     dispatchAppleStatus,
     dispatchErrorStatus,
-    dispatchUserToken,
+    dispatchUserLoginStatus,
   } = useAuthManagement();
   const { button, font } = useStyles();
   const buttonTitle = useLoadingText(BUTTON_TITLE, isLoading.apple);
@@ -40,7 +40,7 @@ export default function Apple() {
       buttonStyle={button}
       title={buttonTitle}
       onPress={() =>
-        goAsync(
+        asyncWave(
           [
             isError && dispatchErrorStatus(false),
             dispatchAppleStatus(true),
@@ -50,7 +50,8 @@ export default function Apple() {
           ],
           {
             onSuccess: (payload: PostAppleAuthResponse) => {
-              dispatchUserToken(payload);
+              handleUserTokenUpdate(payload);
+              dispatchUserLoginStatus(true);
             },
             onError: (error: AppleErrorCode) => {
               if (error?.code !== 'ERR_REQUEST_CANCELED') {
@@ -78,7 +79,11 @@ const createAppleAuthPayload = (
     throw new Error('identityToken does not exist');
   }
 
-  function createName(fullName: AppleAuthenticationFullName) {
+  function createName(fullName: AppleAuthenticationFullName | null) {
+    const isEmptyName = fullName?.familyName || fullName?.givenName;
+
+    if (!isEmptyName) return null;
+
     return `${fullName.familyName}${fullName.givenName}`;
   }
 
@@ -86,9 +91,7 @@ const createAppleAuthPayload = (
     identityToken: credential.identityToken,
     user: credential.user,
     email: credential.email,
-    name: _.isNull(credential.fullName)
-      ? undefined
-      : createName(credential.fullName),
+    name: createName(credential.fullName),
   };
 };
 /**

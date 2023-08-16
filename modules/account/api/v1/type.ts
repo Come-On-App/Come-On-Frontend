@@ -25,11 +25,16 @@ export interface PostAppleAuthPayload {
   identityToken: string;
   user: string;
   email?: string | null;
-  name?: string | null | undefined;
+  name?: string | null;
 }
 
 // POST /api/v1/oauth/apple (response)
 export interface PostAppleAuthResponse {
   accessToken: AccessToken;
   refreshToken: RefreshToken;
+}
+
+// POST /api/v1/oauth/apple (response)
+export interface PostUserLogoutResponse {
+  success: boolean;
 }
