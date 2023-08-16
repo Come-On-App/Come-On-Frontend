@@ -1,31 +1,31 @@
 import { NavigationContainer } from '@react-navigation/native';
 
-import FontThemeProvider from '@shared/provider/FontProvider';
-import QueryClientProvider from '@shared/provider/QueryClientProvider';
+import FontThemeProvider from '../modules/shared/provider/FontProvider';
+import QueryClientProvider from '../modules/shared/provider/QueryClientProvider';
 import { withMsw } from './mswDecorator';
 import { queryClient } from '../modules/app/api/queryClient';
 import handlers from '../modules/app/mocks/handlers';
 import ReduxProvider from '../modules/app/redux/Provider';
 
-export const decorators = [
-  withMsw,
-  (storyFn) => {
-    queryClient.clear();
+const clearQueryClient = (storyFn) => {
+  queryClient.clear();
 
-    return storyFn();
-  },
-  (Story) => (
-    <QueryClientProvider>
-      <ReduxProvider>
-        <FontThemeProvider>
-          <NavigationContainer>
-            <Story />
-          </NavigationContainer>
-        </FontThemeProvider>
-      </ReduxProvider>
-    </QueryClientProvider>
-  ),
-];
+  return storyFn();
+};
+
+const DefaultProvider = (Story) => (
+  <QueryClientProvider>
+    <ReduxProvider>
+      <FontThemeProvider>
+        <NavigationContainer>
+          <Story />
+        </NavigationContainer>
+      </FontThemeProvider>
+    </ReduxProvider>
+  </QueryClientProvider>
+);
+
+export const decorators = [withMsw, clearQueryClient, DefaultProvider];
 
 export const parameters = {
   msw: {

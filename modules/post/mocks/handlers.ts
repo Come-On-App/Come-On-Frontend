@@ -1,11 +1,12 @@
-import { BASE_URL } from '@app/api/axiosInstance';
-import { GetMeetingResponse } from '@post/api/v2/type';
 import { rest } from 'msw';
+
+import { GetMeetingResponse } from '@post/api/v2/type';
 import meetingsSliceResponse, {
   EmptyResponse,
 } from './getMeetingsSliceResponse';
 import meetingDetailResponse from './getMeetingDetailResponse';
 import { GetEntryCodeResponse } from '@post/api/v1/type';
+import { BASE_URL } from '@app/api/config';
 
 const requstGetMeetings = rest.get<GetMeetingResponse>(
   `${BASE_URL}/api/v2/meetings`,

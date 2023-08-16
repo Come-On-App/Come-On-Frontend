@@ -19,11 +19,11 @@ export default {
     ),
   ],
   argTypes: {
-    onCancelHandler: {
-      action: 'onCancelHandler',
+    onPressLeft: {
+      action: 'onPressLeft',
     },
-    onConfirmlHandler: {
-      action: 'onConfirmlHandler',
+    onPressRight: {
+      action: 'onPressRight',
     },
   },
 } as Meta;

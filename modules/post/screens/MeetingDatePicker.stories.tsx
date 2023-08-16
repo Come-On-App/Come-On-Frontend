@@ -21,6 +21,6 @@ export default {
 
 type MeetingDatePickerStory = ComponentStory<typeof MeetingDatePicker>;
 
-export const MeetingDateSelector: MeetingDatePickerStory = () => {
+export const MeetingDateSelector: MeetingDatePickerStory = (arg) => {
   return <PostNavigator initialRouteName="MeetingDateSelector" />;
 };

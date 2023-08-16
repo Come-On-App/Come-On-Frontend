@@ -34,8 +34,8 @@ export default function PostDeletionModal({
         <ConfirmCancelButton
           cancelText={left.text}
           confirmText={right.text}
-          onCancelHandler={onPressLeft}
-          onConfirmlHandler={onPressRight}
+          onPressLeft={onPressLeft}
+          onPressRight={onPressRight}
           rightButtonColor={right.color}
         />
       </View>

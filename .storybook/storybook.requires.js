@@ -55,13 +55,17 @@ try {
 const getStories = () => {
   return {
     "./modules/account/components/accountManagement/AccountManagement.stories.tsx": require("../modules/account/components/accountManagement/AccountManagement.stories.tsx"),
+    "./modules/account/components/auth/button/apple/Apple.stories.tsx": require("../modules/account/components/auth/button/apple/Apple.stories.tsx"),
+    "./modules/account/components/auth/button/google/Google.stories.tsx": require("../modules/account/components/auth/button/google/Google.stories.tsx"),
     "./modules/account/components/description/Email.stories.tsx": require("../modules/account/components/description/Email.stories.tsx"),
     "./modules/account/components/description/WelcomeMessage.stories.tsx": require("../modules/account/components/description/WelcomeMessage.stories.tsx"),
     "./modules/account/components/nickName/NickName.stories.tsx": require("../modules/account/components/nickName/NickName.stories.tsx"),
     "./modules/account/components/policyInfo/PolicyInfo.stories.tsx": require("../modules/account/components/policyInfo/PolicyInfo.stories.tsx"),
     "./modules/account/components/policyVersionList/PolicyVersionList.stories.tsx": require("../modules/account/components/policyVersionList/PolicyVersionList.stories.tsx"),
     "./modules/account/components/userAvatar/UserAvatar.stories.tsx": require("../modules/account/components/userAvatar/UserAvatar.stories.tsx"),
+    "./modules/account/screens/SignIn.stories.tsx": require("../modules/account/screens/SignIn.stories.tsx"),
     "./modules/app/navigation/BottomTabNavigator.stories.tsx": require("../modules/app/navigation/BottomTabNavigator.stories.tsx"),
+    "./modules/app/navigation/RootNavigation.stories.tsx": require("../modules/app/navigation/RootNavigation.stories.tsx"),
     "./modules/connection/components/button/CodeEntryButton.stories.tsx": require("../modules/connection/components/button/CodeEntryButton.stories.tsx"),
     "./modules/connection/components/description/CodeDescription.stories.tsx": require("../modules/connection/components/description/CodeDescription.stories.tsx"),
     "./modules/connection/components/entranceInput/EntranceInput.stories.tsx": require("../modules/connection/components/entranceInput/EntranceInput.stories.tsx"),

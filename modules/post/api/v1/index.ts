@@ -1,6 +1,6 @@
-import { comeonApiAxios } from '@app/api/axiosInstance';
+import { serverAPI } from '@app/api/axiosInstance';
 import { ImagePickerAsset } from 'expo-image-picker';
-import { goAsync } from 'promise-vigilant';
+import { asyncWave } from 'async-wave';
 import { createImageFormData, getAssetState } from '@shared/utils';
 import {
   DeleteMeetingPayload,
@@ -20,7 +20,6 @@ import {
 } from './type';
 
 /**
- * @see https://api.come-on.me/docs/meeting/index.html#entry-code-details
  * GET /api/v1/meetings/{meeting-id}/entry-code 모임 입장 코드 조회
  * @requires Authorization Bearer {access-token}
  * @param payload 입장 코드를 조회할 모임의 식별값
@@ -30,13 +29,12 @@ export async function requestGetEntryCode(
   payload: GetEntryCodePayload,
 ): Promise<GetEntryCodeResponse> {
   const URL = `/api/v1/meetings/${payload}/entry-code`;
-  const { data } = await comeonApiAxios.get(URL);
+  const { data } = await serverAPI.get(URL);
 
   return data;
 }
 
 /**
- * @see https://api.come-on.me/docs/meeting/index.html#entry-code-renew
  * POST /api/v1/meetings/{meeting-id}/entry-code 모임 입장 코드 갱신
  * @requires Authorization Bearer {access-token}
  * @param payload 입장 코드를 조회할 모임의 식별값
@@ -46,13 +44,12 @@ export async function requestPostEntryCode(
   payload: PostEntryCodePayalod,
 ): Promise<PostEntryCodeResponse> {
   const URL = `/api/v1/meetings/${payload}/entry-code`;
-  const { data } = await comeonApiAxios.post(URL);
+  const { data } = await serverAPI.post(URL);
 
   return data;
 }
 
 /**
- * @see https://api.come-on.me/docs/meeting/index.html#meeting-add
  * POST /api/v1/meetings 모임 등록
  * @requires Authorization Bearer {access-token}
  * @param payload 모임 생성에 필요한 정보를 전달한다.
@@ -62,7 +59,7 @@ export async function requestCreateMeetings(
   payload: PostMeetingPayload,
 ): Promise<PostMeetingResponse> {
   const URL = '/api/v1/meetings';
-  const { data } = await comeonApiAxios.post(URL, payload);
+  const { data } = await serverAPI.post(URL, payload);
 
   return data;
 }
@@ -77,7 +74,7 @@ async function requestUploadImage(
   payload: PostUploadImagePayload,
 ): Promise<PostUploadImageResponse> {
   const URL = '/api/v1/image';
-  const { data } = await comeonApiAxios.post(URL, payload, {
+  const { data } = await serverAPI.post(URL, payload, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
@@ -90,7 +87,7 @@ async function requestUploadImage(
  * 이미지 에셋을 유효한 이미지 URL 주소로 변환 요청한다.
  */
 export function requestImageURL(asset: ImagePickerAsset): Promise<string> {
-  return goAsync(asset, [
+  return asyncWave(asset, [
     getAssetState,
     createImageFormData,
     requestUploadImage,
@@ -108,7 +105,7 @@ export async function requestDeleteMeeting(
   payload: DeleteMeetingPayload,
 ): Promise<DeleteMeetingResponse> {
   const URL = `/api/v1/meetings/${payload}/members/me`;
-  const { data } = await comeonApiAxios.delete(URL);
+  const { data } = await serverAPI.delete(URL);
 
   return data;
 }
@@ -124,7 +121,7 @@ export async function requestPatchMeeting({
   payload,
 }: PatchMeetingPayload): Promise<PatchMeetingResponse> {
   const URL = `/api/v1/meetings/${meetingId}`;
-  const { data } = await comeonApiAxios.patch(URL, payload);
+  const { data } = await serverAPI.patch(URL, payload);
 
   return data;
 }
@@ -139,7 +136,7 @@ export async function requestPostReportMeeting(
   payload: PostReportMeetingPayload,
 ): Promise<PostReportMeetingResponse> {
   const URL = `/api/v1/report/meeting`;
-  const { data } = await comeonApiAxios.post(URL, payload);
+  const { data } = await serverAPI.post(URL, payload);
 
   return data;
 }

@@ -186,7 +186,12 @@ export const applyRelativeSizes: IapplyRelativeSizes = (sizes) => {
   return Object.values(sizes).map(relativeSizeConverter);
 };
 
-export function isExpiry(date: string) {
+/**
+ * 전달된 인수가 현재 시간을 기준으로 만료가 됐는지 파악한다.
+ *
+ * 전달 가능한 인수 타입: date 타입 형태 문자열 (년-월-일), UNIX TIME 형태
+ */
+export function isExpiry(date: string | number) {
   const targetDate = new Date(date);
   const currentDate = new Date();
 

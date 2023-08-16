@@ -1,7 +1,7 @@
 import { Keyboard, ScrollView } from 'react-native';
 import React, { useEffect } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { goAsync } from 'promise-vigilant';
+import { asyncWave } from 'async-wave';
 
 import ConfirmCancelButton from '@post/components/button/ConfirmCancelButton';
 import Uploader from '@post/components/creation/uploader/Uploader';
@@ -56,10 +56,10 @@ export default function MeetingPostCreator({
           <ConfirmCancelButton
             leftDisabled={isLoading}
             rightDisabled={!isPostFormValid(postState) || isLoading}
-            onCancelHandler={() => navigation.goBack()}
+            onPressLeft={() => navigation.goBack()}
             confirmText={isLoading ? LOADING_TEXT : CONFIRM_TEXT}
-            onConfirmlHandler={() => {
-              goAsync([
+            onPressRight={() => {
+              asyncWave([
                 Keyboard.dismiss,
                 generatePostPayload(postState),
                 mutate,

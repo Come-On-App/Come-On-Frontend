@@ -1,9 +1,9 @@
+import { rest } from 'msw';
 import { ComponentMeta, ComponentStory } from '@storybook/react-native';
 
 import MeetingPostModifier from './MeetingPostModifier';
-import { rest } from 'msw';
-import { BASE_URL } from '@app/api/axiosInstance';
 import PostNavigator from '@post/navigation/PostNavigator';
+import { BASE_URL } from '@app/api/config';
 
 type Meta = ComponentMeta<typeof MeetingPostModifier>;
 

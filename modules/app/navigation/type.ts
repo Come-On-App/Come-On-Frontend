@@ -6,6 +6,11 @@ export type BottomTabParamList = {
   [Tab.three]: undefined;
 };
 
+export type RootStackParamList = {
+  SignIn: undefined;
+  Home: undefined;
+};
+
 export interface IbottomTabNavigator {
   children: React.ReactNode;
   initialRouteName?: Tab;

@@ -40,7 +40,7 @@ function BottomTabNavigator({
   );
 }
 
-export default function Navigation({ initialRouteName }: Inavigation) {
+export default function BottomTabNavigation({ initialRouteName }: Inavigation) {
   return (
     <BottomTabNavigator initialRouteName={initialRouteName}>
       <Screen

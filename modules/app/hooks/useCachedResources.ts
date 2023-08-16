@@ -2,7 +2,11 @@ import { loadAsync } from 'expo-font';
 import { useEffect, useState } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
 import { hideAsync, preventAutoHideAsync } from 'expo-splash-screen';
-import { goAsync } from 'promise-vigilant';
+import { asyncWave } from 'async-wave';
+import { getUserTokenFromStore } from '@shared/utils/secureStore';
+import { setDefaultsHeaderAuth } from '@app/api/axiosInstance';
+import store from '@app/redux/store';
+import { updateUserLoginStatus } from '@account/features/auth/authSlice';
 
 async function loadFonts() {
   await loadAsync({
@@ -12,11 +16,23 @@ async function loadFonts() {
   });
 }
 
+async function authenticateUserAndDispatch() {
+  const userToken = await getUserTokenFromStore();
+
+  if (userToken) {
+    asyncWave([userToken, setDefaultsHeaderAuth], {
+      onSuccess: () => {
+        store.dispatch(updateUserLoginStatus(true));
+      },
+    });
+  }
+}
+
 export default function useCachedResources() {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
 
   function loadResourcesAndDataAsync() {
-    goAsync([preventAutoHideAsync, loadFonts], {
+    asyncWave([preventAutoHideAsync, loadFonts, authenticateUserAndDispatch], {
       onSuccess: () => {
         setLoadingComplete(true);
         hideAsync();

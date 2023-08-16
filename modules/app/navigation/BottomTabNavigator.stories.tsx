@@ -3,15 +3,14 @@ import { ComponentMeta } from '@storybook/react-native';
 
 import { Tab } from './config';
 import BottomTabNavigator from './BottomTabNavigator';
-import { BASE_URL } from '@app/api/axiosInstance';
 import { EmptyResponse } from '@post/mocks/getMeetingsSliceResponse';
+import { BASE_URL } from '@app/api/config';
 
 type Meta = ComponentMeta<typeof BottomTabNavigator>;
 
 export default {
   title: 'Screens',
   component: BottomTabNavigator,
-  decorators: [(Story) => <Story />],
 } as Meta;
 
 export const MeetingDashboard: Meta = {

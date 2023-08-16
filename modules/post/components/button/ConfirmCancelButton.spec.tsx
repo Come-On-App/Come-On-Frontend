@@ -8,10 +8,7 @@ import ConfirmCancelButton from './ConfirmCancelButton';
 describe('ConfirmCancelButton Compoent', () => {
   test('두 개의 버튼 컴포넌트가 렌더링 되어야 한다.', () => {
     render(
-      <ConfirmCancelButton
-        onCancelHandler={jest.fn()}
-        onConfirmlHandler={jest.fn()}
-      />,
+      <ConfirmCancelButton onPressLeft={jest.fn()} onPressRight={jest.fn()} />,
       wrapper,
     );
 
@@ -19,23 +16,23 @@ describe('ConfirmCancelButton Compoent', () => {
   });
 
   test('각각의 핸들러는 이벤트에 반응해야 한다.', () => {
-    const onCancelHandler = jest.fn();
-    const onConfirmlHandler = jest.fn();
+    const onPressLeft = jest.fn();
+    const onPressRight = jest.fn();
 
     render(
       <ConfirmCancelButton
-        onCancelHandler={onCancelHandler}
-        onConfirmlHandler={onConfirmlHandler}
+        onPressLeft={onPressLeft}
+        onPressRight={onPressRight}
       />,
       wrapper,
     );
 
     fireEvent.press(screen.getByText('취소'));
 
-    expect(onCancelHandler).toHaveBeenCalledTimes(1);
+    expect(onPressLeft).toHaveBeenCalledTimes(1);
 
     fireEvent.press(screen.getByText('완료'));
 
-    expect(onConfirmlHandler).toHaveBeenCalledTimes(1);
+    expect(onPressRight).toHaveBeenCalledTimes(1);
   });
 });
