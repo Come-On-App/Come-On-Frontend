@@ -2,13 +2,13 @@ import { AxiosResponse, isAxiosError } from 'axios';
 import { ErrorResponse, MaybeErrorCode } from './type';
 
 function getErrorCodeFromAxiosError(error: unknown) {
-  if (!isAxiosError(error)) return undefined;
+  if (isAxiosError(error) && error.response) {
+    const { errorCode } = (error.response as AxiosResponse<ErrorResponse>).data;
 
-  const {
-    data: { errorCode },
-  } = error.response as AxiosResponse<ErrorResponse>;
+    return errorCode;
+  }
 
-  return errorCode;
+  return undefined;
 }
 
 function isExpiredAccessTokenCode(errorCode: MaybeErrorCode) {

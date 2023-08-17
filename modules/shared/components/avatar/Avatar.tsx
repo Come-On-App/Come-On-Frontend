@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar as RneAvatar } from '@rneui/themed';
+import { Avatar as RneAvatar, Skeleton } from '@rneui/themed';
 
 import TestId from '@shared/constants/testIds';
 import { relativeSizeConverter } from '@shared/utils';
@@ -17,16 +17,20 @@ export default function Avatar({
   path,
   children,
   containerStyle,
+  isLoading,
 }: Iavatar) {
   const { defaultStyle } = useStyle(size);
 
-  // 빈 문자열인 경우
-  if (!path)
+  if (isLoading) {
     return (
-      <RneAvatar size={size} containerStyle={[defaultStyle, containerStyle]}>
-        {children}
-      </RneAvatar>
+      <Skeleton
+        circle
+        accessibilityHint="loading"
+        width={defaultStyle.width}
+        height={defaultStyle.height}
+      />
     );
+  }
 
   return (
     <RneAvatar

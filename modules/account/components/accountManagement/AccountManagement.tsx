@@ -8,6 +8,7 @@ import { asyncWave } from 'async-wave';
 import { requestPostUserLogout } from '@account/api/v1';
 import useStyles from './style';
 
+const REMOVE_TOKEN_FROM_STORE = true;
 const LEFT_BUTTON_TITLE = '로그아웃';
 const RIGHT_BUTTON_TITLE = '회원탈퇴';
 
@@ -15,7 +16,7 @@ export default function AccountManagement() {
   const { container, font } = useStyles();
   const { initAuthState } = useAuthManagement();
   const onLogout = () => {
-    asyncWave([initAuthState, requestPostUserLogout]);
+    asyncWave([initAuthState(REMOVE_TOKEN_FROM_STORE), requestPostUserLogout]);
   };
   const onAccountDeletion = () => {};
 

@@ -3,6 +3,7 @@ export enum QueryKeys {
   meetings = 'meetings',
   code = 'code',
   post = 'post',
+  user = 'user',
 }
 
 export interface SliceResponse<T> {

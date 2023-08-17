@@ -3877,10 +3877,10 @@ async-limiter@~1.0.0:
   resolved "https://registry.yarnpkg.com/async-limiter/-/async-limiter-1.0.1.tgz#dd379e94f0db8310b08291f9d64c3209766617fd"
   integrity sha512-csOlWGAcRFJaI6m+F2WKdnMKr4HhdhFVBk0H/QbJFMCr+uO2kwohwXQPxw/9OCxp05r5ghVBFSyioixx3gfkNQ==
 
-async-wave@^1.5.4:
-  version "1.5.4"
-  resolved "https://registry.yarnpkg.com/async-wave/-/async-wave-1.5.4.tgz#8b874bae8f72d63ce9fd675a7499e76d43815a85"
-  integrity sha512-S4xYwUbSxjssDceraA0/IyPRl+aBzaERoTAzXO1k/Wmu0B8/j5QvaITNaxoHzJdfqSaw1545jY6Ej+FK188ReQ==
+async-wave@^1.5.5:
+  version "1.5.5"
+  resolved "https://registry.yarnpkg.com/async-wave/-/async-wave-1.5.5.tgz#e764272fbb09548bda71ebc6bfd1e390abc8f0bf"
+  integrity sha512-z/m0vXfR7kysELesKIqiNF7Mmevte3DZfKymFXf9wYucj+Pz4wYhQzjRoBgW+HEQ1mrZ1ruvJ78tC59abVllFQ==
   dependencies:
     is-promise "^4.0.0"
     lodash.add "^3.7.0"
