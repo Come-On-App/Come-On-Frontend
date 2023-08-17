@@ -20,23 +20,14 @@ export default function Deletion({ id, showModal, onClose }: Ideletion) {
     dateTo: dateRange.endingDay?.dateString,
   };
   const queryClient = useQueryClient();
+  const updateMeeting = removeMeetingById(id);
   const mutate = useMutation(requestDeleteMeeting, {
     onSuccess: () => {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       // Updates from Mutation Responses
       queryClient.setQueryData<GetMeetingSliceResponse>(
         [QueryKeys.meetings, paramater],
-        (oldData) => {
-          return oldData
-            ? {
-                ...oldData,
-                contentsCount: oldData.contentsCount - 1,
-                contents: oldData.contents.filter(
-                  ({ meetingId }) => meetingId !== id,
-                ),
-              }
-            : oldData;
-        },
+        updateMeeting,
       );
     },
   });
@@ -50,4 +41,20 @@ export default function Deletion({ id, showModal, onClose }: Ideletion) {
       />
     </View>
   );
+}
+
+function removeMeetingById(id: number) {
+  return (oldData: GetMeetingSliceResponse | undefined) => {
+    if (!oldData) return oldData;
+
+    const updatedContents = oldData.contents.filter(
+      ({ meetingId }) => meetingId !== id,
+    );
+
+    return {
+      ...oldData,
+      contentsCount: oldData.contentsCount - 1,
+      contents: updatedContents,
+    };
+  };
 }
