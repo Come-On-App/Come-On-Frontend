@@ -1,4 +1,7 @@
 import { AxiosResponse, isAxiosError } from 'axios';
+
+import { UserToken } from '@account/features/auth/type';
+import { isExpiry } from '@shared/utils';
 import { ErrorResponse, MaybeErrorCode } from './type';
 
 function getErrorCodeFromAxiosError(error: unknown) {
@@ -36,4 +39,12 @@ export function checkIfAccessTokenExpired(error: unknown) {
   }
 
   return NOT_EXPIRED;
+}
+
+export function verifyRefreshToken(userToken: UserToken) {
+  if (isExpiry(userToken.refreshToken.expiry)) {
+    throw new Error('Refresh token expired');
+  }
+
+  return userToken;
 }
