@@ -54,7 +54,7 @@ export default function Apple() {
               dispatchUserLoginStatus(true);
             },
             onError: (error: AppleErrorCode) => {
-              if (error?.code !== 'ERR_REQUEST_CANCELED') {
+              if (shouldContinueOnError(error)) {
                 dispatchErrorStatus(true);
 
                 throw error;
@@ -106,3 +106,7 @@ const requestAppleAuthentication = () => {
     ],
   });
 };
+
+function shouldContinueOnError(error: AppleErrorCode) {
+  return error?.code !== 'ERR_REQUEST_CANCELED';
+}
