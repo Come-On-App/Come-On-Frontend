@@ -1,25 +1,16 @@
 import { ComponentMeta } from '@storybook/react-native';
 
-import FontThemeProvider from '@shared/provider/FontProvider';
-import PolicyVersionList from './PolicyVersionList';
-import { View } from 'react-native';
+import Component from './PolicyVersionList';
 
-type Meta = ComponentMeta<typeof PolicyVersionList>;
+type Meta = ComponentMeta<typeof Component>;
 
-const IconButtonMeta: ComponentMeta<typeof PolicyVersionList> = {
-  title: 'Account - PolicyVersionList',
-  component: PolicyVersionList,
-  decorators: [
-    (Story) => (
-      <FontThemeProvider>
-        <Story />
-      </FontThemeProvider>
-    ),
-  ],
+const IconButtonMeta: ComponentMeta<typeof Component> = {
+  title: 'Account',
+  component: Component,
 };
 
 export default IconButtonMeta;
 
-export const Defualt: Meta = {
+export const PolicyVersionList: Meta = {
   args: {},
 };

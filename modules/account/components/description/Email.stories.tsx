@@ -1,25 +1,17 @@
 import { ComponentMeta } from '@storybook/react-native';
 
-import FontThemeProvider from '@shared/provider/FontProvider';
-import Email from './Email';
+import Component from './Email';
 
-type Meta = ComponentMeta<typeof Email>;
+type Meta = ComponentMeta<typeof Component>;
 
-const IconButtonMeta: ComponentMeta<typeof Email> = {
-  title: 'Account - Email',
-  component: Email,
-  decorators: [
-    (Story) => (
-      <FontThemeProvider>
-        <Story />
-      </FontThemeProvider>
-    ),
-  ],
+const IconButtonMeta: ComponentMeta<typeof Component> = {
+  title: 'Account',
+  component: Component,
 };
 
 export default IconButtonMeta;
 
-export const Defualt: Meta = {
+export const Email: Meta = {
   args: {
     email: 'jeongbaebang_dev@naver.com',
   },

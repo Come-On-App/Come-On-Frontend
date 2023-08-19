@@ -1,26 +1,17 @@
-import { View } from 'react-native';
 import { ComponentMeta } from '@storybook/react-native';
 
-import FontThemeProvider from '@shared/provider/FontProvider';
-import WelcomeMessage from './WelcomeMessage';
+import Component from './WelcomeMessage';
 
-type Meta = ComponentMeta<typeof WelcomeMessage>;
+type Meta = ComponentMeta<typeof Component>;
 
-const IconButtonMeta: ComponentMeta<typeof WelcomeMessage> = {
-  title: 'Account - WelcomeMessage',
-  component: WelcomeMessage,
-  decorators: [
-    (Story) => (
-      <FontThemeProvider>
-        <Story />
-      </FontThemeProvider>
-    ),
-  ],
+const IconButtonMeta: ComponentMeta<typeof Component> = {
+  title: 'Account',
+  component: Component,
 };
 
 export default IconButtonMeta;
 
-export const Defualt: Meta = {
+export const WelcomeMessage: Meta = {
   args: {
     userName: 'John Doe',
   },

@@ -31,11 +31,9 @@ function MyPage() {
           <NickName name={mockUser.userName} />
         </ScreenLayout>
         {/* 약관 및 앱 정보 */}
-        <View>
-          <DividerWrapper>
-            <PolicyVersionList />
-          </DividerWrapper>
-        </View>
+        <DividerWrapper>
+          <PolicyVersionList />
+        </DividerWrapper>
       </View>
       {/* 로그아웃 및 회원탈퇴  */}
       <View style={cAccountManagement}>
