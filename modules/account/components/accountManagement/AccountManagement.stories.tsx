@@ -4,12 +4,12 @@ import Component from './AccountManagement';
 
 type Meta = ComponentMeta<typeof Component>;
 
-const IconButtonMeta: ComponentMeta<typeof Component> = {
+const AccountManagementMeta: ComponentMeta<typeof Component> = {
   title: 'Account',
   component: Component,
 };
 
-export default IconButtonMeta;
+export default AccountManagementMeta;
 
 export const AccountManagement: Meta = {
   args: {},

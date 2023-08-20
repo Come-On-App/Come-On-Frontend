@@ -4,12 +4,12 @@ import Component from './PolicyInfo';
 
 type Meta = ComponentMeta<typeof Component>;
 
-const IconButtonMeta: ComponentMeta<typeof Component> = {
+const PolicyInfoMeta: ComponentMeta<typeof Component> = {
   title: 'Account',
   component: Component,
 };
 
-export default IconButtonMeta;
+export default PolicyInfoMeta;
 
 export const PolicyInfo: Meta = {
   args: {

@@ -63,6 +63,7 @@ const getStories = () => {
     "./modules/account/components/policyInfo/PolicyInfo.stories.tsx": require("../modules/account/components/policyInfo/PolicyInfo.stories.tsx"),
     "./modules/account/components/policyVersionList/PolicyVersionList.stories.tsx": require("../modules/account/components/policyVersionList/PolicyVersionList.stories.tsx"),
     "./modules/account/components/userAvatar/UserAvatar.stories.tsx": require("../modules/account/components/userAvatar/UserAvatar.stories.tsx"),
+    "./modules/account/components/userInfo/UserInfo.stories.tsx": require("../modules/account/components/userInfo/UserInfo.stories.tsx"),
     "./modules/account/screens/SignIn.stories.tsx": require("../modules/account/screens/SignIn.stories.tsx"),
     "./modules/app/navigation/BottomTabNavigator.stories.tsx": require("../modules/app/navigation/BottomTabNavigator.stories.tsx"),
     "./modules/app/navigation/RootNavigation.stories.tsx": require("../modules/app/navigation/RootNavigation.stories.tsx"),

@@ -4,12 +4,12 @@ import Component from './Email';
 
 type Meta = ComponentMeta<typeof Component>;
 
-const IconButtonMeta: ComponentMeta<typeof Component> = {
+const EmailMeta: ComponentMeta<typeof Component> = {
   title: 'Account',
   component: Component,
 };
 
-export default IconButtonMeta;
+export default EmailMeta;
 
 export const Email: Meta = {
   args: {

@@ -5,9 +5,17 @@ const MS_500 = 500;
 /**
  * 전달된 문자열을 로딩에 적합한 문자열로 반환한다.
  */
-export default function useLoadingText(title: string, isLoading: boolean) {
+export default function useLoadingText(
+  title: string,
+  isLoading: boolean,
+  prefix: string = '중',
+) {
   const [loadingIndex, setLoadingIndex] = useState(0);
-  const loadingPatterns = [`${title} 중.`, `${title} 중..`, `${title} 중...`];
+  const loadingPatterns = [
+    `${title} ${prefix}.`,
+    `${title} ${prefix}..`,
+    `${title} ${prefix}...`,
+  ];
 
   useEffect(() => {
     let interval: NodeJS.Timeout;

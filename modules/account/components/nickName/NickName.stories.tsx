@@ -5,7 +5,7 @@ import Component from './NickName';
 
 type Meta = ComponentMeta<typeof Component>;
 
-const IconButtonMeta: ComponentMeta<typeof Component> = {
+const NickNameMeta: ComponentMeta<typeof Component> = {
   title: 'Account',
   component: Component,
   decorators: [
@@ -17,7 +17,7 @@ const IconButtonMeta: ComponentMeta<typeof Component> = {
   ],
 };
 
-export default IconButtonMeta;
+export default NickNameMeta;
 
 export const NickName: Meta = {
   args: {

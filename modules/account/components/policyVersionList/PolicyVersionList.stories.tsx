@@ -4,12 +4,12 @@ import Component from './PolicyVersionList';
 
 type Meta = ComponentMeta<typeof Component>;
 
-const IconButtonMeta: ComponentMeta<typeof Component> = {
+const PolicyVersionListMeta: ComponentMeta<typeof Component> = {
   title: 'Account',
   component: Component,
 };
 
-export default IconButtonMeta;
+export default PolicyVersionListMeta;
 
 export const PolicyVersionList: Meta = {
   args: {},
