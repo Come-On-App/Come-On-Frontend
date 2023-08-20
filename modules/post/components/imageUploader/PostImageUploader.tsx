@@ -5,7 +5,7 @@ import ImageUploader from '@shared/components/imageUploader/ImageUploader';
 import ScreenLayout from '@shared/components/layout/ScreenLayout';
 import DividerWrapper from '@shared/components/layout/DividerWrapper';
 import ContentHeader from '@shared/components/layout/ContentHeader';
-import useImagePicker from '@post/hooks/useImagePicker';
+import useImagePicker from '@shared/hooks/useImagePicker';
 import { IpostUploader } from './type';
 
 export default function PostImageUploader({
