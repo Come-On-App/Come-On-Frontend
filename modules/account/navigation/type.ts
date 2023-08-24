@@ -12,10 +12,10 @@ export type PolicyParamList = {
   PrivacyPolicy: undefined;
 };
 
-export type PostNativeStack<T extends keyof MyPageParamList> =
+export type MyPageNativeStack<T extends keyof MyPageParamList> =
   NativeStackScreenProps<MyPageParamList, T>;
 
-export type PolicyNavigation = PostNativeStack<'Policy'>['navigation'];
+export type PolicyNavigation = MyPageNativeStack<'Policy'>['navigation'];
 
 export interface Inavigator {
   children: React.ReactNode;
