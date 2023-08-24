@@ -3,7 +3,7 @@ import React from 'react';
 
 import TestId from '@shared/constants/testIds';
 import Modal from '@shared/components/modal/Modal';
-import ConfirmCancelButton from '@post/components/button/ConfirmCancelButton';
+import ConfirmCancelButton from '@shared/components/button/ConfirmCancelButton';
 import Message from '@shared/components/modal/display/Message';
 import SubMessage from '@shared/components/modal/display/SubMessage';
 import useStyles from './style';

@@ -3,17 +3,11 @@ import { View } from 'react-native';
 
 import Message from '@shared/components/modal/display/Message';
 import SubMessage from '@shared/components/modal/display/SubMessage';
-import ConfirmCancelButton from '@post/components/button/ConfirmCancelButton';
+import ConfirmCancelButton from '@shared/components/button/ConfirmCancelButton';
 import TestId from '@shared/constants/testIds';
 import Modal from '@shared/components/modal/Modal';
 import useStyles from './style';
-
-export interface IpostDeletionModal {
-  isVisible: boolean;
-  isSubmit: boolean;
-  onPressRight: () => void;
-  onPressLeft: () => void;
-}
+import { IpostDeletionModal } from './type';
 
 const TITLE = '회원 탈퇴를 진행하시겠습니까?';
 const SUB_MESSAGE_1 = '모든 데이터는 영구적으로 삭제되며,';

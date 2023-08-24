@@ -10,7 +10,7 @@ import Title from '@post/components/report/input/Title';
 import TestId from '@shared/constants/testIds';
 import DividerWrapper from '@shared/components/layout/DividerWrapper';
 import ScreenLayout from '@shared/components/layout/ScreenLayout';
-import ConfirmCancelButton from '@post/components/button/ConfirmCancelButton';
+import ConfirmCancelButton from '@shared/components/button/ConfirmCancelButton';
 import useReportManagement, {
   ReportState,
 } from '@post/hooks/useReportManagement';

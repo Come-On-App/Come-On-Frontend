@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import { View } from 'react-native';
 import React from 'react';
 
@@ -10,7 +9,6 @@ import { IconfirmCancelButton } from './type';
 const CANCEL = '취소';
 const CONFIRM = '완료';
 
-// TODO: 공용 폴더로 승급하기
 export default function ConfirmCancelButton({
   cancelText,
   confirmText,

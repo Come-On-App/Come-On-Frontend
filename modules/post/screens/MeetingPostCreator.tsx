@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { asyncWave } from 'async-wave';
 
-import ConfirmCancelButton from '@post/components/button/ConfirmCancelButton';
+import ConfirmCancelButton from '@shared/components/button/ConfirmCancelButton';
 import Uploader from '@post/components/creation/uploader/Uploader';
 import VotingTimeRangePicker from '@post/components/creation/votingTimeRangePicker/VotingTimeRangePicker';
 import DividerWrapper from '@shared/components/layout/DividerWrapper';

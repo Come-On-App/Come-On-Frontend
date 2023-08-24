@@ -14,7 +14,7 @@ import VotingTimeRangePicker from '@post/components/modification/votingTimeRange
 import usePostManagement from '@post/hooks/usePostManagement';
 import DividerWrapper from '@shared/components/layout/DividerWrapper';
 import ScreenLayout from '@shared/components/layout/ScreenLayout';
-import ConfirmCancelButton from '@post/components/button/ConfirmCancelButton';
+import ConfirmCancelButton from '@shared/components/button/ConfirmCancelButton';
 import { requestImageURL, requestPatchMeeting } from '@post/api/v1';
 import { PostState } from '@post/features/post/type';
 import { GetMeetingDetailResponse } from '@post/api/v2/type';
