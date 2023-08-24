@@ -1,13 +1,23 @@
-import { describe, expect, test } from '@jest/globals';
-import { render, screen } from '@testing-library/react-native';
+import { describe, expect, jest, test } from '@jest/globals';
+import { screen } from '@testing-library/react-native';
 
 import TestId from '@shared/constants/testIds';
-import { wrapper } from '@shared/utils/customRender';
+import { render } from '@shared/utils/customRender';
+import { NavigationContainer } from '@react-navigation/native';
 import MeetingPostViewer from './MeetingPostViewer';
 
 describe('MeetingPostViewer Compoent', () => {
+  const Component = (
+    <NavigationContainer>
+      <MeetingPostViewer
+        navigation={jest.fn() as any}
+        route={{ params: { id: 0 } } as any}
+      />
+    </NavigationContainer>
+  );
+
   test('모임 상세 정보가 올바르게 렌더링 되어야 한다.', () => {
-    render(<MeetingPostViewer />, wrapper);
+    render(Component);
 
     expect(screen.getByText('모임 멤버')).toBeOnTheScreen();
     expect(screen.getByText('모임 기간')).toBeOnTheScreen();

@@ -8,8 +8,15 @@ import Planner from '@post/components/detail/planner/Planner';
 import mockMembers from '@post/mocks/members';
 import mockVenueList from '@post/mocks/venueList';
 import mockDuration from '@post/mocks/duration';
+import { PostNativeStack } from '@post/navigation/type';
 
-export default function MeetingPostViewer() {
+export default function MeetingPostViewer({
+  route: {
+    params: { id },
+  },
+}: PostNativeStack<'MeetingPostDetail'>) {
+  console.log(id);
+
   return (
     <ScrollView testID={TestId.post.detail}>
       <Participants users={mockMembers} />

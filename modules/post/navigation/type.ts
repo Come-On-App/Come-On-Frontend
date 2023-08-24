@@ -7,7 +7,9 @@ export type PostStackParamList = {
   MeetingDateSelector: {
     prevDateRange: DateRange;
   };
-  MeetingPostDetail: undefined;
+  MeetingPostDetail: {
+    id: number;
+  };
   MeetingPostReport: {
     id: number;
   };
