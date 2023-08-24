@@ -12,6 +12,8 @@ export default function PolicyInfo({
   title,
   onPress,
   showIcon = true,
+  position = 'bottom',
+  iconName = 'arrow-forward-ios',
 }: IpolicyInfo) {
   const { cContent, font, icon } = useStyles();
   const pressedStyle = ({ pressed }: IpressedStyle) => ({
@@ -19,18 +21,14 @@ export default function PolicyInfo({
   });
 
   return (
-    <DividerWrapper width={1} position="bottom">
+    <DividerWrapper width={1} position={position}>
       <Pressable onPress={onPress} style={pressedStyle}>
         <ScreenLayout containerStyle={cContent}>
           <Font bold style={font}>
             {title}
           </Font>
           {showIcon ? (
-            <Icon
-              size={icon.fontSize}
-              color={icon.color}
-              name="arrow-forward-ios"
-            />
+            <Icon size={icon.fontSize} color={icon.color} name={iconName} />
           ) : null}
         </ScreenLayout>
       </Pressable>

@@ -1,4 +1,3 @@
 export interface IuserAvatar {
-  path: string;
-  isLoading: boolean;
+  path: string | undefined;
 }

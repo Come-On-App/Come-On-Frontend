@@ -44,7 +44,33 @@ const requestPostUserLogout = rest.post(
   }
 );
 
+const requestPutMyInfo = rest.put(
+  `${BASE_URL}/api/v1/users/me`,
+  (_req, res, ctx) => {
+    return res(
+      ctx.delay(1000),
+      ctx.json({
+        success: true,
+      })
+    );
+  }
+);
+
+const requestDeleteUser = rest.delete(
+  `${BASE_URL}/api/v1/users/me`,
+  (_req, res, ctx) => {
+    return res(
+      ctx.delay(2000),
+      ctx.json({
+        success: true,
+      })
+    );
+  }
+);
+
 export default [
+  requestDeleteUser,
+  requestPutMyInfo,
   requestPostUserLogout,
   requestGetMyInfo,
   requestPostGoogleAuth,

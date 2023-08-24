@@ -4,18 +4,15 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import TestId from '@shared/constants/testIds';
 import { render } from '@shared/utils/customRender';
-import QueryClientProvider from '@shared/provider/QueryClientProvider';
 import BottomTabNavigator from './BottomTabNavigator';
 import { Tab } from './config';
 
 describe('<BottomTabNavigator />', () => {
   function Navigation(routeName: Tab) {
     return (
-      <QueryClientProvider>
-        <NavigationContainer>
-          <BottomTabNavigator initialRouteName={routeName} />
-        </NavigationContainer>
-      </QueryClientProvider>
+      <NavigationContainer>
+        <BottomTabNavigator initialRouteName={routeName} />
+      </NavigationContainer>
     );
   }
 

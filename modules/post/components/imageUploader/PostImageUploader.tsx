@@ -6,6 +6,7 @@ import ScreenLayout from '@shared/components/layout/ScreenLayout';
 import DividerWrapper from '@shared/components/layout/DividerWrapper';
 import ContentHeader from '@shared/components/layout/ContentHeader';
 import useImagePicker from '@shared/hooks/useImagePicker';
+import { withSelectionHaptic } from '@shared/utils/haptics';
 import { IpostUploader } from './type';
 
 export default function PostImageUploader({
@@ -15,7 +16,8 @@ export default function PostImageUploader({
   onImage,
   isDataLoading,
 }: IpostUploader) {
-  const [image, pickImage, isImageLoading] = useImagePicker();
+  const { image, pickImage } = useImagePicker();
+  const [onPress] = withSelectionHaptic(pickImage);
 
   useEffect(() => {
     if (image) {
@@ -30,10 +32,10 @@ export default function PostImageUploader({
           <ScreenTitle>{title}</ScreenTitle>
         </ContentHeader>
         <ImageUploader
-          isLoading={isDataLoading || isImageLoading}
+          isLoading={isDataLoading}
           uri={image?.uri ?? prevImage}
           description={description}
-          onPress={pickImage}
+          onPress={onPress}
         />
       </ScreenLayout>
     </DividerWrapper>

@@ -4,6 +4,7 @@ export interface IThumbnail {
 }
 
 export interface IWithTopComponent {
+  id: number;
   uri: string;
   people: number;
   isDecided: boolean;

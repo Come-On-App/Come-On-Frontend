@@ -3,7 +3,6 @@ import { fireEvent, render, screen } from '@testing-library/react-native';
 
 import TestId from '@shared/constants/testIds';
 import { wrapper } from '@shared/utils/customRender';
-import QueryClientProvider from '@shared/provider/QueryClientProvider';
 import MeetingDashboard from './MeetingDashboard';
 
 const mockedNavigate = jest.fn();
@@ -21,11 +20,7 @@ jest.mock('@react-navigation/native', () => {
 });
 
 describe('<MeetingDashboard />', () => {
-  const Component = (
-    <QueryClientProvider>
-      <MeetingDashboard />
-    </QueryClientProvider>
-  );
+  const Component = <MeetingDashboard />;
 
   test('모임 리스트 컴포넌트가 렌더링 되어야 한다.', async () => {
     render(Component, wrapper);

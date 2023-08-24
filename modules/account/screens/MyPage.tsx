@@ -3,7 +3,7 @@ import { View } from 'react-native';
 
 import TestId from '@shared/constants/testIds';
 import DividerWrapper from '@shared/components/layout/DividerWrapper';
-import PolicyVersionList from '@account/components/policyVersionList/PolicyVersionList';
+import PolicyVersionMenu from '@account/components/policyVersionMenu/PolicyVersionMenu';
 import AccountManagement from '@account/components/accountManagement/AccountManagement';
 import UserInfo from '@account/components/userInfo/UserInfo';
 import useStyles from './style';
@@ -17,7 +17,7 @@ function MyPage() {
         <UserInfo />
         {/* 약관 및 앱 정보 */}
         <DividerWrapper>
-          <PolicyVersionList />
+          <PolicyVersionMenu />
         </DividerWrapper>
       </View>
       {/* 로그아웃 및 회원탈퇴  */}

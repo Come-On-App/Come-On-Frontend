@@ -38,3 +38,19 @@ export interface PostAppleAuthResponse {
 export interface PostUserLogoutResponse {
   success: boolean;
 }
+
+// PUT /api/v1/users/me (payload)
+export interface PutMyInfoPayload {
+  nickname: string;
+  profileImageUrl: string | null;
+}
+
+// PUT /api/v1/users/me (response)
+export interface PutMyInfoResponse {
+  success: boolean;
+}
+
+//  DELETE /api/v1/users/me (response)
+export interface DeleteUserResponse {
+  success: boolean;
+}

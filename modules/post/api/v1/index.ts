@@ -116,10 +116,10 @@ export async function requestDeleteMeeting(
  * @param payload 수정할 모임정보
  * @returns slice Response 형식 응답값
  */
-export async function requestPatchMeeting({
-  meetingId,
-  payload,
-}: PatchMeetingPayload): Promise<PatchMeetingResponse> {
+export async function requestPatchMeeting(
+  a: PatchMeetingPayload,
+): Promise<PatchMeetingResponse> {
+  const { meetingId, payload } = a;
   const URL = `/api/v1/meetings/${meetingId}`;
   const { data } = await serverAPI.patch(URL, payload);
 

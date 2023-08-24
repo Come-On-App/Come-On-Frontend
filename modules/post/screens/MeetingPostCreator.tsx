@@ -61,7 +61,7 @@ export default function MeetingPostCreator({
             onPressRight={() => {
               asyncWave([
                 Keyboard.dismiss,
-                generatePostPayload(postState),
+                () => generatePostPayload(postState),
                 mutate,
               ]);
             }}

@@ -13,12 +13,14 @@ export default function Input({
   maxLength,
   rightIcon,
   multiline,
+  onSubmitEditing,
 }: Iinput) {
   const { outerContainer, inputContainer, placeholderText, font } =
     useStyles(multiline);
 
   return (
     <RnInput
+      onSubmitEditing={onSubmitEditing}
       multiline={multiline}
       disabled={disabled}
       maxLength={maxLength}

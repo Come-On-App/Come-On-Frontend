@@ -1,24 +1,30 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-import React from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
 
 import Font from '@shared/components/font/Font';
 import useAuthManagement from '@account/hooks/useAuthManagement';
 import { asyncWave } from 'async-wave';
-import { requestPostUserLogout } from '@account/api/v1';
+import { requestDeleteUser, requestPostUserLogout } from '@account/api/v1';
+import { useMutation } from '@tanstack/react-query';
 import useStyles from './style';
+import AccountDeletionModal from './accountDeletionModal/AccountDeletionModal';
 
 const REMOVE_TOKEN_FROM_STORE = true;
 const LEFT_BUTTON_TITLE = '로그아웃';
 const RIGHT_BUTTON_TITLE = '회원탈퇴';
 
 export default function AccountManagement() {
+  const [showModal, setModalStatus] = useState(false);
   const { container, font } = useStyles();
   const { initAuthState } = useAuthManagement();
+  const { mutate, isLoading } = useMutation(requestDeleteUser, {
+    onSettled: () => {
+      initAuthState(REMOVE_TOKEN_FROM_STORE);
+    },
+  });
   const onLogout = () => {
     asyncWave([initAuthState(REMOVE_TOKEN_FROM_STORE), requestPostUserLogout]);
   };
-  const onAccountDeletion = () => {};
 
   return (
     <View style={container}>
@@ -26,9 +32,15 @@ export default function AccountManagement() {
         {LEFT_BUTTON_TITLE}
       </Font>
       <Font style={[font, { paddingHorizontal: 5 }]}>|</Font>
-      <Font onPress={onAccountDeletion} style={font}>
+      <Font onPress={() => setModalStatus(true)} style={font}>
         {RIGHT_BUTTON_TITLE}
       </Font>
+      <AccountDeletionModal
+        isVisible={showModal}
+        onPressLeft={() => setModalStatus(false)}
+        onPressRight={mutate}
+        isSubmit={isLoading}
+      />
     </View>
   );
 }

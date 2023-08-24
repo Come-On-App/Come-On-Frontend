@@ -18,6 +18,7 @@ export default function Avatar({
   children,
   containerStyle,
   isLoading,
+  onPress,
 }: Iavatar) {
   const { defaultStyle } = useStyle(size);
 
@@ -35,6 +36,7 @@ export default function Avatar({
   return (
     <RneAvatar
       size={size}
+      onPress={onPress}
       rounded
       source={{ uri: path }}
       containerStyle={[defaultStyle, containerStyle]}
@@ -48,6 +50,8 @@ export function BadgedAvatar({
   path,
   size,
   badgeName,
+  onPress,
+  isLoading,
   badgeSize = DEFAULT_BADGE_SIZE,
 }: IbadgedAvatar) {
   const { badgeColor, defaultBadgeStyle } = useStyle();
@@ -56,6 +60,8 @@ export function BadgedAvatar({
     <Avatar
       path={path}
       size={size}
+      isLoading={isLoading}
+      onPress={onPress}
       containerStyle={{ backgroundColor: undefined }}
     >
       <RneAvatar.Accessory

@@ -6,10 +6,12 @@ export interface IcontentHeader {
   customStyle?: StyleProp<ViewStyle>;
 }
 
+export type DividerPosition = 'top' | 'bottom' | 'both';
+
 export interface IdividerWrapper {
   width?: number;
   children: ReactNode;
-  position?: 'top' | 'bottom' | 'both';
+  position?: DividerPosition;
 }
 
 export interface IscreenLayout {

@@ -68,7 +68,7 @@ export default function MeetingPostReportForm({
             onPressRight={() => {
               asyncWave([
                 Keyboard.dismiss,
-                generateReportPayload(params.id, state),
+                () => generateReportPayload(params.id, state),
                 mutate,
               ]);
             }}

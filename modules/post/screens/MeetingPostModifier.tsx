@@ -90,7 +90,7 @@ export default function MeetingPostModifier({
             onPressRight={() => {
               asyncWave([
                 Keyboard.dismiss,
-                generatePostPayload(params.id, postState),
+                () => generatePostPayload(params.id, postState),
                 mutate,
               ]);
             }}

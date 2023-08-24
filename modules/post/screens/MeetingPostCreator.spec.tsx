@@ -4,23 +4,20 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import TestId from '@shared/constants/testIds';
 import { render } from '@shared/utils/customRender';
-import QueryClientProvider from '@shared/provider/QueryClientProvider';
 import MeetingPostCreator from './MeetingPostCreator';
 
 describe('MeetingPostCreator Compoent', () => {
   const mockedGoBack = jest.fn();
   const Component = (
     <NavigationContainer>
-      <QueryClientProvider>
-        <MeetingPostCreator
-          navigation={
-            {
-              goBack: mockedGoBack,
-            } as any
-          }
-          route={jest.fn() as any}
-        />
-      </QueryClientProvider>
+      <MeetingPostCreator
+        navigation={
+          {
+            goBack: mockedGoBack,
+          } as any
+        }
+        route={jest.fn() as any}
+      />
     </NavigationContainer>
   );
 

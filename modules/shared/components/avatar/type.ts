@@ -9,11 +9,14 @@ export interface Iavatar {
   containerStyle?: StyleProp<ViewStyle>;
   children?: ReactNode;
   isLoading?: boolean;
+  onPress?: () => void;
 }
 
 export interface IbadgedAvatar {
-  path: string;
+  path: string | undefined;
   badgeName: IconName;
   size?: number;
   badgeSize?: number;
+  isLoading: boolean;
+  onPress: () => void;
 }

@@ -4,8 +4,11 @@ const TestId = {
     avatar: 'TestId__account_avatar',
     signin: 'TestId__account_signin',
     logo: {
-      apple: 'TestId__connection_logo_apple',
-      google: 'TestId__connection_logo_googlee',
+      apple: 'TestId__account_logo_apple',
+      google: 'TestId__account_logo_googlee',
+    },
+    modal: {
+      accountDeletion: 'TestId__account_modal_accountDeletion',
     },
   },
   connection: {

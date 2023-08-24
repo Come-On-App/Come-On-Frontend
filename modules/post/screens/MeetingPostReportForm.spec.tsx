@@ -2,7 +2,6 @@ import { describe, expect, test, jest } from '@jest/globals';
 import { fireEvent, screen } from '@testing-library/react-native';
 import { NavigationContainer } from '@react-navigation/native';
 
-import QueryClientProvider from '@shared/provider/QueryClientProvider';
 import { render } from '@shared/utils/customRender';
 import TestId from '@shared/constants/testIds';
 import MeetingPostReport from './MeetingPostReportForm';
@@ -11,16 +10,14 @@ describe('MeetingPostReport Compoent', () => {
   const mockedGoBack = jest.fn();
   const Component = (
     <NavigationContainer>
-      <QueryClientProvider>
-        <MeetingPostReport
-          navigation={
-            {
-              goBack: mockedGoBack,
-            } as any
-          }
-          route={{ params: { id: 0 } } as any}
-        />
-      </QueryClientProvider>
+      <MeetingPostReport
+        navigation={
+          {
+            goBack: mockedGoBack,
+          } as any
+        }
+        route={{ params: { id: 0 } } as any}
+      />
     </NavigationContainer>
   );
 

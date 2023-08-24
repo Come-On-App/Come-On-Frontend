@@ -5,9 +5,11 @@ import { render } from '@shared/utils/customRender';
 import Email from './Email';
 
 describe('Email Compoent', () => {
-  test('이메일 정보가 올바르게 렌더링 되어야 한다', () => {
-    render(<Email email="abc@kfg.com" />);
+  const EMPTY = ' ';
 
-    expect(screen.getByText('abc@kfg.com')).toBeOnTheScreen();
+  test('이메일 정보가 없다면 빈 문자열을 렌더링해야한다.', () => {
+    render(<Email />);
+
+    expect(screen.getByText(EMPTY)).toBeOnTheScreen();
   });
 });

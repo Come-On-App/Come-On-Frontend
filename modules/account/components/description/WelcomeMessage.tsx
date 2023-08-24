@@ -2,17 +2,18 @@ import React from 'react';
 
 import Font from '@shared/components/font/Font';
 import useLoadingText from '@account/hooks/useLoadingText';
-import { IwelcomeMessage } from './type';
+import useUserManagement from '@account/hooks/useUserManagement';
+import { EMPTY_STRING } from '@shared/utils';
+import { useQueryDataByUser } from '@account/hooks/useMyInfoQuery';
 import useStyles from './style';
 
 const LOADING_TITLE = '사용자 정보 불러오는';
 
-export default function WelcomeMessage({
-  userName,
-  isLoading,
-}: IwelcomeMessage) {
+export default function WelcomeMessage() {
+  const message = useGetMessage();
   const { welcomeFont } = useStyles();
-  const message = `어서오세요. ${userName}님!`;
+  const { userState } = useUserManagement();
+  const { isLoading } = userState;
   const loadingText = useLoadingText(LOADING_TITLE, isLoading);
 
   if (isLoading) {
@@ -28,4 +29,11 @@ export default function WelcomeMessage({
       {message}
     </Font>
   );
+}
+
+function useGetMessage() {
+  const userQueryData = useQueryDataByUser();
+  const message = `어서오세요. ${userQueryData?.name || EMPTY_STRING}님!`;
+
+  return message;
 }

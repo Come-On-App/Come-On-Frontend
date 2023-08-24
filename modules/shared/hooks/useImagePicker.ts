@@ -1,16 +1,12 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 
-export default function useImagePicker(): [
-  ImagePicker.ImagePickerAsset | null,
-  () => Promise<void>,
-  boolean,
-] {
+export default function useImagePicker() {
   const [image, setImage] = useState<ImagePicker.ImagePickerAsset | null>(null);
-  const [isLoading, setLoading] = useState(false);
-  const pickImage = async () => {
+  const [isImageLoading, setLoading] = useState(false);
+  const initImage = useCallback(() => setImage(null), []);
+  const pickImage = useCallback(async () => {
     setLoading(true);
-
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -23,7 +19,12 @@ export default function useImagePicker(): [
     }
 
     setLoading(false);
-  };
+  }, []);
 
-  return [image, pickImage, isLoading];
+  return {
+    image,
+    pickImage,
+    isImageLoading,
+    initImage,
+  };
 }

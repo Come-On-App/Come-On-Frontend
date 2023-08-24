@@ -1,31 +1,52 @@
 import { View } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { asyncWave } from 'async-wave';
+import _ from 'lodash';
 
 import { BadgedAvatar } from '@shared/components/avatar/Avatar';
 import TestId from '@shared/constants/testIds';
 import { applyRelativeSizes } from '@shared/utils';
-import { Skeleton } from '@rneui/themed';
-import { IuserAvatar } from './type';
+import useImagePicker from '@shared/hooks/useImagePicker';
+import useUserManagement from '@account/hooks/useUserManagement';
+import { requestImageURL } from '@post/api/v1';
+import { useQueryDataByUser } from '@account/hooks/useMyInfoQuery';
+import useMyInfoMutation from '@account/hooks/useMyInfoMutation';
+import { withSelectionHaptic } from '@shared/utils/haptics';
+import SubmitStatus from '../submitStatus/SubmitStatus';
 
+const SUBMIT_LODING_TITLE = '이미지 업데이트 중';
 const BADGE_NAME = 'photo-camera';
 const [AVATAR_SIZE, AVATAR_BADEG_SIZE] = applyRelativeSizes({
-  avatarSize: 60,
-  badgeSize: 20,
+  avatarSize: 80,
+  badgeSize: 30,
 });
 
-export default function UserAvatar({ path, isLoading }: IuserAvatar) {
-  if (isLoading) {
-    return <Skeleton circle width={AVATAR_SIZE} height={AVATAR_SIZE} />;
-  }
+export default function UserAvatar() {
+  const { userState } = useUserManagement();
+  const userQueryData = useQueryDataByUser();
+  const { image, pickImage, initImage } = useImagePicker();
+  const { mutateUserImage, isSubmit } = useMyInfoMutation();
+  const [onPress] = withSelectionHaptic(pickImage);
+
+  useEffect(() => {
+    if (_.isNull(image)) return;
+
+    asyncWave([image, requestImageURL, mutateUserImage, initImage]);
+  }, [image, initImage, mutateUserImage]);
 
   return (
-    <View testID={TestId.account.avatar}>
-      <BadgedAvatar
-        badgeName={BADGE_NAME}
-        path={path}
-        size={AVATAR_SIZE}
-        badgeSize={AVATAR_BADEG_SIZE}
-      />
-    </View>
+    <>
+      <SubmitStatus isLoading={isSubmit} title={SUBMIT_LODING_TITLE} />
+      <View testID={TestId.account.avatar}>
+        <BadgedAvatar
+          isLoading={userState.isLoading}
+          badgeName={BADGE_NAME}
+          path={userQueryData?.profileImageUrl}
+          size={AVATAR_SIZE}
+          badgeSize={AVATAR_BADEG_SIZE}
+          onPress={onPress}
+        />
+      </View>
+    </>
   );
 }

@@ -6,15 +6,18 @@ import {
   render as testingRender,
 } from '@testing-library/react-native';
 
+import QueryClientProvider from '@shared/provider/QueryClientProvider';
 import ThemeProvider from '@shared/provider/ThemeProvider';
 import { IProvider } from '@shared/provider/type';
 import ReduxProvider from '@app/redux/Provider';
 
 function Provider({ children }: IProvider) {
   return (
-    <ReduxProvider>
-      <ThemeProvider>{children}</ThemeProvider>;
-    </ReduxProvider>
+    <QueryClientProvider>
+      <ReduxProvider>
+        <ThemeProvider>{children}</ThemeProvider>;
+      </ReduxProvider>
+    </QueryClientProvider>
   );
 }
 

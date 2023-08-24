@@ -5,9 +5,9 @@ import { render } from '@shared/utils/customRender';
 import WelcomeMessage from './WelcomeMessage';
 
 describe('WelcomeMessage Compoent', () => {
-  test('환영 문구가 올바르게 렌더링 되어야 한다', () => {
-    render(<WelcomeMessage userName="Apple" />);
+  test('속성이 존재하지 않으면 빈 문자열을 렌더링 해야 한다', () => {
+    render(<WelcomeMessage />);
 
-    expect(screen.getByText('어서오세요. Apple님!')).toBeOnTheScreen();
+    expect(screen.getByText('어서오세요. 님!')).toBeOnTheScreen();
   });
 });

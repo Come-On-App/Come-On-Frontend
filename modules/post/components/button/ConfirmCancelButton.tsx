@@ -3,12 +3,14 @@ import { View } from 'react-native';
 import React from 'react';
 
 import Button from '@shared/components/button/Button';
+import { withSelectionHaptic } from '@shared/utils/haptics';
 import useStyles from './style';
 import { IconfirmCancelButton } from './type';
 
 const CANCEL = '취소';
 const CONFIRM = '완료';
 
+// TODO: 공용 폴더로 승급하기
 export default function ConfirmCancelButton({
   cancelText,
   confirmText,
@@ -24,6 +26,7 @@ export default function ConfirmCancelButton({
     leftButtonColor,
     rightButtonColor,
   });
+  const [onPressRightWithHaptic] = withSelectionHaptic(onPressRight);
 
   return (
     <View style={[area, containerStyle]}>
@@ -41,7 +44,7 @@ export default function ConfirmCancelButton({
           bold
           disabled={rightDisabled}
           title={confirmText ?? CONFIRM}
-          onPress={onPressRight}
+          onPress={onPressRightWithHaptic}
           backgroundColor={rightButton.backgroundColor}
         />
       </View>

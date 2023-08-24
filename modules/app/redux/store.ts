@@ -4,12 +4,14 @@ import { configureStore } from '@reduxjs/toolkit';
 import postSlice from '@post/features/post/postSlice';
 import searchSlice from '@post/features/search/searchSlice';
 import authSlice from '@account/features/auth/authSlice';
+import userSlice from '@account/features/user/userSlice';
 
 export default configureStore({
   reducer: {
     post: postSlice,
     search: searchSlice,
     auth: authSlice,
+    user: userSlice,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

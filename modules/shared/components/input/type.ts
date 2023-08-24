@@ -14,6 +14,7 @@ export interface Iinput {
   maxLength?: number;
   disabled?: boolean;
   multiline?: boolean;
+  onSubmitEditing?: () => void;
 }
 
 export interface IpressableInput {
