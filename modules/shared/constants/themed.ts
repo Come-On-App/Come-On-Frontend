@@ -1,3 +1,4 @@
+/* eslint-disable padding-line-between-statements */
 import { createTheme } from '@rneui/themed';
 
 declare module '@rneui/themed' {
@@ -13,6 +14,7 @@ const lightColors = {
   info: '#24ABE4',
   success: '#20BD4A',
 } as const;
+
 const darkColors = {
   primary: '#1145AA',
   secondary: '#AA9E0B',
@@ -20,6 +22,7 @@ const darkColors = {
   info: '#0E7BAA',
   success: '#0B8A36',
 } as const;
+
 const font = {
   grayscale: {
     900: '#212121',

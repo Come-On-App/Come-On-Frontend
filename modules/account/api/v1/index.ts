@@ -1,11 +1,14 @@
 import { serverAPI } from '@app/api/axiosInstance';
 
 import {
+  DeleteUserResponse,
   PostAppleAuthPayload,
   PostAppleAuthResponse,
   PostGoogleAuthPayload,
   PostGoogleAuthResponse,
   PostUserLogoutResponse,
+  PutMyInfoPayload,
+  PutMyInfoResponse,
 } from './type';
 
 /**
@@ -44,6 +47,33 @@ export async function requestPostAppleAuth(
 export async function requestPostUserLogout(): Promise<PostUserLogoutResponse> {
   const URL = `/api/v1/users/logout`;
   const { data } = await serverAPI.post(URL);
+
+  return data;
+}
+
+/**
+ * PUT /api/v1/users/me 내 정보 수정
+ * @requires Authorization Bearer {access-token}
+ * @param payload 변경할 닉네임, 프로필 이미지
+ * @returns 요청 처리 성공 여부
+ */
+export async function requestPutMyInfo(
+  payload: PutMyInfoPayload,
+): Promise<PutMyInfoResponse> {
+  const URL = `/api/v1/users/me`;
+  const { data } = await serverAPI.put(URL, payload);
+
+  return data;
+}
+
+/**
+ * DELETE /api/v1/users/me 회원 탈퇴
+ * @requires Authorization Bearer {access-token}
+ * @returns 요청 처리 성공 여부
+ */
+export async function requestDeleteUser(): Promise<DeleteUserResponse> {
+  const URL = `/api/v1/users/me`;
+  const { data } = await serverAPI.delete(URL);
 
   return data;
 }

@@ -1,6 +1,3 @@
-import { AuthState } from '@account/features/auth/type';
-import { isExpiry } from '@shared/utils';
-
 export const mockUserAuthToken = {
   accessToken: {
     token: 'newAccessToken',
@@ -26,11 +23,11 @@ export const mockExpiredUserAuthToken = {
 };
 
 export const mockUserAuthState = {
-  isLogin: mockUserAuthToken,
+  isLogin: true,
   isLoading: {
     apple: false,
     google: false,
   },
   isReissue: false,
   isError: false,
-} as AuthState;
+};

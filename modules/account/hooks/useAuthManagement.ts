@@ -30,7 +30,11 @@ export default function useAuthManagement() {
     (paylaod: boolean) => dispatch(updateUserLoginStatus(paylaod)),
     [dispatch],
   );
-  const initAuthState = useCallback(() => dispatch(init()), [dispatch]);
+  const initAuthState = useCallback(
+    (shouldRemoveTokenFromStore = false) =>
+      dispatch(init(shouldRemoveTokenFromStore)),
+    [dispatch],
+  );
 
   return {
     authState,

@@ -1,3 +1,3 @@
 export interface IuserAvatar {
-  path: string;
+  path: string | undefined;
 }

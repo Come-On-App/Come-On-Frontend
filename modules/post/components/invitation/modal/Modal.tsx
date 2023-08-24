@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 
 import TestId from '@shared/constants/testIds';
-import ConfirmCancelButton from '@post/components/button/ConfirmCancelButton';
+import ConfirmCancelButton from '@shared/components/button/ConfirmCancelButton';
 import Modal from '@shared/components/modal/Modal';
 import Message from '@shared/components/modal/display/Message';
 import SubMessage from '@shared/components/modal/display/SubMessage';

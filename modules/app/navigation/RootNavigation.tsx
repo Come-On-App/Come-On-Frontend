@@ -4,8 +4,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import SignIn from '@account/screens/SignIn';
 import useAuthManagement from '@account/hooks/useAuthManagement';
-import BottomTabNavigator from './BottomTabNavigator';
+
 import { RootStackParamList } from './type';
+import BottomTabNavigator from './BottomTabNavigator';
 
 const { Navigator, Screen } = createNativeStackNavigator<RootStackParamList>();
 

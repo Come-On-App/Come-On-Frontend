@@ -24,3 +24,16 @@ function shouldDisallowRetryOnExpiration(failureCount: number, error: unknown) {
 
   return failureCount < RETRY_COUNT;
 }
+
+/**
+ * [react-query] 기존 쿼리 캐시를 업데이트 시킨다.
+ *
+ * @param queryKey 쿼리 키
+ * @param updater 업데이트 함수
+ */
+export function setQueryData<T>(
+  queryKey: unknown[],
+  updater: (payload: T | undefined) => T | undefined,
+) {
+  queryClient.setQueryData(queryKey, updater);
+}

@@ -41,9 +41,9 @@ export const WrongAvatar: Meta = {
   },
 };
 
-export const EmptyAvatar: Meta = {
+export const LoadingAvatar: Meta = {
   args: {
-    path: '',
+    isLoading: true,
   },
 };
 

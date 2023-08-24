@@ -1,29 +1,25 @@
 import { ComponentMeta } from '@storybook/react-native';
-
-import FontThemeProvider from '@shared/provider/FontProvider';
-import NickName from './NickName';
-import { mockUserAvatarImage } from '@account/mocks/mockUserAvatarImage';
 import { View } from 'react-native';
 
-type Meta = ComponentMeta<typeof NickName>;
+import Component from './NickName';
 
-const IconButtonMeta: ComponentMeta<typeof NickName> = {
-  title: 'Account - NickName',
-  component: NickName,
+type Meta = ComponentMeta<typeof Component>;
+
+const NickNameMeta: ComponentMeta<typeof Component> = {
+  title: 'Account',
+  component: Component,
   decorators: [
     (Story) => (
-      <FontThemeProvider>
-        <View style={{ margin: 10 }}>
-          <Story />
-        </View>
-      </FontThemeProvider>
+      <View style={{ margin: 10 }}>
+        <Story />
+      </View>
     ),
   ],
 };
 
-export default IconButtonMeta;
+export default NickNameMeta;
 
-export const Defualt: Meta = {
+export const NickName: Meta = {
   args: {
     name: 'Apple',
   },

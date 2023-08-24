@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar as RneAvatar } from '@rneui/themed';
+import { Avatar as RneAvatar, Skeleton } from '@rneui/themed';
 
 import TestId from '@shared/constants/testIds';
 import { relativeSizeConverter } from '@shared/utils';
@@ -17,20 +17,26 @@ export default function Avatar({
   path,
   children,
   containerStyle,
+  isLoading,
+  onPress,
 }: Iavatar) {
   const { defaultStyle } = useStyle(size);
 
-  // 빈 문자열인 경우
-  if (!path)
+  if (isLoading) {
     return (
-      <RneAvatar size={size} containerStyle={[defaultStyle, containerStyle]}>
-        {children}
-      </RneAvatar>
+      <Skeleton
+        circle
+        accessibilityHint="loading"
+        width={defaultStyle.width}
+        height={defaultStyle.height}
+      />
     );
+  }
 
   return (
     <RneAvatar
       size={size}
+      onPress={onPress}
       rounded
       source={{ uri: path }}
       containerStyle={[defaultStyle, containerStyle]}
@@ -44,6 +50,8 @@ export function BadgedAvatar({
   path,
   size,
   badgeName,
+  onPress,
+  isLoading,
   badgeSize = DEFAULT_BADGE_SIZE,
 }: IbadgedAvatar) {
   const { badgeColor, defaultBadgeStyle } = useStyle();
@@ -52,6 +60,8 @@ export function BadgedAvatar({
     <Avatar
       path={path}
       size={size}
+      isLoading={isLoading}
+      onPress={onPress}
       containerStyle={{ backgroundColor: undefined }}
     >
       <RneAvatar.Accessory

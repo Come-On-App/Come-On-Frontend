@@ -2,11 +2,12 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import MyPage from '@account/screens/MyPage';
-import { MyPageParamList } from '@account/navigation/type';
+import { Inavigator, MyPageParamList } from '@account/navigation/type';
+import PolicyNavigator from './PolicyNavigator';
 
 const { Screen, Navigator } = createNativeStackNavigator<MyPageParamList>();
 
-function AccountNavigator() {
+function AccountNavigator({ children }: Inavigator) {
   return (
     <Navigator
       initialRouteName="MyPage"
@@ -15,9 +16,16 @@ function AccountNavigator() {
         contentStyle: { backgroundColor: 'white' },
       }}
     >
-      <Screen name="MyPage" component={MyPage} />
+      {children}
     </Navigator>
   );
 }
 
-export default AccountNavigator;
+export default function Navigation() {
+  return (
+    <AccountNavigator>
+      <Screen name="MyPage" component={MyPage} />
+      <Screen name="Policy" component={PolicyNavigator} />
+    </AccountNavigator>
+  );
+}

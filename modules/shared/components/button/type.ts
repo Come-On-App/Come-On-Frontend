@@ -28,3 +28,15 @@ export interface IappleButton {
   disabled?: boolean;
   onPress: () => void;
 }
+
+export interface IconfirmCancelButton {
+  containerStyle?: StyleProp<ViewStyle>;
+  cancelText?: string;
+  confirmText?: string;
+  onPressLeft: () => void;
+  onPressRight: () => void;
+  leftDisabled?: boolean;
+  rightDisabled?: boolean;
+  leftButtonColor?: string;
+  rightButtonColor?: string;
+}

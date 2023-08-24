@@ -4,7 +4,6 @@ import { screen } from '@testing-library/react-native';
 import TestId from '@shared/constants/testIds';
 import { render } from '@shared/utils/customRender';
 import store from '@app/redux/store';
-import QueryClientProvider from '@shared/provider/QueryClientProvider';
 import {
   init,
   updateErrorStatus,
@@ -17,11 +16,7 @@ beforeEach(() => {
 });
 
 describe('<RootNavigator />', () => {
-  const Component = (
-    <QueryClientProvider>
-      <RootNavigation />
-    </QueryClientProvider>
-  );
+  const Component = <RootNavigation />;
 
   test('앱이 처음 실행될 때 로그인 네비게이터가 활성화되어야 한다.', async () => {
     render(Component);

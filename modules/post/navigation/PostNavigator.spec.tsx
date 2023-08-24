@@ -4,16 +4,13 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import TestId from '@shared/constants/testIds';
 import { render } from '@shared/utils/customRender';
-import QueryClientProvider from '@shared/provider/QueryClientProvider';
 import PostNavigator from './PostNavigator';
 
 describe('<PostNavigator />', () => {
   const Navigation = (
-    <QueryClientProvider>
-      <NavigationContainer>
-        <PostNavigator />
-      </NavigationContainer>
-    </QueryClientProvider>
+    <NavigationContainer>
+      <PostNavigator />
+    </NavigationContainer>
   );
 
   test('렌더링 시 초기 라우터는 모임 리스트 컴포넌트를 렌더링 해야 한다.', () => {

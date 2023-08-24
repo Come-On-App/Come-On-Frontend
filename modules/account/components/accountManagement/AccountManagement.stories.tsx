@@ -1,24 +1,16 @@
 import { ComponentMeta } from '@storybook/react-native';
 
-import FontThemeProvider from '@shared/provider/FontProvider';
-import AccountManagement from './AccountManagement';
+import Component from './AccountManagement';
 
-type Meta = ComponentMeta<typeof AccountManagement>;
+type Meta = ComponentMeta<typeof Component>;
 
-const IconButtonMeta: ComponentMeta<typeof AccountManagement> = {
-  title: 'Account - AccountManagement',
-  component: AccountManagement,
-  decorators: [
-    (Story) => (
-      <FontThemeProvider>
-        <Story />
-      </FontThemeProvider>
-    ),
-  ],
+const AccountManagementMeta: ComponentMeta<typeof Component> = {
+  title: 'Account',
+  component: Component,
 };
 
-export default IconButtonMeta;
+export default AccountManagementMeta;
 
-export const Defualt: Meta = {
+export const AccountManagement: Meta = {
   args: {},
 };

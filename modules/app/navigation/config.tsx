@@ -4,6 +4,7 @@ import Avatar from '@shared/components/avatar/Avatar';
 import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 import { relativeSizeConverter } from '@shared/utils';
 import createTabBarLabel from '@app/components/tabBarLabel/TabBarLabel';
+import useMyInfoQuery from '@account/hooks/useMyInfoQuery';
 import createTabBarIcon from '../components/tabBarIcon/TabBarIcon';
 
 export enum Tab {
@@ -25,15 +26,19 @@ export const options: {
   },
   [Tab.three]: {
     tabBarLabel: createTabBarLabel('마이페이지'),
-    tabBarIcon: () => {
-      const AVATAR_SIZE = 32;
+    tabBarIcon: TabThreeIcon,
+  } as const,
+};
 
-      return (
-        <Avatar
-          path="https://picsum.photos/200/300"
-          size={relativeSizeConverter(AVATAR_SIZE)}
-        />
-      );
-    },
-  },
-} as const;
+function TabThreeIcon() {
+  const AVATAR_SIZE = 32;
+  const { data, isLoading } = useMyInfoQuery();
+
+  return (
+    <Avatar
+      isLoading={isLoading}
+      path={data?.profileImageUrl}
+      size={relativeSizeConverter(AVATAR_SIZE)}
+    />
+  );
+}

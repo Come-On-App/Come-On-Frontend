@@ -2,7 +2,15 @@ import { makeStyles } from '@rneui/themed';
 import { applyRelativeSizes } from '@shared/utils';
 
 export default makeStyles(
-  (theme, props: { bold?: boolean; backgroundColor?: string }) => {
+  (
+    theme,
+    props: {
+      bold?: boolean;
+      backgroundColor?: string;
+      leftButtonColor?: string;
+      rightButtonColor?: string;
+    },
+  ) => {
     const [
       BUTTON_HEIGHT,
       FONT_SIZE,
@@ -61,6 +69,26 @@ export default makeStyles(
       },
       loginButtonPressed: {
         opacity: 0.7,
+      },
+      area: {
+        flexDirection: 'row',
+      },
+      leftArea: {
+        flex: 0.4,
+        marginRight: 12,
+      },
+      leftButton: {
+        backgroundColor: props.leftButtonColor
+          ? props.leftButtonColor
+          : theme.font.grayscale['300'],
+      },
+      rightArea: {
+        flex: 0.6,
+      },
+      rightButton: {
+        backgroundColor: props.rightButtonColor
+          ? props.rightButtonColor
+          : undefined,
       },
     };
   },

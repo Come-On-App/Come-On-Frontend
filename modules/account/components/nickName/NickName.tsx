@@ -1,50 +1,109 @@
-import { View } from 'react-native';
-import React, { useState } from 'react';
+import { ActivityIndicator, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { isEmpty } from 'lodash';
 
 import Input from '@shared/components/input/Input';
 import IconButton from '@shared/components/button/IconButton';
 import TextLengthCounter from '@shared/components/textLengthCounter/TextLengthCounter';
 import Font from '@shared/components/font/Font';
+import { EMPTY_STRING, invert } from '@shared/utils';
+import useUserManagement from '@account/hooks/useUserManagement';
+import { useQueryDataByUser } from '@account/hooks/useMyInfoQuery';
+import useMyInfoMutation from '@account/hooks/useMyInfoMutation';
+import { withSelectionHaptic } from '@shared/utils/haptics';
 import useStyles from './style';
-import { InickName } from './type';
+import { IrenderIcon } from './type';
 
+const LOADING_PLACEHOLDER = '닉네임 불러오는 중';
 const NICKNAME_TITLE = '닉네임';
 const MAX_TEXT_LENGTH = 20;
 
-export default function NickName({ name }: InickName) {
-  const { iconButton, nickNameTitleFont, labelContainer } = useStyles();
-  const [nickName, setNickName] = useState(name);
-  // 아이콘 버튼 이벤트 핸들러
-  const onPressHandler = () => {
-    console.log('clicked icon button!');
-  };
+export default function NickName() {
+  const { nickNameTitleFont, labelContainer } = useStyles();
+  const {
+    userState: { isLoading },
+  } = useUserManagement();
+  const userQueryData = useQueryDataByUser();
+  const name = userQueryData?.nickname ?? EMPTY_STRING;
+  const { mutateUserNickname, isSubmit } = useMyInfoMutation();
+  const [currentInput, setNickName] = useState(name);
+  const [onPressRefresh, onPressSubmit] = withSelectionHaptic(
+    () => setNickName(name),
+    () => mutateUserNickname(currentInput),
+  );
+
+  useEffect(() => {
+    if (!isLoading) setNickName(name);
+  }, [isLoading, name]);
 
   return (
     <View>
       <Input
-        text={nickName}
+        disabled={isLoading || isSubmit}
+        text={currentInput}
         onChangeText={setNickName}
-        placeholder={name}
+        placeholder={isLoading ? LOADING_PLACEHOLDER : name}
         maxLength={MAX_TEXT_LENGTH}
         rightIcon={
-          nickName !== name ? (
-            <IconButton
-              name="edit"
-              size={iconButton.fontSize}
-              color={iconButton.color}
-              onPress={onPressHandler}
-            />
-          ) : undefined
+          <RenderIcon
+            isSubmit={isSubmit}
+            prevName={name}
+            currentInput={currentInput}
+            onPressRefresh={onPressRefresh}
+            onPressSubmit={onPressSubmit}
+          />
         }
         label={
           <View style={labelContainer}>
             <Font bold style={nickNameTitleFont}>
               {NICKNAME_TITLE}
             </Font>
-            <TextLengthCounter text={nickName} max={MAX_TEXT_LENGTH} />
+            <TextLengthCounter text={currentInput} max={MAX_TEXT_LENGTH} />
           </View>
         }
       />
     </View>
   );
+}
+
+/**
+ * 문자열 상태에 따라서 아이콘의 렌더링을 결정한다.
+ */
+function RenderIcon({
+  currentInput,
+  prevName,
+  onPressRefresh,
+  onPressSubmit,
+  isSubmit,
+}: IrenderIcon) {
+  const { iconButton } = useStyles();
+  const isNotEmpty = invert(isEmpty(currentInput.trim()));
+  const isDifferentInput = currentInput !== prevName;
+  const isShowIcon = isNotEmpty && isDifferentInput;
+
+  if (isSubmit) return <ActivityIndicator />;
+
+  if (isShowIcon) {
+    return (
+      <IconButton
+        name="edit"
+        size={iconButton.fontSize}
+        color={iconButton.color}
+        onPress={onPressSubmit}
+      />
+    );
+  }
+
+  if (isDifferentInput) {
+    return (
+      <IconButton
+        name="refresh"
+        size={iconButton.fontSize}
+        color={iconButton.color}
+        onPress={onPressRefresh}
+      />
+    );
+  }
+
+  return undefined;
 }

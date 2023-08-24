@@ -57,21 +57,21 @@ function renderCardList(
   data: GetMeetingSliceResponse,
   isDateRangeSearched: boolean,
 ) {
-  const cardListPayload = data.contents.map(createCardListPayload);
+  const cardListInfo = data.contents.map(generateCardInfo);
 
   // 특정 범위의 게시물이 없는 경우
-  if (_.isEmpty(cardListPayload) && isDateRangeSearched) {
+  if (_.isEmpty(cardListInfo) && isDateRangeSearched) {
     return <EmptyCardList type="search" />;
   }
 
-  return <CardList payload={cardListPayload} />;
+  return <CardList payload={cardListInfo} />;
 }
 
 /**
  * [헬퍼 함수]
- * 서버에 요청할 올바른 페이로드 객체를 반환한다.
+ * API 응답 데이터를 유효한 데이터로 가공한다.
  */
-const createCardListPayload = (response: GetMeetingResponse): CardInfo => {
+const generateCardInfo = (response: GetMeetingResponse): CardInfo => {
   const isDecided = !_.isEmpty(response.fixedDate);
 
   return {
