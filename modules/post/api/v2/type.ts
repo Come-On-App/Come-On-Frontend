@@ -1,6 +1,6 @@
 import { SliceResponse } from '@app/api/type';
 
-interface HostUser {
+export interface HostUser {
   userId: number;
   nickname: string;
   profileImageUrl: string | null;
@@ -8,7 +8,7 @@ interface HostUser {
 
 export type MemberRole = 'HOST' | 'PARTICIPANT';
 
-interface FixedDate {
+export interface FixedDate {
   startFrom: string;
   endTo: string;
 }

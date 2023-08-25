@@ -5,9 +5,8 @@ import _ from 'lodash';
 import { convertDateRangeToDateInfo, hasPostStateChanged } from '@shared/utils';
 import TestId from '@shared/constants/testIds';
 import { PostNativeStack } from '@post/navigation/type';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { QueryKeys } from '@app/api/type';
-import { requestGetMeetingDetail } from '@post/api/v2';
 import Uploader from '@post/components/modification/uploader/Uploader';
 import MeetingName from '@post/components/modification/meetingName/MeetingName';
 import VotingTimeRangePicker from '@post/components/modification/votingTimeRangePicker/VotingTimeRangePicker';
@@ -20,6 +19,7 @@ import { PostState } from '@post/features/post/type';
 import { GetMeetingDetailResponse } from '@post/api/v2/type';
 import { PatchMeetingPayload } from '@post/api/v1/type';
 import { asyncWave } from 'async-wave';
+import useMeetingDetailQuery from '@post/hooks/useMeetingDetailQuery';
 
 const CONFIRM_TEXT = '모임 수정하기';
 const LOADING_TEXT = '모임 수정중...';
@@ -34,10 +34,7 @@ export default function MeetingPostModifier({
     data: response,
     isLoading,
     isSuccess,
-  } = useQuery({
-    queryKey: [QueryKeys.post, params.id],
-    queryFn: ({ signal }) => requestGetMeetingDetail(params.id, signal),
-  });
+  } = useMeetingDetailQuery(params.id);
   const { mutate, isLoading: isSubmit } = useMutation({
     mutationFn: requestPatchMeeting,
     onSuccess: () => {

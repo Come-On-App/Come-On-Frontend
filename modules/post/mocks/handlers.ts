@@ -109,7 +109,7 @@ const requestGetMeetingDetail = rest.get(
   `${BASE_URL}/api/v2/meetings/:meetingId`,
   (req, res, ctx) => {
     return res(
-      ctx.delay(2000),
+      ctx.delay(1000),
       ctx.json({
         ...mockMeetingDetailResponse,
         meetingMetaData: {
@@ -120,10 +120,7 @@ const requestGetMeetingDetail = rest.get(
             startFrom: '2023-07-01',
             endTo: '2023-07-31',
           },
-          fixedDate: {
-            startFrom: '2023-07-11',
-            endTo: '2023-07-11',
-          },
+          fixedDate: null,
         },
       })
     );
