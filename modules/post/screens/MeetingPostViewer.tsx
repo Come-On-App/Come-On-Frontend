@@ -6,7 +6,6 @@ import Duration from '@post/components/detail/duration/Duration';
 import Participants from '@post/components/detail/participants/Participants';
 import Planner from '@post/components/detail/planner/Planner';
 import mockVenueList from '@post/mocks/venueList';
-import mockDuration from '@post/mocks/duration';
 import { PostNativeStack } from '@post/navigation/type';
 
 export default function MeetingPostViewer({
@@ -15,7 +14,7 @@ export default function MeetingPostViewer({
   return (
     <ScrollView testID={TestId.post.detail}>
       <Participants id={params.id} />
-      <Duration range={mockDuration.range} time={mockDuration.time} />
+      <Duration id={params.id} />
       <Planner venueList={mockVenueList} />
     </ScrollView>
   );
