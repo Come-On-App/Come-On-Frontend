@@ -11,6 +11,8 @@ import { PostNativeStack } from '@post/navigation/type';
 export default function MeetingPostViewer({
   route: { params },
 }: PostNativeStack<'MeetingPostDetail'>) {
+  console.log(params);
+
   return (
     <ScrollView testID={TestId.post.detail}>
       <Participants id={params.id} />

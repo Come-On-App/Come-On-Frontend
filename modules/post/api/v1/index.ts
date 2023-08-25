@@ -13,6 +13,8 @@ import {
   PostEntryCodeResponse,
   PostMeetingPayload,
   PostMeetingResponse,
+  PostMeetingTimePayalod,
+  PostMeetingTimeResponse,
   PostReportMeetingPayload,
   PostReportMeetingResponse,
   PostUploadImagePayload,
@@ -137,6 +139,23 @@ export async function requestPostReportMeeting(
 ): Promise<PostReportMeetingResponse> {
   const URL = `/api/v1/report/meeting`;
   const { data } = await serverAPI.post(URL, payload);
+
+  return data;
+}
+
+/**
+ * POST /api/v1/meetings/{meeting-id}/meeting-time 모임 시간 변경
+ * @requires Authorization Bearer {access-token}
+ * @param payload 모임 시간을 변경할 모임의 식별값
+ * @returns 요청 처리 성공 여부
+ */
+export async function requestPostMeetingTime(
+  payload: PostMeetingTimePayalod,
+): Promise<PostMeetingTimeResponse> {
+  const URL = `/api/v1/meetings/${payload.meetingId}/meeting-time`;
+  const { data } = await serverAPI.post(URL, {
+    meetingStartTime: payload.meetingStartTime,
+  });
 
   return data;
 }

@@ -71,3 +71,14 @@ export interface PostReportMeetingPayload {
 export interface PostReportMeetingResponse {
   reportId: number;
 }
+
+// POST /api/v1/meetings/{meeting-id}/meeting-time (payalod)
+export interface PostMeetingTimePayalod {
+  meetingId: number;
+  meetingStartTime: string;
+}
+
+// POST /api/v1/meetings/{meeting-id}/meeting-time (response)
+export interface PostMeetingTimeResponse {
+  success: boolean;
+}

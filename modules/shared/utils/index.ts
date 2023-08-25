@@ -115,6 +115,25 @@ export function formatTimeWithAMPM(time: string) {
 }
 
 /**
+ * date 형식을 문자열 형태로 가공한다. -> [00:00:00]
+ */
+export function formatTime(date: Date): string {
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const hoursFormatted = hours.toString().padStart(2, '0');
+  const minutesFormatted = minutes.toString().padStart(2, '0');
+
+  return `${hoursFormatted}:${minutesFormatted}:00`;
+}
+
+/**
+ * 문자열 date 형식을 Date 형태로 가공한다.
+ */
+export function formatTimeWithDate(time: string): Date {
+  return new Date(`1970-01-01T${time}`);
+}
+
+/**
  * 전달된 길이와 일치하는지 확인하는 함수를 반환
  */
 export function createLengthValidator(length: number) {

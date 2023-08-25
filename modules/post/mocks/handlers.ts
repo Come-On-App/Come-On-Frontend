@@ -108,22 +108,33 @@ const requestDeleteMeeting = rest.delete(
 const requestGetMeetingDetail = rest.get(
   `${BASE_URL}/api/v2/meetings/:meetingId`,
   (req, res, ctx) => {
-    return res(
-      ctx.delay(1000),
-      ctx.json({
-        ...mockMeetingDetailResponse,
-        meetingMetaData: {
-          ...mockMeetingDetailResponse.meetingMetaData,
-          meetingId: req.params.meetingId,
-          meetingName: '예시 모임 제목#1',
-          calendar: {
-            startFrom: '2023-07-01',
-            endTo: '2023-07-31',
+    const { meetingId } = req.params;
+
+    if (meetingId === '600') {
+      return res(
+        ctx.delay(1000),
+        ctx.json({
+          ...mockMeetingDetailResponse,
+          meetingMetaData: {
+            ...mockMeetingDetailResponse.meetingMetaData,
+            hostUser: {
+              userId: 200,
+              nickname: '주인',
+              profileImageUrl: 'https://picsum.photos/200/300',
+            },
+            meetingId: req.params.meetingId,
+            meetingName: '예시 모임 제목#1',
+            calendar: {
+              startFrom: '2023-07-01',
+              endTo: '2023-07-31',
+            },
+            fixedDate: null,
           },
-          fixedDate: null,
-        },
-      })
-    );
+        })
+      );
+    }
+
+    return res(ctx.delay(1000), ctx.json(mockMeetingDetailResponse));
   }
 );
 
@@ -143,22 +154,26 @@ const requestPostReportMeeting = rest.post(
 
 const requestGetMeetingMembers = rest.get(
   `${BASE_URL}/api/v2/meetings/:meetingId/members`,
-  (req, res, ctx) => {
-    const { meetingId } = req.params;
+  (_req, res, ctx) => {
+    return res(ctx.delay(1000), ctx.json(mockMembers));
+  }
+);
 
-    if (meetingId === '0') {
-      return res(ctx.json(mockMembers));
-    }
+const requestPostMeetingTime = rest.post(
+  `${BASE_URL}/api/v1/meetings/:meetingId/meeting-time`,
 
-    if (meetingId === '600') {
-      return res(ctx.delay('infinite'), ctx.json(mockMembers));
-    }
-
-    return res(ctx.delay(3000), ctx.json(mockMembers));
+  (_req, res, ctx) => {
+    return res(
+      ctx.delay(1000),
+      ctx.json({
+        success: true,
+      })
+    );
   }
 );
 
 export default [
+  requestPostMeetingTime,
   requestGetMeetingMembers,
   requstGetMeetings,
   requestGetEntryCode,

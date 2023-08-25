@@ -58,9 +58,7 @@ export async function requestGetMeetingMembers(
   signal?: AbortSignal,
 ): Promise<GetMeetingMembersListResponse> {
   const URL = `/api/v2/meetings/${payload}/members`;
-  const { data } = await serverAPI.get(URL, {
-    signal: signal || undefined,
-  });
+  const { data } = await serverAPI.get(URL, { signal });
 
   return data;
 }

@@ -33,6 +33,7 @@ export default function Duration({ id }: Iduration) {
       <View style={cContent}>
         <Schedule range={calendar} fixedDate={fixedDate} />
         <TimePickerButton
+          id={id}
           time={meetingStartTime}
           isHost={hostUser.userId === user.userId}
         />

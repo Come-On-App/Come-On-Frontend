@@ -7,7 +7,7 @@ export const mockUser = {
 };
 
 export const mockMyInfo = {
-  userId: 123,
+  userId: 112,
   nickname: 'jeongbaebang',
   profileImageType: 'CUSTOM',
   profileImageUrl: mockUserAvatarImage,
