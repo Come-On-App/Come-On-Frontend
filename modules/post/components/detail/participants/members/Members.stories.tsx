@@ -23,6 +23,7 @@ export default {
 
 export const Members: Meta = {
   args: {
-    members: mockMembers,
+    response: mockMembers,
+    isLoading: false,
   },
 };

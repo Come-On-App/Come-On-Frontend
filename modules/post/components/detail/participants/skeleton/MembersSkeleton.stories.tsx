@@ -1,16 +1,12 @@
 import { ComponentMeta } from '@storybook/react-native';
 
-import Component from './Participants';
+import Component from './MembersSkeleton';
 
 type Meta = ComponentMeta<typeof Component>;
 
 export default {
-  title: 'Detail - Participants',
+  title: 'Detail - MembersSkeleton',
   component: Component,
 } as Meta;
 
-export const Participants: Meta = {
-  args: {
-    id: 0,
-  },
-};
+export const MembersSkeleton: Meta = {};

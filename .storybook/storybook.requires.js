@@ -85,6 +85,7 @@ const getStories = () => {
     "./modules/post/components/detail/participants/memberCount/MemberCount.stories.tsx": require("../modules/post/components/detail/participants/memberCount/MemberCount.stories.tsx"),
     "./modules/post/components/detail/participants/members/Members.stories.tsx": require("../modules/post/components/detail/participants/members/Members.stories.tsx"),
     "./modules/post/components/detail/participants/Participants.stories.tsx": require("../modules/post/components/detail/participants/Participants.stories.tsx"),
+    "./modules/post/components/detail/participants/skeleton/MembersSkeleton.stories.tsx": require("../modules/post/components/detail/participants/skeleton/MembersSkeleton.stories.tsx"),
     "./modules/post/components/detail/planner/addVenue/AddVenue.stories.tsx": require("../modules/post/components/detail/planner/addVenue/AddVenue.stories.tsx"),
     "./modules/post/components/detail/planner/map/Map.stories.tsx": require("../modules/post/components/detail/planner/map/Map.stories.tsx"),
     "./modules/post/components/detail/planner/Planner.stories.tsx": require("../modules/post/components/detail/planner/Planner.stories.tsx"),

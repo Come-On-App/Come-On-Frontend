@@ -1,12 +1,13 @@
 import { rest } from 'msw';
 
-import { GetMeetingResponse } from '@post/api/v2/type';
-import meetingsSliceResponse, {
+import mockMeetingsSliceResponse, {
   EmptyResponse,
 } from './getMeetingsSliceResponse';
-import meetingDetailResponse from './getMeetingDetailResponse';
+import { GetMeetingResponse } from '@post/api/v2/type';
 import { GetEntryCodeResponse } from '@post/api/v1/type';
 import { BASE_URL } from '@app/api/config';
+import mockMembers from './members';
+import mockMeetingDetailResponse from './getMeetingDetailResponse';
 
 const requstGetMeetings = rest.get<GetMeetingResponse>(
   `${BASE_URL}/api/v2/meetings`,
@@ -14,7 +15,7 @@ const requstGetMeetings = rest.get<GetMeetingResponse>(
     if (req.url.searchParams.get('dateFrom'))
       return res(ctx.delay(3000), ctx.json(EmptyResponse));
 
-    return res(ctx.json(meetingsSliceResponse));
+    return res(ctx.json(mockMeetingsSliceResponse));
   }
 );
 
@@ -110,9 +111,9 @@ const requestGetMeetingDetail = rest.get(
     return res(
       ctx.delay(2000),
       ctx.json({
-        ...meetingDetailResponse,
+        ...mockMeetingDetailResponse,
         meetingMetaData: {
-          ...meetingDetailResponse.meetingMetaData,
+          ...mockMeetingDetailResponse.meetingMetaData,
           meetingId: req.params.meetingId,
           meetingName: '예시 모임 제목#1',
           calendar: {
@@ -143,7 +144,25 @@ const requestPostReportMeeting = rest.post(
   }
 );
 
+const requestGetMeetingMembers = rest.get(
+  `${BASE_URL}/api/v2/meetings/:meetingId/members`,
+  (req, res, ctx) => {
+    const { meetingId } = req.params;
+
+    if (meetingId === '0') {
+      return res(ctx.json(mockMembers));
+    }
+
+    if (meetingId === '600') {
+      return res(ctx.delay('infinite'), ctx.json(mockMembers));
+    }
+
+    return res(ctx.delay(3000), ctx.json(mockMembers));
+  }
+);
+
 export default [
+  requestGetMeetingMembers,
   requstGetMeetings,
   requestGetEntryCode,
   requestPostEntryCode,

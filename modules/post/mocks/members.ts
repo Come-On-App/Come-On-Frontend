@@ -1,16 +1,35 @@
-import { Imember } from '@post/components/detail/participants/member/type';
+import { GetMeetingMembersListResponse } from '@post/api/v2/type';
 
-export default [
-  { nickname: 'name1', profileImageUrl: 'https://picsum.photos/200/300' },
-  { nickname: 'name2', profileImageUrl: 'https://picsum.photos/200/300' },
-  { nickname: 'name3', profileImageUrl: 'https://picsum.photos/200/300' },
-  { nickname: 'name4', profileImageUrl: 'https://picsum.photos/200/300' },
-  { nickname: 'name5', profileImageUrl: 'https://picsum.photos/200/300' },
-  { nickname: 'name6', profileImageUrl: 'https://picsum.photos/200/300' },
-  { nickname: 'name7', profileImageUrl: 'https://picsum.photos/200/300' },
-  { nickname: 'name8', profileImageUrl: 'https://picsum.photos/200/300' },
-  { nickname: 'name9', profileImageUrl: 'https://picsum.photos/200/300' },
-  { nickname: 'name10', profileImageUrl: 'https://picsum.photos/200/300' },
-  { nickname: 'name11', profileImageUrl: 'https://picsum.photos/200/300' },
-  { nickname: 'name12', profileImageUrl: 'https://picsum.photos/200/300' },
-] as Imember[];
+export default {
+  contentsCount: 4,
+  contents: [
+    {
+      memberId: 88,
+      userId: 112,
+      nickname: '차운우',
+      profileImageUrl: 'https://picsum.photos/200/300',
+      memberRole: 'HOST',
+    },
+    {
+      memberId: 109,
+      userId: 134,
+      nickname: '쏭',
+      profileImageUrl: 'https://picsum.photos/200/300',
+      memberRole: 'PARTICIPANT',
+    },
+    {
+      memberId: 111,
+      userId: 155,
+      nickname: 'user155',
+      profileImageUrl: 'https://picsum.photos/200/300',
+      memberRole: 'PARTICIPANT',
+    },
+    {
+      memberId: 135,
+      userId: 157,
+      nickname: 'user157',
+      profileImageUrl: 'https://picsum.photos/200/300',
+      memberRole: 'PARTICIPANT',
+    },
+  ],
+} as GetMeetingMembersListResponse;

@@ -100,3 +100,15 @@ export interface GetMeetingDetailResponse {
   votingDates: VotingDates[];
   places?: Places[] | null;
 }
+
+interface GetMeetingMembersResponse {
+  memberId: number;
+  userId: number;
+  nickname: string;
+  profileImageUrl: string;
+  memberRole: MemberRole;
+}
+
+// GET /api/v2/meetings/{meeting-id}/members (response)
+export type GetMeetingMembersListResponse =
+  SliceResponse<GetMeetingMembersResponse>;

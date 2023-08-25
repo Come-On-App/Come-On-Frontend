@@ -4,6 +4,7 @@ export enum QueryKeys {
   code = 'code',
   post = 'post',
   user = 'user',
+  members = 'members',
 }
 
 export interface SliceResponse<T> {
