@@ -13,5 +13,6 @@ export default configureStore({
     auth: authSlice,
     user: userSlice,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
+
+//  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
