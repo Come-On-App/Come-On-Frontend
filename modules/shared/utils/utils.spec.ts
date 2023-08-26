@@ -138,6 +138,8 @@ describe('utils Test', () => {
 
     test('두 번째 인자가 첫 번째 인지와 동일하거나 빈 문자열이라면 빈 배열을 반환해야 한다.', () => {
       expect(getDatesInRange('2023-07-12', '2023-07-12')).toEqual([]);
+      expect(getDatesInRange('2023-07-12', '')).toEqual([]);
+      expect(getDatesInRange('2023-07-12', null)).toEqual([]);
     });
 
     test('두 번째 인자가 첫 번째 인지와 동일하거나 빈 문자열이라면 첫 번째 인자를 반환해야 한다.', () => {

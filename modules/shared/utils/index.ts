@@ -219,18 +219,18 @@ export function isExpiry(date: string | number) {
 
 export function getDatesInRange(
   startDate: string,
-  endDate: string,
+  endDate?: string | null,
   itself = false,
 ) {
+  // 마지막 날짜가 없거나 날짜가 동일한 경우
+  if (!endDate || startDate === endDate) {
+    return itself ? [startDate] : [];
+  }
+
   const dates = [];
   const currentDate = new Date(startDate);
   const lastDate = new Date(endDate);
   const nextDate = itself ? 0 : 1; // 시작 날짜 판단
-
-  // 날짜가 동일한 경우
-  if (startDate === endDate && itself) {
-    return [startDate];
-  }
 
   currentDate.setDate(currentDate.getDate() + nextDate);
 
