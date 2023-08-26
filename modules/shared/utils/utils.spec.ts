@@ -14,6 +14,7 @@ import {
   hasPostStateChanged,
   truncateText,
   validateCode,
+  getDayOfWeek,
 } from './index';
 
 describe('utils Test', () => {
@@ -118,7 +119,7 @@ describe('utils Test', () => {
     expect(isExpiry('2100-08-30 23:11:30')).toBeFalsy();
   });
 
-  describe.only('getDatesInRange Function', () => {
+  describe('getDatesInRange Function', () => {
     test('전달된 날짜 범위를 반환해야 한다.', () => {
       expect(getDatesInRange('2023-07-12', '2023-07-16')).toEqual([
         '2023-07-13',
@@ -149,6 +150,16 @@ describe('utils Test', () => {
       expect(getDatesInRange('2023-07-12', '', true)).toEqual(['2023-07-12']);
       expect(getDatesInRange('2023-07-12', null, true)).toEqual(['2023-07-12']);
     });
+  });
+
+  test('getDayOfWeek 함수는 해당 날짜의 요일을 반환해야 한다.', () => {
+    expect(getDayOfWeek('2023-08-21')).toEqual('월');
+    expect(getDayOfWeek('2023-08-22')).toEqual('화');
+    expect(getDayOfWeek('2023-08-23')).toEqual('수');
+    expect(getDayOfWeek('2023-08-24')).toEqual('목');
+    expect(getDayOfWeek('2023-08-25')).toEqual('금');
+    expect(getDayOfWeek('2023-08-26')).toEqual('토');
+    expect(getDayOfWeek('2023-08-27')).toEqual('일');
   });
 
   test('getAssetState 함수는 이미지 정보 객체를 반환해야 한다.', () => {

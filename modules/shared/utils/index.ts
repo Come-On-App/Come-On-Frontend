@@ -242,6 +242,13 @@ export function getDatesInRange(
   return dates;
 }
 
+export function getDayOfWeek(dateString: string) {
+  const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
+  const date = new Date(dateString);
+
+  return daysOfWeek[date.getDay()];
+}
+
 function getFileName(uri: string) {
   const emptyFileName = 'noname.jpg';
   const fileName = uri.split('/').pop();
