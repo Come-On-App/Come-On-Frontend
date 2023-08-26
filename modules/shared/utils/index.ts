@@ -33,14 +33,14 @@ function joinDate(ymd: string[]) {
   return _.join(separator, ymd);
 }
 
-function spliteDate(date: string) {
+function splitDate(date: string) {
   const separator = '-';
 
   return _.split(separator, date);
 }
 
-function spliteDateRange(range: IformatDateRange) {
-  return _.map(spliteDate, Object.values(range));
+function splitDateRange(range: IformatDateRange) {
+  return _.map(splitDate, Object.values(range));
 }
 
 function formatDate(type?: formatType) {
@@ -54,20 +54,29 @@ function formatDate(type?: formatType) {
   };
 }
 
+export function formatDateToKorean(dateString: string, addDayOfWeek = false) {
+  const dateFormatByKo = formatDate('ko');
+  const formattedDate = dateFormatByKo(splitDate(dateString));
+
+  return addDayOfWeek
+    ? `${formattedDate} (${getDayOfWeek(dateString)})`
+    : formattedDate;
+}
+
+export const koFormattedDate = formattedArrayProcessor('ko');
+
 function formattedArrayMapper(type?: formatType) {
   const dateFormatted = formatDate(type);
 
   return (ymd: string[]) => _.map(dateFormatted, ymd);
 }
 
-export const koFormattedDate = formattedArrayProcessor('ko');
-
-export function formattedArrayProcessor(
+function formattedArrayProcessor(
   type?: formatType,
 ): (range: IformatDateRange) => string[] {
   const formattedMapper = formattedArrayMapper(type);
 
-  return _.flow([spliteDateRange, formattedMapper]);
+  return _.flow([splitDateRange, formattedMapper]);
 }
 
 /**

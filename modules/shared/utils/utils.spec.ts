@@ -15,6 +15,7 @@ import {
   truncateText,
   validateCode,
   getDayOfWeek,
+  formatDateToKorean,
 } from './index';
 
 describe('utils Test', () => {
@@ -160,6 +161,18 @@ describe('utils Test', () => {
     expect(getDayOfWeek('2023-08-25')).toEqual('금');
     expect(getDayOfWeek('2023-08-26')).toEqual('토');
     expect(getDayOfWeek('2023-08-27')).toEqual('일');
+  });
+
+  describe('formatDateToKorean Function', () => {
+    test('date 문자열을 한국식 날짜 포맷으로 변환해야 한다.', () => {
+      expect(formatDateToKorean('2023-08-21')).toEqual('2023년 08월 21일');
+    });
+
+    test('두번째 인자에 true를 전달하면 전달된 날짜의 요일도 같이 반환해야 한다.', () => {
+      expect(formatDateToKorean('2023-08-21', true)).toEqual(
+        '2023년 08월 21일 (월)',
+      );
+    });
   });
 
   test('getAssetState 함수는 이미지 정보 객체를 반환해야 한다.', () => {
