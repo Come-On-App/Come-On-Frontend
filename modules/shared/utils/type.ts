@@ -1,5 +1,5 @@
-export interface IFormatDateRange {
-  startFrom: string | null;
+export interface IformatDateRange {
+  startFrom: string;
   endTo?: string | null;
 }
 

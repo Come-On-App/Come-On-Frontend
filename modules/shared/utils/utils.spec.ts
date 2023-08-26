@@ -118,12 +118,33 @@ describe('utils Test', () => {
     expect(isExpiry('2100-08-30 23:11:30')).toBeFalsy();
   });
 
-  test('getDatesInRange 함수는 전달된 날짜 범위를 반환해야 한다.', () => {
-    expect(getDatesInRange('2023-07-12', '2023-07-16')).toEqual([
-      '2023-07-13',
-      '2023-07-14',
-      '2023-07-15',
-    ]);
+  describe.only('getDatesInRange Function', () => {
+    test('전달된 날짜 범위를 반환해야 한다.', () => {
+      expect(getDatesInRange('2023-07-12', '2023-07-16')).toEqual([
+        '2023-07-13',
+        '2023-07-14',
+        '2023-07-15',
+      ]);
+    });
+
+    test('세번째 인자를 true를 전달한다면 자기 자신의 시작점도 포함하여 반환해야 한다.', () => {
+      expect(getDatesInRange('2023-07-12', '2023-07-16', true)).toEqual([
+        '2023-07-12',
+        '2023-07-13',
+        '2023-07-14',
+        '2023-07-15',
+      ]);
+    });
+
+    test('두 번째 인자가 첫 번째 인지와 동일하거나 빈 문자열이라면 빈 배열을 반환해야 한다.', () => {
+      expect(getDatesInRange('2023-07-12', '2023-07-12')).toEqual([]);
+    });
+
+    test('두 번째 인자가 첫 번째 인지와 동일하거나 빈 문자열이라면 첫 번째 인자를 반환해야 한다.', () => {
+      expect(getDatesInRange('2023-07-12', '2023-07-12', true)).toEqual([
+        '2023-07-12',
+      ]);
+    });
   });
 
   test('getAssetState 함수는 이미지 정보 객체를 반환해야 한다.', () => {

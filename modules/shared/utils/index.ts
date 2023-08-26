@@ -6,7 +6,7 @@ import type { DateData } from 'react-native-calendars';
 import { DateRange, PostState } from '@post/features/post/type';
 import {
   AssetState,
-  IFormatDateRange,
+  IformatDateRange,
   IapplyRelativeSizes,
   IconvertStringToDateInfos,
   formatType,
@@ -39,7 +39,7 @@ function spliteDate(date: string) {
   return _.split(separator, date);
 }
 
-function spliteDateRange(range: IFormatDateRange) {
+function spliteDateRange(range: IformatDateRange) {
   return _.map(spliteDate, Object.values(range));
 }
 
@@ -64,7 +64,7 @@ export const koFormattedDate = formattedArrayProcessor('ko');
 
 export function formattedArrayProcessor(
   type?: formatType,
-): (range: IFormatDateRange) => string[] {
+): (range: IformatDateRange) => string[] {
   const formattedMapper = formattedArrayMapper(type);
 
   return _.flow([spliteDateRange, formattedMapper]);
@@ -76,7 +76,7 @@ export function formattedArrayProcessor(
  * [변경 예정]
  */
 export function formatDateRange(
-  range: IFormatDateRange,
+  range: IformatDateRange,
   type?: formatType,
 ): string {
   const formattedMapper = formattedArrayProcessor(type);
@@ -217,12 +217,22 @@ export function isExpiry(date: string | number) {
   return targetDate < currentDate;
 }
 
-export function getDatesInRange(startDate: string, endDate: string) {
+export function getDatesInRange(
+  startDate: string,
+  endDate: string,
+  itself = false,
+) {
   const dates = [];
   const currentDate = new Date(startDate);
   const lastDate = new Date(endDate);
+  const nextDate = itself ? 0 : 1; // 시작 날짜 판단
 
-  currentDate.setDate(currentDate.getDate() + 1); // 시작 날짜를 다음 날짜로 설정
+  // 날짜가 동일한 경우
+  if (startDate === endDate && itself) {
+    return [startDate];
+  }
+
+  currentDate.setDate(currentDate.getDate() + nextDate);
 
   while (currentDate < lastDate) {
     dates.push(currentDate.toISOString().split('T')[0]);
