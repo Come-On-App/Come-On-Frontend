@@ -146,6 +146,8 @@ describe('utils Test', () => {
       expect(getDatesInRange('2023-07-12', '2023-07-12', true)).toEqual([
         '2023-07-12',
       ]);
+      expect(getDatesInRange('2023-07-12', '', true)).toEqual(['2023-07-12']);
+      expect(getDatesInRange('2023-07-12', null, true)).toEqual(['2023-07-12']);
     });
   });
 
