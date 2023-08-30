@@ -1,5 +1,5 @@
 import { makeStyles } from '@rneui/themed';
-import { applyRelativeSizes, relativeSizeConverter } from '@shared/utils';
+import { applyRelativeSizes } from '@shared/utils';
 
 export default makeStyles((theme, hiddenIcon: boolean) => {
   const [
@@ -9,7 +9,6 @@ export default makeStyles((theme, hiddenIcon: boolean) => {
     DISPLAY_MARGIN_RIGHT,
     DISPLAY_BORDER_RADIUS,
     FONT_SIZE,
-    FONT_LINE_HEIGHT,
     ICON_SIZE,
     ICON_CONTAINER_MARGIN_TOP,
     IOCN_CONTAINER_MARGIN_RIGHT,
@@ -20,7 +19,6 @@ export default makeStyles((theme, hiddenIcon: boolean) => {
     displayMarginRight: 4,
     displayBorderRadius: 2,
     fontSize: theme.font.type.body3.fontSize,
-    fontLineHeight: theme.font.type.body3.lineHeight,
     iconSize: 16,
     iconContainerMarginTop: 1,
     iconContainerMarginRight: 2,
@@ -44,7 +42,7 @@ export default makeStyles((theme, hiddenIcon: boolean) => {
         ? theme.font.grayscale['500']
         : theme.font.grayscale['0'],
       fontSize: FONT_SIZE,
-      lineHeight: FONT_LINE_HEIGHT,
+      alignSelf: 'center',
     },
     icon: {
       color: theme.font.grayscale['0'],
