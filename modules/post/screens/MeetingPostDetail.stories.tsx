@@ -3,13 +3,13 @@ import { ComponentMeta, ComponentStory } from '@storybook/react-native';
 import FontThemeProvider from '@shared/provider/FontProvider';
 
 import PostNavigator from '@post/navigation/PostNavigator';
-import MeetingPostViewer from './MeetingPostViewer';
+import Component from './MeetingPostDetail';
 
-type Meta = ComponentMeta<typeof MeetingPostViewer>;
+type Meta = ComponentMeta<typeof MeetingPostDetail>;
 
 export default {
   title: 'Screens',
-  component: MeetingPostViewer,
+  component: Component,
   decorators: [
     (Story) => (
       <FontThemeProvider>
@@ -19,8 +19,10 @@ export default {
   ],
 } as Meta;
 
-type MeetingPostViewerStory = ComponentStory<typeof MeetingPostViewer>;
+type MeetingPostDetailStory = ComponentStory<typeof Component>;
 
-export const MeetingPostDetail: MeetingPostViewerStory = () => {
-  return <PostNavigator initialRouteName="MeetingPostDetail" />;
+export const MeetingPostDetail: MeetingPostDetailStory = () => {
+  return (
+    <PostNavigator initialRouteName="MeetingPostDetail" ONLY_TEST_ID={1} />
+  );
 };

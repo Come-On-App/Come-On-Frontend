@@ -1,7 +1,7 @@
 import { requestPutMyInfo } from '@account/api/v1';
 import { GetMyInfoResponse } from '@account/api/v2/type';
 import { useMutation } from '@tanstack/react-query';
-import { QueryKeys } from '@app/api/type';
+import { QueryKey } from '@app/api/type';
 import { setQueryData } from '@app/api/queryClient';
 import { PutMyInfoPayload } from '@account/api/v1/type';
 import { useCallback } from 'react';
@@ -14,8 +14,9 @@ export default function useMyInfoMutation() {
   const userQueryData = useQueryDataByUser();
   const { mutate, isLoading } = useMutation(requestPutMyInfo, {
     onMutate: (payload) => {
-      setQueryData<GetMyInfoResponse>([QueryKeys.user], (oldData) =>
-        updateUser(oldData, payload),
+      setQueryData<GetMyInfoResponse>(
+        [QueryKey.user, QueryKey.self],
+        (oldData) => updateUser(oldData, payload),
       );
     },
   });

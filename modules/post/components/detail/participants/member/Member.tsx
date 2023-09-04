@@ -8,16 +8,12 @@ import useStyles from './style';
 
 export default function Member({ nickname, profileImageUrl }: Imember) {
   const { container, font } = useStyles();
-  const { path, name } = {
-    path: profileImageUrl ?? '',
-    name: nickname ?? '',
-  };
 
   return (
     <View style={container}>
-      <Avatar path={path} />
-      <Font style={font} numberOfLines={1}>
-        {name}
+      <Avatar path={profileImageUrl} />
+      <Font style={font} numberOfLines={2}>
+        {nickname}
       </Font>
     </View>
   );

@@ -1,4 +1,5 @@
 import _ from 'lodash/fp';
+import { memoize } from 'lodash';
 import { Dimensions, PixelRatio } from 'react-native';
 import { ImagePickerAsset } from 'expo-image-picker';
 import type { DateData } from 'react-native-calendars';
@@ -8,7 +9,6 @@ import {
   AssetState,
   IformatDateRange,
   IapplyRelativeSizes,
-  IconvertStringToDateInfos,
   formatType,
 } from './type';
 
@@ -54,7 +54,10 @@ function formatDate(type?: formatType) {
   };
 }
 
-export function formatDateToKorean(dateString: string, addDayOfWeek = false) {
+export function formatDateToKorean(
+  dateString: string,
+  addDayOfWeek = false,
+): string {
   const dateFormatByKo = formatDate('ko');
   const formattedDate = dateFormatByKo(splitDate(dateString));
 
@@ -81,8 +84,6 @@ function formattedArrayProcessor(
 
 /**
  * 지정된 날짜 포맷 형식으로 날짜 형식을 수정한다.
- *
- * [변경 예정]
  */
 export function formatDateRange(
   range: IformatDateRange,
@@ -226,30 +227,40 @@ export function isExpiry(date: string | number) {
   return targetDate < currentDate;
 }
 
-export function getDatesInRange(
-  startDate: string,
-  endDate?: string | null,
-  itself = false,
-) {
-  // 마지막 날짜가 없거나 날짜가 동일한 경우
-  if (!endDate || startDate === endDate) {
-    return itself ? [startDate] : [];
-  }
+/**
+ * 주어진 시작 날짜와 종료 날짜 사이의 날짜 목록을 반환
+ * @param startDate - 시작 날짜(YYYY-MM-DD 형식의 문자열)
+ * @param endDate - 종료 날짜(YYYY-MM-DD 형식의 문자열 또는 null)
+ * @param itself - 시작 및 종료 날짜를 결과에 포함할지 여부
+ * @returns 날짜 목록(YYYY-MM-DD 형식의 문자열 배열)
+ */
 
-  const dates = [];
-  const currentDate = new Date(startDate);
-  const lastDate = new Date(endDate);
-  const nextDate = itself ? 0 : 1; // 시작 날짜 판단
+export const generateDateRange = memoize(
+  (startDate: string, endDate?: string | null, itself = false) => {
+    // 마지막 날짜가 없거나 날짜가 동일한 경우
+    if (!endDate || startDate === endDate) {
+      return itself ? [startDate] : [];
+    }
 
-  currentDate.setDate(currentDate.getDate() + nextDate);
+    const dates = [];
+    const currentDate = new Date(startDate);
+    const lastDate = new Date(endDate);
 
-  while (currentDate < lastDate) {
-    dates.push(currentDate.toISOString().split('T')[0]);
     currentDate.setDate(currentDate.getDate() + 1);
-  }
 
-  return dates;
-}
+    while (currentDate < lastDate) {
+      dates.push(currentDate.toISOString().split('T')[0]);
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    if (itself) {
+      return [startDate, ...dates, endDate];
+    }
+
+    return dates;
+  },
+  (startDate, endDate, itself) => `${startDate}-${endDate}-${itself}`,
+);
 
 export function getDayOfWeek(dateString: string) {
   const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
@@ -327,7 +338,7 @@ export function hasPostStateChanged(
   );
 }
 
-export function convertStringToDateInfo(dateString = ''): DateData {
+export function convertStringToDateInfo(dateString: string): DateData {
   const date = new Date(dateString);
   const dateInfo: DateData = {
     dateString,
@@ -340,16 +351,16 @@ export function convertStringToDateInfo(dateString = ''): DateData {
   return dateInfo;
 }
 
-export function convertDateRangeToDateInfo(
-  dateRange: IconvertStringToDateInfos,
-) {
-  const [startingDay, endingDay] = Object.values(dateRange ?? []).map(
+export function convertDateRangeToDateInfo(dateRange: IformatDateRange) {
+  const [startingDay, endingDay] = Object.values(dateRange).map(
     convertStringToDateInfo,
   );
 
   return {
     startingDay,
-    endingDay,
+    endingDay: isEqualDate([startingDay.dateString, endingDay.dateString])
+      ? null
+      : endingDay,
   };
 }
 
@@ -373,4 +384,33 @@ export function getFormattedDateRange({ startingDay, endingDay }: DateRange) {
   return formatDateRange({
     startFrom: startingDay.dateString,
   });
+}
+
+/**
+ * 주어진 배열을 이용해 Map 객체를 생성.
+ *
+ * 두 번째 인자로 받은 속성을 키로 사용하여 배열의 각 객체를 맵핑.
+ *
+ * @param array - 맵핑할 객체들이 담긴 배열
+ * @param property - 배열 내 객체를 맵핑할 때 사용할 속성 이름
+ * @returns getByKey 메서드를 포함하는 객체
+ */
+export function indexByProperty<T, K extends keyof T>(array: T[], property: K) {
+  if (!array || !property) {
+    throw new Error('Invalid arguments');
+  }
+
+  const map = new Map<T[K], T>();
+
+  array.forEach((item) => {
+    const key = item[property];
+
+    map.set(key, item);
+  });
+
+  const getByKey = (key: T[K]) => {
+    return map.get(key) as T;
+  };
+
+  return { getByKey };
 }

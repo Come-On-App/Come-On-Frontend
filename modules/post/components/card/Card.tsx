@@ -7,11 +7,11 @@ import Thumbnail from './thumbnail/Thumbnail';
 import TopHeading from './info/heading/TopHeading';
 import BottomHeading from './info/heading/BottomHeading';
 import useStyles from './style';
-import { Icard } from './type';
+import { ICard } from './type';
 
 export default function Card({
   payload: { uri, people, isDecided, title, subTitle, id },
-}: Icard) {
+}: ICard) {
   const { cCard } = useStyles();
 
   return (

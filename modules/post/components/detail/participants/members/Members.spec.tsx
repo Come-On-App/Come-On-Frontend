@@ -11,7 +11,7 @@ describe('Members Compoent', () => {
 
     expect(screen.getAllByTestId('RNE__Avatar__Image')).toHaveLength(4);
 
-    ['차운우', '쏭', 'user157', 'user155'].forEach((name) => {
+    ['사용자1(본인)', '사용자2', '사용자3', '사용자4'].forEach((name) => {
       expect(screen.getByText(name)).toBeOnTheScreen();
     });
   });

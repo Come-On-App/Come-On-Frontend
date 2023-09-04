@@ -13,10 +13,9 @@ export default function WelcomeMessage() {
   const message = useGetMessage();
   const { welcomeFont } = useStyles();
   const { userState } = useUserManagement();
-  const { isLoading } = userState;
-  const loadingText = useLoadingText(LOADING_TITLE, isLoading);
+  const loadingText = useLoadingText(LOADING_TITLE, userState.isLoading);
 
-  if (isLoading) {
+  if (userState.isLoading) {
     return (
       <Font bold style={welcomeFont}>
         {loadingText}

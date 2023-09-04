@@ -1,4 +1,4 @@
-import { SliceResponse } from '@app/api/type';
+import { ListResponse, SliceResponse } from '@app/api/type';
 
 export interface HostUser {
   userId: number;
@@ -8,10 +8,12 @@ export interface HostUser {
 
 export type MemberRole = 'HOST' | 'PARTICIPANT';
 
-export interface FixedDate {
+export interface Calendar {
   startFrom: string;
   endTo: string;
 }
+
+export type FixedDate = Calendar | null;
 
 // GET /api/v2/meetings (payalod)
 export interface GetMeetingPayload {
@@ -32,7 +34,7 @@ export interface GetMeetingResponse {
   calendarEndTo: string;
   meetingStartTime: string;
   meetingImageUrl: string;
-  fixedDate: FixedDate | null | undefined;
+  fixedDate: FixedDate | undefined;
 }
 
 // GET /api/v2/meetings (response)
@@ -47,11 +49,8 @@ interface MeetingMetaData {
   meetingName: string;
   meetingStartTime: string;
   hostUser: HostUser;
-  calendar: {
-    startFrom: string;
-    endTo: string;
-  };
-  fixedDate: FixedDate | null;
+  calendar: Calendar;
+  fixedDate: FixedDate;
 }
 
 export interface Members {
@@ -101,6 +100,9 @@ export interface GetMeetingDetailResponse {
   places?: Places[] | null;
 }
 
+// GET /api/v2/meetings/{meeting-id}/members (payload)
+export type GetMeetingMembersPayload = number;
+
 interface GetMeetingMembersResponse {
   memberId: number;
   userId: number;
@@ -111,4 +113,10 @@ interface GetMeetingMembersResponse {
 
 // GET /api/v2/meetings/{meeting-id}/members (response)
 export type GetMeetingMembersListResponse =
-  SliceResponse<GetMeetingMembersResponse>;
+  ListResponse<GetMeetingMembersResponse>;
+
+// GET /api/v2/meetings/{meeting-id}/members/me (payload)
+export type GetMeetingMemberMePayload = number;
+
+// GET /api/v2/meetings/{meeting-id}/members/me (response)
+export type GetMeetingMemberMeResponse = GetMeetingMembersResponse;

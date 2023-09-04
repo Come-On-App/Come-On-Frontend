@@ -2,6 +2,10 @@ import * as Haptics from 'expo-haptics';
 
 export const hapticSelection = Haptics.selectionAsync;
 
+export const hapticImpactLight = () => {
+  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+};
+
 /**
  * A library that provides access to the system's vibration effects
  */

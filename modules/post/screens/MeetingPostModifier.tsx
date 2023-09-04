@@ -1,12 +1,12 @@
 import { Keyboard, ScrollView } from 'react-native';
 import React, { useEffect } from 'react';
-import _ from 'lodash';
+import { isNull, isEmpty } from 'lodash';
 
 import { convertDateRangeToDateInfo, hasPostStateChanged } from '@shared/utils';
 import TestId from '@shared/constants/testIds';
 import { PostNativeStack } from '@post/navigation/type';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { QueryKeys } from '@app/api/type';
+import { useMutation } from '@tanstack/react-query';
+import { QueryKey } from '@app/api/type';
 import Uploader from '@post/components/modification/uploader/Uploader';
 import MeetingName from '@post/components/modification/meetingName/MeetingName';
 import VotingTimeRangePicker from '@post/components/modification/votingTimeRangePicker/VotingTimeRangePicker';
@@ -20,6 +20,7 @@ import { GetMeetingDetailResponse } from '@post/api/v2/type';
 import { PatchMeetingPayload } from '@post/api/v1/type';
 import { asyncWave } from 'async-wave';
 import useMeetingDetailQuery from '@post/hooks/useMeetingDetailQuery';
+import { invalidateQueries } from '@app/api/queryClient';
 
 const CONFIRM_TEXT = '모임 수정하기';
 const LOADING_TEXT = '모임 수정중...';
@@ -28,7 +29,6 @@ export default function MeetingPostModifier({
   navigation,
   route: { params },
 }: PostNativeStack<'MeetingPostModification'>) {
-  const queryClient = useQueryClient();
   const { dispatch, initPostState, postState } = usePostManagement();
   const {
     data: response,
@@ -38,7 +38,7 @@ export default function MeetingPostModifier({
   const { mutate, isLoading: isSubmit } = useMutation({
     mutationFn: requestPatchMeeting,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QueryKeys.post, params.id] });
+      invalidateQueries([QueryKey.post, QueryKey.list, params.id]);
       navigation.reset({
         index: 0,
         routes: [{ name: 'MeetingPostList' }],
@@ -77,8 +77,8 @@ export default function MeetingPostModifier({
           <ConfirmCancelButton
             leftDisabled={isSubmit}
             rightDisabled={
-              _.isNull(postState.dateRange.startingDay) ||
-              _.isEmpty(postState.name) ||
+              isNull(postState.dateRange.startingDay) ||
+              isEmpty(postState.name) ||
               hasFormChanged ||
               isProcessing
             }

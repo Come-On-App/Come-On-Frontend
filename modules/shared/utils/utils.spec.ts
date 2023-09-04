@@ -9,13 +9,14 @@ import {
   formatDateRange,
   formatTimeWithAMPM,
   getAssetState,
-  getDatesInRange,
+  generateDateRange,
   isExpiry,
   hasPostStateChanged,
   truncateText,
   validateCode,
   getDayOfWeek,
   formatDateToKorean,
+  indexByProperty,
 } from './index';
 
 describe('utils Test', () => {
@@ -122,34 +123,37 @@ describe('utils Test', () => {
 
   describe('getDatesInRange Function', () => {
     test('전달된 날짜 범위를 반환해야 한다.', () => {
-      expect(getDatesInRange('2023-07-12', '2023-07-16')).toEqual([
+      expect(generateDateRange('2023-07-12', '2023-07-16')).toEqual([
         '2023-07-13',
         '2023-07-14',
         '2023-07-15',
       ]);
     });
 
-    test('세번째 인자를 true를 전달한다면 자기 자신의 시작점도 포함하여 반환해야 한다.', () => {
-      expect(getDatesInRange('2023-07-12', '2023-07-16', true)).toEqual([
+    test('세번째 인자를 true를 전달한다면 시작점과 끝점도 포함해야 한다.', () => {
+      expect(generateDateRange('2023-07-12', '2023-07-16', true)).toEqual([
         '2023-07-12',
         '2023-07-13',
         '2023-07-14',
         '2023-07-15',
+        '2023-07-16',
       ]);
     });
 
     test('두 번째 인자가 첫 번째 인지와 동일하거나 빈 문자열이라면 빈 배열을 반환해야 한다.', () => {
-      expect(getDatesInRange('2023-07-12', '2023-07-12')).toEqual([]);
-      expect(getDatesInRange('2023-07-12', '')).toEqual([]);
-      expect(getDatesInRange('2023-07-12', null)).toEqual([]);
+      expect(generateDateRange('2023-07-12', '2023-07-12')).toEqual([]);
+      expect(generateDateRange('2023-07-12', '')).toEqual([]);
+      expect(generateDateRange('2023-07-12', null)).toEqual([]);
     });
 
     test('두 번째 인자가 첫 번째 인지와 동일하거나 빈 문자열이라면 첫 번째 인자를 반환해야 한다.', () => {
-      expect(getDatesInRange('2023-07-12', '2023-07-12', true)).toEqual([
+      expect(generateDateRange('2023-07-12', '2023-07-12', true)).toEqual([
         '2023-07-12',
       ]);
-      expect(getDatesInRange('2023-07-12', '', true)).toEqual(['2023-07-12']);
-      expect(getDatesInRange('2023-07-12', null, true)).toEqual(['2023-07-12']);
+      expect(generateDateRange('2023-07-12', '', true)).toEqual(['2023-07-12']);
+      expect(generateDateRange('2023-07-12', null, true)).toEqual([
+        '2023-07-12',
+      ]);
     });
   });
 
@@ -268,5 +272,37 @@ describe('utils Test', () => {
         },
       }),
     ).toBeTruthy();
+  });
+
+  describe('indexByProperty Function', () => {
+    test('주어진 속성에 따라 객체 배열의 색인을 올바르게 생성해야 한다.', () => {
+      const array = [
+        { id: 1, name: 'Apple' },
+        { id: 2, name: 'Banana' },
+        { id: 3, name: 'Cherry' },
+      ];
+      const { getByKey } = indexByProperty(array, 'id');
+
+      expect(getByKey(1)).toEqual({ id: 1, name: 'Apple' });
+      expect(getByKey(2)).toEqual({ id: 2, name: 'Banana' });
+      expect(getByKey(3)).toEqual({ id: 3, name: 'Cherry' });
+    });
+
+    test('존재하지 않는 키에 대해 정의되지 않은 값을 반환해야 한다.', () => {
+      const array = [
+        { id: 1, name: 'Apple' },
+        { id: 2, name: 'Banana' },
+      ];
+      const { getByKey } = indexByProperty(array, 'id');
+
+      expect(getByKey(3)).toBeUndefined();
+    });
+
+    test('유효하지 않은 인자에 대해 에러를 발생시켜야 한다.', () => {
+      const Error = 'Invalid arguments';
+
+      expect(() => indexByProperty(null as any, 'id' as never)).toThrow(Error);
+      expect(() => indexByProperty([], null as any)).toThrow(Error);
+    });
   });
 });

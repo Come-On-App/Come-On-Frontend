@@ -1,6 +1,6 @@
 import { Keyboard, ScrollView } from 'react-native';
 import React, { useEffect } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { asyncWave } from 'async-wave';
 
 import ConfirmCancelButton from '@shared/components/button/ConfirmCancelButton';
@@ -12,11 +12,12 @@ import TestId from '@shared/constants/testIds';
 import { requestCreateMeetings, requestImageURL } from '@post/api/v1';
 import { PostNativeStack } from '@post/navigation/type';
 import { isPostFormValid } from '@shared/utils';
-import { QueryKeys } from '@app/api/type';
+import { QueryKey } from '@app/api/type';
 import MeetingNameInput from '@post/components/creation/meetingName/MeetingName';
 import usePostManagement from '@post/hooks/usePostManagement';
 import type { ValidatedPostState, PostState } from '@post/features/post/type';
 import { PostMeetingPayload } from '@post/api/v1/type';
+import { invalidateQueries } from '@app/api/queryClient';
 
 const CONFIRM_TEXT = '모임 만들기';
 const LOADING_TEXT = '모임 생성중...';
@@ -24,11 +25,10 @@ const LOADING_TEXT = '모임 생성중...';
 export default function MeetingPostCreator({
   navigation,
 }: PostNativeStack<'MeetingPostCreation'>) {
-  const queryClient = useQueryClient();
   const { initPostState, postState } = usePostManagement();
   const { mutate, isLoading } = useMutation(requestCreateMeetings, {
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QueryKeys.meetings] });
+      invalidateQueries([QueryKey.post, QueryKey.list]);
       navigation.reset({
         index: 0,
         routes: [{ name: 'MeetingPostList' }],

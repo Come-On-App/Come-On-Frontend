@@ -70,7 +70,7 @@ describe('(API) Invitation Compoent', () => {
   });
 
   describe('(Error) Invitation Compoent', () => {
-    const throwError = 500;
+    const throwError = 1;
 
     test('서버 응답에 올바르게 렌더링 되어야 한다.', async () => {
       render(
@@ -88,7 +88,7 @@ describe('(API) Invitation Compoent', () => {
   });
 
   describe('(Expired) Invitation Compoent', () => {
-    const expiredCode = 600;
+    const expiredCode = 2;
     const Component = (
       <QueryClientProvider client={queryClient}>
         <Invitation id={expiredCode} showModal onClose={jest.fn()} />

@@ -1,7 +1,10 @@
-import { FixedDate } from '@post/api/v2/type';
-import { IFormatDateRange } from '@shared/utils/type';
+import { GetDateVotingListResponse } from '@post/api/v1/type';
+import { FixedDate, Calendar, Members } from '@post/api/v2/type';
 
 export interface Ischedule {
-  range: IFormatDateRange;
-  fixedDate: FixedDate | null;
+  isHost: boolean;
+  range: Calendar;
+  fixedDate: FixedDate;
+  members: Members[];
+  votingStatus: GetDateVotingListResponse;
 }

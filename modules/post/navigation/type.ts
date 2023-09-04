@@ -1,21 +1,16 @@
-import { DateRange } from '@post/features/post/type';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+
+import { DateRange } from '@post/features/post/type';
+import { Ischedule } from '@post/components/detail/duration/schedule/type';
 
 export type PostStackParamList = {
   MeetingPostList: undefined;
   MeetingPostCreation: undefined;
-  MeetingDateSelector: {
-    prevDateRange: DateRange;
-  };
-  MeetingPostDetail: {
-    id: number;
-  };
-  MeetingPostReport: {
-    id: number;
-  };
-  MeetingPostModification: {
-    id: number;
-  };
+  MeetingDateSelector: { prevDateRange: DateRange };
+  MeetingPostDetail: { id: number };
+  MeetingPostReport: { id: number };
+  MeetingPostModification: { id: number };
+  MeetingVote: Omit<Ischedule, 'votingStatus' | 'fixedDate'>;
 };
 
 type PostRouteNames = keyof PostStackParamList;
@@ -35,4 +30,5 @@ export interface IpostNavigator {
 
 export interface Inavigation {
   initialRouteName?: PostRouteNames;
+  ONLY_TEST_ID?: number;
 }

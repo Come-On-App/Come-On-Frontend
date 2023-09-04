@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import React, { useEffect } from 'react';
 import { asyncWave } from 'async-wave';
-import _ from 'lodash';
+import { isNull } from 'lodash';
 
 import { BadgedAvatar } from '@shared/components/avatar/Avatar';
 import TestId from '@shared/constants/testIds';
@@ -11,7 +11,6 @@ import useUserManagement from '@account/hooks/useUserManagement';
 import { requestImageURL } from '@post/api/v1';
 import { useQueryDataByUser } from '@account/hooks/useMyInfoQuery';
 import useMyInfoMutation from '@account/hooks/useMyInfoMutation';
-import { withSelectionHaptic } from '@shared/utils/haptics';
 import SubmitStatus from '../submitStatus/SubmitStatus';
 
 const SUBMIT_LODING_TITLE = '이미지 업데이트 중';
@@ -26,10 +25,9 @@ export default function UserAvatar() {
   const userQueryData = useQueryDataByUser();
   const { image, pickImage, initImage } = useImagePicker();
   const { mutateUserImage, isSubmit } = useMyInfoMutation();
-  const [onPress] = withSelectionHaptic(pickImage);
 
   useEffect(() => {
-    if (_.isNull(image)) return;
+    if (isNull(image)) return;
 
     asyncWave([image, requestImageURL, mutateUserImage, initImage]);
   }, [image, initImage, mutateUserImage]);
@@ -44,7 +42,7 @@ export default function UserAvatar() {
           path={userQueryData?.profileImageUrl}
           size={AVATAR_SIZE}
           badgeSize={AVATAR_BADEG_SIZE}
-          onPress={onPress}
+          onPress={pickImage}
         />
       </View>
     </>

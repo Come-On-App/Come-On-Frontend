@@ -1,10 +1,13 @@
 // Query-client Key
-export enum QueryKeys {
-  meetings = 'meetings',
-  code = 'code',
+export enum QueryKey {
+  list = 'list',
   post = 'post',
   user = 'user',
+  self = 'self',
+  detail = 'detail',
   members = 'members',
+  code = 'code',
+  vote = 'vote',
 }
 
 export interface SliceResponse<T> {

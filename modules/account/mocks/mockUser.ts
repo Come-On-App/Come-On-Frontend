@@ -1,16 +1,10 @@
-import { mockUserAvatarImage } from './mockUserAvatarImage';
-
-export const mockUser = {
-  userName: 'jeongbaebang',
-  email: 'jeongbaebang_dev@naver.com',
-  userImage: mockUserAvatarImage,
-};
+import image from '@post/mocks/image';
 
 export const mockMyInfo = {
-  userId: 112,
-  nickname: 'jeongbaebang',
+  userId: 1,
+  nickname: '사용자1(본인)',
   profileImageType: 'CUSTOM',
-  profileImageUrl: mockUserAvatarImage,
+  profileImageUrl: image(),
   role: 'ROLE_USER',
   email: 'jeongbaebang_dev@naver.com',
   name: 'jeongbaebang',

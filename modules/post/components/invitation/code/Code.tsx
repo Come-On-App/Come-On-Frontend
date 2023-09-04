@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import React from 'react';
-import _ from 'lodash';
+import { uniqueId } from 'lodash';
 
 import Field from './field/Field';
 import { Icode } from './type';
@@ -12,7 +12,7 @@ export default function Code({ value = '' }: Icode) {
   return (
     <View style={container}>
       {[...value].map((eachCode) => (
-        <Field code={eachCode} key={_.uniqueId(eachCode)} />
+        <Field code={eachCode} key={uniqueId(eachCode)} />
       ))}
     </View>
   );

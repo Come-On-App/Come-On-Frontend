@@ -18,4 +18,5 @@ export interface IscreenLayout {
   children: ReactNode;
   testID?: string;
   containerStyle?: StyleProp<ViewStyle>;
+  scroll?: boolean;
 }

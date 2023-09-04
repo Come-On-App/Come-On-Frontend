@@ -5,6 +5,7 @@ import postSlice from '@post/features/post/postSlice';
 import searchSlice from '@post/features/search/searchSlice';
 import authSlice from '@account/features/auth/authSlice';
 import userSlice from '@account/features/user/userSlice';
+import detailSlice from '@post/features/detail/detailSlice';
 
 export default configureStore({
   reducer: {
@@ -12,7 +13,7 @@ export default configureStore({
     search: searchSlice,
     auth: authSlice,
     user: userSlice,
+    detail: detailSlice,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
-
-//  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),

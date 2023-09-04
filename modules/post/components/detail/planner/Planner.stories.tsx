@@ -12,11 +12,9 @@ export default {
   component: Component,
   decorators: [
     (Story) => (
-      <FontThemeProvider>
-        <ScrollView>
-          <Story />
-        </ScrollView>
-      </FontThemeProvider>
+      <ScrollView>
+        <Story />
+      </ScrollView>
     ),
   ],
 } as Meta;

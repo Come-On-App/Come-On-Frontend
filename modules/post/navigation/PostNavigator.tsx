@@ -9,11 +9,11 @@ import {
 import MeetingDashboard from '@post/screens/MeetingDashboard';
 import MeetingPostCreator from '@post/screens/MeetingPostCreator';
 import MeetingDatePicker from '@post/screens/MeetingDatePicker';
-import MeetingPostViewer from '@post/screens/MeetingPostViewer';
+import MeetingPostDetail from '@post/screens/MeetingPostDetail';
 import MeetingPostModifier from '@post/screens/MeetingPostModifier';
 import MeetingPostReportForm from '@post/screens/MeetingPostReportForm';
+import MeetingVote from '@post/screens/MeetingVote';
 
-const INIT_ID = { id: 0 };
 const { Screen, Navigator } = createNativeStackNavigator<PostStackParamList>();
 
 function PostNavigator({ children, initialRouteName }: IpostNavigator) {
@@ -32,21 +32,16 @@ function PostNavigator({ children, initialRouteName }: IpostNavigator) {
   );
 }
 
-export default function Navigation({ initialRouteName }: Inavigation) {
+export default function Navigation({
+  initialRouteName,
+  ONLY_TEST_ID,
+}: Inavigation) {
   return (
     <PostNavigator initialRouteName={initialRouteName}>
       <Screen name="MeetingPostList" component={MeetingDashboard} />
       <Screen name="MeetingPostCreation" component={MeetingPostCreator} />
-      <Screen
-        name="MeetingPostModification"
-        initialParams={INIT_ID}
-        component={MeetingPostModifier}
-      />
-      <Screen
-        name="MeetingPostReport"
-        initialParams={INIT_ID}
-        component={MeetingPostReportForm}
-      />
+      <Screen name="MeetingPostModification" component={MeetingPostModifier} />
+      <Screen name="MeetingPostReport" component={MeetingPostReportForm} />
       <Screen
         name="MeetingDateSelector"
         component={MeetingDatePicker}
@@ -54,9 +49,10 @@ export default function Navigation({ initialRouteName }: Inavigation) {
       />
       <Screen
         name="MeetingPostDetail"
-        initialParams={INIT_ID}
-        component={MeetingPostViewer}
+        component={MeetingPostDetail}
+        initialParams={{ id: ONLY_TEST_ID }}
       />
+      <Screen name="MeetingVote" component={MeetingVote} />
     </PostNavigator>
   );
 }

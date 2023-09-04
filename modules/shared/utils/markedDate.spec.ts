@@ -1,6 +1,6 @@
 import { describe, expect, test } from '@jest/globals';
 
-import markedDate from './markedDate';
+import generateMarkedDate from './markedDate';
 
 describe('markedDate Function', () => {
   const expected = {
@@ -32,6 +32,6 @@ describe('markedDate Function', () => {
   };
 
   test('시작 날짜부터 끝 날짜까지 선택된 범위를 캘린더 속성에 맞게 반환해야 한다.', () => {
-    expect(markedDate('2023-07-04', '2023-07-06')).toEqual(expected);
+    expect(generateMarkedDate('2023-07-04', '2023-07-06')).toEqual(expected);
   });
 });

@@ -1,9 +1,8 @@
 import { View } from 'react-native';
 import React from 'react';
 import { useMutation } from '@tanstack/react-query';
-import * as Haptics from 'expo-haptics';
 
-import { QueryKeys } from '@app/api/type';
+import { QueryKey } from '@app/api/type';
 import { requestDeleteMeeting } from '@post/api/v1';
 import { GetMeetingSliceResponse } from '@post/api/v2/type';
 import useSearchManagement from '@post/hooks/useSearchManagement';
@@ -20,13 +19,11 @@ export default function Deletion({ id, showModal, onClose }: Ideletion) {
     dateFrom: dateRange.startingDay?.dateString,
     dateTo: dateRange.endingDay?.dateString,
   };
-  const updateMeeting = removeMeetingById(id);
   const mutate = useMutation(requestDeleteMeeting, {
     onSuccess: () => {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       setQueryData<GetMeetingSliceResponse>(
-        [QueryKeys.meetings, paramater],
-        updateMeeting,
+        [QueryKey.post, QueryKey.list, paramater],
+        removeMeetingByPostId(id),
       );
     },
   });
@@ -42,7 +39,7 @@ export default function Deletion({ id, showModal, onClose }: Ideletion) {
   );
 }
 
-function removeMeetingById(id: number) {
+function removeMeetingByPostId(id: number) {
   return (oldData: GetMeetingSliceResponse | undefined) => {
     if (!oldData) return oldData;
 

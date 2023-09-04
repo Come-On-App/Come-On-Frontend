@@ -5,19 +5,22 @@ import { ScreenTitle } from '@shared/components/font/Font';
 import ScreenLayout from '@shared/components/layout/ScreenLayout';
 import DividerWrapper from '@shared/components/layout/DividerWrapper';
 import ContentHeader from '@shared/components/layout/ContentHeader';
-import { QueryKeys } from '@app/api/type';
+import { QueryKey } from '@app/api/type';
 import { requestGetMeetingMembers } from '@post/api/v2';
 import { invert } from '@shared/utils';
+import useDetailManagement from '@post/hooks/useDetailManagement';
 import MemberCount from './memberCount/MemberCount';
 import Members from './members/Members';
-import { Iparticipants } from './type';
 
 const TITLE = '모임 멤버';
 
-export default function Participants({ id }: Iparticipants) {
+export default function Participants() {
+  const {
+    detailState: { postId },
+  } = useDetailManagement();
   const { data, isSuccess } = useQuery({
-    queryKey: [QueryKeys.members, id],
-    queryFn: ({ signal }) => requestGetMeetingMembers(id, signal),
+    queryKey: [QueryKey.detail, QueryKey.members, postId],
+    queryFn: ({ signal }) => requestGetMeetingMembers(postId, signal),
   });
 
   return (

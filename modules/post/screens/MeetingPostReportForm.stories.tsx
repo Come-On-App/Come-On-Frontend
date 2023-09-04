@@ -19,8 +19,8 @@ export default {
   ],
 } as Meta;
 
-type MeetingPostViewerStory = ComponentStory<typeof MeetingPostReportForm>;
+type MeetingPostDetailStory = ComponentStory<typeof MeetingPostReportForm>;
 
-export const MeetingPostReport: MeetingPostViewerStory = () => {
+export const MeetingPostReport: MeetingPostDetailStory = () => {
   return <PostNavigator initialRouteName="MeetingPostReport" />;
 };

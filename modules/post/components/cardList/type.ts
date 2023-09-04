@@ -1,5 +1,5 @@
-import { CardInfo } from '../card/type';
+import { ICardInfo } from '../card/type';
 
 export interface ICardList {
-  payload: CardInfo[] | undefined;
+  payload: ICardInfo[] | undefined;
 }

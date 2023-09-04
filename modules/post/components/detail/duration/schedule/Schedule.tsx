@@ -1,26 +1,47 @@
-import { View } from 'react-native';
-import React from 'react';
+import { Pressable, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 import { formatDateRange } from '@shared/utils';
 import Font from '@shared/components/font/Font';
+import { PostListNavigation } from '@post/navigation/type';
+import useDetailManagement from '@post/hooks/useDetailManagement';
 import { Ischedule } from './type';
 import useStyles from './style';
 
-export default function Schedule({ range, fixedDate }: Ischedule) {
+export default function Schedule(props: Ischedule) {
+  const { range, fixedDate, votingStatus } = props;
   const isFixed = Boolean(fixedDate);
-  const formattedDateRangeKo = formatDateRange(fixedDate || range, 'ko');
-  const messageBasedOnFixedDate = getMessageBasedOnFixedDate(isFixed);
   const { container, cFont, descriptionFont, divider, rangeFont } =
     useStyles(isFixed);
+  const navigation = useNavigation<PostListNavigation>();
+  const { dispatchVotingStatus, dispatchFixedDate } = useDetailManagement();
+
+  useEffect(() => {
+    if (votingStatus) {
+      dispatchVotingStatus(votingStatus);
+    }
+  }, [dispatchVotingStatus, votingStatus]);
+
+  useEffect(() => {
+    dispatchFixedDate(fixedDate);
+  }, [dispatchFixedDate, fixedDate]);
 
   return (
-    <View style={container}>
+    <Pressable
+      style={[container]}
+      onPress={() => navigation.navigate('MeetingVote', props)}
+    >
       <View style={divider} />
       <View style={cFont}>
-        <Font style={rangeFont}>{formattedDateRangeKo}</Font>
-        <Font style={descriptionFont}>{messageBasedOnFixedDate}</Font>
+        <Font style={rangeFont}>
+          {formatDateRange(fixedDate || range, 'ko')}
+        </Font>
+        <Font style={descriptionFont}>
+          {getMessageBasedOnFixedDate(isFixed)}
+        </Font>
       </View>
-    </View>
+    </Pressable>
   );
 }
 

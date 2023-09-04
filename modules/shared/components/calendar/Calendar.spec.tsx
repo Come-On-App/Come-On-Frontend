@@ -35,7 +35,6 @@ describe('Calendar Compoent', () => {
     render(<Calendar current={CURRENT} onDayPress={jest.fn()} />);
 
     fireEvent.press(screen.getByTestId(startDayTestID));
-
     // re-event
     fireEvent.press(screen.getByTestId(startDayTestID));
 
@@ -45,9 +44,8 @@ describe('Calendar Compoent', () => {
   test('시작 지점을 선택하고 다음 클릭 이벤트는 끝나는 지점을 표시하여 렌더링 해야 한다.', async () => {
     render(<Calendar current={CURRENT} onDayPress={jest.fn()} />);
 
-    fireEvent.press(screen.getByTestId(startDayTestID));
-
-    fireEvent.press(screen.getByTestId(endDayTestID));
+    fireEvent.press(await screen.findByTestId(startDayTestID));
+    fireEvent.press(await screen.findByTestId(endDayTestID));
 
     expect(
       screen.getByLabelText('금요일 21 7월 2023 period end'),
@@ -60,9 +58,9 @@ describe('Calendar Compoent', () => {
     const targetDay3 = `${testID}.day_${'2023-08-31'}`;
 
     render(<Calendar current={CURRENT} onDayPress={jest.fn()} />);
+
     fireEvent.press(screen.getByTestId(startDayTestID));
     fireEvent.press(screen.getByTestId(endDayTestID));
-
     fireEvent.press(screen.getByTestId(targetDay1));
 
     expect(
@@ -77,7 +75,6 @@ describe('Calendar Compoent', () => {
 
     // 다음달 표시
     fireEvent.press(screen.getByTestId(`${testID}.header.rightArrow`));
-
     fireEvent.press(screen.getByTestId(targetDay3));
 
     expect(
@@ -92,7 +89,6 @@ describe('Calendar Compoent', () => {
     render(<Calendar current={CURRENT} onDayPress={jest.fn()} />);
     fireEvent.press(screen.getByTestId(startDayTestID));
     fireEvent.press(screen.getByTestId(endDayTestID));
-
     fireEvent.press(screen.getByTestId(targetDay1));
 
     expect(
@@ -111,9 +107,9 @@ describe('Calendar Compoent', () => {
 
   test('범위가 지정된 상태에서 시작 지점을 다시 클릭한다면 끝나는 지점 표시가 없어져야 한다.', () => {
     render(<Calendar current={CURRENT} onDayPress={jest.fn()} />);
+
     fireEvent.press(screen.getByTestId(startDayTestID));
     fireEvent.press(screen.getByTestId(endDayTestID));
-
     fireEvent.press(screen.getByTestId(startDayTestID));
 
     expect(screen.getByLabelText('금요일 21 7월 2023')).toBeOnTheScreen();
@@ -121,9 +117,20 @@ describe('Calendar Compoent', () => {
 
   test('범위가 지정된 상태에서 끝나는 지점을 다시 클릭한다면 시작 지점 표시가 없어져야 한다.', () => {
     render(<Calendar current={CURRENT} onDayPress={jest.fn()} />);
+
     fireEvent.press(screen.getByTestId(startDayTestID));
     fireEvent.press(screen.getByTestId(endDayTestID));
+    fireEvent.press(screen.getByTestId(endDayTestID));
 
+    expect(screen.getByLabelText('월요일 17 7월 2023')).toBeOnTheScreen();
+  });
+
+  test('blockLocalEvent 속성을 true로 설정하면 내부 이벤트가 발생하지 않아야 한다.', () => {
+    render(
+      <Calendar current={CURRENT} onDayPress={jest.fn()} blockLocalEvent />,
+    );
+
+    fireEvent.press(screen.getByTestId(startDayTestID));
     fireEvent.press(screen.getByTestId(endDayTestID));
 
     expect(screen.getByLabelText('월요일 17 7월 2023')).toBeOnTheScreen();

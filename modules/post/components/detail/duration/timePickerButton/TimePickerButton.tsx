@@ -14,14 +14,11 @@ import {
 import Font from '@shared/components/font/Font';
 import { Button } from '@rneui/themed';
 import { requestPostMeetingTime } from '@post/api/v1';
+import useDetailManagement from '@post/hooks/useDetailManagement';
 import useStyles from './style';
 import { ItimePickerButton } from './type';
 
-export default function TimePickerButton({
-  time,
-  id,
-  isHost,
-}: ItimePickerButton) {
+export default function TimePickerButton({ time, isHost }: ItimePickerButton) {
   const { button, font } = useStyles(isHost);
 
   if (!isHost) {
@@ -35,10 +32,11 @@ export default function TimePickerButton({
     );
   }
 
-  return <DateTimePicker id={id} time={time} />;
+  return <DateTimePicker time={time} />;
 }
 
-function DateTimePicker({ id, time }: { id: number; time: string }) {
+function DateTimePicker({ time }: { time: string }) {
+  const { detailState } = useDetailManagement();
   const { button, font } = useStyles();
   const formatedDate = formatTimeWithDate(time);
   const { mutate } = useMutation(requestPostMeetingTime);
@@ -48,7 +46,7 @@ function DateTimePicker({ id, time }: { id: number; time: string }) {
   ) => {
     if (selectedDate && event.type === 'set') {
       mutate({
-        meetingId: id,
+        meetingId: detailState.postId,
         meetingStartTime: formatTime(selectedDate),
       });
     }

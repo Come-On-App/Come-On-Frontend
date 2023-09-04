@@ -9,4 +9,7 @@ export default makeStyles(() => ({
   skeleton: {
     height: relativeSizeConverter(36),
   },
+  timePickerContainer: {
+    alignSelf: 'center',
+  },
 }));

@@ -19,10 +19,10 @@ export const SignInError: Meta = {
     msw: {
       handlers: [
         rest.post(`${BASE_URL}/api/v1/oauth/apple`, (_req, res, ctx) => {
-          return res(ctx.delay(3000), ctx.status(505));
+          return res(ctx.delay(2000), ctx.status(505));
         }),
         rest.post(`${BASE_URL}/api/v1/oauth/google`, (_req, res, ctx) => {
-          return res(ctx.delay(3000), ctx.status(505));
+          return res(ctx.delay(2000), ctx.status(505));
         }),
       ],
     },

@@ -14,6 +14,8 @@ export interface Iinput {
   maxLength?: number;
   disabled?: boolean;
   multiline?: boolean;
+  errorMessage?: string;
+  inputStyle?: StyleProp<TextStyle>;
   onSubmitEditing?: () => void;
 }
 

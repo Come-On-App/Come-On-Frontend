@@ -1,13 +1,13 @@
 import React from 'react';
 import { View } from 'react-native';
-import _ from 'lodash';
+import { isEmpty } from 'lodash';
 
 import TestId from '@shared/constants/testIds';
 import { useQuery } from '@tanstack/react-query';
 import { requestGetMeetings } from '@post/api/v2';
 import { GetMeetingResponse, GetMeetingSliceResponse } from '@post/api/v2/type';
-import { CardInfo } from '@post/components/card/type';
-import { QueryKeys } from '@app/api/type';
+import { ICardInfo } from '@post/components/card/type';
+import { QueryKey } from '@app/api/type';
 import SearchAndCreateBar from '@post/components/search/searchAndCreate/SearchAndCreateBar';
 import CardList from '@post/components/cardList/CardList';
 import ServerError from '@post/components/serverError/ServerError';
@@ -26,7 +26,7 @@ export default function MeetingDashboard() {
     dateTo: endingDay?.dateString,
   };
   const { data, status } = useQuery({
-    queryKey: [QueryKeys.meetings, paramater],
+    queryKey: [QueryKey.post, QueryKey.list, paramater],
     queryFn: ({ signal }) => requestGetMeetings(paramater, signal),
   });
   let Content = <View />;
@@ -60,7 +60,7 @@ function renderCardList(
   const cardListInfo = data.contents.map(generateCardInfo);
 
   // 특정 범위의 게시물이 없는 경우
-  if (_.isEmpty(cardListInfo) && isDateRangeSearched) {
+  if (isEmpty(cardListInfo) && isDateRangeSearched) {
     return <EmptyCardList type="search" />;
   }
 
@@ -71,8 +71,8 @@ function renderCardList(
  * [헬퍼 함수]
  * API 응답 데이터를 유효한 데이터로 가공한다.
  */
-const generateCardInfo = (response: GetMeetingResponse): CardInfo => {
-  const isDecided = !_.isEmpty(response.fixedDate);
+const generateCardInfo = (response: GetMeetingResponse): ICardInfo => {
+  const isDecided = !isEmpty(response.fixedDate);
 
   return {
     id: response.meetingId,

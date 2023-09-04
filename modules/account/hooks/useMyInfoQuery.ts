@@ -1,6 +1,6 @@
-import { QueryKeys } from '@app/api/type';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
+import { QueryKey } from '@app/api/type';
 import { requestGetMyInfo } from '@account/api/v2';
 import { GetMyInfoResponse } from '@account/api/v2/type';
 
@@ -9,7 +9,7 @@ import { GetMyInfoResponse } from '@account/api/v2/type';
  */
 export default function useMyInfoQuery() {
   const query = useQuery({
-    queryKey: [QueryKeys.user],
+    queryKey: [QueryKey.user, QueryKey.self],
     queryFn: ({ signal }) => requestGetMyInfo(signal),
   });
 
@@ -21,9 +21,10 @@ export default function useMyInfoQuery() {
  */
 export function useQueryDataByUser() {
   const queryClient = useQueryClient();
-  const prevUserData = queryClient.getQueryData<GetMyInfoResponse>([
-    QueryKeys.user,
+  const prevData = queryClient.getQueryData<GetMyInfoResponse>([
+    QueryKey.user,
+    QueryKey.self,
   ]);
 
-  return prevUserData;
+  return prevData;
 }

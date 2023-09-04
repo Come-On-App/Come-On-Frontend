@@ -1,3 +1,6 @@
+import { ListResponse } from '@app/api/type';
+import { MemberRole } from '../v2/type';
+
 // GET /api/v1/meetings/{meeting-id}/entry-code (payalod)
 export type GetEntryCodePayload = number;
 
@@ -80,5 +83,89 @@ export interface PostMeetingTimePayalod {
 
 // POST /api/v1/meetings/{meeting-id}/meeting-time (response)
 export interface PostMeetingTimeResponse {
+  success: boolean;
+}
+
+export interface GetDateVotingResponse {
+  date: string;
+  memberCount: number;
+  myVoting: boolean;
+}
+
+// GET /api/v1/meetings/{meeting-id}/date/voting (payload)
+export type GetDateVotingPayload = number;
+
+// GET /api/v1/meetings/{meeting-id}/date/voting (response)
+export type GetDateVotingListResponse = ListResponse<GetDateVotingResponse>;
+
+// GET /api/v1/meetings/{meeting-id}/meeting-time (payalod)
+export type GetMeetingTimePayalod = number;
+
+// GET /api/v1/meetings/{meeting-id}/meeting-time (response)
+export interface GetMeetingTimeResponse {
+  meetingStartTime: string;
+}
+
+// GET /api/v1/meetings/{meeting-id}/date/voting/details (payload)
+export interface GetDateVotingDetailsPayload {
+  meetingId: number;
+  date: string;
+}
+
+interface VotingUsers {
+  userId: number;
+  nickname: string;
+  profileImageUrl?: string | null;
+  memberRole: MemberRole;
+}
+
+// GET /api/v1/meetings/{meeting-id}/date/voting/details (response)
+export interface GetDateVotingDetailsResponse {
+  date: string;
+  memberCount: number;
+  myVoting: boolean;
+  votingUsers: VotingUsers[];
+}
+
+// POST /api/v1/meetings/{meeting-id}/date/voting (payload)
+export interface PostDateVotingPayload {
+  meetingId: number;
+  date: string;
+}
+
+// POST /api/v1/meetings/{meeting-id}/date/voting (response)
+export interface PostDateVotingResponse {
+  success: boolean;
+}
+
+export interface DeleteDateVotingPayload {
+  meetingId: number;
+  date: string;
+}
+
+// DELETE /api/v1/meetings/{meeting-id}/date/voting (response)
+export interface DeleteDateVotingResponse {
+  success: boolean;
+}
+
+// POST /api/v1/meetings/{meeting-id}/date/confirm (payload)
+export interface PostConfirmMeetingDatePayload {
+  meetingId: number;
+  meetingDate: {
+    meetingDateStartFrom: string;
+    meetingDateEndTo: string;
+  };
+}
+
+// POST /api/v1/meetings/{meeting-id}/date/confirm (response)
+export interface PostConfirmMeetingDateResponse {
+  success: boolean;
+}
+
+// DELETE /api/v1/meetings/{meeting-id}/date/confirm (payload)
+export type DeleteConfirmMeetingDatePayload = number;
+
+// DELETE /api/v1/meetings/{meeting-id}/date/confirm (response)
+export interface DeleteConfirmMeetingDateResponse {
   success: boolean;
 }

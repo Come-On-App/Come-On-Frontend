@@ -3,7 +3,7 @@ import { screen } from '@testing-library/react-native';
 
 import { render } from '@shared/utils/customRender';
 import TestId from '@shared/constants/testIds';
-import { CardInfo } from './type';
+import { ICardInfo } from './type';
 import Card from './Card';
 
 jest.mock('@react-navigation/native', () => {
@@ -18,7 +18,7 @@ jest.mock('@react-navigation/native', () => {
 });
 
 describe('card Compoent', () => {
-  const payload: CardInfo = {
+  const payload: ICardInfo = {
     id: 0,
     uri: '...png',
     people: 30,
