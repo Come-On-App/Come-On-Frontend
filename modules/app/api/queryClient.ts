@@ -37,3 +37,25 @@ export function setQueryData<T>(
 ) {
   queryClient.setQueryData(queryKey, updater);
 }
+
+/**
+ * [react-query] 전달된 쿼리키와 관련된 모든 항목을 업데이트 시킨다.
+ *
+ * @param queryKey 쿼리 키
+ * @param updater 업데이트 함수
+ */
+export function setQueriesData<T>(
+  queryKey: unknown[],
+  updater: (payload: T | undefined) => T | undefined,
+) {
+  queryClient.setQueriesData(queryKey, updater);
+}
+
+/**
+ * [react-query] 전달된 쿼리키와 관련된 모든 항목을 무효화 시킨다.
+ *
+ * @param queryKey 쿼리 키
+ */
+export function invalidateQueries(queryKey: unknown[]) {
+  queryClient.invalidateQueries(queryKey);
+}

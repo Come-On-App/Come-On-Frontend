@@ -22,6 +22,7 @@ export default function Font({
       onPress={onPress}
       style={[defaultStyle, style, { fontFamily }]}
       numberOfLines={numberOfLines}
+      ellipsizeMode="tail"
     >
       {children}
     </Text>

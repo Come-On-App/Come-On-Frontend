@@ -1,51 +1,68 @@
 import { MarkedDates } from 'react-native-calendars/src/types';
-import _ from 'lodash';
+import { memoize, reduce } from 'lodash';
 
-import { getDatesInRange } from '@shared/utils';
+import { generateDateRange } from '@shared/utils';
 import { SelectedDates } from '../components/calendar/type';
 import { customTextStyle } from '../components/calendar/style';
+import { IdayConfig } from './type';
 
+const BACKGROUND_DAY = '#EBF4FE';
 /**
  * 시작 날짜부터 끝 날짜까지 선택된 범위를 캘린더 속성에 맞게 반환한다.
  */
-export default function markedDate(
-  starting: string,
-  ending: string | null,
-): MarkedDates {
-  const backgroundDay = '#EBF4FE';
-  const dayConfig = {
-    color: ending ? backgroundDay : undefined,
+const generateMarkedDate = memoize(
+  (starting: string, ending: string | null): MarkedDates => {
+    const dayConfig = createDayConfig(ending);
+    const startingDate = createStartingDate(starting, dayConfig);
+
+    if (!ending) {
+      return { ...startingDate };
+    }
+
+    const endingDate = createEndingDate(ending, dayConfig);
+    const selectedDates = createSelectedDates(starting, ending);
+
+    return { ...startingDate, ...endingDate, ...selectedDates };
+  },
+  (starting, ending) => `${starting}-${ending || 'null'}`,
+);
+
+function createDayConfig(ending: string | null): IdayConfig {
+  return {
+    color: ending ? BACKGROUND_DAY : undefined,
     customTextStyle,
   };
-  const startingDate = {
+}
+
+function createStartingDate(starting: string, dayConfig: IdayConfig) {
+  return {
     [starting]: {
       startingDay: true,
       ...dayConfig,
     },
   };
+}
 
-  if (!ending) {
-    return { ...startingDate };
-  }
-
-  const markedDates = {
-    ...startingDate,
+function createEndingDate(ending: string, dayConfig: IdayConfig) {
+  return {
     [ending]: {
       endingDay: true,
       ...dayConfig,
     },
   };
-  // 시작 - 끝 중간 범위 값 계산
-  const selectedDates = _.reduce(
-    getDatesInRange(starting, ending),
+}
+
+function createSelectedDates(starting: string, ending: string) {
+  return reduce(
+    generateDateRange(starting, ending),
     (obj: SelectedDates, date) => {
       // eslint-disable-next-line no-param-reassign
-      obj[date] = { color: backgroundDay };
+      obj[date] = { color: BACKGROUND_DAY };
 
       return obj;
     },
     {},
   );
-
-  return { ...markedDates, ...selectedDates };
 }
+
+export default generateMarkedDate;

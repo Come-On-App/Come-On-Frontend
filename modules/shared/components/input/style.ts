@@ -43,7 +43,6 @@ export default makeStyles((theme, multiline: boolean) => {
       color: theme.font.grayscale['500'],
     },
     font: {
-      height: multiline === true ? 100 : 44,
       fontSize: INPUT_FONT_SIZE,
     },
     cPressableInput: {

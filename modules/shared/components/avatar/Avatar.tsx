@@ -20,7 +20,7 @@ export default function Avatar({
   isLoading,
   onPress,
 }: Iavatar) {
-  const { defaultStyle } = useStyle(size);
+  const { defaultStyle } = useStyle({ size, path });
 
   if (isLoading) {
     return (
@@ -38,7 +38,7 @@ export default function Avatar({
       size={size}
       onPress={onPress}
       rounded
-      source={{ uri: path }}
+      source={{ uri: path || undefined }}
       containerStyle={[defaultStyle, containerStyle]}
     >
       {children}

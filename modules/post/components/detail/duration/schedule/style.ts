@@ -13,6 +13,7 @@ export default makeStyles((theme, isFixed: boolean) => {
   return {
     container: {
       flexDirection: 'row',
+      flex: 1,
     },
     divider: {
       backgroundColor: isFixed ? theme.colors.primary : theme.colors.secondary,

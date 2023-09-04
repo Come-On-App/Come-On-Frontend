@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import React, { useState } from 'react';
-import _ from 'lodash';
+import { isNull } from 'lodash';
 
 import { getFormattedDateRange } from '@shared/utils';
 import TestId from '@shared/constants/testIds';
@@ -26,7 +26,7 @@ export default function SearchBar() {
           color: searchBarkIcon.color,
         }}
         text={
-          _.isNull(dateRange.startingDay)
+          isNull(dateRange.startingDay)
             ? INITIAL_VALUE
             : getFormattedDateRange(dateRange)
         }

@@ -10,7 +10,6 @@ import { EMPTY_STRING, invert } from '@shared/utils';
 import useUserManagement from '@account/hooks/useUserManagement';
 import { useQueryDataByUser } from '@account/hooks/useMyInfoQuery';
 import useMyInfoMutation from '@account/hooks/useMyInfoMutation';
-import { withSelectionHaptic } from '@shared/utils/haptics';
 import useStyles from './style';
 import { IrenderIcon } from './type';
 
@@ -27,10 +26,6 @@ export default function NickName() {
   const name = userQueryData?.nickname ?? EMPTY_STRING;
   const { mutateUserNickname, isSubmit } = useMyInfoMutation();
   const [currentInput, setNickName] = useState(name);
-  const [onPressRefresh, onPressSubmit] = withSelectionHaptic(
-    () => setNickName(name),
-    () => mutateUserNickname(currentInput),
-  );
 
   useEffect(() => {
     if (!isLoading) setNickName(name);
@@ -49,8 +44,8 @@ export default function NickName() {
             isSubmit={isSubmit}
             prevName={name}
             currentInput={currentInput}
-            onPressRefresh={onPressRefresh}
-            onPressSubmit={onPressSubmit}
+            onPressRefresh={() => setNickName(name)}
+            onPressSubmit={() => mutateUserNickname(currentInput)}
           />
         }
         label={

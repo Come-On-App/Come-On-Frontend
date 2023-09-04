@@ -6,6 +6,7 @@ import Modal from '@shared/components/modal/Modal';
 import ConfirmCancelButton from '@shared/components/button/ConfirmCancelButton';
 import Message from '@shared/components/modal/display/Message';
 import SubMessage from '@shared/components/modal/display/SubMessage';
+import Spacer from '@shared/components/layout/Spacer';
 import useStyles from './style';
 import { IpostDeletionModal } from './type';
 import config from './config';
@@ -28,7 +29,7 @@ export default function PostDeletionModal({
       onBackdropPress={onPressLeft}
     >
       <Message text={status} />
-      <View style={box} />
+      <Spacer height={box.height} />
       <SubMessage text={subStatus} />
       <View style={cButton}>
         <ConfirmCancelButton

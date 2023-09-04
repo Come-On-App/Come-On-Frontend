@@ -14,6 +14,8 @@ export default function Input({
   rightIcon,
   multiline,
   onSubmitEditing,
+  errorMessage,
+  inputStyle,
 }: Iinput) {
   const { outerContainer, inputContainer, placeholderText, font } =
     useStyles(multiline);
@@ -31,8 +33,9 @@ export default function Input({
       containerStyle={outerContainer}
       inputContainerStyle={inputContainer}
       placeholderTextColor={placeholderText.color}
-      inputStyle={font}
+      inputStyle={[font, inputStyle]}
       onChangeText={onChangeText}
+      errorMessage={errorMessage}
     />
   );
 }

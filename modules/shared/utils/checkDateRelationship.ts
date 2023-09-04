@@ -1,8 +1,8 @@
 import type { DateData } from 'react-native-calendars';
 
 const checkDateRelationship = (
-  endingDay: DateData | null,
   startingDay: DateData | null,
+  endingDay: DateData | null,
   targetDay: DateData,
 ) => {
   // 시작일과 끝일이 모두 비어있는지 확인

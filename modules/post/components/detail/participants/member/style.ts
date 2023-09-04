@@ -22,6 +22,7 @@ export default makeStyles((theme) => {
     },
     font: {
       marginVertical: FONT_MARGIN_VERTICAL,
+      textAlign: 'center',
       fontSize: FONT_SIZE,
       color: theme.font.grayscale['700'],
     },

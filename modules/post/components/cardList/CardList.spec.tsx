@@ -5,7 +5,7 @@ import _ from 'lodash';
 import TestId from '@shared/constants/testIds';
 import { render } from '@shared/utils/customRender';
 import CardList from './CardList';
-import { CardInfo } from '../card/type';
+import { ICardInfo } from '../card/type';
 
 const mockedNavigate = jest.fn();
 
@@ -20,7 +20,7 @@ jest.mock('@react-navigation/native', () => {
   };
 });
 
-const testCase: CardInfo[] = _.range(4).map(() => ({
+const testCase: ICardInfo[] = _.range(4).map(() => ({
   id: 1,
   uri: 'path',
   people: 30,

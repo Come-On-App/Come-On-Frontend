@@ -1,5 +1,6 @@
-import { Imember } from '../member/type';
+import { GetMeetingMembersListResponse } from '@post/api/v2/type';
 
 export interface Imembers {
-  members: Imember[];
+  response: GetMeetingMembersListResponse | undefined;
+  isLoading: boolean;
 }

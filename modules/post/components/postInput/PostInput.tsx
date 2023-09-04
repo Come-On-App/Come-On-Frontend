@@ -13,12 +13,14 @@ import { ImeetingNameInput } from './type';
 
 export default function PostInput({
   title,
+  errorMessage,
   placeholder,
   lengthMax,
   onInput,
   isDataLoading,
   multiline,
   prevMeetingName,
+  inputStyle,
 }: ImeetingNameInput) {
   const { top, screenLayout } = useStyles();
   const [input, setInput] = useState(EMPTY_STRING);
@@ -49,6 +51,8 @@ export default function PostInput({
           text={input}
           placeholder={placeholder}
           onChangeText={onChnageHandler}
+          errorMessage={errorMessage}
+          inputStyle={inputStyle}
         />
       </ScreenLayout>
     </DividerWrapper>

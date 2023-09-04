@@ -1,14 +1,20 @@
 import { describe, expect, test } from '@jest/globals';
-import { render, screen } from '@testing-library/react-native';
+import { screen } from '@testing-library/react-native';
 import { Text, View } from 'react-native';
 
+import { render } from '@shared/utils/customRender';
+import { NavigationContainer } from '@react-navigation/native';
 import Thumbnail from './Thumbnail';
 
 describe('Thumbnail Compoent', () => {
   const path = '@shared/assets/preview01.png';
 
   test('이미지가 올바르게 렌더링 되어야 한다', () => {
-    render(<Thumbnail uri={path} />);
+    render(
+      <NavigationContainer>
+        <Thumbnail uri={path} id={0} />
+      </NavigationContainer>,
+    );
 
     expect(screen.getByTestId('RNE__Image')).toBeOnTheScreen();
   });
@@ -17,11 +23,13 @@ describe('Thumbnail Compoent', () => {
     const text = 'CardTopInfo';
 
     render(
-      <Thumbnail uri={path}>
-        <View>
-          <Text>{text}</Text>
-        </View>
-      </Thumbnail>,
+      <NavigationContainer>
+        <Thumbnail uri={path} id={0}>
+          <View>
+            <Text>{text}</Text>
+          </View>
+        </Thumbnail>
+      </NavigationContainer>,
     );
 
     expect(screen.getByText(text)).toBeOnTheScreen();

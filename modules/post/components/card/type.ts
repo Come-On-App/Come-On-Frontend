@@ -1,4 +1,4 @@
-export interface CardInfo {
+export interface ICardInfo {
   id: number;
   uri: string;
   people: number;
@@ -13,6 +13,6 @@ export interface CardInfo {
   };
 }
 
-export interface Icard {
-  payload: CardInfo;
+export interface ICard {
+  payload: ICardInfo;
 }

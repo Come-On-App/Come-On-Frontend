@@ -51,7 +51,7 @@ describe('MeetingPostReport Compoent', () => {
 
   test('신고 제목과 신고 내용이 입력되었을 때, 신고 버튼이 활성화되어야 한다.', async () => {
     const PLACEHOLDER1 = '제목을 입력해 주세요.';
-    const PLACEHOLDER2 = '신고가 접수되면 자동으로 모임에서 제외됩니다.';
+    const PLACEHOLDER2 = '내용을 작성해 주세요.';
 
     render(Component);
 

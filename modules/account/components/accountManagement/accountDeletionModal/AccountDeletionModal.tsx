@@ -6,6 +6,7 @@ import SubMessage from '@shared/components/modal/display/SubMessage';
 import ConfirmCancelButton from '@shared/components/button/ConfirmCancelButton';
 import TestId from '@shared/constants/testIds';
 import Modal from '@shared/components/modal/Modal';
+import Spacer from '@shared/components/layout/Spacer';
 import useStyles from './style';
 import { IpostDeletionModal } from './type';
 
@@ -30,7 +31,7 @@ export default function AccountDeletionModal({
       onBackdropPress={onPressLeft}
     >
       <Message text={TITLE} />
-      <View style={box} />
+      <Spacer height={box.height} />
       <SubMessage text={SUB_MESSAGE_1} />
       <SubMessage text={SUB_MESSAGE_2} />
       <View style={cButton}>

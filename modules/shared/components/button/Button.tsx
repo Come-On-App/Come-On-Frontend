@@ -15,6 +15,7 @@ export default function Button({
   bold,
   backgroundColor,
   disabled,
+  Icon,
 }: Ibutton) {
   const { defaultStyle, font } = useStyles({ bold, backgroundColor });
 
@@ -22,11 +23,13 @@ export default function Button({
     <RneButton
       testID={TestId.shared.button.default}
       onPress={onPress}
-      title={title}
       buttonStyle={[defaultStyle]}
       titleStyle={[font]}
       disabled={disabled}
-    />
+    >
+      {Icon || null}
+      {title}
+    </RneButton>
   );
 }
 

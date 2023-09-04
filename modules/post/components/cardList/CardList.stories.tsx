@@ -1,7 +1,7 @@
 import { ComponentMeta } from '@storybook/react-native';
 
 import FontThemeProvider from '@shared/provider/FontProvider';
-import DB from '@post/mocks/meetingPostLists';
+import mockMeetingPostList from '@post/mocks/meetingPostList';
 import CardList from './CardList';
 
 type Meta = ComponentMeta<typeof CardList>;
@@ -20,6 +20,6 @@ export default {
 
 export const Default: Meta = {
   args: {
-    payload: DB,
+    payload: mockMeetingPostList,
   },
 };

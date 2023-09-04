@@ -1,12 +1,18 @@
 import { ScrollView } from 'react-native';
 import React from 'react';
+
 import { Imembers } from './type';
 import Member from '../member/Member';
+import MembersSkeleton from '../skeleton/MembersSkeleton';
 
-export default function Members({ members }: Imembers) {
+export default function Members({ response, isLoading }: Imembers) {
+  if (isLoading) {
+    return <MembersSkeleton />;
+  }
+
   return (
     <ScrollView horizontal>
-      {members.map(({ nickname, profileImageUrl }) => (
+      {response?.contents.map(({ nickname, profileImageUrl }) => (
         <Member
           key={nickname + profileImageUrl}
           nickname={nickname}

@@ -1,7 +1,7 @@
 import { Keyboard, ScrollView } from 'react-native';
-import React, { useRef } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import _ from 'lodash';
+import React from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { isNull } from 'lodash';
 import { asyncWave } from 'async-wave';
 
 import Uploader from '@post/components/report/uploader/Uploader';
@@ -14,12 +14,12 @@ import ConfirmCancelButton from '@shared/components/button/ConfirmCancelButton';
 import useReportManagement, {
   ReportState,
 } from '@post/hooks/useReportManagement';
-import useScrollViewAutoScrollOnKeyboard from '@post/hooks/useScrollViewAutoScrollOnKeyboard';
 import { theme } from '@shared/constants/themed';
 import { requestImageURL, requestPostReportMeeting } from '@post/api/v1';
 import { PostNativeStack } from '@post/navigation/type';
 import { PostReportMeetingPayload } from '@post/api/v1/type';
-import { QueryKeys } from '@app/api/type';
+import { QueryKey } from '@app/api/type';
+import { invalidateQueries } from '@app/api/queryClient';
 
 const CONFIRM_TEXT = '모임 신고하기';
 const LOADING_TEXT = '모임 신고중...';
@@ -28,15 +28,13 @@ export default function MeetingPostReportForm({
   navigation,
   route: { params },
 }: PostNativeStack<'MeetingPostReport'>) {
-  const queryClient = useQueryClient();
-  const scrollViewRef = useRef<ScrollView>(null);
   const [state, dispatch] = useReportManagement();
-  const hasChanged = _.isNull(state.title) || _.isNull(state.content);
+  const hasChanged = isNull(state.title) || isNull(state.content);
   const { mutate, isLoading: isSubmit } = useMutation(
     requestPostReportMeeting,
     {
       onSuccess: () => {
-        queryClient.invalidateQueries([QueryKeys.meetings]);
+        invalidateQueries([QueryKey.post, QueryKey.list, params.id]);
         navigation.reset({
           index: 0,
           routes: [{ name: 'MeetingPostList' }],
@@ -45,18 +43,15 @@ export default function MeetingPostReportForm({
     },
   );
 
-  useScrollViewAutoScrollOnKeyboard(scrollViewRef);
-
   return (
     <ScrollView
-      ref={scrollViewRef}
       testID={TestId.post.report}
       bounces={false}
       keyboardShouldPersistTaps="handled"
     >
       <Uploader onImage={dispatch.image} />
       <Title onInput={dispatch.title} />
-      <Content onInput={dispatch.content} />
+      <Content onInput={dispatch.content} hasChanged={hasChanged} />
       <DividerWrapper>
         <ScreenLayout>
           <ConfirmCancelButton

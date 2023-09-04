@@ -1,16 +1,15 @@
-import { View } from 'react-native';
 import React from 'react';
+
 import Font from '@shared/components/font/Font';
 import useStyles from './style';
+import { Imessage } from './type';
 
-export default function Message({ text }: { text: string }) {
+export default function Message({ text, customStyle }: Imessage) {
   const { titleFont } = useStyles();
 
   return (
-    <View>
-      <Font style={titleFont} bold>
-        {text}
-      </Font>
-    </View>
+    <Font style={[titleFont, customStyle]} bold>
+      {text}
+    </Font>
   );
 }

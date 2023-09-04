@@ -34,6 +34,7 @@ const TestId = {
       calender: 'TestId__post_modal_calender',
       invitation: 'TestId__post_modal_invitation',
       deletion: 'TestId__post_modal_deletion',
+      vote: 'TestId__post_modal_vote',
     },
     button: {
       create: 'TestId__post_meeting_create_button',

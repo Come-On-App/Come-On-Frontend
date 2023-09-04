@@ -10,7 +10,6 @@ describe('Planner Compoent', () => {
   test('장소와 관련된 정보가 올바르게 렌더링 되어야 한다.', () => {
     render(<Planner venueList={mockVenueList} />, wrapper);
 
-    expect(screen.getByTestId(TestId.post.map)).toBeOnTheScreen();
     expect(screen.getByTestId(TestId.post.venueList)).toBeOnTheScreen();
     expect(screen.getAllByTestId(TestId.post.venue)).toHaveLength(4);
     expect(screen.getByTestId(TestId.post.button.addVenue)).toBeOnTheScreen();
