@@ -7,14 +7,12 @@ export default makeStyles((theme) => {
     PADDING_VERTICAL,
     PADDING_HORIZONTAL,
     MARGIN_LEFT,
-    HEIGHT,
     FONT_SIZE,
   ] = applyRelativeSizes({
     borderRadius: 2,
     paddingVertical: 1,
     paddingHorizontal: 3,
     marginLeft: 4,
-    height: 15,
     fontSize: theme.font.type.caption.fontSize,
   });
 
@@ -26,7 +24,6 @@ export default makeStyles((theme) => {
       backgroundColor: theme.font.grayscale['200'],
       alignSelf: 'center',
       marginLeft: MARGIN_LEFT,
-      height: HEIGHT,
     },
     font: {
       color: theme.font.grayscale['500'],
