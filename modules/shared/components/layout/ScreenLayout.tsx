@@ -1,7 +1,7 @@
 import { ScrollView, View } from 'react-native';
 import React from 'react';
 
-import { IscreenLayout } from './type';
+import { IScreenLayout } from './type';
 import useStyles from './style';
 
 /**
@@ -12,7 +12,7 @@ export default function ScreenLayout({
   testID,
   containerStyle,
   scroll,
-}: IscreenLayout) {
+}: IScreenLayout) {
   const { container } = useStyles();
   const Component = scroll ? ScrollView : View;
 
