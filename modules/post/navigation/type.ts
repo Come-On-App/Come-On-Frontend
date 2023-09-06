@@ -16,13 +16,15 @@ export type PostStackParamList = {
 
 type PostRouteNames = keyof PostStackParamList;
 
+export type PostScreenProps = NativeStackScreenProps<PostStackParamList>;
+
 export type PostNativeStack<T extends PostRouteNames> = NativeStackScreenProps<
   PostStackParamList,
   T
 >;
 
-export type PostListNavigation =
-  PostNativeStack<'MeetingPostList'>['navigation'];
+export type PostNavigation<T extends PostRouteNames> =
+  PostNativeStack<T>['navigation'];
 
 export interface IpostNavigator {
   children: React.ReactNode;

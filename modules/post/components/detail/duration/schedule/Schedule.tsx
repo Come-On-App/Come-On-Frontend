@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { formatDateRange } from '@shared/utils';
 import Font from '@shared/components/font/Font';
-import { PostListNavigation } from '@post/navigation/type';
+import { PostNavigation } from '@post/navigation/type';
 import useDetailManagement from '@post/hooks/useDetailManagement';
 import { Ischedule } from './type';
 import useStyles from './style';
@@ -14,7 +14,7 @@ export default function Schedule(props: Ischedule) {
   const isFixed = Boolean(fixedDate);
   const { container, cFont, descriptionFont, divider, rangeFont } =
     useStyles(isFixed);
-  const navigation = useNavigation<PostListNavigation>();
+  const navigation = useNavigation<PostNavigation<'MeetingVote'>>();
   const { dispatchVotingStatus, dispatchFixedDate } = useDetailManagement();
 
   useEffect(() => {

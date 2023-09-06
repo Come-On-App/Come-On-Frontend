@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { ScreenTitle } from '@shared/components/font/Font';
 import PressableInput from '@shared/components/input/PressableInput';
-import { PostListNavigation } from '@post/navigation/type';
+import { PostNavigation } from '@post/navigation/type';
 import ScreenLayout from '@shared/components/layout/ScreenLayout';
 import DividerWrapper from '@shared/components/layout/DividerWrapper';
 import ContentHeader from '@shared/components/layout/ContentHeader';
@@ -18,7 +18,7 @@ export default function DateRange({
   dateRange,
 }: ItimeRange) {
   const { container, icon, font } = useStyles();
-  const navigation = useNavigation<PostListNavigation>();
+  const navigation = useNavigation<PostNavigation<'MeetingDateSelector'>>();
 
   return (
     <DividerWrapper>

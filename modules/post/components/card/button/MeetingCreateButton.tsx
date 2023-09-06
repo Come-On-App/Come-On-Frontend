@@ -4,11 +4,11 @@ import React from 'react';
 import TestId from '@shared/constants/testIds';
 import IconButton from '@shared/components/button/IconButton';
 import { useNavigation } from '@react-navigation/native';
-import { PostListNavigation } from '@post/navigation/type';
+import { PostNavigation } from '@post/navigation/type';
 import useStyles from './style';
 
 export default function MeetingCreateButton() {
-  const navigation = useNavigation<PostListNavigation>();
+  const navigation = useNavigation<PostNavigation<'MeetingPostCreation'>>();
   const {
     buttonIcon: { color, size },
     cButtonIcon,
