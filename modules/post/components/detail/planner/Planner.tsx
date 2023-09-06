@@ -8,13 +8,10 @@ import ContentHeader from '@shared/components/layout/ContentHeader';
 import VenueList from './venueList/VenueList';
 import AddVenue from './addVenue/AddVenue';
 import { Iplanner } from './type';
-import useStyles from './style';
 
 const TITLE = '모임 장소';
 
 export default function Planner({ venueList }: Iplanner) {
-  const { cVenueList } = useStyles();
-
   return (
     <DividerWrapper>
       <ScreenLayout>

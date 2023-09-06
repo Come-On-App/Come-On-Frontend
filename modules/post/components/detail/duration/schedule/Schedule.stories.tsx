@@ -32,7 +32,16 @@ export default {
 } as Meta;
 
 export const Schedule: Meta = {
-  args: {},
+  args: {
+    range: {
+      startFrom: '2023-06-10',
+      endTo: '2023-06-10',
+    },
+    fixedDate: null,
+    isHost: false,
+    members: [],
+    votingStatus: { contents: [], contentsCount: 0 },
+  },
 };
 
 export const FixedSchedule: Meta = {
@@ -41,6 +50,12 @@ export const FixedSchedule: Meta = {
       startFrom: '2023-06-10',
       endTo: '2023-06-10',
     },
-    isFixed: true,
+    fixedDate: {
+      startFrom: '2023-06-10',
+      endTo: '2023-06-10',
+    },
+    isHost: false,
+    members: [],
+    votingStatus: { contents: [], contentsCount: 0 },
   },
 };
