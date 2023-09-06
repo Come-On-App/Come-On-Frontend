@@ -6,7 +6,7 @@ export interface IContentHeader {
   customStyle?: StyleProp<ViewStyle>;
 }
 
-export type DividerPosition = 'top' | 'bottom' | 'both';
+export type DividerPosition = 'top' | 'bottom' | 'both' | 'none';
 
 export interface IDividerWrapper {
   width?: number;

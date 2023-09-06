@@ -1,4 +1,5 @@
 import { OnChangeText } from '@shared/components/input/type';
+import { DividerPosition } from '@shared/components/layout/type';
 import { StyleProp, TextStyle } from 'react-native';
 
 export interface ImeetingNameInput {
@@ -11,4 +12,5 @@ export interface ImeetingNameInput {
   isDataLoading?: boolean;
   multiline?: boolean;
   inputStyle?: StyleProp<TextStyle>;
+  dividerPosition?: DividerPosition;
 }

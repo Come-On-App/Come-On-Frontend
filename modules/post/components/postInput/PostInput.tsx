@@ -21,6 +21,7 @@ export default function PostInput({
   multiline,
   prevMeetingName,
   inputStyle,
+  dividerPosition,
 }: ImeetingNameInput) {
   const { top, screenLayout } = useStyles();
   const [input, setInput] = useState(EMPTY_STRING);
@@ -37,7 +38,7 @@ export default function PostInput({
   }, [prevMeetingName]);
 
   return (
-    <DividerWrapper>
+    <DividerWrapper position={dividerPosition}>
       <ScreenLayout containerStyle={screenLayout}>
         <ContentHeader>
           <View style={top}>

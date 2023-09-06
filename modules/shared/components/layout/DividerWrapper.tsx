@@ -1,8 +1,8 @@
 import React from 'react';
-
 import { Divider } from '@rneui/themed';
 import { View } from 'react-native';
 
+import TestId from '@shared/constants/testIds';
 import useStyles from './style';
 import { IDividerWrapper } from './type';
 
@@ -18,6 +18,10 @@ export default function DividerWrapper({
   const shouldRenderTopDivider = position === 'top' || position === 'both';
   const shouldRenderBottomDivider =
     position === 'bottom' || position === 'both';
+
+  if (position === 'none') {
+    return <View testID={TestId.shared.divider.none}>{children}</View>;
+  }
 
   return (
     <View>

@@ -62,6 +62,9 @@ const TestId = {
       badge: 'TestId__shared_avatar_badge',
     },
     calender: 'TestId__shared_calender',
+    divider: {
+      none: 'TestId__shared_none_divider',
+    },
   },
 } as const;
 
