@@ -4,13 +4,13 @@ import React from 'react';
 import TestId from '@shared/constants/testIds';
 import Title from './text/Title';
 import Category from './category/Category';
-import { InoteCard } from './type';
+import { INoteCard } from './type';
 import Content from './text/Content';
 import Address from './text/Address';
 import NoteCardMenu from './menu/Menu';
 import useStyles from './style';
 
-export default function NoteCard({ info }: InoteCard) {
+export default function NoteCard({ info, showRightIcon }: INoteCard) {
   const { container, cTitle, cMenu, cContent, cDescription } = useStyles();
 
   return (
@@ -28,9 +28,11 @@ export default function NoteCard({ info }: InoteCard) {
         </View>
       </View>
       {/* 카드 오른쪽 메뉴 */}
-      <View style={cMenu}>
-        <NoteCardMenu />
-      </View>
+      {showRightIcon ? (
+        <View style={cMenu}>
+          <NoteCardMenu />
+        </View>
+      ) : null}
     </View>
   );
 }

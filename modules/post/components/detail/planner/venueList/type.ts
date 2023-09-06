@@ -1,5 +1,5 @@
-import { Ivenue } from '../venue/type';
+import { IVenue } from '../venue/type';
 
 export interface IvenueList {
-  data: Ivenue[];
+  data: IVenue[];
 }

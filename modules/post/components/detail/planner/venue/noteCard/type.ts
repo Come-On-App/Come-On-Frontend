@@ -7,6 +7,7 @@ export interface NoteCardInfo {
   type: CategoryType;
 }
 
-export interface InoteCard {
+export interface INoteCard {
   info: NoteCardInfo;
+  showRightIcon?: boolean;
 }

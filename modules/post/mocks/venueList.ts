@@ -1,4 +1,4 @@
-import { Ivenue } from '@post/components/detail/planner/venue/type';
+import { IVenue } from '@post/components/detail/planner/venue/type';
 
 export default [
   {
@@ -37,4 +37,4 @@ export default [
       type: '음식점',
     },
   },
-] as Ivenue[];
+] as IVenue[];

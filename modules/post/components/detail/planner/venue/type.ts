@@ -1,6 +1,7 @@
 import { NoteCardInfo } from './noteCard/type';
 
-export interface Ivenue {
+export interface IVenue {
   order: number;
   info: NoteCardInfo;
+  showRightIcon?: boolean;
 }

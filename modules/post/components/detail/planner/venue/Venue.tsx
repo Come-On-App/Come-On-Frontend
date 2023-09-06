@@ -4,10 +4,10 @@ import React from 'react';
 import TestId from '@shared/constants/testIds';
 import Order from './order/Order';
 import NoteCard from './noteCard/NoteCard';
-import { Ivenue } from './type';
+import { IVenue } from './type';
 import useStyles from './style';
 
-export default function Venue({ order, info }: Ivenue) {
+export default function Venue({ order, info, showRightIcon = true }: IVenue) {
   const { container, cNoteCard, cOrder } = useStyles();
 
   return (
@@ -16,7 +16,7 @@ export default function Venue({ order, info }: Ivenue) {
         <Order order={order} />
       </View>
       <View style={cNoteCard}>
-        <NoteCard info={info} />
+        <NoteCard info={info} showRightIcon={showRightIcon} />
       </View>
     </View>
   );
