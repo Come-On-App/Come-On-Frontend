@@ -1,27 +1,31 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { Input as RnInput } from '@rneui/themed';
+
 import useStyles from './style';
+import { IInput, RNEInputRef } from './type';
 
-import { Iinput } from './type';
-
-export default function Input({
-  text,
-  placeholder,
-  onChangeText,
-  label,
-  disabled,
-  maxLength,
-  rightIcon,
-  multiline,
-  onSubmitEditing,
-  errorMessage,
-  inputStyle,
-}: Iinput) {
+const Input = forwardRef<RNEInputRef, IInput>((props, ref) => {
+  const {
+    text,
+    placeholder,
+    onChangeText,
+    label,
+    disabled,
+    maxLength,
+    rightIcon,
+    multiline,
+    onSubmitEditing,
+    errorMessage,
+    inputStyle,
+    returnKeyType,
+    blurOnSubmit,
+  } = props;
   const { outerContainer, inputContainer, placeholderText, font } =
     useStyles(multiline);
 
   return (
     <RnInput
+      ref={ref}
       onSubmitEditing={onSubmitEditing}
       multiline={multiline}
       disabled={disabled}
@@ -36,6 +40,10 @@ export default function Input({
       inputStyle={[font, inputStyle]}
       onChangeText={onChangeText}
       errorMessage={errorMessage}
+      returnKeyType={returnKeyType}
+      blurOnSubmit={blurOnSubmit}
     />
   );
-}
+});
+
+export default Input;

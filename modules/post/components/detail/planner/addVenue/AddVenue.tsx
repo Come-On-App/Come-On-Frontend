@@ -8,7 +8,7 @@ import Icon from '@shared/components/icon/Icon';
 import { PostNavigation } from '@post/navigation/type';
 import useStyles from './style';
 
-const DESCRIPTION = '새로운 장소를 추가해 보세요!';
+const DESCRIPTION = '새로운 모임 카드를 추가해 보세요!';
 
 export default function AddVenue() {
   const { container, font, icon } = useStyles();

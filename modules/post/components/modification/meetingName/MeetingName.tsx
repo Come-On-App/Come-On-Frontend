@@ -24,7 +24,7 @@ export default function MeetingName({
       placeholder={prevMeetingName || PLACEHOLDER}
       lengthMax={LENGTH_MAX}
       onInput={dispatchName}
-      prevMeetingName={name}
+      prevPayload={name}
     />
   );
 }

@@ -22,7 +22,6 @@ export default function Content({
       lengthMax={LENGTH_MAX}
       onInput={onInput}
       placeholder={PLACEHOLDER}
-      inputStyle={{ alignSelf: 'flex-start' }}
       errorMessage={hasChanged ? undefined : MESSAGE}
     />
   );

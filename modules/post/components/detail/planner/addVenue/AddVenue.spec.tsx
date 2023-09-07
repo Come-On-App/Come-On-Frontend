@@ -18,6 +18,8 @@ describe('addVenue Compoent', () => {
 
     expect(screen.getByTestId('RNE__ICON')).toBeOnTheScreen();
 
-    expect(screen.getByText('새로운 장소를 추가해 보세요!')).toBeOnTheScreen();
+    expect(
+      screen.getByText('새로운 모임 카드를 추가해 보세요!'),
+    ).toBeOnTheScreen();
   });
 });

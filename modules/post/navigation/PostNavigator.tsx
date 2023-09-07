@@ -41,7 +41,11 @@ export default function Navigation({
     <PostNavigator initialRouteName={initialRouteName}>
       <Screen name="MeetingPostList" component={MeetingDashboard} />
       <Screen name="MeetingPostCreation" component={MeetingPostCreator} />
-      <Screen name="MeetingPostModification" component={MeetingPostModifier} />
+      <Screen
+        name="MeetingPostModification"
+        component={MeetingPostModifier}
+        initialParams={{ id: ONLY_TEST_ID }}
+      />
       <Screen name="MeetingPostReport" component={MeetingPostReportForm} />
       <Screen
         name="MeetingDateSelector"

@@ -3,7 +3,7 @@ import React from 'react';
 
 import TestId from '@shared/constants/testIds';
 import Order from './order/Order';
-import NoteCard from './noteCard/NoteCard';
+import NoteCard from './card/NoteCard';
 import { IVenue } from './type';
 import useStyles from './style';
 

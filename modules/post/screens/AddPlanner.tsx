@@ -1,38 +1,20 @@
 import React from 'react';
+import { ScrollView } from 'react-native';
 
-import DividerWrapper from '@shared/components/layout/DividerWrapper';
-import ScreenLayout from '@shared/components/layout/ScreenLayout';
-import ContentHeader from '@shared/components/layout/ContentHeader';
-import { ScreenTitle } from '@shared/components/font/Font';
-import Venue from '@post/components/detail/planner/venue/Venue';
+import Preview from '@post/components/detail/planner/preview/Preview';
+import Tag from '@post/components/detail/planner/creation/tag/Tag';
+import Content from '@post/components/detail/planner/creation/content/Content';
+import NextStepButton from '@post/components/detail/planner/creation/button/NextStep';
+
+const NO_BOUNCES = false;
 
 export default function AddPlanner() {
   return (
-    <>
-      <DividerWrapper>
-        <ScreenLayout>
-          <ContentHeader>
-            <ScreenTitle>미리보기</ScreenTitle>
-          </ContentHeader>
-          <Venue
-            order={1}
-            info={{
-              title: '카드 제목',
-              content: '카드 내용',
-              address: '주소',
-              type: '기타',
-            }}
-            showRightIcon={false}
-          />
-        </ScreenLayout>
-      </DividerWrapper>
-      <DividerWrapper>
-        <ScreenLayout>
-          <ContentHeader>
-            <ScreenTitle>AddPlanner</ScreenTitle>
-          </ContentHeader>
-        </ScreenLayout>
-      </DividerWrapper>
-    </>
+    <ScrollView bounces={NO_BOUNCES}>
+      <Preview />
+      <Tag />
+      <Content />
+      <NextStepButton />
+    </ScrollView>
   );
 }

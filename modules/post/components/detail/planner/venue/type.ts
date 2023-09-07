@@ -1,4 +1,4 @@
-import { NoteCardInfo } from './noteCard/type';
+import { NoteCardInfo } from './card/type';
 
 export interface IVenue {
   order: number;
