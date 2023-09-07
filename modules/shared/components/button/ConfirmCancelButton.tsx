@@ -3,7 +3,7 @@ import React from 'react';
 
 import Button from '@shared/components/button/Button';
 import useStyles from './style';
-import { IconfirmCancelButton } from './type';
+import { IConfirmCancelButton } from './type';
 
 const CANCEL = '취소';
 const CONFIRM = '완료';
@@ -18,7 +18,7 @@ export default function ConfirmCancelButton({
   rightDisabled,
   leftButtonColor,
   rightButtonColor,
-}: IconfirmCancelButton) {
+}: IConfirmCancelButton) {
   const { area, leftArea, rightArea, leftButton, rightButton } = useStyles({
     leftButtonColor,
     rightButtonColor,

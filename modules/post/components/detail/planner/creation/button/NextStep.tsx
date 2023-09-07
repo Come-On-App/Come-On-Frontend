@@ -20,7 +20,7 @@ export default function NextStepButton() {
         <ConfirmCancelButton
           rightDisabled={isEmpty(plannerState.title)}
           onPressLeft={() => navigation.goBack()}
-          onPressRight={() => null}
+          onPressRight={() => navigation.navigate('MeetingPlannerDetail')}
           confirmText={RIGHT_BUTTON_TEXT}
         />
       </ScreenLayout>

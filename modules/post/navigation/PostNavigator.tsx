@@ -13,7 +13,8 @@ import MeetingPostDetail from '@post/screens/MeetingPostDetail';
 import MeetingPostModifier from '@post/screens/MeetingPostModifier';
 import MeetingPostReportForm from '@post/screens/MeetingPostReportForm';
 import MeetingVote from '@post/screens/MeetingVote';
-import AddPlanner from '@post/screens/AddPlanner';
+import MeetingPlanner from '@post/screens/MeetingPlanner';
+import MeetingPlannerDetail from '@post/screens/MeetingPlannerDetail';
 
 const { Screen, Navigator } = createNativeStackNavigator<PostStackParamList>();
 
@@ -58,7 +59,8 @@ export default function Navigation({
         initialParams={{ id: ONLY_TEST_ID }}
       />
       <Screen name="MeetingVote" component={MeetingVote} />
-      <Screen name="MeetingPlanner" component={AddPlanner} />
+      <Screen name="MeetingPlanner" component={MeetingPlanner} />
+      <Screen name="MeetingPlannerDetail" component={MeetingPlannerDetail} />
     </PostNavigator>
   );
 }

@@ -12,6 +12,7 @@ export type PostStackParamList = {
   MeetingPostModification: { id: number };
   MeetingVote: Omit<Ischedule, 'votingStatus' | 'fixedDate'>;
   MeetingPlanner: undefined;
+  MeetingPlannerDetail: undefined;
 };
 
 type PostRouteNames = keyof PostStackParamList;

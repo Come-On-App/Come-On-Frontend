@@ -3,7 +3,7 @@ import React from 'react';
 
 import TestId from '@shared/constants/testIds';
 import Icon from '../icon/Icon';
-import { IiconButton } from './type';
+import { IIconButton } from './type';
 
 export default function IconButton({
   onPress,
@@ -11,7 +11,7 @@ export default function IconButton({
   size,
   name,
   _pressed,
-}: IiconButton) {
+}: IIconButton) {
   return (
     <View style={{ width: size }}>
       <Pressable

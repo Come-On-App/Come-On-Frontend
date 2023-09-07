@@ -3,7 +3,7 @@ import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 import { IconName } from '../icon/type';
 
-export interface IiconButton {
+export interface IIconButton {
   onPress: () => void;
   color: string;
   size: number;
@@ -11,7 +11,7 @@ export interface IiconButton {
   _pressed?: boolean;
 }
 
-export interface Ibutton {
+export interface IButton {
   onPress: () => void;
   title: string;
   bold?: boolean;
@@ -20,7 +20,7 @@ export interface Ibutton {
   Icon?: ReactNode;
 }
 
-export interface IappleButton {
+export interface IAppleButton {
   buttonStyle?: StyleProp<ViewStyle>;
   fontStyle?: StyleProp<TextStyle>;
   title: string;
@@ -29,7 +29,7 @@ export interface IappleButton {
   onPress: () => void;
 }
 
-export interface IconfirmCancelButton {
+export interface IConfirmCancelButton {
   containerStyle?: StyleProp<ViewStyle>;
   cancelText?: string;
   confirmText?: string;
@@ -39,4 +39,9 @@ export interface IconfirmCancelButton {
   rightDisabled?: boolean;
   leftButtonColor?: string;
   rightButtonColor?: string;
+}
+
+export interface IAddButton {
+  testID?: string;
+  onPress: () => void;
 }
