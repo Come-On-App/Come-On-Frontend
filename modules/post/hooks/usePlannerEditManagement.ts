@@ -12,18 +12,18 @@ import {
   updateField,
   updatePlannerState,
   updateFieldStatus,
-} from '@post/features/detail/planner/plannerSlice';
+} from '@post/features/detail/planner/plannerEditSlice';
 import { MetaData } from '@post/components/detail/planner/customField/type';
 import { CategoryKey } from '@post/api/v2/type';
 import { PlannerState } from '@post/features/detail/planner/type';
 
 /**
- * [redux] post planner 상태, 디스패치를 반환한다.
+ * [redux] post Edit planner 상태, 디스패치를 반환한다.
  */
-export default function usePlannerManagement() {
+export default function usePlannerEditManagement() {
   const dispatch = useAppDispatch();
-  const plannerState = useAppSelector(
-    (state) => state.planner,
+  const plannerEditState = useAppSelector(
+    (state) => state.plannerEdit,
     (prev, next) => {
       // 배열의 동일성을 검사하는 로직
       return JSON.stringify(prev) === JSON.stringify(next);
@@ -88,7 +88,7 @@ export default function usePlannerManagement() {
   }, [dispatch]);
 
   return {
-    plannerState,
+    plannerState: plannerEditState,
     dispatchState,
     dispatchTitle,
     dispatchContent,

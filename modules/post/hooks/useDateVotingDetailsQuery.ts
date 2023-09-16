@@ -1,4 +1,4 @@
-import { QueryKey } from '@app/api/type';
+import { QueryKeys } from '@app/api/type';
 import { requestGetDateVotingDetails } from '@post/api/v1';
 import { useQuery } from '@tanstack/react-query';
 
@@ -10,7 +10,7 @@ export default function useDateVotingDetailsQuery(
   dateString: string,
 ) {
   return useQuery({
-    queryKey: [QueryKey.detail, QueryKey.vote, dateString],
+    queryKey: QueryKeys.postVoteDate(dateString),
     queryFn: ({ signal }) => {
       return requestGetDateVotingDetails(
         { meetingId, date: dateString },

@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { QueryKey } from '@app/api/type';
+import { QueryKeys } from '@app/api/type';
 import { requestGetMeetingMemberMe } from '@post/api/v2';
 import { GetMeetingMemberMeResponse } from '@post/api/v2/type';
 
@@ -9,7 +9,7 @@ import { GetMeetingMemberMeResponse } from '@post/api/v2/type';
  */
 export default function useMeetingMemberMeQuery(meetingId: number) {
   return useQuery({
-    queryKey: [QueryKey.detail, QueryKey.user, QueryKey.self, meetingId],
+    queryKey: QueryKeys.postUserSelf(meetingId),
     queryFn: ({ signal }) => requestGetMeetingMemberMe(meetingId, signal),
   });
 }
@@ -19,12 +19,9 @@ export default function useMeetingMemberMeQuery(meetingId: number) {
  */
 export function useQueryDataByMeetingMemberMe(meetingId: number) {
   const queryClient = useQueryClient();
-  const prevData = queryClient.getQueryData<GetMeetingMemberMeResponse>([
-    QueryKey.detail,
-    QueryKey.user,
-    QueryKey.self,
-    meetingId,
-  ]);
+  const prevData = queryClient.getQueryData<GetMeetingMemberMeResponse>(
+    QueryKeys.postUserSelf(meetingId),
+  );
 
   return prevData;
 }

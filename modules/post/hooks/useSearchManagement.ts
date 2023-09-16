@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { shallowEqual } from 'react-redux';
 import { useAppDispatch, useAppSelector } from '@app/hooks/useAppRedux';
 
 import { DateInfo } from '@shared/components/calendar/type';
@@ -9,7 +10,7 @@ import { updateDateRange, init } from '@post/features/search/searchSlice';
  */
 export default function useSearchManagement() {
   const dispatch = useAppDispatch();
-  const searchState = useAppSelector((state) => state.search);
+  const searchState = useAppSelector((state) => state.search, shallowEqual);
   const dispatchSearchRange = useCallback(
     (startingDay: DateInfo, endingDay: DateInfo) => {
       const newPayload = {
