@@ -2,10 +2,10 @@ import { View } from 'react-native';
 import React from 'react';
 
 import Font from '@shared/components/font/Font';
+import { CategoryLabel } from '@post/api/v2/type';
 import useStyles from './style';
-import { CategoryType } from './type';
 
-export default function Category({ type }: { type: CategoryType }) {
+export default function Category({ type }: { type: CategoryLabel }) {
   const { container, font } = useStyles();
 
   return (

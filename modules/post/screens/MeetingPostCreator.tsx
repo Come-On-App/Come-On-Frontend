@@ -12,12 +12,12 @@ import TestId from '@shared/constants/testIds';
 import { requestCreateMeetings, requestImageURL } from '@post/api/v1';
 import { PostNativeStack } from '@post/navigation/type';
 import { isPostFormValid } from '@shared/utils';
-import { QueryKey } from '@app/api/type';
 import MeetingNameInput from '@post/components/creation/meetingName/MeetingName';
 import usePostManagement from '@post/hooks/usePostManagement';
 import type { ValidatedPostState, PostState } from '@post/features/post/type';
 import { PostMeetingPayload } from '@post/api/v1/type';
 import { invalidateQueries } from '@app/api/queryClient';
+import { QueryKey } from '@app/api/type';
 
 const CONFIRM_TEXT = '모임 만들기';
 const LOADING_TEXT = '모임 생성중...';

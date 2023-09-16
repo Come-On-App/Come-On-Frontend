@@ -1,7 +1,7 @@
 import { makeStyles } from '@rneui/themed';
 import { applyRelativeSizes } from '@shared/utils';
 
-export default makeStyles((theme) => {
+export default makeStyles((theme, showRightIcon?: boolean) => {
   const [
     CONTAINER_BORDER_WIDHT,
     CONTAINER_BORDER_RADIUS,
@@ -28,7 +28,8 @@ export default makeStyles((theme) => {
       overflow: 'hidden',
     },
     cContent: {
-      maxWidth: '80%',
+      maxWidth: showRightIcon ? '80%' : '100%',
+      width: showRightIcon ? '80%' : '100%',
       justifyContent: 'center',
     },
     cTitle: {

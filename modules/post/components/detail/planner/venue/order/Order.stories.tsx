@@ -1,6 +1,5 @@
 import { ComponentMeta } from '@storybook/react-native';
 
-import FontThemeProvider from '@shared/provider/FontProvider';
 import Component from './Order';
 import { View } from 'react-native';
 
@@ -11,11 +10,9 @@ export default {
   component: Component,
   decorators: [
     (Story) => (
-      <FontThemeProvider>
-        <View style={{ margin: 10 }}>
-          <Story />
-        </View>
-      </FontThemeProvider>
+      <View style={{ margin: 10 }}>
+        <Story />
+      </View>
     ),
   ],
 } as Meta;

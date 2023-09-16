@@ -18,7 +18,7 @@ import { theme } from '@shared/constants/themed';
 import { requestImageURL, requestPostReportMeeting } from '@post/api/v1';
 import { PostNativeStack } from '@post/navigation/type';
 import { PostReportMeetingPayload } from '@post/api/v1/type';
-import { QueryKey } from '@app/api/type';
+import { QueryKeys } from '@app/api/type';
 import { invalidateQueries } from '@app/api/queryClient';
 
 const CONFIRM_TEXT = '모임 신고하기';
@@ -34,7 +34,7 @@ export default function MeetingPostReportForm({
     requestPostReportMeeting,
     {
       onSuccess: () => {
-        invalidateQueries([QueryKey.post, QueryKey.list, params.id]);
+        invalidateQueries(QueryKeys.post(params.id));
         navigation.reset({
           index: 0,
           routes: [{ name: 'MeetingPostList' }],

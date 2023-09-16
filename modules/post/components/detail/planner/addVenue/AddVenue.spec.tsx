@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import TestId from '@shared/constants/testIds';
 import { render } from '@shared/utils/customRender';
-import AddVenue from './AddVenue';
+import AddVenue from './AddVenueButton';
 
 describe('addVenue Compoent', () => {
   test('장소를 추가할 수 있는 버튼이 올바르게 렌더링 되어야 한다.', () => {

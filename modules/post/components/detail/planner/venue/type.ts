@@ -1,7 +1,6 @@
-import { NoteCardInfo } from './card/type';
+import { ExtendedMeetingPlace } from '@post/api/v1/type';
 
 export interface IVenue {
-  order: number;
-  info: NoteCardInfo;
   showRightIcon?: boolean;
+  data: ExtendedMeetingPlace;
 }

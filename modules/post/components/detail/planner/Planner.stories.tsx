@@ -1,9 +1,9 @@
-import { ComponentMeta } from '@storybook/react-native';
+import { ComponentMeta, ComponentStory } from '@storybook/react-native';
 
-import FontThemeProvider from '@shared/provider/FontProvider';
 import Component from './Planner';
-import mockVenueList from '@post/mocks/venueList';
-import { ScrollView, View } from 'react-native';
+import { ScrollView } from 'react-native';
+import store from '@app/redux/store';
+import { updateCurrentPostId } from '@post/features/detail/detailSlice';
 
 type Meta = ComponentMeta<typeof Component>;
 
@@ -19,8 +19,11 @@ export default {
   ],
 } as Meta;
 
-export const Planner: Meta = {
-  args: {
-    venueList: mockVenueList,
-  },
+type MeetingDatePickerStory = ComponentStory<typeof Component>;
+
+export const Planner: MeetingDatePickerStory = () => {
+  // 특정 포스트 게시물 아이디 재현
+  store.dispatch(updateCurrentPostId(1));
+
+  return <Component />;
 };
