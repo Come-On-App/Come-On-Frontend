@@ -15,7 +15,12 @@ export default function Thumbnail({ uri, children, id }: IThumbnail) {
       transition
       style={ImageContianer}
       source={{ uri }}
-      onPress={() => navigation.navigate('MeetingPostDetail', { id })}
+      onPress={() =>
+        navigation.navigate('MeetingPostDetail', {
+          screen: 'PostDetail',
+          params: { id },
+        })
+      }
     >
       {children}
     </Card.Image>

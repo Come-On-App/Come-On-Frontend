@@ -8,7 +8,7 @@ import {
 } from '@post/api/v1';
 import { setQueryData } from '@app/api/queryClient';
 import { GetMeetingDetailResponse } from '@post/api/v2/type';
-import { QueryKey } from '@app/api/type';
+import { QueryKeys } from '@app/api/type';
 import useDetailManagement from '@post/hooks/useDetailManagement';
 import { PostConfirmMeetingDatePayload } from '@post/api/v1/type';
 import { IConfirmMeetingDateButton } from './type';
@@ -78,7 +78,7 @@ const handleMeetingDateMutation = (
   payload: PostConfirmMeetingDatePayload | null,
 ) => {
   setQueryData<GetMeetingDetailResponse>(
-    [QueryKey.post, QueryKey.detail, meetingId],
+    QueryKeys.postDetail(meetingId),
     (oldData) => updateMeetingDetail(oldData, payload),
   );
 };

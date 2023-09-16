@@ -8,7 +8,38 @@ export enum QueryKey {
   members = 'members',
   code = 'code',
   vote = 'vote',
+  venue = 'venue',
 }
+
+export const QueryKeys = {
+  venueList: (postId: number) => [
+    QueryKey.detail,
+    QueryKey.venue,
+    QueryKey.list,
+    postId,
+  ],
+  meetingCardList: (paramater: {
+    dateFrom: string | undefined;
+    dateTo: string | undefined;
+  }) => [QueryKey.post, QueryKey.list, paramater],
+  post: (postId: number) => [QueryKey.post, QueryKey.list, postId],
+  postDetail: (postId: number) => [QueryKey.post, QueryKey.detail, postId],
+  postVoteDetail: (postId: number) => [
+    QueryKey.detail,
+    QueryKey.vote,
+    QueryKey.list,
+    postId,
+  ],
+  postUserSelf: (postId: number) => [
+    QueryKey.detail,
+    QueryKey.user,
+    QueryKey.self,
+    postId,
+  ],
+  postVoteDate: (date: string) => [QueryKey.detail, QueryKey.vote, date],
+  postMembers: (postId: number) => [QueryKey.detail, QueryKey.members, postId],
+  postCode: (postId: number) => [QueryKey.post, QueryKey.code, postId],
+};
 
 export interface SliceResponse<T> {
   currentSlice: number;

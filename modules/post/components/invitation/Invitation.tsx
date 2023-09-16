@@ -5,7 +5,7 @@ import * as Clipboard from 'expo-clipboard';
 import * as Haptics from 'expo-haptics';
 import { asyncWave } from 'async-wave';
 
-import { QueryKey } from '@app/api/type';
+import { QueryKeys } from '@app/api/type';
 import { requestGetEntryCode, requestPostEntryCode } from '@post/api/v1';
 import { isExpiry } from '@shared/utils';
 import { PostEntryCodeResponse } from '@post/api/v1/type';
@@ -19,7 +19,7 @@ export default function Invitation({ id, showModal, onClose }: Iinvitation) {
   const [code, setCode] = useState(INIT_CODE);
   const [modalType, setModalType] = useState<ModalStatus>('Loading');
   const { data, status } = useQuery({
-    queryKey: [QueryKey.post, QueryKey.code, id],
+    queryKey: QueryKeys.postCode(id),
     queryFn: () => requestGetEntryCode(id),
     enabled: showModal,
   });

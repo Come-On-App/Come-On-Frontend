@@ -13,7 +13,7 @@ import {
   GetDateVotingListResponse,
   PostDateVotingPayload,
 } from '@post/api/v1/type';
-import { QueryKey } from '@app/api/type';
+import { QueryKeys } from '@app/api/type';
 import { indexByProperty } from '@shared/utils';
 import { useQueryDataByMeetingMemberMe } from '@post/hooks/useMeetingMemberMeQuery';
 import { HandleVoteMutationProps, IToggleVoteButton } from './type';
@@ -81,12 +81,12 @@ const handleVoteMutation = ({
   payload,
 }: HandleVoteMutationProps) => {
   setQueryData<GetDateVotingListResponse>(
-    [QueryKey.detail, QueryKey.vote, QueryKey.list, payload.meetingId],
+    QueryKeys.postVoteDetail(payload.meetingId),
     (oldData) => updateVoteList(oldData, payload, isAdding),
   );
 
   setQueryData<GetDateVotingDetailsResponse>(
-    [QueryKey.detail, QueryKey.vote, currentDate],
+    QueryKeys.postVoteDate(currentDate),
     (oldData) => updateVoteUserList(oldData, myMeetingStatus, isAdding),
   );
 };

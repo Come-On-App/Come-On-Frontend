@@ -64,7 +64,7 @@ const PostInput = forwardRef<RNEInputRef, IPostInput>(
             placeholder={placeholder}
             onChangeText={onChnageHandler}
             errorMessage={errorMessage}
-            inputStyle={[inputStyle, multiline && { alignSelf: 'flex-start' }]}
+            inputStyle={inputStyle}
             returnKeyType={returnKeyType}
           />
         </ScreenLayout>
