@@ -15,6 +15,7 @@ async function loadFonts() {
     ...FontAwesome.font,
     'Pretendard-Medium': require('../../shared/assets/fonts/Pretendard-Medium.ttf'),
     'Pretendard-SemiBold': require('../../shared/assets/fonts/Pretendard-SemiBold.ttf'),
+    'Pretendard-Regular': require('../../shared/assets/fonts/Pretendard-Regular.ttf'),
   });
 }
 
