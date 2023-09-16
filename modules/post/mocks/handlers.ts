@@ -13,6 +13,7 @@ import { dateVotingResponse } from './getDateVotingListResponse';
 import { meetingMemberMeResponse } from './getMeetingMemberMeResponse';
 import { meetingTimeResponse } from './getMeetingTimeResponse';
 import { getDateVotingDetailsResponse } from './getDateVotingDetailsResponse';
+import { meetingPlaceListResponse } from './getMeetingPlaceListResponse';
 
 const requstGetMeetings = rest.get<GetMeetingResponse>(
   `${BASE_URL}/api/v2/meetings`,
@@ -221,7 +222,41 @@ const requestDeleteConfirmMeetingDate = rest.delete(
   }
 );
 
+const requestAddMeetingPlace = rest.post(
+  `${BASE_URL}/api/v1/meetings/:meetingId/places`,
+  (_req, res, ctx) => {
+    return res(ctx.delay(1000), ctx.json({ meetingPlaceId: 1 }));
+  }
+);
+
+const requestMeetingPlace = rest.get(
+  `${BASE_URL}/api/v1/meetings/:meetingId/places`,
+  (req, res, ctx) => {
+    const { meetingId } = req.params as any;
+
+    return res(ctx.delay(1000), ctx.json(meetingPlaceListResponse[meetingId]));
+  }
+);
+
+const requestUpdateMeetingPlace = rest.put(
+  `${BASE_URL}/api/v1/meetings/:meetingId/places/:placeId`,
+  (_req, res, ctx) => {
+    return res(ctx.delay(1000), ctx.json({ success: true }));
+  }
+);
+
+const requestDeleteMeetingPlace = rest.delete(
+  `${BASE_URL}/api/v1/meetings/:meetingId/places/:placeId`,
+  (_req, res, ctx) => {
+    return res(ctx.delay(1000), ctx.json({ success: true }));
+  }
+);
+
 export default [
+  requestDeleteMeetingPlace,
+  requestUpdateMeetingPlace,
+  requestAddMeetingPlace,
+  requestMeetingPlace,
   requestPostConfirmMeetingDate,
   requestDeleteConfirmMeetingDate,
   requestAddDateVoting,
