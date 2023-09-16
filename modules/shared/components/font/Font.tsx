@@ -2,7 +2,7 @@ import React from 'react';
 import { Text } from '@rneui/themed';
 
 import { Ifont, IscreenFont } from './type';
-import useStyle from './style';
+import useStyles from './style';
 
 /**
  * 기본 폰트 크기는 14px
@@ -14,7 +14,7 @@ export default function Font({
   onPress,
   numberOfLines,
 }: Ifont) {
-  const { defaultStyle } = useStyle();
+  const { defaultStyle } = useStyles();
   const fontFamily = bold ? 'Pretendard-SemiBold' : 'Pretendard-Medium';
 
   return (
@@ -30,7 +30,7 @@ export default function Font({
 }
 
 export function ScreenTitle({ children }: IscreenFont) {
-  const { screenFont } = useStyle();
+  const { screenFont } = useStyles();
 
   return (
     <Font bold style={screenFont}>

@@ -22,6 +22,8 @@ export default makeStyles(
       CONTAINER_BORDER_RADIUS,
       CONTAINER_PADDING_HORIZONTAL,
       CONTAINER_PADDING_MARGIN_TOP,
+      CONTAINER_BUTTON_WIDHT,
+      BUTTON_ICON_SIZE,
     ] = applyRelativeSizes({
       buttonHeight: 48,
       fontSzie: theme.font.type.title4.fontSize,
@@ -33,6 +35,8 @@ export default makeStyles(
       containerBorderRadius: 8,
       containerPaddingHorizontal: 23,
       marginTop: 16,
+      addButtonContainerButtonWidth: 44,
+      addButtonIconSize: 24,
     });
 
     return {
@@ -89,6 +93,14 @@ export default makeStyles(
         backgroundColor: props.rightButtonColor
           ? props.rightButtonColor
           : undefined,
+      },
+      addButtonContainer: {
+        width: CONTAINER_BUTTON_WIDHT,
+        alignItems: 'center',
+      },
+      addButtonIcon: {
+        size: BUTTON_ICON_SIZE,
+        color: '#231F20',
       },
     };
   },

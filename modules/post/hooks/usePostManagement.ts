@@ -1,6 +1,8 @@
 import { useCallback } from 'react';
+import { shallowEqual } from 'react-redux';
+import type { ImagePickerAsset } from 'expo-image-picker';
+
 import { useAppDispatch, useAppSelector } from '@app/hooks/useAppRedux';
-import { ImagePickerAsset } from 'expo-image-picker';
 import {
   updateDateRange,
   updateImage,
@@ -17,7 +19,7 @@ import type { DateInfo } from '@shared/components/calendar/type';
  */
 export default function usePostManagement() {
   const dispatch = useAppDispatch();
-  const postState = useAppSelector((state) => state.post);
+  const postState = useAppSelector((state) => state.post, shallowEqual);
   const dispatchImage = useCallback(
     (asset: ImagePickerAsset) => dispatch(updateImage({ uri: null, asset })),
     [dispatch],

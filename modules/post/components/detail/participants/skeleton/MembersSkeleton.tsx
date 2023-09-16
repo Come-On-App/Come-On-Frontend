@@ -23,7 +23,7 @@ function MemberSkeleton() {
   const { container, font } = useStyles();
 
   return (
-    <View style={container}>
+    <View style={container} accessibilityHint="loading">
       <Avatar isLoading />
       <Font style={font}>{EMPTY_STRING}</Font>
     </View>

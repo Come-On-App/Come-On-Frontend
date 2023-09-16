@@ -16,11 +16,21 @@ export default {
 type MeetingPostCreatorStory = ComponentStory<typeof MeetingPostModifier>;
 
 export const MeetingPostModification: MeetingPostCreatorStory = () => {
-  return <PostNavigator initialRouteName="MeetingPostModification" />;
+  return (
+    <PostNavigator
+      initialRouteName="MeetingPostModification"
+      ONLY_TEST_ID={1}
+    />
+  );
 };
 
 export const MeetingPostModificationLoading: MeetingPostCreatorStory = () => {
-  return <PostNavigator initialRouteName="MeetingPostModification" />;
+  return (
+    <PostNavigator
+      initialRouteName="MeetingPostModification"
+      ONLY_TEST_ID={1}
+    />
+  );
 };
 
 MeetingPostModificationLoading.parameters = {

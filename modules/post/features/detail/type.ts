@@ -1,10 +1,7 @@
-import { GetDateVotingListResponse } from '@post/api/v1/type';
-import { FixedDate } from '@post/api/v2/type';
-
-export type VotingStatus = GetDateVotingListResponse;
+export type PostStatus = 'EDIT' | 'CREATE';
 
 export interface DetailState {
   postId: number;
-  votingStatus: VotingStatus;
-  fixedDate: FixedDate;
+  cardId: number;
+  status: PostStatus;
 }

@@ -24,5 +24,8 @@ export const Default: Meta = {
     multiline: false,
     placeholder: 'placeholder',
     onInput: console.log,
+    dividerPosition: 'both',
+    errorMessage: '',
+    isDataLoading: false,
   },
 };

@@ -1,13 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { FixedDate } from '@post/api/v2/type';
-import type { DetailState, VotingStatus } from './type';
+import type { DetailState, PostStatus } from './type';
 
 export const initialDetailState: DetailState = {
   postId: 0,
-  votingStatus: { contentsCount: 0, contents: [] },
-  fixedDate: null,
+  cardId: 0,
+  status: 'CREATE',
 };
 
 export const detailSlice = createSlice({
@@ -17,11 +16,11 @@ export const detailSlice = createSlice({
     updateCurrentPostId: (state, action: PayloadAction<number>) => {
       state.postId = action.payload;
     },
-    updateVotingStatus: (state, action: PayloadAction<VotingStatus>) => {
-      state.votingStatus = action.payload;
+    updateCurrentCardId: (state, action: PayloadAction<number>) => {
+      state.cardId = action.payload;
     },
-    updateFixedDate: (state, action: PayloadAction<FixedDate>) => {
-      state.fixedDate = action.payload;
+    updatePostStatus: (state, action: PayloadAction<PostStatus>) => {
+      state.status = action.payload;
     },
     init: () => {
       return initialDetailState;
@@ -31,8 +30,8 @@ export const detailSlice = createSlice({
 
 export const {
   updateCurrentPostId,
-  updateVotingStatus,
-  updateFixedDate,
+  updateCurrentCardId,
+  updatePostStatus,
   init,
 } = detailSlice.actions;
 

@@ -24,14 +24,14 @@ export default function Duration() {
   const { data: detail } = useMeetingDetailQuery(postId);
   const { data: currentPostUserData } = useMeetingMemberMeQuery(postId);
   const { data: votingStatus } = useVotingStatusQuery(postId);
-  const isLoading = detail && currentPostUserData && votingStatus;
+  const isContentLoaded = detail && currentPostUserData && votingStatus;
   let Content = (
     <View style={cContent}>
       <Skeleton height={skeleton.height} />
     </View>
   );
 
-  if (isLoading) {
+  if (isContentLoaded) {
     const { calendar, fixedDate, meetingStartTime } = detail.meetingMetaData;
     const isHost = currentPostUserData.memberRole === 'HOST';
 
@@ -42,7 +42,6 @@ export default function Duration() {
           fixedDate={fixedDate}
           isHost={isHost}
           members={detail.members}
-          votingStatus={votingStatus}
         />
         <View style={timePickerContainer}>
           <TimePickerButton time={meetingStartTime} isHost={isHost} />

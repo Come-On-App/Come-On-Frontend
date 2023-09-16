@@ -5,8 +5,8 @@ import { Imembers } from './type';
 import Member from '../member/Member';
 import MembersSkeleton from '../skeleton/MembersSkeleton';
 
-export default function Members({ response, isLoading }: Imembers) {
-  if (isLoading) {
+export default function Members({ response }: Imembers) {
+  if (!response) {
     return <MembersSkeleton />;
   }
 

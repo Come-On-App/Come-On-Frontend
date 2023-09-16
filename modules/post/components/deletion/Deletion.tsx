@@ -2,7 +2,7 @@ import { View } from 'react-native';
 import React from 'react';
 import { useMutation } from '@tanstack/react-query';
 
-import { QueryKey } from '@app/api/type';
+import { QueryKeys } from '@app/api/type';
 import { requestDeleteMeeting } from '@post/api/v1';
 import { GetMeetingSliceResponse } from '@post/api/v2/type';
 import useSearchManagement from '@post/hooks/useSearchManagement';
@@ -22,7 +22,7 @@ export default function Deletion({ id, showModal, onClose }: Ideletion) {
   const mutate = useMutation(requestDeleteMeeting, {
     onSuccess: () => {
       setQueryData<GetMeetingSliceResponse>(
-        [QueryKey.post, QueryKey.list, paramater],
+        QueryKeys.meetingCardList(paramater),
         removeMeetingByPostId(id),
       );
     },

@@ -1,11 +1,12 @@
+import { Pressable, View } from 'react-native';
 import { Button as RneButton } from '@rneui/themed';
 import React from 'react';
 
 import TestId from '@shared/constants/testIds';
-import { Pressable, View } from 'react-native';
 import useStyles from './style';
-import { IappleButton, Ibutton } from './type';
+import { IAddButton, IAppleButton, IButton } from './type';
 import Font from '../font/Font';
+import IconButton from './IconButton';
 
 export const DEFUALT_BUTTON_WIDTH = 192;
 
@@ -16,7 +17,7 @@ export default function Button({
   backgroundColor,
   disabled,
   Icon,
-}: Ibutton) {
+}: IButton) {
   const { defaultStyle, font } = useStyles({ bold, backgroundColor });
 
   return (
@@ -40,7 +41,7 @@ export function LoginButton({
   disabled,
   title,
   onPress,
-}: IappleButton) {
+}: IAppleButton) {
   const { loginButtonContainer, loginButtonPressed, loginFont, loginIcon } =
     useStyles();
 
@@ -60,5 +61,30 @@ export function LoginButton({
       </Font>
       <View style={loginIcon} />
     </Pressable>
+  );
+}
+
+export function StyledIconButton({
+  testID,
+  onPress,
+  containerStyle,
+  radius,
+  iconName = 'add',
+}: IAddButton) {
+  const { addButtonContainer, addButtonIcon } = useStyles();
+
+  return (
+    <View testID={testID} style={addButtonContainer}>
+      <IconButton
+        containerStyle={[
+          containerStyle,
+          radius && { borderRadius: addButtonIcon.size },
+        ]}
+        onPress={onPress}
+        name={iconName}
+        color={addButtonIcon.color}
+        size={addButtonIcon.size}
+      />
+    </View>
   );
 }

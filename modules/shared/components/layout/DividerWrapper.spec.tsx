@@ -2,6 +2,7 @@ import { describe, expect, test } from '@jest/globals';
 import { screen } from '@testing-library/react-native';
 
 import { View } from 'react-native';
+import TestId from '@shared/constants/testIds';
 import DividerWrapper from './DividerWrapper';
 import { render } from '../../utils/customRender';
 
@@ -30,5 +31,13 @@ describe('DividerWrapper Compoent', () => {
     );
 
     expect(screen.getAllByTestId('RNE__Divider')).toHaveLength(2);
+
+    render(
+      <DividerWrapper position="none">
+        <View />
+      </DividerWrapper>,
+    );
+
+    expect(screen.getByTestId(TestId.shared.divider.none)).toBeOnTheScreen();
   });
 });

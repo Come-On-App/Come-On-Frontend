@@ -5,7 +5,7 @@ import { formatDateToKorean } from '@shared/utils';
 import Font from '@shared/components/font/Font';
 
 import { useQueryClient } from '@tanstack/react-query';
-import { QueryKey } from '@app/api/type';
+import { QueryKeys } from '@app/api/type';
 import { requestGetDateVotingDetails } from '@post/api/v1';
 import useDetailManagement from '@post/hooks/useDetailManagement';
 import useStyles from './style';
@@ -30,7 +30,7 @@ export default function DisplayDateAndCount({
   useEffect(() => {
     if (enabled) {
       queryClient.prefetchQuery({
-        queryKey: [QueryKey.detail, QueryKey.vote, dateString],
+        queryKey: QueryKeys.postVoteDate(dateString),
         queryFn: ({ signal }) =>
           requestGetDateVotingDetails(
             { meetingId: detailState.postId, date: dateString },

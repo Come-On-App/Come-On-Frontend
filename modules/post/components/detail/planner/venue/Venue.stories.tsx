@@ -1,8 +1,6 @@
 import { ComponentMeta } from '@storybook/react-native';
 
-import FontThemeProvider from '@shared/provider/FontProvider';
 import Component from './Venue';
-import mockVenueList from '@post/mocks/venueList';
 
 import { View } from 'react-native';
 
@@ -13,20 +11,26 @@ export default {
   component: Component,
   decorators: [
     (Story) => (
-      <FontThemeProvider>
-        <View style={{ margin: 10 }}>
-          <Story />
-        </View>
-      </FontThemeProvider>
+      <View style={{ margin: 10 }}>
+        <Story />
+      </View>
     ),
   ],
 } as Meta;
 
-const venue = mockVenueList[0];
-
 export const Venue: Meta = {
   args: {
-    info: venue.info,
-    order: venue.order,
+    data: {
+      order: 1,
+      meetingPlaceId: 0,
+      category: 'CULTURE',
+      placeName: '제목',
+      memo: '메모 내용',
+      address: '서브 제목',
+      lat: 0,
+      lng: 0,
+      googlePlaceId: 'null',
+    },
+    showRightIcon: false,
   },
 };

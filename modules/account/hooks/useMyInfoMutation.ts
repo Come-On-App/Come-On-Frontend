@@ -46,10 +46,10 @@ export default function useMyInfoMutation() {
   return { isSubmit: isLoading, mutateUserImage, mutateUserNickname };
 }
 
-function updateUser(
+const updateUser = (
   oldData: GetMyInfoResponse | undefined,
   payload: PutMyInfoPayload,
-): GetMyInfoResponse | undefined {
+): GetMyInfoResponse | undefined => {
   if (!oldData) return oldData;
 
   return {
@@ -57,4 +57,4 @@ function updateUser(
     profileImageUrl: payload.profileImageUrl || oldData.profileImageUrl,
     nickname: payload.nickname || oldData.nickname,
   };
-}
+};

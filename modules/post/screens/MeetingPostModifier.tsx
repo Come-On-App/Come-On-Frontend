@@ -6,7 +6,7 @@ import { convertDateRangeToDateInfo, hasPostStateChanged } from '@shared/utils';
 import TestId from '@shared/constants/testIds';
 import { PostNativeStack } from '@post/navigation/type';
 import { useMutation } from '@tanstack/react-query';
-import { QueryKey } from '@app/api/type';
+import { QueryKeys } from '@app/api/type';
 import Uploader from '@post/components/modification/uploader/Uploader';
 import MeetingName from '@post/components/modification/meetingName/MeetingName';
 import VotingTimeRangePicker from '@post/components/modification/votingTimeRangePicker/VotingTimeRangePicker';
@@ -38,7 +38,7 @@ export default function MeetingPostModifier({
   const { mutate, isLoading: isSubmit } = useMutation({
     mutationFn: requestPatchMeeting,
     onSuccess: () => {
-      invalidateQueries([QueryKey.post, QueryKey.list, params.id]);
+      invalidateQueries(QueryKeys.post(params.id));
       navigation.reset({
         index: 0,
         routes: [{ name: 'MeetingPostList' }],

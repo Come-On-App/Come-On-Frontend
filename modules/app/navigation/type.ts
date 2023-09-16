@@ -1,3 +1,5 @@
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+
 import { Tab } from './config';
 
 export type BottomTabParamList = {
@@ -5,6 +7,8 @@ export type BottomTabParamList = {
   [Tab.two]: undefined;
   [Tab.three]: undefined;
 };
+
+export type BottomTabProps = BottomTabScreenProps<BottomTabParamList>;
 
 export type RootStackParamList = {
   SignIn: undefined;

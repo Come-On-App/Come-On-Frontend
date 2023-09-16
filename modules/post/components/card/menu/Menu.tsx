@@ -7,15 +7,15 @@ import Icon from '@shared/components/icon/Icon';
 import Invitation from '@post/components/invitation/Invitation';
 import Deletion from '@post/components/deletion/Deletion';
 import { useNavigation } from '@react-navigation/native';
-import { PostListNavigation } from '@post/navigation/type';
-import useStyle from './style';
+import { PostScreenProps } from '@post/navigation/type';
+import useStyles from './style';
 import { IcardMenu } from './type';
 
 export default function CardMenu({ id = 0 }: IcardMenu) {
-  const { icon, menuFont, anchorBackground } = useStyle();
+  const { icon, menuFont, anchorBackground } = useStyles();
   const [showCodeModal, setCodeModal] = useState(false);
   const [showDeletionModal, setDeletionModal] = useState(false);
-  const navigation = useNavigation<PostListNavigation>();
+  const navigation = useNavigation<PostScreenProps['navigation']>();
   const MenuList: IList[] = [
     {
       name: '초대코드 관리',

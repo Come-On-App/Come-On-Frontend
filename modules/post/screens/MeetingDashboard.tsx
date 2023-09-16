@@ -7,7 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import { requestGetMeetings } from '@post/api/v2';
 import { GetMeetingResponse, GetMeetingSliceResponse } from '@post/api/v2/type';
 import { ICardInfo } from '@post/components/card/type';
-import { QueryKey } from '@app/api/type';
+import { QueryKeys } from '@app/api/type';
 import SearchAndCreateBar from '@post/components/search/searchAndCreate/SearchAndCreateBar';
 import CardList from '@post/components/cardList/CardList';
 import ServerError from '@post/components/serverError/ServerError';
@@ -26,7 +26,7 @@ export default function MeetingDashboard() {
     dateTo: endingDay?.dateString,
   };
   const { data, status } = useQuery({
-    queryKey: [QueryKey.post, QueryKey.list, paramater],
+    queryKey: QueryKeys.meetingCardList(paramater),
     queryFn: ({ signal }) => requestGetMeetings(paramater, signal),
   });
   let Content = <View />;

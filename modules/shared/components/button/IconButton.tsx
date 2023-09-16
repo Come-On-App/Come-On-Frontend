@@ -3,17 +3,18 @@ import React from 'react';
 
 import TestId from '@shared/constants/testIds';
 import Icon from '../icon/Icon';
-import { IiconButton } from './type';
+import { IIconButton } from './type';
 
 export default function IconButton({
   onPress,
   color,
   size,
   name,
+  containerStyle,
   _pressed,
-}: IiconButton) {
+}: IIconButton) {
   return (
-    <View style={{ width: size }}>
+    <View style={[{ width: size }, containerStyle]}>
       <Pressable
         testOnly_pressed={_pressed}
         onPress={onPress}

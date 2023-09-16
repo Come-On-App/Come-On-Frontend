@@ -1,11 +1,23 @@
-import type { IconNode } from '@rneui/base';
+import type { ReactNode, RefObject } from 'react';
+import type {
+  KeyboardTypeOptions,
+  ReturnKeyTypeOptions,
+  StyleProp,
+  TextInput,
+  TextStyle,
+  ViewStyle,
+} from 'react-native';
+import type { IconNode, Input as BaseInput } from '@rneui/base';
+
 import type { IconName } from '@shared/components/icon/type';
-import type { ReactNode } from 'react';
-import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
+
+export type RNEInputRef = TextInput & BaseInput;
+
+export type RNEInputRefObject = RefObject<RNEInputRef>;
 
 export type OnChangeText = (text: string) => void;
 
-export interface Iinput {
+export interface IInput {
   text: string;
   placeholder?: string;
   onChangeText?: OnChangeText;
@@ -17,6 +29,9 @@ export interface Iinput {
   errorMessage?: string;
   inputStyle?: StyleProp<TextStyle>;
   onSubmitEditing?: () => void;
+  returnKeyType?: ReturnKeyTypeOptions;
+  blurOnSubmit?: boolean;
+  keyboardType?: KeyboardTypeOptions;
 }
 
 export interface IpressableInput {

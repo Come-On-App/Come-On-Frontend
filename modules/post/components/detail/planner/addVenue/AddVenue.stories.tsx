@@ -1,7 +1,7 @@
 import { ComponentMeta } from '@storybook/react-native';
 
 import FontThemeProvider from '@shared/provider/FontProvider';
-import Component from './AddVenue';
+import Component from './AddVenueButton';
 import { View } from 'react-native';
 
 type Meta = ComponentMeta<typeof Component>;
