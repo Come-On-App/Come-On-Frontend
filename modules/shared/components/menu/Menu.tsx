@@ -37,11 +37,25 @@ export default function Menu({
         anchor={<Pressable onPress={showMenu}>{anchor}</Pressable>}
       >
         <View>{modalComponent}</View>
-        {list.map(({ name, onPress, fontStyle }) => {
+        {list.map(({ disabled, name, onPress, fontStyle }) => {
           return (
             <View key={name}>
-              <MenuItem onPress={() => onPress(hideMenu)} style={cMenuItem}>
-                <Font style={[menuDefaultFont, fontAllStyle, fontStyle]}>
+              <MenuItem
+                disabled={disabled}
+                onPress={() => onPress(hideMenu)}
+                style={cMenuItem}
+              >
+                <Font
+                  style={[
+                    menuDefaultFont,
+                    fontAllStyle,
+                    fontStyle,
+                    disabled && {
+                      color: '#A9A9A9',
+                      opacity: 0.5,
+                    },
+                  ]}
+                >
                   {name}
                 </Font>
               </MenuItem>

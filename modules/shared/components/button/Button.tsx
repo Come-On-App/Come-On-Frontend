@@ -64,15 +64,24 @@ export function LoginButton({
   );
 }
 
-export function AddButton({ testID, onPress }: IAddButton) {
-  const BUTTON_ICON_TPYE = 'add';
+export function StyledIconButton({
+  testID,
+  onPress,
+  containerStyle,
+  radius,
+  iconName = 'add',
+}: IAddButton) {
   const { addButtonContainer, addButtonIcon } = useStyles();
 
   return (
     <View testID={testID} style={addButtonContainer}>
       <IconButton
+        containerStyle={[
+          containerStyle,
+          radius && { borderRadius: addButtonIcon.size },
+        ]}
         onPress={onPress}
-        name={BUTTON_ICON_TPYE}
+        name={iconName}
         color={addButtonIcon.color}
         size={addButtonIcon.size}
       />

@@ -12,6 +12,7 @@ export interface IDividerWrapper {
   width?: number;
   children: ReactNode;
   position?: DividerPosition;
+  customStyle?: StyleProp<ViewStyle>;
 }
 
 export interface IScreenLayout {

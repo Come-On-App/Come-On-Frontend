@@ -4,7 +4,7 @@ import { Avatar as RneAvatar, Skeleton } from '@rneui/themed';
 import TestId from '@shared/constants/testIds';
 import { relativeSizeConverter } from '@shared/utils';
 import { Iavatar, IbadgedAvatar } from './type';
-import useStyle from './style';
+import useStyles from './style';
 
 const DEFAULT_AVATAR_SIZE = relativeSizeConverter(40);
 const DEFAULT_BADGE_SIZE = relativeSizeConverter(20);
@@ -20,7 +20,7 @@ export default function Avatar({
   isLoading,
   onPress,
 }: Iavatar) {
-  const { defaultStyle } = useStyle({ size, path });
+  const { defaultStyle } = useStyles({ size, path });
 
   if (isLoading) {
     return (
@@ -54,7 +54,7 @@ export function BadgedAvatar({
   isLoading,
   badgeSize = DEFAULT_BADGE_SIZE,
 }: IbadgedAvatar) {
-  const { badgeColor, defaultBadgeStyle } = useStyle();
+  const { badgeColor, defaultBadgeStyle } = useStyles();
 
   return (
     <Avatar

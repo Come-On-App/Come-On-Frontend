@@ -8,6 +8,7 @@ export interface IIconButton {
   color: string;
   size: number;
   name: IconName;
+  containerStyle?: StyleProp<ViewStyle>;
   _pressed?: boolean;
 }
 
@@ -44,4 +45,7 @@ export interface IConfirmCancelButton {
 export interface IAddButton {
   testID?: string;
   onPress: () => void;
+  iconName?: IconName;
+  containerStyle?: StyleProp<ViewStyle>;
+  radius?: boolean;
 }

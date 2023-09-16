@@ -16,3 +16,12 @@ export default function Spacer({ height, applyRelative }: ISpacer) {
     />
   );
 }
+
+/**
+ * 조건에 따라서 화면 너비 전체를 포함하는 컴포넌트를 렌더링 한다.
+ */
+export function FullScreenWrapper({ isHide }: { isHide: boolean }) {
+  if (isHide) return null;
+
+  return <View style={{ flex: 1 }} />;
+}

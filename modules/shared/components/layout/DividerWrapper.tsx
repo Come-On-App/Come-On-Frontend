@@ -13,6 +13,7 @@ export default function DividerWrapper({
   children,
   width = 12,
   position = 'top',
+  customStyle,
 }: IDividerWrapper) {
   const { dividerStyle } = useStyles(width);
   const shouldRenderTopDivider = position === 'top' || position === 'both';
@@ -20,11 +21,15 @@ export default function DividerWrapper({
     position === 'bottom' || position === 'both';
 
   if (position === 'none') {
-    return <View testID={TestId.shared.divider.none}>{children}</View>;
+    return (
+      <View testID={TestId.shared.divider.none} style={customStyle}>
+        {children}
+      </View>
+    );
   }
 
   return (
-    <View>
+    <View style={customStyle}>
       {shouldRenderTopDivider && (
         <Divider width={dividerStyle.width} color={dividerStyle.color} />
       )}
@@ -34,4 +39,10 @@ export default function DividerWrapper({
       )}
     </View>
   );
+}
+
+export function StyledDivider({ width }: { width: number }) {
+  const { dividerStyle } = useStyles(width);
+
+  return <Divider width={dividerStyle.width} color={dividerStyle.color} />;
 }

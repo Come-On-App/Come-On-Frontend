@@ -1,5 +1,6 @@
 import type { ReactNode, RefObject } from 'react';
 import type {
+  KeyboardTypeOptions,
   ReturnKeyTypeOptions,
   StyleProp,
   TextInput,
@@ -30,6 +31,7 @@ export interface IInput {
   onSubmitEditing?: () => void;
   returnKeyType?: ReturnKeyTypeOptions;
   blurOnSubmit?: boolean;
+  keyboardType?: KeyboardTypeOptions;
 }
 
 export interface IpressableInput {

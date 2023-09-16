@@ -15,6 +15,7 @@ export default makeStyles((theme, multiline: boolean) => {
     BORDER_RADIUS,
     CONTAINER_CODE_FIELD_WIDTH,
     CONTAINER_CODE_FIELD_HEIGHT,
+    INPUT_LABEL_FONT_SIZE,
   ] = applyRelativeSizes({
     inputFontSize: theme.font.type.body1.fontSize,
     inputContainerHeight: multiline === true ? 100 : 44,
@@ -26,6 +27,7 @@ export default makeStyles((theme, multiline: boolean) => {
     borderRadius: 4,
     containerCodeFieldWidth: 50,
     containerCodeFieldhHeigth: 58,
+    inputLabelFontSize: theme.font.type.body1.fontSize,
   });
 
   return {
@@ -44,6 +46,7 @@ export default makeStyles((theme, multiline: boolean) => {
     },
     font: {
       fontSize: INPUT_FONT_SIZE,
+      fontFamily: 'Pretendard-Regular',
     },
     cPressableInput: {
       height: SEARCH_ADN_CREATE_HEIGHT,
@@ -74,6 +77,9 @@ export default makeStyles((theme, multiline: boolean) => {
       textAlign: 'center',
       color: theme.font.grayscale['900'],
       fontSize: CODE_FIELD_FONT_SIZE,
+    },
+    inputLabelFont: {
+      fontSize: INPUT_LABEL_FONT_SIZE,
     },
   };
 });

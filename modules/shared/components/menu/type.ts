@@ -4,6 +4,7 @@ export interface IList {
   name: string;
   onPress: (hideMenuHandler: () => void) => void;
   fontStyle?: StyleProp<TextStyle>;
+  disabled?: boolean;
 }
 
 export interface IMenu {

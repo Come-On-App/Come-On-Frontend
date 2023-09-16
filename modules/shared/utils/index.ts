@@ -387,7 +387,7 @@ export function getFormattedDateRange({ startingDay, endingDay }: DateRange) {
 }
 
 /**
- * 주어진 배열을 이용해 Map 객체를 생성.
+ * 인덱싱 함수
  *
  * 두 번째 인자로 받은 속성을 키로 사용하여 배열의 각 객체를 맵핑.
  *
@@ -408,9 +408,9 @@ export function indexByProperty<T, K extends keyof T>(array: T[], property: K) {
     map.set(key, item);
   });
 
-  const getByKey = (key: T[K]) => {
+  const getByKey = memoize((key: T[K]) => {
     return map.get(key) as T;
-  };
+  });
 
   return { getByKey };
 }
