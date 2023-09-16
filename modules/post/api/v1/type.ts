@@ -1,5 +1,5 @@
 import { ListResponse } from '@app/api/type';
-import { MemberRole } from '../v2/type';
+import { CategoryKey, MemberRole } from '../v2/type';
 
 // GET /api/v1/meetings/{meeting-id}/entry-code (payalod)
 export type GetEntryCodePayload = number;
@@ -167,5 +167,60 @@ export type DeleteConfirmMeetingDatePayload = number;
 
 // DELETE /api/v1/meetings/{meeting-id}/date/confirm (response)
 export interface DeleteConfirmMeetingDateResponse {
+  success: boolean;
+}
+
+export interface MeetingPlace {
+  placeName: string;
+  memo: string;
+  address: string;
+  lat: number;
+  lng: number;
+  category: CategoryKey;
+  googlePlaceId: string;
+}
+
+export interface ExtendedMeetingPlace extends MeetingPlace {
+  meetingPlaceId: number;
+  order: number;
+}
+
+// GET /api/v1/meetings/{meeting-id}/places (paylaod)
+export type GetMeetingPlacePayalod = number;
+
+// GET /api/v1/meetings/{meeting-id}/places (response)
+export type GetMeetingPlaceListResponse = ListResponse<ExtendedMeetingPlace>;
+
+// POST /api/v1/meetings/{meeting-id}/places (payload)
+export interface PostAddMeetingPlacePayload {
+  meetingId: number;
+  payload: MeetingPlace;
+}
+
+// POST /api/v1/meetings/{meeting-id}/places (response)
+export interface PostAddMeetingPlaceResponse {
+  meetingPlaceId: number;
+}
+
+// PUT /api/v1/meetings/{meeting-id}/places/{place-id} (payload)
+export interface PutUpdateMeetingPlacesPayload {
+  meetingId: number;
+  placeId: number;
+  payload: MeetingPlace;
+}
+
+// PUT /api/v1/meetings/{meeting-id}/places/{place-id} (response)
+export interface PutUpdateMeetingPlacesResponse {
+  success: boolean;
+}
+
+// DELETE /api/v1/meetings/{meeting-id}/places/{place-id} (payload)
+export interface DeleteMeetingPlacePayload {
+  meetingId: number;
+  placeId: number;
+}
+
+// DELETE /api/v1/meetings/{meeting-id}/places/{place-id} (response)
+export interface DeleteMeetingPlaceResponse {
   success: boolean;
 }

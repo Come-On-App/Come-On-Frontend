@@ -67,7 +67,7 @@ interface VotingDates {
   myVoting: boolean;
 }
 
-type CategoryKey =
+export type CategoryKey =
   | 'ACCOMMODATION'
   | 'ACTIVITY'
   | 'ATTRACTION'
@@ -79,6 +79,19 @@ type CategoryKey =
   | 'SCHOOL'
   | 'SHOPPING'
   | 'SPORT';
+
+export type CategoryLabel =
+  | '학교'
+  | '카페'
+  | '술집'
+  | '스포츠'
+  | '쇼핑'
+  | '관광명소'
+  | '음식점'
+  | '숙박'
+  | '문화시설'
+  | '액티비티'
+  | '기타';
 
 export interface Places {
   meetingPlaceId: number;
