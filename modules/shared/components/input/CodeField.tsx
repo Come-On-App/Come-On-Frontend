@@ -1,4 +1,4 @@
-import { Text } from 'react-native';
+import { Keyboard, Text } from 'react-native';
 import React from 'react';
 import {
   CodeField as CodeInput,
@@ -30,6 +30,7 @@ export default function CodeField({
 
   return (
     <CodeInput
+      onSubmitEditing={Keyboard.dismiss}
       testID={TestId.shared.input.codeInput.field}
       ref={ref}
       onPressOut={onPressOut}
