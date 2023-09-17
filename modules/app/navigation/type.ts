@@ -10,6 +10,8 @@ export type BottomTabParamList = {
 
 export type BottomTabProps = BottomTabScreenProps<BottomTabParamList>;
 
+export type BottomTabNavigation = BottomTabProps['navigation'];
+
 export type RootStackParamList = {
   SignIn: undefined;
   Home: undefined;
