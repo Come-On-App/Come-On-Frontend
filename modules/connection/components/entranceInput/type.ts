@@ -1,6 +1,6 @@
-import { Dispatch, SetStateAction } from 'react';
+import { CodeDispatch } from '@connection/components/type';
 
 export interface IentranceInput {
   code: string;
-  dispatch: Dispatch<SetStateAction<string>>;
+  dispatch: CodeDispatch;
 }

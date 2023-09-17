@@ -6,6 +6,14 @@ export const hapticImpactLight = () => {
   Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 };
 
+export const hapticError = () => {
+  Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+};
+
+export const hapticSuccess = () => {
+  Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+};
+
 /**
  * A library that provides access to the system's vibration effects
  */
