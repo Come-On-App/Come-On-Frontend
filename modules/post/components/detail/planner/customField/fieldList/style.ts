@@ -16,10 +16,7 @@ export default makeStyles((theme) => {
       fontSize: EMPTY_FONT_SIZE,
       color: theme.font.grayscale[700],
     },
-    sectionListContainer: {
-      flex: 1,
-    },
-    sectionContentContainer: {
+    scrollViewContainer: {
       flexGrow: 1,
     },
   };

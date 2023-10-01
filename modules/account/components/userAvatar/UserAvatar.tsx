@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { asyncWave } from 'async-wave';
 import { isNull } from 'lodash';
 
@@ -24,17 +24,23 @@ export default function UserAvatar() {
   const { userState } = useUserManagement();
   const userQueryData = useQueryDataByUser();
   const { image, pickImage, initImage } = useImagePicker();
-  const { mutateUserImage, isSubmit } = useMyInfoMutation();
+  const { mutateUserImage } = useMyInfoMutation();
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     if (isNull(image)) return;
 
-    asyncWave([image, requestImageURL, mutateUserImage, initImage]);
+    setLoading(true);
+    asyncWave([image, requestImageURL, mutateUserImage, initImage], {
+      onSettled: () => {
+        setLoading(false);
+      },
+    });
   }, [image, initImage, mutateUserImage]);
 
   return (
     <>
-      <SubmitStatus isLoading={isSubmit} title={SUBMIT_LODING_TITLE} />
+      <SubmitStatus isLoading={isLoading} title={SUBMIT_LODING_TITLE} />
       <View testID={TestId.account.avatar}>
         <BadgedAvatar
           isLoading={userState.isLoading}

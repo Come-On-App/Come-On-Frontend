@@ -1,9 +1,11 @@
 import type { ReactNode, RefObject } from 'react';
 import type {
   KeyboardTypeOptions,
+  NativeSyntheticEvent,
   ReturnKeyTypeOptions,
   StyleProp,
   TextInput,
+  TextInputFocusEventData,
   TextStyle,
   ViewStyle,
 } from 'react-native';
@@ -16,6 +18,10 @@ export type RNEInputRef = TextInput & BaseInput;
 export type RNEInputRefObject = RefObject<RNEInputRef>;
 
 export type OnChangeText = (text: string) => void;
+
+export type OnFocus = (
+  e: NativeSyntheticEvent<TextInputFocusEventData>,
+) => void;
 
 export interface IInput {
   text: string;
@@ -32,6 +38,7 @@ export interface IInput {
   returnKeyType?: ReturnKeyTypeOptions;
   blurOnSubmit?: boolean;
   keyboardType?: KeyboardTypeOptions;
+  onFocus?: OnFocus;
 }
 
 export interface IpressableInput {

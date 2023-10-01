@@ -173,11 +173,11 @@ export interface DeleteConfirmMeetingDateResponse {
 export interface MeetingPlace {
   placeName: string;
   memo: string;
-  address: string;
-  lat: number;
-  lng: number;
+  address?: string;
+  lat?: number;
+  lng?: number;
   category: CategoryKey;
-  googlePlaceId: string;
+  googlePlaceId?: string;
 }
 
 export interface ExtendedMeetingPlace extends MeetingPlace {

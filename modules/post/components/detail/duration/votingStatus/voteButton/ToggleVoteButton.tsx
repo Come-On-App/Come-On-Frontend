@@ -122,22 +122,35 @@ function updateVoteList(
 
   const prevContents = [...oldData.contents];
   const { getByKey } = indexByProperty(prevContents, 'date');
-  const targetPayload = getByKey(payload.date);
+  const targetPayload = getByKey(payload.date) ?? {
+    date: payload.date,
+    memberCount: 1,
+    myVoting: true,
+  };
   const targetIndex = prevContents.findIndex(
     (item) => item.date === payload.date,
   );
+  const newCount = increment ? 1 : -1;
+  const nextContentsCount = oldData.contentsCount + newCount;
 
   if (targetIndex !== -1) {
+    const nextMemberCount = targetPayload.memberCount + newCount;
+
     prevContents[targetIndex] = {
-      ...targetPayload,
-      memberCount: targetPayload.memberCount + (increment ? 1 : -1),
+      date: targetPayload.date,
+      memberCount: nextMemberCount,
       myVoting: increment,
+    };
+
+    return {
+      contentsCount: nextContentsCount,
+      contents: prevContents,
     };
   }
 
   return {
-    ...oldData,
-    contents: prevContents,
+    contentsCount: nextContentsCount,
+    contents: [...prevContents, targetPayload],
   };
 }
 

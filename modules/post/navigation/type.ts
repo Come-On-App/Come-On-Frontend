@@ -15,7 +15,7 @@ export type PostStackParamList = {
   MeetingPostModification: { id: number };
 };
 
-type PostRouteNames = keyof PostStackParamList;
+export type PostRouteNames = keyof PostStackParamList;
 
 export type PostScreenProps = NativeStackScreenProps<PostStackParamList>;
 

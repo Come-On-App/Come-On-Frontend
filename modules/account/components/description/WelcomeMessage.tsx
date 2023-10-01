@@ -32,7 +32,6 @@ export default function WelcomeMessage() {
 
 function useGetMessage() {
   const userQueryData = useQueryDataByUser();
-  const message = `어서오세요. ${userQueryData?.name || EMPTY_STRING}님!`;
 
-  return message;
+  return userQueryData?.name || EMPTY_STRING;
 }

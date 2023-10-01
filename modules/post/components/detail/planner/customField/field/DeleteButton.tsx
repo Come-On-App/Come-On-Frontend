@@ -11,7 +11,9 @@ export default function DeleteButton({ itemKey }: IDeleteButton) {
 
   return (
     <StyledIconButton
-      onPress={() => dispatchDeleteField(itemKey)}
+      onPress={() => {
+        dispatchDeleteField(itemKey);
+      }}
       iconName="delete"
       containerStyle={iconButtonContainer}
       radius

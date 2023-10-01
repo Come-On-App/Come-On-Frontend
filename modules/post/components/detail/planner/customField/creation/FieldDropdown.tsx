@@ -3,6 +3,7 @@ import React, { memo } from 'react';
 
 import { DropdownPayload } from '@shared/components/dropdown/type';
 import Dropdown from '@shared/components/dropdown/Dropdown';
+import { fullScreenContainer } from '@shared/constants/style';
 import { IFieldDropdown } from './type';
 
 const DROPDONW_PLACEHOLDER = '필요한 모듈을 선택해주세요!';
@@ -15,7 +16,7 @@ const dropdownItems: DropdownPayload[] = [
 
 function FieldDropdown({ tagDispatcher }: IFieldDropdown) {
   return (
-    <View style={{ flex: 1 }}>
+    <View style={fullScreenContainer}>
       <Dropdown
         list={dropdownItems}
         onChange={tagDispatcher}

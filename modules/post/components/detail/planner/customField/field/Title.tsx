@@ -9,6 +9,7 @@ import { ITitle } from './type';
 
 export default function Title({
   metaData: { fieldType, label, itemKey },
+  onFocus,
 }: ITitle) {
   const style = useStyles();
   const [currentLabel, updateLabel] = useState(label);
@@ -23,6 +24,7 @@ export default function Title({
   return (
     <View style={style.inputOuterContainer}>
       <RNInput
+        onFocus={onFocus}
         label={fieldType}
         value={currentLabel}
         onChangeText={updateLabel}

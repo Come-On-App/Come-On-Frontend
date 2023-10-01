@@ -265,7 +265,11 @@ export async function requestDeleteDateVoting({
   date,
 }: DeleteDateVotingPayload): Promise<DeleteDateVotingResponse> {
   const URL = `/api/v1/meetings/${meetingId}/date/voting`;
-  const { data } = await serverAPI.delete(URL, { data: date });
+  const { data } = await serverAPI.delete(URL, {
+    data: {
+      date,
+    },
+  });
 
   return data;
 }

@@ -1,10 +1,11 @@
 import { requestPutMyInfo } from '@account/api/v1';
 import { GetMyInfoResponse } from '@account/api/v2/type';
 import { useMutation } from '@tanstack/react-query';
-import { QueryKey } from '@app/api/type';
-import { setQueryData } from '@app/api/queryClient';
+import { QueryKey, QueryKeys } from '@app/api/type';
+import { invalidateQueries, setQueryData } from '@app/api/queryClient';
 import { PutMyInfoPayload } from '@account/api/v1/type';
 import { useCallback } from 'react';
+import useDetailManagement from '@post/hooks/useDetailManagement';
 import { useQueryDataByUser } from './useMyInfoQuery';
 
 /**
@@ -12,12 +13,18 @@ import { useQueryDataByUser } from './useMyInfoQuery';
  */
 export default function useMyInfoMutation() {
   const userQueryData = useQueryDataByUser();
+  const {
+    detailState: { postId },
+  } = useDetailManagement();
   const { mutate, isLoading } = useMutation(requestPutMyInfo, {
     onMutate: (payload) => {
       setQueryData<GetMyInfoResponse>(
         [QueryKey.user, QueryKey.self],
         (oldData) => updateUser(oldData, payload),
       );
+    },
+    onSuccess: () => {
+      invalidateQueries(QueryKeys.postMembers(postId));
     },
   });
   const mutateUserImage = useCallback(
@@ -43,7 +50,7 @@ export default function useMyInfoMutation() {
     [mutate, userQueryData],
   );
 
-  return { isSubmit: isLoading, mutateUserImage, mutateUserNickname };
+  return { isLoading, mutateUserImage, mutateUserNickname };
 }
 
 const updateUser = (

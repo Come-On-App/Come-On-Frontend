@@ -10,17 +10,17 @@ import DeleteButton from './DeleteButton';
 import Content from './Content';
 import { ICustomFieldEditor } from './type';
 
-function CustomField({ metaData }: ICustomFieldEditor) {
+function CustomField({ metaData, onLayout, onFocus }: ICustomFieldEditor) {
   const style = useStyles();
 
   return (
-    <DividerWrapper>
+    <DividerWrapper onLayout={onLayout}>
       <ScreenLayout>
         <ContentHeader customStyle={style.contentHeader}>
-          <Title metaData={metaData} />
+          <Title metaData={metaData} onFocus={onFocus} />
           <DeleteButton itemKey={metaData.itemKey} />
         </ContentHeader>
-        <Content metaData={metaData} />
+        <Content metaData={metaData} onFocus={onFocus} />
       </ScreenLayout>
     </DividerWrapper>
   );

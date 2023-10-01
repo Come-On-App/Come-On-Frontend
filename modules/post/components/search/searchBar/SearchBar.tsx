@@ -6,6 +6,7 @@ import { getFormattedDateRange } from '@shared/utils';
 import TestId from '@shared/constants/testIds';
 import useSearchManagement from '@post/hooks/useSearchManagement';
 import PressableInput from '@shared/components/input/PressableInput';
+import { fullScreenContainer } from '@shared/constants/style';
 import useStyles from './style';
 import CalendarModal from '../modal/SearchModal';
 
@@ -13,13 +14,13 @@ const INITIAL_VALUE = '모이기로 한 날짜를 검색해 보세요!';
 
 export default function SearchBar() {
   const [showModal, setModalState] = useState(false);
-  const { container, searchBarkIcon } = useStyles();
+  const { searchBarkIcon } = useStyles();
   const {
     searchState: { dateRange },
   } = useSearchManagement();
 
   return (
-    <View style={container}>
+    <View style={fullScreenContainer}>
       <PressableInput
         icon={{
           name: 'date-range',

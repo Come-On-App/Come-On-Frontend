@@ -1,6 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { isEmpty } from 'lodash';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import TestId from '@shared/constants/testIds';
 import { useQuery } from '@tanstack/react-query';
@@ -14,6 +15,8 @@ import ServerError from '@post/components/serverError/ServerError';
 import LoadingCardList from '@post/components/loadingCardList/LoadingCardList';
 import useSearchManagement from '@post/hooks/useSearchManagement';
 import EmptyCardList from '@post/components/emptyCardList/EmptyCardList';
+import useRefreshOnFocus from '@shared/hooks/useRefreshOnFocus';
+import { fullScreenContainer } from '@shared/constants/style';
 
 export default function MeetingDashboard() {
   const {
@@ -25,10 +28,13 @@ export default function MeetingDashboard() {
     dateFrom: startingDay?.dateString,
     dateTo: endingDay?.dateString,
   };
-  const { data, status } = useQuery({
+  const { data, status, refetch } = useQuery({
     queryKey: QueryKeys.meetingCardList(paramater),
     queryFn: ({ signal }) => requestGetMeetings(paramater, signal),
   });
+
+  useRefreshOnFocus(refetch);
+
   let Content = <View />;
 
   if (status === 'loading') {
@@ -46,10 +52,10 @@ export default function MeetingDashboard() {
   }
 
   return (
-    <View testID={TestId.post.list}>
+    <SafeAreaView testID={TestId.post.list} style={fullScreenContainer}>
       <SearchAndCreateBar />
       {Content}
-    </View>
+    </SafeAreaView>
   );
 }
 

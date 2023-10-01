@@ -1,9 +1,10 @@
-import React, { useLayoutEffect } from 'react';
+import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import {
   IPostNavigation,
   IPostNavigator,
+  PostRouteNames,
   PostStackParamList,
 } from '@post/navigation/type';
 import MeetingDashboard from '@post/screens/MeetingDashboard';
@@ -12,8 +13,7 @@ import MeetingDatePicker from '@post/screens/MeetingDatePicker';
 import MeetingPostModifier from '@post/screens/MeetingPostModifier';
 import MeetingPostReportForm from '@post/screens/MeetingPostReportForm';
 
-import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
-import { bottomTabStyle } from '@app/navigation/config';
+import useTabBarVisibility from '@post/hooks/useTabBarVisibility';
 import PostDetailNavigator from './PostDetailNavigator';
 
 const { Screen, Navigator } = createNativeStackNavigator<PostStackParamList>();
@@ -40,22 +40,10 @@ export default function Navigation({
   navigation,
   route,
 }: IPostNavigation) {
-  // TODO: [beta] 하단바 숨기 기능
-  useLayoutEffect(() => {
-    if (navigation && route) {
-      const routeName = getFocusedRouteNameFromRoute(route);
-
-      if (routeName === 'MeetingPostDetail') {
-        navigation.setOptions({
-          tabBarStyle: { ...bottomTabStyle, display: 'none' },
-        });
-      } else {
-        navigation.setOptions({
-          tabBarStyle: { ...bottomTabStyle, display: 'flex' },
-        });
-      }
-    }
-  }, [navigation, route]);
+  useTabBarVisibility<PostRouteNames>(
+    { navigation, route },
+    'MeetingPostDetail',
+  );
 
   return (
     <PostNavigator initialRouteName={initialRouteName}>

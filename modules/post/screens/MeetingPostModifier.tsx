@@ -1,6 +1,7 @@
 import { Keyboard, ScrollView } from 'react-native';
 import React, { useEffect } from 'react';
 import { isNull, isEmpty } from 'lodash';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { convertDateRangeToDateInfo, hasPostStateChanged } from '@shared/utils';
 import TestId from '@shared/constants/testIds';
@@ -61,40 +62,42 @@ export default function MeetingPostModifier({
   }, [response, isSuccess, dispatch, initPostState]);
 
   return (
-    <ScrollView
-      testID={TestId.post.modifier}
-      bounces={false}
-      keyboardShouldPersistTaps="handled"
-    >
-      <Uploader isDataLoading={isLoading} />
-      <MeetingName
-        isDataLoading={isLoading}
-        prevMeetingName={response?.meetingMetaData.meetingName}
-      />
-      <VotingTimeRangePicker isDataLoading={isLoading} />
-      <DividerWrapper>
-        <ScreenLayout>
-          <ConfirmCancelButton
-            leftDisabled={isSubmit}
-            rightDisabled={
-              isNull(postState.dateRange.startingDay) ||
-              isEmpty(postState.name) ||
-              hasFormChanged ||
-              isProcessing
-            }
-            onPressLeft={() => navigation.goBack()}
-            confirmText={isSubmit ? LOADING_TEXT : CONFIRM_TEXT}
-            onPressRight={() => {
-              asyncWave([
-                Keyboard.dismiss,
-                () => generatePostPayload(params.id, postState),
-                mutate,
-              ]);
-            }}
-          />
-        </ScreenLayout>
-      </DividerWrapper>
-    </ScrollView>
+    <SafeAreaView>
+      <ScrollView
+        testID={TestId.post.modifier}
+        bounces={false}
+        keyboardShouldPersistTaps="handled"
+      >
+        <Uploader isDataLoading={isLoading} />
+        <MeetingName
+          isDataLoading={isLoading}
+          prevMeetingName={response?.meetingMetaData.meetingName}
+        />
+        <VotingTimeRangePicker isDataLoading={isLoading} />
+        <DividerWrapper>
+          <ScreenLayout>
+            <ConfirmCancelButton
+              leftDisabled={isSubmit}
+              rightDisabled={
+                isNull(postState.dateRange.startingDay) ||
+                isEmpty(postState.name) ||
+                hasFormChanged ||
+                isProcessing
+              }
+              onPressLeft={() => navigation.goBack()}
+              confirmText={isSubmit ? LOADING_TEXT : CONFIRM_TEXT}
+              onPressRight={() => {
+                asyncWave([
+                  Keyboard.dismiss,
+                  () => generatePostPayload(params.id, postState),
+                  mutate,
+                ]);
+              }}
+            />
+          </ScreenLayout>
+        </DividerWrapper>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 

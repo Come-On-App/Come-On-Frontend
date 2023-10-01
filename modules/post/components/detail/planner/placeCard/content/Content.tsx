@@ -3,6 +3,7 @@ import React, { useRef } from 'react';
 import PostInput from '@post/components/postInput/PostInput';
 import { RNEInputRefObject } from '@shared/components/input/type';
 import usePlannerManagementByStatus from '@post/hooks/usePlannerManagementByStatus';
+import { IContent } from './type';
 
 const INPUT_CONFIG = {
   TITLE: { TEXT: '*제목', MAX_LENGTH: 15, PLACEHOLDER: '제목을 입력하세요.' },
@@ -18,8 +19,13 @@ const INPUT_CONFIG = {
   },
 };
 const KEEP_KEYBOARD_ACTIVE = false;
+const [TITLE, DESCRIPTION, SUB_DESCRIPTION] = [
+  'TITLE',
+  'DESCRIPTION',
+  'SUB_DESCRIPTION',
+];
 
-export default function Content() {
+export default function Content({ onLayout, onFocus }: IContent) {
   const { dispatchTitle, dispatchContent, dispatchSubContent, plannerState } =
     usePlannerManagementByStatus();
   const titleInputRef = useRef(null);
@@ -34,7 +40,10 @@ export default function Content() {
   return (
     <>
       <PostInput
+        key={TITLE}
         ref={titleInputRef}
+        onLayout={(event) => onLayout(event, TITLE)}
+        onFocus={() => onFocus(TITLE)}
         lengthMax={INPUT_CONFIG.TITLE.MAX_LENGTH}
         onInput={dispatchTitle}
         title={INPUT_CONFIG.TITLE.TEXT}
@@ -45,7 +54,10 @@ export default function Content() {
         returnKeyType="next"
       />
       <PostInput
+        key={DESCRIPTION}
         ref={summaryInputRef}
+        onLayout={(event) => onLayout(event, DESCRIPTION)}
+        onFocus={() => onFocus(DESCRIPTION)}
         lengthMax={INPUT_CONFIG.SUMMARY.MAX_LENGTH}
         onInput={dispatchContent}
         title={INPUT_CONFIG.SUMMARY.TEXT}
@@ -56,13 +68,16 @@ export default function Content() {
         returnKeyType="next"
       />
       <PostInput
+        key={SUB_DESCRIPTION}
         ref={subContentInputRef}
+        onLayout={(event) => onLayout(event, SUB_DESCRIPTION)}
+        onFocus={() => onFocus(SUB_DESCRIPTION)}
         lengthMax={INPUT_CONFIG.SUB_CONTENT.MAX_LENGTH}
         onInput={dispatchSubContent}
         title={INPUT_CONFIG.SUB_CONTENT.TEXT}
         prevPayload={plannerState.subContent}
-        placeholder={INPUT_CONFIG.SUB_CONTENT.PLACEHOLDER}
         onSubmitEditing={() => focusNextInput(subContentInputRef)}
+        placeholder={INPUT_CONFIG.SUB_CONTENT.PLACEHOLDER}
       />
     </>
   );

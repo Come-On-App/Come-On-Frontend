@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { StyleProp, ViewStyle } from 'react-native';
+import { LayoutChangeEvent, StyleProp, ViewStyle } from 'react-native';
 
 export interface IContentHeader {
   children: ReactNode;
@@ -8,11 +8,14 @@ export interface IContentHeader {
 
 export type DividerPosition = 'top' | 'bottom' | 'both' | 'none';
 
+export type OnLayout = (event: LayoutChangeEvent) => void;
+
 export interface IDividerWrapper {
   width?: number;
   children: ReactNode;
   position?: DividerPosition;
   customStyle?: StyleProp<ViewStyle>;
+  onLayout?: OnLayout;
 }
 
 export interface IScreenLayout {

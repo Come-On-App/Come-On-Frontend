@@ -409,7 +409,7 @@ export function indexByProperty<T, K extends keyof T>(array: T[], property: K) {
   });
 
   const getByKey = memoize((key: T[K]) => {
-    return map.get(key) as T;
+    return map.get(key) as T | undefined;
   });
 
   return { getByKey };

@@ -21,6 +21,7 @@ const Input = forwardRef<RNEInputRef, IInput>((props, ref) => {
     returnKeyType,
     blurOnSubmit,
     keyboardType,
+    onFocus,
   } = props;
   const {
     font,
@@ -62,6 +63,7 @@ const Input = forwardRef<RNEInputRef, IInput>((props, ref) => {
         returnKeyType={returnKeyType}
         blurOnSubmit={blurOnSubmit}
         labelStyle={inputLabelFont}
+        onFocus={onFocus}
         autoCapitalize="none"
       />
     </Pressable>

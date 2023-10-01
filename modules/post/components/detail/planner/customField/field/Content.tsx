@@ -10,7 +10,10 @@ import {
 } from './util/inputFieldUtils';
 import { IContent } from './type';
 
-function Content({ metaData: { content, itemKey, fieldType } }: IContent) {
+function Content({
+  metaData: { content, itemKey, fieldType },
+  onFocus,
+}: IContent) {
   const [currentContent, updateContent] = useState(content);
   const [errorMessage, setErrorMessage] = useState<string | null>(
     validateAndFormatText(content, fieldType).newErrorMessage,
@@ -53,6 +56,7 @@ function Content({ metaData: { content, itemKey, fieldType } }: IContent) {
       onChangeText={handleTextChange}
       keyboardType={keyboardTypeMapping[fieldType]}
       multiline={fieldType === 'NOTE'}
+      onFocus={onFocus}
     />
   );
 }

@@ -2,6 +2,7 @@ import { SEARCH_ADN_CREATE_HEIGHT } from '@post/components/search/searchAndCreat
 import { makeStyles } from '@rneui/themed';
 
 import { applyRelativeSizes } from '@shared/utils';
+import { Platform } from 'react-native';
 
 export default makeStyles((theme, multiline: boolean) => {
   const [
@@ -73,7 +74,8 @@ export default makeStyles((theme, multiline: boolean) => {
     },
     codeFieldFont: {
       fontFamily: 'Pretendard-SemiBold',
-      lineHeight: CONTAINER_CODE_FIELD_HEIGHT,
+      lineHeight: Platform.select({ ios: CONTAINER_CODE_FIELD_HEIGHT }),
+      textAlignVertical: 'center',
       textAlign: 'center',
       color: theme.font.grayscale['900'],
       fontSize: CODE_FIELD_FONT_SIZE,

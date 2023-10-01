@@ -6,6 +6,7 @@ import TestId from '@shared/constants/testIds';
 import { requestMeetingPlaces } from '@post/api/v1';
 import useDetailManagement from '@post/hooks/useDetailManagement';
 import { QueryKeys } from '@app/api/type';
+import useRefreshOnFocus from '@shared/hooks/useRefreshOnFocus';
 import Venue from '../venue/Venue';
 import VenueListSkeleton from '../venue/skeleton/Skeleton';
 
@@ -13,10 +14,12 @@ export default function VenueList() {
   const {
     detailState: { postId },
   } = useDetailManagement();
-  const { data: meetingPlaces } = useQuery({
+  const { data: meetingPlaces, refetch } = useQuery({
     queryKey: QueryKeys.venueList(postId),
     queryFn: ({ signal }) => requestMeetingPlaces(postId, signal),
   });
+
+  useRefreshOnFocus(refetch);
 
   if (!meetingPlaces) {
     return <VenueListSkeleton />;

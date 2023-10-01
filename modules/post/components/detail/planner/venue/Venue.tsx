@@ -3,6 +3,7 @@ import React from 'react';
 
 import TestId from '@shared/constants/testIds';
 import { ExtendedMeetingPlace } from '@post/api/v1/type';
+import { EMPTY_STRING } from '@shared/utils';
 import Order from './order/Order';
 import NoteCard from './card/NoteCard';
 import { IVenue } from './type';
@@ -31,7 +32,7 @@ function generateCardData(data: ExtendedMeetingPlace): NoteCardInfo {
   return {
     type: data.category,
     title: data.placeName,
-    address: data.address,
+    address: data.address ?? EMPTY_STRING,
     placeId: data.meetingPlaceId,
     content,
     fields,
