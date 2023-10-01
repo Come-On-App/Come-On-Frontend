@@ -2,17 +2,18 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
 import QueryClientProvider from '@shared/provider/QueryClientProvider';
 import FontThemeProvider from '@shared/provider/FontProvider';
 import ReduxProvider from '@app/redux/Provider';
 import RootNavigation from '@app/navigation/RootNavigation';
 import isStorybookEnabled from '@shared/utils/isStorybookEnabled';
+import { fullScreenContainer } from '@shared/constants/style';
 
 export function App() {
   return (
-    <View style={styles.container}>
+    <View style={fullScreenContainer}>
       <StatusBar style="auto" />
       <QueryClientProvider>
         <ReduxProvider>
@@ -25,11 +26,6 @@ export function App() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
 let AppEntryPoint = App;
 
 /**

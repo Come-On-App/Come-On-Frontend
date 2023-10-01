@@ -24,7 +24,7 @@ export default function NickName() {
   } = useUserManagement();
   const userQueryData = useQueryDataByUser();
   const name = userQueryData?.nickname ?? EMPTY_STRING;
-  const { mutateUserNickname, isSubmit } = useMyInfoMutation();
+  const { mutateUserNickname, isLoading: isSubmit } = useMyInfoMutation();
   const [currentInput, setNickName] = useState(name);
 
   useEffect(() => {

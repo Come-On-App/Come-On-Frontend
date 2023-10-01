@@ -1,7 +1,7 @@
 import type { ReturnKeyTypeOptions, StyleProp, TextStyle } from 'react-native';
 
-import type { OnChangeText } from '@shared/components/input/type';
-import type { DividerPosition } from '@shared/components/layout/type';
+import type { OnChangeText, OnFocus } from '@shared/components/input/type';
+import type { DividerPosition, OnLayout } from '@shared/components/layout/type';
 
 export interface IPostInput {
   title: string;
@@ -17,4 +17,6 @@ export interface IPostInput {
   onSubmitEditing?: () => void;
   returnKeyType?: ReturnKeyTypeOptions;
   blurOnSubmit?: boolean;
+  onFocus?: OnFocus;
+  onLayout?: OnLayout;
 }

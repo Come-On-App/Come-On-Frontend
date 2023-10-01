@@ -1,5 +1,5 @@
-import { View } from 'react-native';
 import React from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { IpolicyInfo } from '@account/components/policyInfo/type';
 import PolicyInfo from '@account/components/policyInfo/PolicyInfo';
@@ -22,7 +22,7 @@ export default function PolicyPages() {
   ];
 
   return (
-    <View>
+    <SafeAreaView>
       {list.map(({ title, onPress, showIcon, iconName }) => (
         <PolicyInfo
           title={title}
@@ -32,6 +32,6 @@ export default function PolicyPages() {
           iconName={iconName}
         />
       ))}
-    </View>
+    </SafeAreaView>
   );
 }

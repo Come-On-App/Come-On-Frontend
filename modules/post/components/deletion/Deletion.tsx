@@ -20,7 +20,7 @@ export default function Deletion({ id, showModal, onClose }: Ideletion) {
     dateTo: dateRange.endingDay?.dateString,
   };
   const mutate = useMutation(requestDeleteMeeting, {
-    onSuccess: () => {
+    onMutate: () => {
       setQueryData<GetMeetingSliceResponse>(
         QueryKeys.meetingCardList(paramater),
         removeMeetingByPostId(id),

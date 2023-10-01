@@ -15,8 +15,12 @@ import Font from '@shared/components/font/Font';
 import { Button } from '@rneui/themed';
 import { requestPostMeetingTime } from '@post/api/v1';
 import useDetailManagement from '@post/hooks/useDetailManagement';
-import useStyles from './style';
+import { setQueryData } from '@app/api/queryClient';
+import { GetMeetingDetailResponse } from '@post/api/v2/type';
+import { QueryKeys } from '@app/api/type';
+import { PostMeetingTimePayalod } from '@post/api/v1/type';
 import { ItimePickerButton } from './type';
+import useStyles from './style';
 
 export default function TimePickerButton({ time, isHost }: ItimePickerButton) {
   const { button, font } = useStyles(isHost);
@@ -39,7 +43,14 @@ function DateTimePicker({ time }: { time: string }) {
   const { detailState } = useDetailManagement();
   const { button, font } = useStyles();
   const formatedDate = formatTimeWithDate(time);
-  const { mutate } = useMutation(requestPostMeetingTime);
+  const { mutate } = useMutation(requestPostMeetingTime, {
+    onMutate: (payload) => {
+      setQueryData<GetMeetingDetailResponse>(
+        QueryKeys.postDetail(payload.meetingId),
+        (oldData) => updateMeetingStartTime(oldData, payload),
+      );
+    },
+  });
   const updateMeetingTime = (
     event: DateTimePickerEvent,
     selectedDate: Date | undefined,
@@ -78,3 +89,18 @@ function DateTimePicker({ time }: { time: string }) {
     />
   );
 }
+
+const updateMeetingStartTime = (
+  oldData: GetMeetingDetailResponse | undefined,
+  payload: PostMeetingTimePayalod,
+): GetMeetingDetailResponse | undefined => {
+  if (!oldData) return oldData;
+
+  return {
+    ...oldData,
+    meetingMetaData: {
+      ...oldData.meetingMetaData,
+      meetingStartTime: payload.meetingStartTime,
+    },
+  };
+};

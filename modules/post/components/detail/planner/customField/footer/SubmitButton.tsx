@@ -5,7 +5,6 @@ import { useNavigation } from '@react-navigation/native';
 import DividerWrapper from '@shared/components/layout/DividerWrapper';
 import ScreenLayout from '@shared/components/layout/ScreenLayout';
 import ConfirmCancelButton from '@shared/components/button/ConfirmCancelButton';
-import useKeyboardState from '@shared/hooks/useKeyboardState';
 import { PostStatus } from '@post/features/detail/type';
 import { EMPTY_STRING } from '@shared/utils';
 import { MeetingPlace } from '@post/api/v1/type';
@@ -19,15 +18,12 @@ import { PostDetailNavigation } from '@post/navigation/type';
 import useDetailManagement from '@post/hooks/useDetailManagement';
 import usePlannerManagementByStatus from '@post/hooks/usePlannerManagementByStatus';
 import { PlannerState } from '@post/features/detail/planner/type';
-import useStyles from './style';
 
 const LEFT_BUTTON_TEXT = '뒤로가기';
 
 export default function SubmitButton() {
   const navigation =
     useNavigation<PostDetailNavigation<'PostDetailPlannerField'>>();
-  const [isKeyboardOpen] = useKeyboardState();
-  const { container } = useStyles(isKeyboardOpen);
   const {
     detailState: { status, postId, cardId },
   } = useDetailManagement();
@@ -36,10 +32,8 @@ export default function SubmitButton() {
     (item) => item.content === EMPTY_STRING,
   );
   const mutationOptions = {
-    onSettled: () => {
-      initPlannerState();
-    },
     onSuccess: () => {
+      initPlannerState();
       invalidateQueries(QueryKeys.venueList(postId));
       navigation.reset({
         index: 0,
@@ -75,11 +69,11 @@ export default function SubmitButton() {
       : updatePlaceMutation.isLoading;
 
   return (
-    <DividerWrapper customStyle={container}>
+    <DividerWrapper>
       <ScreenLayout>
         <ConfirmCancelButton
           leftDisabled={isLoading}
-          rightDisabled={isLoading || hasEmptyField || isKeyboardOpen}
+          rightDisabled={isLoading || hasEmptyField}
           cancelText={LEFT_BUTTON_TEXT}
           confirmText={getButtonText(status, isLoading)}
           onPressLeft={() => navigation.goBack()}
@@ -95,7 +89,7 @@ export default function SubmitButton() {
  * 형식에 맞는 객체를 반환한다.
  */
 function generatePlaceData(plannerState: PlannerState): MeetingPlace {
-  const plannerPayload = {
+  const plannerPayload: MeetingPlace = {
     category: plannerState.category,
     placeName: plannerState.title,
     address: plannerState.subContent,
@@ -103,10 +97,6 @@ function generatePlaceData(plannerState: PlannerState): MeetingPlace {
       content: plannerState.content,
       fields: plannerState.customModuleFields,
     }),
-    // 구글 맵 기능 비활성화 처리
-    lat: 0,
-    lng: 0,
-    googlePlaceId: 'null',
   };
 
   return plannerPayload;

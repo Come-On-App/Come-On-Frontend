@@ -14,6 +14,7 @@ export default function DividerWrapper({
   width = 12,
   position = 'top',
   customStyle,
+  onLayout,
 }: IDividerWrapper) {
   const { dividerStyle } = useStyles(width);
   const shouldRenderTopDivider = position === 'top' || position === 'both';
@@ -29,7 +30,7 @@ export default function DividerWrapper({
   }
 
   return (
-    <View style={customStyle}>
+    <View style={customStyle} onLayout={onLayout}>
       {shouldRenderTopDivider && (
         <Divider width={dividerStyle.width} color={dividerStyle.color} />
       )}

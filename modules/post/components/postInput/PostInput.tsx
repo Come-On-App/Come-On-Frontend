@@ -28,6 +28,8 @@ const PostInput = forwardRef<RNEInputRef, IPostInput>(
       onSubmitEditing,
       returnKeyType,
       blurOnSubmit,
+      onFocus,
+      onLayout,
     },
     ref,
   ) => {
@@ -46,7 +48,7 @@ const PostInput = forwardRef<RNEInputRef, IPostInput>(
     }, [prevPayload]);
 
     return (
-      <DividerWrapper position={dividerPosition}>
+      <DividerWrapper position={dividerPosition} onLayout={onLayout}>
         <ScreenLayout containerStyle={screenLayout}>
           <ContentHeader>
             <View style={top}>
@@ -66,6 +68,7 @@ const PostInput = forwardRef<RNEInputRef, IPostInput>(
             errorMessage={errorMessage}
             inputStyle={inputStyle}
             returnKeyType={returnKeyType}
+            onFocus={onFocus}
           />
         </ScreenLayout>
       </DividerWrapper>

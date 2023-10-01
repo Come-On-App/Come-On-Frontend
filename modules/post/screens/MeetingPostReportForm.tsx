@@ -3,6 +3,7 @@ import React from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { isNull } from 'lodash';
 import { asyncWave } from 'async-wave';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import Uploader from '@post/components/report/uploader/Uploader';
 import Content from '@post/components/report/input/Content';
@@ -44,33 +45,35 @@ export default function MeetingPostReportForm({
   );
 
   return (
-    <ScrollView
-      testID={TestId.post.report}
-      bounces={false}
-      keyboardShouldPersistTaps="handled"
-    >
-      <Uploader onImage={dispatch.image} />
-      <Title onInput={dispatch.title} />
-      <Content onInput={dispatch.content} hasChanged={hasChanged} />
-      <DividerWrapper>
-        <ScreenLayout>
-          <ConfirmCancelButton
-            leftDisabled={isSubmit}
-            rightDisabled={isSubmit || hasChanged}
-            rightButtonColor={theme.lightColors?.warning}
-            confirmText={isSubmit ? LOADING_TEXT : CONFIRM_TEXT}
-            onPressLeft={() => navigation.goBack()}
-            onPressRight={() => {
-              asyncWave([
-                Keyboard.dismiss,
-                () => generateReportPayload(params.id, state),
-                mutate,
-              ]);
-            }}
-          />
-        </ScreenLayout>
-      </DividerWrapper>
-    </ScrollView>
+    <SafeAreaView>
+      <ScrollView
+        testID={TestId.post.report}
+        bounces={false}
+        keyboardShouldPersistTaps="handled"
+      >
+        <Uploader onImage={dispatch.image} />
+        <Title onInput={dispatch.title} />
+        <Content onInput={dispatch.content} hasChanged={hasChanged} />
+        <DividerWrapper>
+          <ScreenLayout>
+            <ConfirmCancelButton
+              leftDisabled={isSubmit}
+              rightDisabled={isSubmit || hasChanged}
+              rightButtonColor={theme.lightColors?.warning}
+              confirmText={isSubmit ? LOADING_TEXT : CONFIRM_TEXT}
+              onPressLeft={() => navigation.goBack()}
+              onPressRight={() => {
+                asyncWave([
+                  Keyboard.dismiss,
+                  () => generateReportPayload(params.id, state),
+                  mutate,
+                ]);
+              }}
+            />
+          </ScreenLayout>
+        </DividerWrapper>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 

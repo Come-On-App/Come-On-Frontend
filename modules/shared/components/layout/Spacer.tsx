@@ -2,6 +2,7 @@ import { View } from 'react-native';
 import React from 'react';
 
 import { relativeSizeConverter } from '@shared/utils';
+import { fullScreenContainer } from '@shared/constants/style';
 import { ISpacer } from './type';
 
 /**
@@ -23,5 +24,5 @@ export default function Spacer({ height, applyRelative }: ISpacer) {
 export function FullScreenWrapper({ isHide }: { isHide: boolean }) {
   if (isHide) return null;
 
-  return <View style={{ flex: 1 }} />;
+  return <View style={fullScreenContainer} />;
 }

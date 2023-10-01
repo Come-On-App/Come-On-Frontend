@@ -7,10 +7,8 @@ import WelcomeMessage from '@account/components/description/WelcomeMessage';
 import NickName from '@account/components/nickName/NickName';
 import ScreenLayout from '@shared/components/layout/ScreenLayout';
 import useMyInfoQuery from '@account/hooks/useMyInfoQuery';
-
 import useUserManagement from '@account/hooks/useUserManagement';
 import { invert } from '@shared/utils';
-
 import useStyles from './style';
 
 /**

@@ -3,8 +3,8 @@ import { useMutation } from '@tanstack/react-query';
 
 import Button from '@shared/components/button/Button';
 import {
-  requestDeleteConfirmMeetingDate,
-  requestPostConfirmMeetingDate,
+  requestDeleteConfirmMeetingDate as requestDelete,
+  requestPostConfirmMeetingDate as requestPost,
 } from '@post/api/v1';
 import { setQueryData } from '@app/api/queryClient';
 import { GetMeetingDetailResponse } from '@post/api/v2/type';
@@ -24,23 +24,15 @@ export default function ConfirmMeetingDateButton({
   isFixed,
   currentDate,
 }: IConfirmMeetingDateButton) {
-  const { detailState } = useDetailManagement();
-  const confirmMeetingDateMutation = useMutation(
-    requestPostConfirmMeetingDate,
-    {
-      onMutate: (payload) => {
-        handleMeetingDateMutation(detailState.postId, payload);
-      },
-    },
-  );
-  const deleteMeetingDateMutation = useMutation(
-    requestDeleteConfirmMeetingDate,
-    {
-      onMutate: () => {
-        handleMeetingDateMutation(detailState.postId, null);
-      },
-    },
-  );
+  const {
+    detailState: { postId },
+  } = useDetailManagement();
+  const confirmMeetingDateMutation = useMutation(requestPost, {
+    onMutate: (payload) => handleMeetingDateMutation(postId, payload),
+  });
+  const deleteMeetingDateMutation = useMutation(requestDelete, {
+    onMutate: () => handleMeetingDateMutation(postId, null),
+  });
   const isLoading =
     deleteMeetingDateMutation.isLoading || confirmMeetingDateMutation.isLoading;
 
@@ -60,9 +52,9 @@ export default function ConfirmMeetingDateButton({
       disabled={isLoading || disabled}
       onPress={() =>
         isFixed
-          ? deleteMeetingDateMutation.mutate(detailState.postId)
+          ? deleteMeetingDateMutation.mutate(postId)
           : confirmMeetingDateMutation.mutate({
-              meetingId: detailState.postId,
+              meetingId: postId,
               meetingDate: {
                 meetingDateStartFrom: currentDate,
                 meetingDateEndTo: currentDate,
@@ -105,7 +97,9 @@ const updateMeetingDetail = (
 const toggleMeetingConfirmationText = (
   isFixed: boolean,
   currentDate: string,
-) => (isFixed ? `확정된 모임 날짜 취소하기` : `${currentDate} 모임 확정하기`);
+) => {
+  return isFixed ? `확정된 모임 날짜 취소하기` : `${currentDate} 모임 확정하기`;
+};
 const getButtonTitle = (
   disabled: boolean,
   isLoading: boolean,

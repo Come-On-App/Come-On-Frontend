@@ -10,6 +10,7 @@ export default makeStyles((theme) => {
     CONTAINER_BORDER_RADIUS,
     ICON_SIZE,
     FONT_PADDING_TOP,
+    OUTER_CONTAINER_PADDING_BOTTOM,
   ] = applyRelativeSizes({
     height: 80,
     paddingVertical: 16,
@@ -18,6 +19,7 @@ export default makeStyles((theme) => {
     borderRadius: 4,
     iconSize: 24,
     fontPaddingTop: 4,
+    paddingBottom: 20,
   });
 
   return {
@@ -38,6 +40,9 @@ export default makeStyles((theme) => {
     font: {
       paddingTop: FONT_PADDING_TOP,
       color: theme.font.grayscale['700'],
+    },
+    outerContainer: {
+      paddingBottom: OUTER_CONTAINER_PADDING_BOTTOM,
     },
   };
 });

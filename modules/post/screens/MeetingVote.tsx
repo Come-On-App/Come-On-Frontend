@@ -12,6 +12,7 @@ import VoteButton from '@post/components/detail/duration/votingStatus/voteButton
 import useDetailManagement from '@post/hooks/useDetailManagement';
 import { useCustomVotingStatus } from '@post/hooks/useVotingStatusQuery';
 import { useCustomMeetingDetail } from '@post/hooks/useMeetingDetailQuery';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const INCLUDE_START_END = true;
 
@@ -29,9 +30,14 @@ export default function MeetingVote({
   const { data: votingStatusData } = useCustomVotingStatus(postId);
   const { data: detail } = useCustomMeetingDetail(postId);
   const { fixedDate } = detail.meetingMetaData;
+  const { contents } = votingStatusData;
+  const { getByKey } = indexByProperty(contents, 'date');
+  const { myVoting, memberCount } = getByKey(currentDate) ?? {
+    date: currentDate,
+    memberCount: 0,
+    myVoting: false,
+  };
   const dateRange = generateDateRange(startFrom, endTo, INCLUDE_START_END);
-  const { getByKey } = indexByProperty(votingStatusData.contents, 'date');
-  const { myVoting, memberCount } = getByKey(currentDate);
   const onDayPress = useCallback(
     ({ dateString }: DateData) => {
       if (!dateRange.includes(dateString)) {
@@ -49,28 +55,30 @@ export default function MeetingVote({
 
   return (
     <ScrollView bounces={false}>
-      <DividerWrapper position="both">
-        <VoteCalendar
-          range={range}
-          fixedDate={fixedDate}
-          onDayPress={onDayPress}
-        />
-        <VotingStatus
-          isEnabled={isShow}
-          totalMember={members.length}
+      <SafeAreaView>
+        <DividerWrapper position="both">
+          <VoteCalendar
+            range={range}
+            fixedDate={fixedDate}
+            onDayPress={onDayPress}
+          />
+          <VotingStatus
+            isEnabled={isShow}
+            totalMember={members.length}
+            myVoting={myVoting}
+            voteCount={memberCount}
+            dateString={currentDate}
+          />
+        </DividerWrapper>
+        <VoteButton
           myVoting={myVoting}
-          voteCount={memberCount}
-          dateString={currentDate}
+          currentDate={currentDate}
+          fixedDate={fixedDate}
+          isFixed={Boolean(fixedDate)}
+          isHost={isHost}
+          isShow={isShow}
         />
-      </DividerWrapper>
-      <VoteButton
-        myVoting={myVoting}
-        currentDate={currentDate}
-        fixedDate={fixedDate}
-        isFixed={Boolean(fixedDate)}
-        isHost={isHost}
-        isShow={isShow}
-      />
+      </SafeAreaView>
     </ScrollView>
   );
 }
