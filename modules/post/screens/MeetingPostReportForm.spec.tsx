@@ -6,14 +6,29 @@ import { render } from '@shared/utils/customRender';
 import TestId from '@shared/constants/testIds';
 import MeetingPostReport from './MeetingPostReportForm';
 
+const mockedNavigate = jest.fn();
+
+jest.mock('@react-navigation/native', () => {
+  const actualNav: unknown[] = jest.requireActual('@react-navigation/native');
+
+  return {
+    ...actualNav,
+    useFocusEffect: jest.fn(),
+    useNavigation: () => ({
+      navigate: mockedNavigate,
+      dispatch: jest.fn(),
+      setOptions: jest.fn(),
+    }),
+  };
+});
+
 describe('MeetingPostReport Compoent', () => {
-  const mockedGoBack = jest.fn();
   const Component = (
     <NavigationContainer>
       <MeetingPostReport
         navigation={
           {
-            goBack: mockedGoBack,
+            goBack: mockedNavigate,
           } as any
         }
         route={{ params: { id: 0 } } as any}
@@ -46,7 +61,7 @@ describe('MeetingPostReport Compoent', () => {
 
     fireEvent.press(CancelButton);
 
-    expect(mockedGoBack).toBeCalled();
+    expect(mockedNavigate).toBeCalled();
   });
 
   test('신고 제목과 신고 내용이 입력되었을 때, 신고 버튼이 활성화되어야 한다.', async () => {

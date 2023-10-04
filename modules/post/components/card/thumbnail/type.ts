@@ -1,6 +1,7 @@
 export interface IThumbnail {
   uri: string;
   id: number;
+  title: string;
   children?: React.ReactNode;
 }
 

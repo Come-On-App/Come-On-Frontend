@@ -10,4 +10,5 @@ export interface IsubTitle {
 
 export interface Ititle {
   text: string;
+  customTextStyle: string;
 }

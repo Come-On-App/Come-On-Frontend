@@ -14,7 +14,7 @@ import { fullScreenContainer } from '@shared/constants/style';
 export function App() {
   return (
     <View style={fullScreenContainer}>
-      <StatusBar style="auto" />
+      <StatusBar style="dark" animated />
       <QueryClientProvider>
         <ReduxProvider>
           <FontThemeProvider>

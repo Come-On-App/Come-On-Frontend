@@ -9,4 +9,5 @@ export interface ItopHeading {
   people: number;
   isDecided: boolean;
   id: number;
+  isHost: boolean;
 }

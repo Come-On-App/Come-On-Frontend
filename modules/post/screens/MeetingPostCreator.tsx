@@ -1,4 +1,9 @@
-import { Keyboard, ScrollView } from 'react-native';
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { asyncWave } from 'async-wave';
@@ -19,6 +24,7 @@ import type { ValidatedPostState, PostState } from '@post/features/post/type';
 import { PostMeetingPayload } from '@post/api/v1/type';
 import { invalidateQueries } from '@app/api/queryClient';
 import { QueryKey } from '@app/api/type';
+import useRestrictNavigation from '@shared/hooks/useRestrictNavigation';
 
 const CONFIRM_TEXT = '모임 만들기';
 const LOADING_TEXT = '모임 생성중...';
@@ -44,35 +50,39 @@ export default function MeetingPostCreator({
     };
   }, [initPostState]);
 
+  useRestrictNavigation(isLoading);
+
   return (
-    <SafeAreaView>
-      <ScrollView
-        testID={TestId.post.creator}
-        bounces={false}
-        keyboardShouldPersistTaps="handled"
-      >
-        <Uploader />
-        <MeetingNameInput />
-        <VotingTimeRangePicker />
-        <DividerWrapper>
-          <ScreenLayout>
-            <ConfirmCancelButton
-              leftDisabled={isLoading}
-              rightDisabled={!isPostFormValid(postState) || isLoading}
-              onPressLeft={() => navigation.goBack()}
-              confirmText={isLoading ? LOADING_TEXT : CONFIRM_TEXT}
-              onPressRight={() => {
-                asyncWave([
-                  setLoading(true),
-                  Keyboard.dismiss,
-                  () => generatePostPayload(postState),
-                  mutate,
-                ]);
-              }}
-            />
-          </ScreenLayout>
-        </DividerWrapper>
-      </ScrollView>
+    <SafeAreaView edges={['top']}>
+      <KeyboardAvoidingView behavior={Platform.select({ ios: 'padding' })}>
+        <ScrollView
+          testID={TestId.post.creator}
+          bounces={false}
+          keyboardShouldPersistTaps="handled"
+        >
+          <Uploader />
+          <MeetingNameInput />
+          <VotingTimeRangePicker />
+          <DividerWrapper>
+            <ScreenLayout>
+              <ConfirmCancelButton
+                leftDisabled={isLoading}
+                rightDisabled={!isPostFormValid(postState) || isLoading}
+                onPressLeft={() => navigation.goBack()}
+                confirmText={isLoading ? LOADING_TEXT : CONFIRM_TEXT}
+                onPressRight={() => {
+                  asyncWave([
+                    setLoading(true),
+                    Keyboard.dismiss,
+                    () => generatePostPayload(postState),
+                    mutate,
+                  ]);
+                }}
+              />
+            </ScreenLayout>
+          </DividerWrapper>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
