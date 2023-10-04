@@ -18,6 +18,7 @@ import { PostDetailNavigation } from '@post/navigation/type';
 import useDetailManagement from '@post/hooks/useDetailManagement';
 import usePlannerManagementByStatus from '@post/hooks/usePlannerManagementByStatus';
 import { PlannerState } from '@post/features/detail/planner/type';
+import useRestrictNavigation from '@shared/hooks/useRestrictNavigation';
 
 const LEFT_BUTTON_TEXT = '뒤로가기';
 
@@ -67,6 +68,8 @@ export default function SubmitButton() {
     status === 'CREATE'
       ? addPlaceMutation.isLoading
       : updatePlaceMutation.isLoading;
+
+  useRestrictNavigation(isLoading);
 
   return (
     <DividerWrapper>

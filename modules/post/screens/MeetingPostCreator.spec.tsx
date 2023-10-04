@@ -6,14 +6,29 @@ import TestId from '@shared/constants/testIds';
 import { render } from '@shared/utils/customRender';
 import MeetingPostCreator from './MeetingPostCreator';
 
+const mockedNavigate = jest.fn();
+
+jest.mock('@react-navigation/native', () => {
+  const actualNav: unknown[] = jest.requireActual('@react-navigation/native');
+
+  return {
+    ...actualNav,
+    useFocusEffect: jest.fn(),
+    useNavigation: () => ({
+      navigate: mockedNavigate,
+      dispatch: jest.fn(),
+      setOptions: jest.fn(),
+    }),
+  };
+});
+
 describe('MeetingPostCreator Compoent', () => {
-  const mockedGoBack = jest.fn();
   const Component = (
     <NavigationContainer>
       <MeetingPostCreator
         navigation={
           {
-            goBack: mockedGoBack,
+            goBack: mockedNavigate,
           } as any
         }
         route={jest.fn() as any}
@@ -46,6 +61,6 @@ describe('MeetingPostCreator Compoent', () => {
 
     fireEvent.press(CancelButton);
 
-    expect(mockedGoBack).toBeCalled();
+    expect(mockedNavigate).toBeCalled();
   });
 });

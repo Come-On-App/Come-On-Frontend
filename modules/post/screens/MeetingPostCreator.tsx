@@ -19,6 +19,7 @@ import type { ValidatedPostState, PostState } from '@post/features/post/type';
 import { PostMeetingPayload } from '@post/api/v1/type';
 import { invalidateQueries } from '@app/api/queryClient';
 import { QueryKey } from '@app/api/type';
+import useRestrictNavigation from '@shared/hooks/useRestrictNavigation';
 
 const CONFIRM_TEXT = '모임 만들기';
 const LOADING_TEXT = '모임 생성중...';
@@ -43,6 +44,8 @@ export default function MeetingPostCreator({
       initPostState();
     };
   }, [initPostState]);
+
+  useRestrictNavigation(isLoading);
 
   return (
     <SafeAreaView>

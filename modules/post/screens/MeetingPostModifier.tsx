@@ -22,6 +22,7 @@ import { PatchMeetingPayload } from '@post/api/v1/type';
 import { asyncWave } from 'async-wave';
 import useMeetingDetailQuery from '@post/hooks/useMeetingDetailQuery';
 import { invalidateQueries } from '@app/api/queryClient';
+import useRestrictNavigation from '@shared/hooks/useRestrictNavigation';
 
 const CONFIRM_TEXT = '모임 수정하기';
 const LOADING_TEXT = '모임 수정중...';
@@ -60,6 +61,8 @@ export default function MeetingPostModifier({
       initPostState();
     };
   }, [response, isSuccess, dispatch, initPostState]);
+
+  useRestrictNavigation(isProcessing);
 
   return (
     <SafeAreaView>
