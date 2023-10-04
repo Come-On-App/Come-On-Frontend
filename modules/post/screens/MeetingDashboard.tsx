@@ -52,7 +52,11 @@ export default function MeetingDashboard() {
   }
 
   return (
-    <SafeAreaView testID={TestId.post.list} style={fullScreenContainer}>
+    <SafeAreaView
+      edges={['top']}
+      testID={TestId.post.list}
+      style={fullScreenContainer}
+    >
       <SearchAndCreateBar />
       {Content}
     </SafeAreaView>
