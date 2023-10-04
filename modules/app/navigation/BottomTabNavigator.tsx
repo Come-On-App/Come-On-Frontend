@@ -26,6 +26,7 @@ function BottomTabNavigator({
         tabBarLabelPosition: 'below-icon',
         tabBarStyle: bottomTabStyle,
         tabBarHideOnKeyboard: true,
+        freezeOnBlur: true,
       }}
     >
       {children}
