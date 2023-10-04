@@ -29,7 +29,7 @@ export type PostNavigation<T extends PostRouteNames> =
 
 // Post Detail Navigation
 export type PostDetailStackParamLis = {
-  PostDetail: { id: number };
+  PostDetail: { id: number; imagePath: string; title: string };
   PostDetailVote: Omit<Ischedule, 'fixedDate'>;
   PostDetailPlanner: undefined;
   PostDetailPlannerField: undefined;

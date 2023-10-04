@@ -17,7 +17,7 @@ export default function Card({
   return (
     <View testID={TestId.post.card}>
       <RneCard containerStyle={cCard}>
-        <Thumbnail uri={uri} id={id}>
+        <Thumbnail id={id} uri={uri} title={title}>
           <TopHeading people={people} isDecided={isDecided} id={id} />
         </Thumbnail>
         <BottomHeading title={title} subTitle={subTitle} />

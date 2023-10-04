@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import useStyles from './style';
 import { IThumbnail } from './type';
 
-export default function Thumbnail({ uri, children, id }: IThumbnail) {
+export default function Thumbnail({ uri, children, id, title }: IThumbnail) {
   const { ImageContianer } = useStyles();
   const navigation = useNavigation<PostNavigation<'MeetingPostDetail'>>();
 
@@ -14,11 +14,11 @@ export default function Thumbnail({ uri, children, id }: IThumbnail) {
     <Card.Image
       transition
       style={ImageContianer}
-      source={{ uri }}
+      source={{ uri, cache: 'force-cache' }}
       onPress={() =>
         navigation.navigate('MeetingPostDetail', {
           screen: 'PostDetail',
-          params: { id },
+          params: { id, title, imagePath: uri },
         })
       }
     >
