@@ -103,5 +103,6 @@ const generateCardInfo = (response: GetMeetingResponse): ICardInfo => {
     },
     title: response.meetingName,
     uri: response.meetingImageUrl,
+    isHost: response.myMeetingRole === 'HOST',
   };
 };

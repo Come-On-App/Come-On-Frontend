@@ -10,7 +10,7 @@ import useStyles from './style';
 import { ICard } from './type';
 
 export default function Card({
-  payload: { uri, people, isDecided, title, subTitle, id },
+  payload: { uri, people, isDecided, title, subTitle, id, isHost },
 }: ICard) {
   const { cCard } = useStyles();
 
@@ -18,7 +18,12 @@ export default function Card({
     <View testID={TestId.post.card}>
       <RneCard containerStyle={cCard}>
         <Thumbnail id={id} uri={uri} title={title}>
-          <TopHeading people={people} isDecided={isDecided} id={id} />
+          <TopHeading
+            id={id}
+            isHost={isHost}
+            people={people}
+            isDecided={isDecided}
+          />
         </Thumbnail>
         <BottomHeading title={title} subTitle={subTitle} />
       </RneCard>

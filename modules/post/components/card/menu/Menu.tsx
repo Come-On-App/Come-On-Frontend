@@ -8,10 +8,12 @@ import Invitation from '@post/components/invitation/Invitation';
 import Deletion from '@post/components/deletion/Deletion';
 import { useNavigation } from '@react-navigation/native';
 import { PostScreenProps } from '@post/navigation/type';
+import { invert } from '@shared/utils';
 import useStyles from './style';
 import { IcardMenu } from './type';
 
-export default function CardMenu({ id = 0 }: IcardMenu) {
+export default function CardMenu({ id = 0, isHost }: IcardMenu) {
+  const featurePermission = invert(isHost);
   const { icon, menuFont, anchorBackground } = useStyles();
   const [showCodeModal, setCodeModal] = useState(false);
   const [showDeletionModal, setDeletionModal] = useState(false);
@@ -20,6 +22,7 @@ export default function CardMenu({ id = 0 }: IcardMenu) {
     {
       name: '초대코드 관리',
       onPress: () => setCodeModal(true),
+      disabled: featurePermission,
     },
     {
       name: '모임 수정',
@@ -27,6 +30,7 @@ export default function CardMenu({ id = 0 }: IcardMenu) {
         hideMenu();
         navigation.navigate('MeetingPostModification', { id });
       },
+      disabled: featurePermission,
     },
     {
       name: '게시물 신고',

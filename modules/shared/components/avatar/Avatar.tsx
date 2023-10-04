@@ -26,6 +26,7 @@ export default function Avatar({
     return (
       <Skeleton
         circle
+        animation="pulse"
         accessibilityHint="loading"
         width={defaultStyle.width}
         height={defaultStyle.height}

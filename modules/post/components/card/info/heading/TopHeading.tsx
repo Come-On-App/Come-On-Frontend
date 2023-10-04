@@ -7,7 +7,12 @@ import CardMenu from '../../menu/Menu';
 import useStyles from './style';
 import { ItopHeading } from './type';
 
-export default function TopHeading({ people, isDecided, id }: ItopHeading) {
+export default function TopHeading({
+  id,
+  isHost,
+  people,
+  isDecided,
+}: ItopHeading) {
   const { cTopHeading, cTopWrap } = useStyles();
 
   return (
@@ -16,7 +21,7 @@ export default function TopHeading({ people, isDecided, id }: ItopHeading) {
         <GroupDisplay people={people} />
         <DecisionDisplay isDecided={isDecided} />
       </View>
-      <CardMenu id={id} />
+      <CardMenu id={id} isHost={isHost} />
     </View>
   );
 }
