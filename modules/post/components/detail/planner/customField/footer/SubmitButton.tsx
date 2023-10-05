@@ -20,6 +20,8 @@ import useDetailManagement from '@post/hooks/useDetailManagement';
 import usePlannerManagementByStatus from '@post/hooks/usePlannerManagementByStatus';
 import { PlannerState } from '@post/features/detail/planner/type';
 import useRestrictNavigation from '@shared/hooks/useRestrictNavigation';
+import { hapticSuccess } from '@shared/utils/haptics';
+import { noop } from 'lodash';
 
 const LEFT_BUTTON_TEXT = '뒤로가기';
 const TOAST_CONFIG_CREATE = {
@@ -48,12 +50,15 @@ export default function SubmitButton() {
       Toast.show(
         status === 'CREATE' ? TOAST_CONFIG_CREATE : TOAST_CONFIG_UPDATE,
       );
+
       initPlannerState();
       invalidateQueries(QueryKeys.venueList(postId));
       navigation.reset({
         index: 0,
         routes: [{ name: 'PostDetail' }],
       });
+
+      return status === 'CREATE' ? hapticSuccess() : noop();
     },
   };
   const addPlaceMutation = useMutation(requestAddMeetingPlace, mutationOptions);

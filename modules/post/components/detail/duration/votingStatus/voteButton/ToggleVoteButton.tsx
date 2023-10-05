@@ -1,6 +1,6 @@
 import React from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { omit } from 'lodash';
+import { noop, omit } from 'lodash';
 import Toast from 'react-native-toast-message';
 
 import Button from '@shared/components/button/Button';
@@ -17,6 +17,7 @@ import {
 import { QueryKeys } from '@app/api/type';
 import { indexByProperty } from '@shared/utils';
 import { useQueryDataByMeetingMemberMe } from '@post/hooks/useMeetingMemberMeQuery';
+import { hapticSuccess } from '@shared/utils/haptics';
 import { HandleVoteMutationProps, IToggleVoteButton } from './type';
 import useStyles from './style';
 
@@ -67,6 +68,9 @@ export default function ToggleVoteButton({
           : TOAST_CONFIG_VOTE;
 
         Toast.show(TOAST_CONFIG(payload.date));
+      },
+      onSuccess: () => {
+        return myVoting ? hapticSuccess() : noop();
       },
     },
   );
