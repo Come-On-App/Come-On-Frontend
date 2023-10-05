@@ -42,6 +42,7 @@ export default function NoteCardMenu({ prevCardInfo }: INoteCardMenu) {
           content: prevCardInfo.content,
           subContent: prevCardInfo.address,
           customModuleFields: prevCardInfo.fields,
+          hasFieldError: false,
         });
         hideMenuHandler();
         navigation.navigate('PostDetailPlanner');
