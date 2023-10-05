@@ -3,6 +3,7 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { View } from 'react-native';
+import Toast from 'react-native-toast-message';
 
 import QueryClientProvider from '@shared/provider/QueryClientProvider';
 import FontThemeProvider from '@shared/provider/FontProvider';
@@ -22,6 +23,7 @@ export function App() {
           </FontThemeProvider>
         </ReduxProvider>
       </QueryClientProvider>
+      <Toast />
     </View>
   );
 }
