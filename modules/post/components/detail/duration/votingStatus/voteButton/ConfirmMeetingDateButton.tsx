@@ -12,6 +12,7 @@ import { GetMeetingDetailResponse } from '@post/api/v2/type';
 import { QueryKeys } from '@app/api/type';
 import useDetailManagement from '@post/hooks/useDetailManagement';
 import { PostConfirmMeetingDatePayload } from '@post/api/v1/type';
+import { hapticSuccess } from '@shared/utils/haptics';
 import { IConfirmMeetingDateButton } from './type';
 
 const BUTTON_COLOR = '#24ABE4';
@@ -47,6 +48,7 @@ export default function ConfirmMeetingDateButton({
         TOAST_CONFIG_CONFIRM(payload.meetingDate.meetingDateStartFrom),
       );
     },
+    onSuccess: hapticSuccess,
   });
   const deleteMeetingDateMutation = useMutation(requestDelete, {
     onMutate: () => {

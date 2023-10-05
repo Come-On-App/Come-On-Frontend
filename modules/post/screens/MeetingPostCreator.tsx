@@ -26,6 +26,7 @@ import { PostMeetingPayload } from '@post/api/v1/type';
 import { invalidateQueries } from '@app/api/queryClient';
 import { QueryKey } from '@app/api/type';
 import useRestrictNavigation from '@shared/hooks/useRestrictNavigation';
+import { hapticSuccess } from '@shared/utils/haptics';
 
 const CONFIRM_TEXT = '모임 만들기';
 const LOADING_TEXT = '모임 생성중...';
@@ -42,6 +43,7 @@ export default function MeetingPostCreator({
   const { initPostState, postState } = usePostManagement();
   const { mutate } = useMutation(requestCreateMeetings, {
     onSuccess: () => {
+      hapticSuccess();
       Toast.show(TOAST_CONFIG);
       invalidateQueries([QueryKey.post, QueryKey.list]);
       navigation.reset({
