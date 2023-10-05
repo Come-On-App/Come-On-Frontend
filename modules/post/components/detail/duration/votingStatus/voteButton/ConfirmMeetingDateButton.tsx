@@ -1,5 +1,6 @@
 import React from 'react';
 import { useMutation } from '@tanstack/react-query';
+import Toast from 'react-native-toast-message';
 
 import Button from '@shared/components/button/Button';
 import {
@@ -14,6 +15,18 @@ import { PostConfirmMeetingDatePayload } from '@post/api/v1/type';
 import { IConfirmMeetingDateButton } from './type';
 
 const BUTTON_COLOR = '#24ABE4';
+const TOAST_CONFIG_CONFIRM = (meetingDate: string) => {
+  return {
+    type: 'success',
+    text1: '모임 날짜가 확정되었습니다 🎉',
+    text2: `${meetingDate}일에 만나요~`,
+  };
+};
+const TOAST_CONFIG_DELETE = {
+  type: 'success',
+  text1: '확정된 모임을 취소하였습니다',
+  text2: '다른 날짜로 모임을 확정해 보세요!',
+};
 
 /**
  * 날짜 확정 여부 버튼
@@ -28,10 +41,18 @@ export default function ConfirmMeetingDateButton({
     detailState: { postId },
   } = useDetailManagement();
   const confirmMeetingDateMutation = useMutation(requestPost, {
-    onMutate: (payload) => handleMeetingDateMutation(postId, payload),
+    onMutate: (payload) => {
+      handleMeetingDateMutation(postId, payload);
+      Toast.show(
+        TOAST_CONFIG_CONFIRM(payload.meetingDate.meetingDateStartFrom),
+      );
+    },
   });
   const deleteMeetingDateMutation = useMutation(requestDelete, {
-    onMutate: () => handleMeetingDateMutation(postId, null),
+    onMutate: () => {
+      handleMeetingDateMutation(postId, null);
+      Toast.show(TOAST_CONFIG_DELETE);
+    },
   });
   const isLoading =
     deleteMeetingDateMutation.isLoading || confirmMeetingDateMutation.isLoading;

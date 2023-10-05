@@ -126,6 +126,7 @@ const getStories = () => {
     "./modules/shared/components/logo/Logo.stories.tsx": require("../modules/shared/components/logo/Logo.stories.tsx"),
     "./modules/shared/components/menu/Menu.stories.tsx": require("../modules/shared/components/menu/Menu.stories.tsx"),
     "./modules/shared/components/textLengthCounter/TextLengthCounter.stories.tsx": require("../modules/shared/components/textLengthCounter/TextLengthCounter.stories.tsx"),
+    "./modules/shared/components/toastMessage/Toast.stories.tsx": require("../modules/shared/components/toastMessage/Toast.stories.tsx"),
   };
 };
 

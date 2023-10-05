@@ -9,6 +9,7 @@ import { useMutation } from '@tanstack/react-query';
 import { isNull } from 'lodash';
 import { asyncWave } from 'async-wave';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
 
 import Uploader from '@post/components/report/uploader/Uploader';
 import Content from '@post/components/report/input/Content';
@@ -21,32 +22,61 @@ import useReportManagement, {
   ReportState,
 } from '@post/hooks/useReportManagement';
 import { theme } from '@shared/constants/themed';
-import { requestImageURL, requestPostReportMeeting } from '@post/api/v1';
+import {
+  requestDeleteMeeting,
+  requestImageURL,
+  requestPostReportMeeting,
+} from '@post/api/v1';
 import { PostNativeStack } from '@post/navigation/type';
 import { PostReportMeetingPayload } from '@post/api/v1/type';
 import { QueryKeys } from '@app/api/type';
 import { invalidateQueries } from '@app/api/queryClient';
 import useRestrictNavigation from '@shared/hooks/useRestrictNavigation';
 import useKeyboardAwareScroll from '@shared/hooks/useKeyboardAwareScroll';
+import useSearchManagement from '@post/hooks/useSearchManagement';
+import { updateMeetingList } from '@post/components/deletion/Deletion';
 
 const CONFIRM_TEXT = '모임 신고하기';
 const LOADING_TEXT = '모임 신고중...';
+const TOAST_CONFIG = {
+  type: 'info',
+  text1: '해당 모임 신고가 접수되었습니다',
+  text2: '빠른 시일 내에 조치하도록 하겠습니다 죄송합니다.',
+};
 
 export default function MeetingPostReportForm({
   navigation,
   route: { params },
 }: PostNativeStack<'MeetingPostReport'>) {
+  const {
+    searchState: { dateRange },
+  } = useSearchManagement();
   const [state, dispatch] = useReportManagement();
   const hasChanged = isNull(state.title) || isNull(state.content);
-  const { mutate, isLoading: isSubmit } = useMutation(
+  const { mutateAsync } = useMutation(requestDeleteMeeting, {
+    onMutate: (postId) => {
+      updateMeetingList(
+        {
+          dateFrom: dateRange.startingDay?.dateString,
+          dateTo: dateRange.endingDay?.dateString,
+        },
+        postId,
+      );
+    },
+    onSuccess: () => {
+      Toast.show(TOAST_CONFIG);
+      invalidateQueries(QueryKeys.post(params.id));
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'MeetingPostList' }],
+      });
+    },
+  });
+  const { mutate: postReporMutate, isLoading: isSubmit } = useMutation(
     requestPostReportMeeting,
     {
-      onSuccess: () => {
-        invalidateQueries(QueryKeys.post(params.id));
-        navigation.reset({
-          index: 0,
-          routes: [{ name: 'MeetingPostList' }],
-        });
+      onSuccess: async () => {
+        await mutateAsync(params.id);
       },
     },
   );
@@ -85,7 +115,7 @@ export default function MeetingPostReportForm({
                   asyncWave([
                     Keyboard.dismiss,
                     () => generateReportPayload(params.id, state),
-                    mutate,
+                    postReporMutate,
                   ]);
                 }}
               />

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigation } from '@react-navigation/native';
+import Toast from 'react-native-toast-message';
 
 import DividerWrapper from '@shared/components/layout/DividerWrapper';
 import ScreenLayout from '@shared/components/layout/ScreenLayout';
@@ -21,6 +22,16 @@ import { PlannerState } from '@post/features/detail/planner/type';
 import useRestrictNavigation from '@shared/hooks/useRestrictNavigation';
 
 const LEFT_BUTTON_TEXT = '뒤로가기';
+const TOAST_CONFIG_CREATE = {
+  type: 'success',
+  text1: '새로운 카드를 성공적으로 생성하였습니다 🎉',
+  text2: '알찬 구성으로 카드를 만들었나요?',
+};
+const TOAST_CONFIG_UPDATE = {
+  type: 'success',
+  text1: '카드를 성공적으로 업데이트하였습니다 🎉',
+  text2: '카드 내용이 훨씬 보기 좋아요!',
+};
 
 export default function SubmitButton() {
   const navigation =
@@ -34,6 +45,9 @@ export default function SubmitButton() {
   );
   const mutationOptions = {
     onSuccess: () => {
+      Toast.show(
+        status === 'CREATE' ? TOAST_CONFIG_CREATE : TOAST_CONFIG_UPDATE,
+      );
       initPlannerState();
       invalidateQueries(QueryKeys.venueList(postId));
       navigation.reset({

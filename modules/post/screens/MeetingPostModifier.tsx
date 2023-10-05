@@ -2,6 +2,7 @@ import { Keyboard, ScrollView } from 'react-native';
 import React, { useEffect } from 'react';
 import { isNull, isEmpty } from 'lodash';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
 
 import { convertDateRangeToDateInfo, hasPostStateChanged } from '@shared/utils';
 import TestId from '@shared/constants/testIds';
@@ -26,6 +27,11 @@ import useRestrictNavigation from '@shared/hooks/useRestrictNavigation';
 
 const CONFIRM_TEXT = '모임 수정하기';
 const LOADING_TEXT = '모임 수정중...';
+const TOAST_CONFIG = {
+  type: 'success',
+  text1: '모임을 성공적으로 수정하였습니다 🎉',
+  text2: '수정된 내용이 이전보다 훨씬 좋아 보여요!',
+};
 
 export default function MeetingPostModifier({
   navigation,
@@ -40,6 +46,7 @@ export default function MeetingPostModifier({
   const { mutate, isLoading: isSubmit } = useMutation({
     mutationFn: requestPatchMeeting,
     onSuccess: () => {
+      Toast.show(TOAST_CONFIG);
       invalidateQueries(QueryKeys.post(params.id));
       navigation.reset({
         index: 0,

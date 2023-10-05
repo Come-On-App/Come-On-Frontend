@@ -8,6 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { asyncWave } from 'async-wave';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
 
 import ConfirmCancelButton from '@shared/components/button/ConfirmCancelButton';
 import Uploader from '@post/components/creation/uploader/Uploader';
@@ -28,6 +29,11 @@ import useRestrictNavigation from '@shared/hooks/useRestrictNavigation';
 
 const CONFIRM_TEXT = '모임 만들기';
 const LOADING_TEXT = '모임 생성중...';
+const TOAST_CONFIG = {
+  type: 'success',
+  text1: '새로운 모임을 성공적으로 만들었습니다 🎉',
+  text2: '다른 사람들을 초대하여 모임을 진행하세요! 👋',
+};
 
 export default function MeetingPostCreator({
   navigation,
@@ -36,6 +42,7 @@ export default function MeetingPostCreator({
   const { initPostState, postState } = usePostManagement();
   const { mutate } = useMutation(requestCreateMeetings, {
     onSuccess: () => {
+      Toast.show(TOAST_CONFIG);
       invalidateQueries([QueryKey.post, QueryKey.list]);
       navigation.reset({
         index: 0,

@@ -1,8 +1,10 @@
 /* eslint-disable import/no-mutable-exports */
 /* eslint-disable @typescript-eslint/no-var-requires */
+
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { View } from 'react-native';
+import Toast from 'react-native-toast-message';
 
 import QueryClientProvider from '@shared/provider/QueryClientProvider';
 import FontThemeProvider from '@shared/provider/FontProvider';
@@ -10,6 +12,7 @@ import ReduxProvider from '@app/redux/Provider';
 import RootNavigation from '@app/navigation/RootNavigation';
 import isStorybookEnabled from '@shared/utils/isStorybookEnabled';
 import { fullScreenContainer } from '@shared/constants/style';
+import { toastConfig } from '@shared/components/toastMessage/Config';
 
 export function App() {
   return (
@@ -22,6 +25,11 @@ export function App() {
           </FontThemeProvider>
         </ReduxProvider>
       </QueryClientProvider>
+      <Toast
+        visibilityTime={6000}
+        onPress={() => Toast.hide()}
+        config={toastConfig}
+      />
     </View>
   );
 }
