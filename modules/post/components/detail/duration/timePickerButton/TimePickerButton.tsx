@@ -5,6 +5,7 @@ import RNDateTimePicker, {
   DateTimePickerAndroid,
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
+import Toast from 'react-native-toast-message';
 
 import {
   formatTime,
@@ -21,6 +22,11 @@ import { QueryKeys } from '@app/api/type';
 import { PostMeetingTimePayalod } from '@post/api/v1/type';
 import { ItimePickerButton } from './type';
 import useStyles from './style';
+
+const TOAST_CONFIG = {
+  type: 'success',
+  text1: '모임 시간이 성공적으로 업데이트 되었습니다 🎉',
+};
 
 export default function TimePickerButton({ time, isHost }: ItimePickerButton) {
   const { button, font } = useStyles(isHost);
@@ -49,6 +55,9 @@ function DateTimePicker({ time }: { time: string }) {
         QueryKeys.postDetail(payload.meetingId),
         (oldData) => updateMeetingStartTime(oldData, payload),
       );
+    },
+    onSuccess: () => {
+      Toast.show(TOAST_CONFIG);
     },
   });
   const updateMeetingTime = (

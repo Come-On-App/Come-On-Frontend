@@ -2,7 +2,7 @@ import { Button, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 import { ComponentMeta, ComponentStory } from '@storybook/react-native';
 
-import { toastConfig } from './Toast.config';
+import { toastConfig } from './Config';
 
 type Meta = ComponentMeta<typeof Toast>;
 

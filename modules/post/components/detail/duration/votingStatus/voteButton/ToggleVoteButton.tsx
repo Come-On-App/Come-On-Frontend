@@ -1,6 +1,7 @@
 import React from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { omit } from 'lodash';
+import Toast from 'react-native-toast-message';
 
 import Button from '@shared/components/button/Button';
 import Icon from '@shared/components/icon/Icon';
@@ -20,6 +21,20 @@ import { HandleVoteMutationProps, IToggleVoteButton } from './type';
 import useStyles from './style';
 
 const VOTE_PROCESSING_TEXT = '투표 처리하는중...';
+const TOAST_CONFIG_VOTE = (date: string) => {
+  return {
+    type: 'success',
+    text1: `${date} 모임 투표를 하였습니다 🎉`,
+    text2: '다른 날짜도 투표를 해보는 건 어떤가요?',
+  };
+};
+const TOAST_CONFIG_VOTE_CANCEL = (date: string) => {
+  return {
+    type: 'success',
+    text1: `${date} 모임 투표를 취소하였습니다`,
+    text2: '더 좋은 날짜가 있을거에요!',
+  };
+};
 
 /**
  * 투표 버튼 컴포넌트
@@ -47,6 +62,11 @@ export default function ToggleVoteButton({
           payload,
           isAdding: !myVoting,
         });
+        const TOAST_CONFIG = myVoting
+          ? TOAST_CONFIG_VOTE_CANCEL
+          : TOAST_CONFIG_VOTE;
+
+        Toast.show(TOAST_CONFIG(payload.date));
       },
     },
   );
