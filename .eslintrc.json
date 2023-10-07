@@ -18,7 +18,9 @@
     "project": "./tsconfig.json"
   },
   "ignorePatterns": [
-    "*.config.*",
+    // "*.config.*",
+    "app.config.js",
+    "metro.config.js",
     "*.stories.*",
     "**/mocks/*",
     "**/jest/*",

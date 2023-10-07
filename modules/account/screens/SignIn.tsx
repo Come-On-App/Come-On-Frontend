@@ -2,8 +2,8 @@ import { View } from 'react-native';
 import React from 'react';
 
 import Logo from '@shared/components/logo/Logo';
-import AppleLoginButton from '@account/components/auth/button/apple/Apple';
-import GoogleLoginButton from '@account/components/auth/button/google/Google';
+import AppleLoginButton from '@account/components/auth/apple/Apple';
+import GoogleLoginButton from '@account/components/auth/google/Google';
 import Font from '@shared/components/font/Font';
 import useAuthManagement from '@account/hooks/useAuthManagement';
 import TestId from '@shared/constants/testIds';
@@ -22,7 +22,7 @@ export default function SignIn() {
     loginError,
   } = useStyles();
   const {
-    authState: { isLoading, isError },
+    authState: { isLoading, isError, error },
   } = useAuthManagement();
   const isAnyLoading = isLoading.apple || isLoading.google;
   let SignInMessage = (
@@ -32,9 +32,11 @@ export default function SignIn() {
   );
 
   if (isError) {
+    const LOGIN_ERROR_REASON = error.reason;
+
     SignInMessage = (
       <Font style={loginError} bold>
-        {LOGIN_ERROR}
+        {LOGIN_ERROR_REASON || LOGIN_ERROR}
       </Font>
     );
   }

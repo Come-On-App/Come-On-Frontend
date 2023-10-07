@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 import Font from '@shared/components/font/Font';
 import useAuthManagement from '@account/hooks/useAuthManagement';
@@ -18,12 +19,19 @@ export default function AccountManagement() {
   const { container, font } = useStyles();
   const { initAuthState } = useAuthManagement();
   const { mutate, isLoading } = useMutation(requestDeleteUser, {
+    onSuccess: () => {
+      signOutIfGoogleLoggedIn();
+    },
     onSettled: () => {
       initAuthState(REMOVE_TOKEN_FROM_STORE);
     },
   });
   const onLogout = () => {
-    asyncWave([initAuthState(REMOVE_TOKEN_FROM_STORE), requestPostUserLogout]);
+    asyncWave([
+      signOutIfGoogleLoggedIn,
+      initAuthState(REMOVE_TOKEN_FROM_STORE),
+      requestPostUserLogout,
+    ]);
   };
 
   return (
@@ -44,3 +52,11 @@ export default function AccountManagement() {
     </View>
   );
 }
+
+const signOutIfGoogleLoggedIn = async () => {
+  const isSignedIn = await GoogleSignin.isSignedIn();
+
+  if (isSignedIn) {
+    await GoogleSignin.signOut();
+  }
+};

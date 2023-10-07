@@ -11,8 +11,10 @@ const initialState: AuthState = {
     apple: false,
     google: false,
   },
-  isReissue: false,
   isError: false,
+  error: {
+    reason: null,
+  },
 };
 
 export const authSlice = createSlice({
@@ -25,14 +27,14 @@ export const authSlice = createSlice({
     updateGoogleLoadingStatus: (state, action: PayloadAction<boolean>) => {
       state.isLoading.google = action.payload;
     },
-    updateReissueStatus: (state, action: PayloadAction<boolean>) => {
-      state.isReissue = action.payload;
-    },
     updateErrorStatus: (state, action: PayloadAction<boolean>) => {
       state.isError = action.payload;
     },
     updateUserLoginStatus: (state, action: PayloadAction<boolean>) => {
       state.isLogin = action.payload;
+    },
+    updateErrorReason: (state, action: PayloadAction<string | null>) => {
+      state.error.reason = action.payload;
     },
     init: {
       reducer: () => {
@@ -52,9 +54,9 @@ export const authSlice = createSlice({
 export const {
   updateAppleLoadingStatus,
   updateGoogleLoadingStatus,
-  updateReissueStatus,
   updateUserLoginStatus,
   updateErrorStatus,
+  updateErrorReason,
   init,
 } = authSlice.actions;
 

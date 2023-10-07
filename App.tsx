@@ -1,5 +1,6 @@
 /* eslint-disable import/no-mutable-exports */
 /* eslint-disable @typescript-eslint/no-var-requires */
+import 'expo-dev-client';
 
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';

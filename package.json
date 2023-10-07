@@ -16,6 +16,7 @@
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
     "@react-native-community/datetimepicker": "7.2.0",
+    "@react-native-google-signin/google-signin": "^10.0.1",
     "@react-navigation/bottom-tabs": "^6.5.9",
     "@react-navigation/native": "^6.1.8",
     "@react-navigation/native-stack": "^6.9.14",
@@ -29,6 +30,7 @@
     "expo-apple-authentication": "~6.1.0",
     "expo-clipboard": "~4.3.1",
     "expo-constants": "~14.4.2",
+    "expo-dev-client": "~2.4.11",
     "expo-font": "~11.4.0",
     "expo-haptics": "~12.4.0",
     "expo-image-picker": "~14.3.2",
