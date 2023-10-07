@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '@app/hooks/useAppRedux';
 import {
   init,
   updateAppleLoadingStatus,
+  updateErrorReason,
   updateErrorStatus,
   updateGoogleLoadingStatus,
   updateUserLoginStatus,
@@ -30,6 +31,10 @@ export default function useAuthManagement() {
     (paylaod: boolean) => dispatch(updateUserLoginStatus(paylaod)),
     [dispatch],
   );
+  const dispatchErrorReason = useCallback(
+    (paylaod: string | null) => dispatch(updateErrorReason(paylaod)),
+    [dispatch],
+  );
   const initAuthState = useCallback(
     (shouldRemoveTokenFromStore = false) =>
       dispatch(init(shouldRemoveTokenFromStore)),
@@ -42,6 +47,7 @@ export default function useAuthManagement() {
     dispatchGoogleStatus,
     dispatchUserLoginStatus,
     dispatchErrorStatus,
+    dispatchErrorReason,
     initAuthState,
   };
 }

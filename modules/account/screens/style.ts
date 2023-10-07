@@ -3,8 +3,8 @@ import { makeStyles } from '@rneui/themed';
 export default makeStyles((theme) => ({
   cAccountManagement: {
     flex: 1,
-    justifyContent: 'flex-end',
     alignItems: 'center',
+    justifyContent: 'flex-end',
   },
   signInContainer: {
     flex: 1,

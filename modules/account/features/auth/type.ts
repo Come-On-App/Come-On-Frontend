@@ -13,6 +13,8 @@ export type LoginStatus = {
 export interface AuthState {
   isLogin: boolean;
   isLoading: LoginStatus;
-  isReissue: boolean;
   isError: boolean;
+  error: {
+    reason: null | string;
+  };
 }

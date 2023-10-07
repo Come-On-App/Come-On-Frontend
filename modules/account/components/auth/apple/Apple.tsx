@@ -21,12 +21,14 @@ import useStyles from './style';
 import { AppleErrorCode } from './type';
 
 const BUTTON_TITLE = 'Apple 로그인';
+const ERROR_REASON_UNSUPPORTED = 'Apple 로그인은 iOS에서만 지원하고 있습니다.';
 
 export default function Apple() {
   const {
     authState: { isLoading, isError },
     dispatchAppleStatus,
     dispatchErrorStatus,
+    dispatchErrorReason,
     dispatchUserLoginStatus,
   } = useAuthManagement();
   const { button, font } = useStyles();
@@ -43,6 +45,7 @@ export default function Apple() {
         asyncWave(
           [
             isError && dispatchErrorStatus(false),
+            isError && dispatchErrorReason(null),
             dispatchAppleStatus(true),
             requestAppleAuthentication,
             createAppleAuthPayload,
@@ -54,7 +57,14 @@ export default function Apple() {
               dispatchUserLoginStatus(true);
             },
             onError: (error: AppleErrorCode) => {
-              if (shouldContinueOnError(error)) {
+              if (checkUnavailableError(error)) {
+                dispatchErrorStatus(true);
+                dispatchErrorReason(ERROR_REASON_UNSUPPORTED);
+
+                return;
+              }
+
+              if (ignoreRequestCanceled(error)) {
                 dispatchErrorStatus(true);
 
                 throw error;
@@ -98,7 +108,7 @@ const createAppleAuthPayload = (
  * [헬퍼 함수]
  * Apple 로그인 API 요청 함수
  */
-const requestAppleAuthentication = () => {
+const requestAppleAuthentication = async () => {
   return signInAsync({
     requestedScopes: [
       AppleAuthenticationScope.FULL_NAME,
@@ -106,7 +116,9 @@ const requestAppleAuthentication = () => {
     ],
   });
 };
-
-function shouldContinueOnError(error: AppleErrorCode) {
+const ignoreRequestCanceled = (error: AppleErrorCode) => {
   return error?.code !== 'ERR_REQUEST_CANCELED';
-}
+};
+const checkUnavailableError = (error: AppleErrorCode) => {
+  return error?.code === 'ERR_UNAVAILABLE';
+};

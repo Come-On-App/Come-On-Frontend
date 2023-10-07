@@ -7,7 +7,8 @@ type AppleLoginErrorCodes =
   | 'ERR_REQUEST_FAILED'
   | 'ERR_REQUEST_NOT_HANDLED'
   | 'ERR_REQUEST_NOT_INTERACTIVE'
-  | 'ERR_REQUEST_UNKNOWN';
+  | 'ERR_REQUEST_UNKNOWN'
+  | 'ERR_UNAVAILABLE';
 
 export interface AppleErrorCode {
   code: AppleLoginErrorCodes;

@@ -4,7 +4,11 @@ module.exports = {
     'node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg|@rneui/*)',
   ],
   setupFilesAfterEnv: ['./jest/jest.setup.ts'],
-  setupFiles: ['./jest/mock.setup.ts', 'jest-date-mock'],
+  setupFiles: [
+    './jest/mock.setup.ts',
+    'jest-date-mock',
+    './node_modules/@react-native-google-signin/google-signin/jest/build/setup.js',
+  ],
   clearMocks: true,
   collectCoverage: true,
   collectCoverageFrom: [
