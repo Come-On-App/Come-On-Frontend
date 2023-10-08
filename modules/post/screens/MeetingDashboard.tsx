@@ -28,12 +28,16 @@ export default function MeetingDashboard() {
     dateFrom: startingDay?.dateString,
     dateTo: endingDay?.dateString,
   };
-  const { data, status, refetch } = useQuery({
+  const {
+    data,
+    status,
+    refetch: meetingListRefetch,
+  } = useQuery({
     queryKey: QueryKeys.meetingCardList(paramater),
     queryFn: ({ signal }) => requestGetMeetings(paramater, signal),
   });
 
-  useRefreshOnFocus(refetch);
+  useRefreshOnFocus(meetingListRefetch);
 
   let Content = <View />;
 

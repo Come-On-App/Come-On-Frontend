@@ -12,7 +12,7 @@ describe('Thumbnail Compoent', () => {
   test('이미지가 올바르게 렌더링 되어야 한다', () => {
     render(
       <NavigationContainer>
-        <Thumbnail uri={path} id={0} />
+        <Thumbnail uri={path} id={0} title="postTitle" />
       </NavigationContainer>,
     );
 
@@ -24,7 +24,7 @@ describe('Thumbnail Compoent', () => {
 
     render(
       <NavigationContainer>
-        <Thumbnail uri={path} id={0}>
+        <Thumbnail uri={path} id={0} title="postTitle">
           <View>
             <Text>{text}</Text>
           </View>

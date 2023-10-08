@@ -11,7 +11,6 @@ export default function useImagePicker() {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 1,
     });
 
     if (!result.canceled) {

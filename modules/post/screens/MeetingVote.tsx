@@ -1,18 +1,18 @@
 import React, { useCallback, useState } from 'react';
 import type { DateData } from 'react-native-calendars';
+import { ScrollView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import DividerWrapper from '@shared/components/layout/DividerWrapper';
 import { PostDetailNativeStack } from '@post/navigation/type';
-import { generateDateRange, indexByProperty } from '@shared/utils';
+import { generateDateRange } from '@shared/utils';
 import VoteCalendar from '@post/components/detail/duration/votingStatus/calendar/VoteCalendar';
 import VotingStatus from '@post/components/detail/duration/votingStatus/VotingStatus';
-import { ScrollView } from 'react-native';
 import { hapticImpactLight } from '@shared/utils/haptics';
 import VoteButton from '@post/components/detail/duration/votingStatus/voteButton/VoteButton';
 import useDetailManagement from '@post/hooks/useDetailManagement';
-import { useCustomVotingStatus } from '@post/hooks/useVotingStatusQuery';
 import { useCustomMeetingDetail } from '@post/hooks/useMeetingDetailQuery';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import useDateVotingDetailsQuery from '@post/hooks/useDateVotingDetailsQuery';
 
 const INCLUDE_START_END = true;
 
@@ -22,22 +22,22 @@ export default function MeetingVote({
   },
 }: PostDetailNativeStack<'PostDetailVote'>) {
   const { startFrom, endTo } = range;
+  const dateRange = generateDateRange(startFrom, endTo, INCLUDE_START_END);
   const [isShow, setShow] = useState(false);
   const [currentDate, setCurrentDate] = useState(startFrom);
   const {
     detailState: { postId },
   } = useDetailManagement();
-  const { data: votingStatusData } = useCustomVotingStatus(postId);
+  const {
+    data: { memberCount, myVoting } = {
+      date: startFrom,
+      memberCount: 0,
+      myVoting: false,
+      votingUsers: [],
+    },
+  } = useDateVotingDetailsQuery(postId, currentDate);
   const { data: detail } = useCustomMeetingDetail(postId);
   const { fixedDate } = detail.meetingMetaData;
-  const { contents } = votingStatusData;
-  const { getByKey } = indexByProperty(contents, 'date');
-  const { myVoting, memberCount } = getByKey(currentDate) ?? {
-    date: currentDate,
-    memberCount: 0,
-    myVoting: false,
-  };
-  const dateRange = generateDateRange(startFrom, endTo, INCLUDE_START_END);
   const onDayPress = useCallback(
     ({ dateString }: DateData) => {
       if (!dateRange.includes(dateString)) {

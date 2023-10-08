@@ -1,5 +1,6 @@
 import { describe, expect, test } from '@jest/globals';
 import { screen } from '@testing-library/react-native';
+import { NavigationContainer } from '@react-navigation/native';
 
 import { postMembers } from '@post/mocks/members';
 import { render } from '@shared/utils/customRender';
@@ -14,7 +15,11 @@ describe('Participants Compoent', () => {
     // 특정 게시물 ID 구현
     store.dispatch(updateCurrentPostId(POST_ID));
 
-    render(<ParticipantCard />);
+    render(
+      <NavigationContainer>
+        <ParticipantCard />
+      </NavigationContainer>,
+    );
 
     expect(screen.getByText('모임 멤버')).toBeOnTheScreen();
 

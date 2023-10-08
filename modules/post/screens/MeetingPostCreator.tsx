@@ -35,6 +35,11 @@ const TOAST_CONFIG = {
   text1: '새로운 모임을 성공적으로 만들었습니다 🎉',
   text2: '다른 사람들을 초대하여 모임을 진행하세요! 👋',
 };
+const TOAST_CONFIG_ERROR = {
+  type: 'error',
+  text1: '모임 생성에 실패하였습니다.',
+  text2: '서버 오류가 발생하였습니다 다시 생성해 주세요',
+};
 
 export default function MeetingPostCreator({
   navigation,
@@ -50,6 +55,10 @@ export default function MeetingPostCreator({
         index: 0,
         routes: [{ name: 'MeetingPostList' }],
       });
+    },
+    onError: () => {
+      setLoading(false);
+      Toast.show(TOAST_CONFIG_ERROR);
     },
   });
 

@@ -14,12 +14,12 @@ export default function VenueList() {
   const {
     detailState: { postId },
   } = useDetailManagement();
-  const { data: meetingPlaces, refetch } = useQuery({
+  const { data: meetingPlaces, refetch: venueListRefetch } = useQuery({
     queryKey: QueryKeys.venueList(postId),
     queryFn: ({ signal }) => requestMeetingPlaces(postId, signal),
   });
 
-  useRefreshOnFocus(refetch);
+  useRefreshOnFocus(venueListRefetch);
 
   if (!meetingPlaces) {
     return <VenueListSkeleton />;
