@@ -8,7 +8,7 @@ export default makeStyles(() => {
     CONTAINER_MODAL_RADIUS,
   ] = applyRelativeSizes({
     containerModalHeight: 235,
-    padding: 28,
+    padding: 20,
     radius: 8,
   });
 
