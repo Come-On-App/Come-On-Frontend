@@ -15,6 +15,7 @@ export type BottomTabNavigation = BottomTabProps['navigation'];
 export type RootStackParamList = {
   SignIn: undefined;
   Home: undefined;
+  MeetingPostDetail: undefined;
 };
 
 export interface IbottomTabNavigator {

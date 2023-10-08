@@ -10,6 +10,7 @@ import { Skeleton } from '@rneui/themed';
 import useDetailManagement from '@post/hooks/useDetailManagement';
 import useMeetingMemberMeQuery from '@post/hooks/useMeetingMemberMeQuery';
 import useVotingStatusQuery from '@post/hooks/useVotingStatusQuery';
+import useRefreshOnFocus from '@shared/hooks/useRefreshOnFocus';
 import Schedule from './schedule/Schedule';
 import TimePickerButton from './timePickerButton/TimePickerButton';
 import useStyles from './style';
@@ -21,7 +22,8 @@ export default function Duration() {
   const {
     detailState: { postId },
   } = useDetailManagement();
-  const { data: detail } = useMeetingDetailQuery(postId);
+  const { data: detail, refetch: meetingDetailRefetch } =
+    useMeetingDetailQuery(postId);
   const { data: currentPostUserData } = useMeetingMemberMeQuery(postId);
   const { data: votingStatus } = useVotingStatusQuery(postId);
   const isContentLoaded = detail && currentPostUserData && votingStatus;
@@ -30,6 +32,8 @@ export default function Duration() {
       <Skeleton height={skeleton.height} />
     </View>
   );
+
+  useRefreshOnFocus(meetingDetailRefetch);
 
   if (isContentLoaded) {
     const { calendar, fixedDate, meetingStartTime } = detail.meetingMetaData;

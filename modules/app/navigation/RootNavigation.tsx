@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import SignIn from '@account/screens/SignIn';
 import useAuthManagement from '@account/hooks/useAuthManagement';
-
+import PostDetailNavigator from '@post/navigation/PostDetailNavigator';
 import { RootStackParamList } from './type';
 import BottomTabNavigator from './BottomTabNavigator';
 
@@ -16,7 +16,17 @@ export function RootNavigator() {
   return (
     <Navigator initialRouteName="SignIn" screenOptions={{ headerShown: false }}>
       {authState.isLogin ? (
-        <Screen name="Home" component={BottomTabNavigator} />
+        <>
+          <Screen name="Home" component={BottomTabNavigator} />
+          {/* Hiding tab bar in specific screens */}
+          <Screen
+            name="MeetingPostDetail"
+            component={PostDetailNavigator}
+            options={{
+              animation: 'fade',
+            }}
+          />
+        </>
       ) : (
         <Screen
           name="SignIn"

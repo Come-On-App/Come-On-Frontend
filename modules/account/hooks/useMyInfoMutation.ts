@@ -14,7 +14,7 @@ import { useQueryDataByUser } from './useMyInfoQuery';
 const TOAST_CONFIG_USER_IMAGE = {
   type: 'success',
   text1: '사용자 정보 업데이트 완료',
-  text2: '프로필 이미지를 성공적으로 변경되었습니다.',
+  text2: '프로필 이미지를 성공적으로 변경하였습니다.',
 };
 const TOAST_CONFIG_NICKNAME = (changedNickname: string) => {
   return {

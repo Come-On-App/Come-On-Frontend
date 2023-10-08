@@ -1,4 +1,3 @@
-import logger, { createLogger } from 'redux-logger';
 import { configureStore } from '@reduxjs/toolkit';
 
 import postSlice from '@post/features/post/postSlice';
@@ -10,11 +9,11 @@ import plannerSlice from '@post/features/detail/planner/plannerSlice';
 import plannerEditSlice from '@post/features/detail/planner/plannerEditSlice';
 
 // 커스텀 로거
-const customLogger = createLogger({
-  predicate: (getState, action) => {
-    return action.type.startsWith('plannerEdit/');
-  },
-});
+// const customLogger = createLogger({
+//   predicate: (getState, action) => {
+//     return action.type.startsWith('plannerEdit/');
+//   },
+// });
 
 export default configureStore({
   reducer: {
@@ -26,5 +25,5 @@ export default configureStore({
     planner: plannerSlice,
     plannerEdit: plannerEditSlice,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+  // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

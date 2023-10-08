@@ -8,6 +8,7 @@ import ContentHeader from '@shared/components/layout/ContentHeader';
 import { QueryKeys } from '@app/api/type';
 import { requestGetMeetingMembers } from '@post/api/v2';
 import useDetailManagement from '@post/hooks/useDetailManagement';
+import useRefreshOnFocus from '@shared/hooks/useRefreshOnFocus';
 import MemberCount from './memberCount/MemberCount';
 import Members from './members/Members';
 
@@ -17,10 +18,12 @@ export default function Participants() {
   const {
     detailState: { postId },
   } = useDetailManagement();
-  const { data } = useQuery({
+  const { data, refetch: meetingMemberRefetch } = useQuery({
     queryKey: QueryKeys.postMembers(postId),
     queryFn: ({ signal }) => requestGetMeetingMembers(postId, signal),
   });
+
+  useRefreshOnFocus(meetingMemberRefetch);
 
   return (
     <DividerWrapper>
