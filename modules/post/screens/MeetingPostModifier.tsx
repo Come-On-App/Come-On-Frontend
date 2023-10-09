@@ -8,7 +8,6 @@ import { convertDateRangeToDateInfo, hasPostStateChanged } from '@shared/utils';
 import TestId from '@shared/constants/testIds';
 import { PostNativeStack } from '@post/navigation/type';
 import { useMutation } from '@tanstack/react-query';
-import { QueryKeys } from '@app/api/type';
 import Uploader from '@post/components/modification/uploader/Uploader';
 import MeetingName from '@post/components/modification/meetingName/MeetingName';
 import VotingTimeRangePicker from '@post/components/modification/votingTimeRangePicker/VotingTimeRangePicker';
@@ -22,7 +21,6 @@ import { GetMeetingDetailResponse } from '@post/api/v2/type';
 import { PatchMeetingPayload } from '@post/api/v1/type';
 import { asyncWave } from 'async-wave';
 import useMeetingDetailQuery from '@post/hooks/useMeetingDetailQuery';
-import { invalidateQueries } from '@app/api/queryClient';
 import useRestrictNavigation from '@shared/hooks/useRestrictNavigation';
 
 const CONFIRM_TEXT = '모임 수정하기';
@@ -47,7 +45,6 @@ export default function MeetingPostModifier({
     mutationFn: requestPatchMeeting,
     onSuccess: () => {
       Toast.show(TOAST_CONFIG);
-      invalidateQueries(QueryKeys.post(params.id));
       navigation.reset({
         index: 0,
         routes: [{ name: 'MeetingPostList' }],

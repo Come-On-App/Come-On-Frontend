@@ -21,6 +21,7 @@ export default function Participants() {
   const { data, refetch: meetingMemberRefetch } = useQuery({
     queryKey: QueryKeys.postMembers(postId),
     queryFn: ({ signal }) => requestGetMeetingMembers(postId, signal),
+    enabled: postId !== 0,
   });
 
   useRefreshOnFocus(meetingMemberRefetch);

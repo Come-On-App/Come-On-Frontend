@@ -12,7 +12,7 @@ import { invert } from '@shared/utils';
 import useStyles from './style';
 import { IcardMenu } from './type';
 
-export default function CardMenu({ id = 0, isHost }: IcardMenu) {
+export default function CardMenu({ id, isHost }: IcardMenu) {
   const featurePermission = invert(isHost);
   const { icon, menuFont, anchorBackground } = useStyles();
   const [showCodeModal, setCodeModal] = useState(false);

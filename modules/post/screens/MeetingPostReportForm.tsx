@@ -29,8 +29,6 @@ import {
 } from '@post/api/v1';
 import { PostNativeStack } from '@post/navigation/type';
 import { PostReportMeetingPayload } from '@post/api/v1/type';
-import { QueryKeys } from '@app/api/type';
-import { invalidateQueries } from '@app/api/queryClient';
 import useRestrictNavigation from '@shared/hooks/useRestrictNavigation';
 import useKeyboardAwareScroll from '@shared/hooks/useKeyboardAwareScroll';
 import useSearchManagement from '@post/hooks/useSearchManagement';
@@ -65,7 +63,6 @@ export default function MeetingPostReportForm({
     },
     onSuccess: () => {
       Toast.show(TOAST_CONFIG);
-      invalidateQueries(QueryKeys.post(params.id));
       navigation.reset({
         index: 0,
         routes: [{ name: 'MeetingPostList' }],

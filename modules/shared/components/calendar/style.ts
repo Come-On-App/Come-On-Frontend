@@ -38,7 +38,7 @@ export const calendarTheme = {
 
 export default makeStyles(() => {
   const [CALENDAR_WRAP_HEIGHT] = applyRelativeSizes({
-    wrapCalendar: 400,
+    wrapCalendar: 415,
   });
 
   return {

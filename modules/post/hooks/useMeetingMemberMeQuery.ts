@@ -11,6 +11,7 @@ export default function useMeetingMemberMeQuery(meetingId: number) {
   return useQuery({
     queryKey: QueryKeys.postUserSelf(meetingId),
     queryFn: ({ signal }) => requestGetMeetingMemberMe(meetingId, signal),
+    enabled: meetingId !== 0,
   });
 }
 

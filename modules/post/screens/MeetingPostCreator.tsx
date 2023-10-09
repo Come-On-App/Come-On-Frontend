@@ -23,8 +23,6 @@ import MeetingNameInput from '@post/components/creation/meetingName/MeetingName'
 import usePostManagement from '@post/hooks/usePostManagement';
 import type { ValidatedPostState, PostState } from '@post/features/post/type';
 import { PostMeetingPayload } from '@post/api/v1/type';
-import { invalidateQueries } from '@app/api/queryClient';
-import { QueryKey } from '@app/api/type';
 import useRestrictNavigation from '@shared/hooks/useRestrictNavigation';
 import { hapticSuccess } from '@shared/utils/haptics';
 
@@ -50,7 +48,6 @@ export default function MeetingPostCreator({
     onSuccess: () => {
       hapticSuccess();
       Toast.show(TOAST_CONFIG);
-      invalidateQueries([QueryKey.post, QueryKey.list]);
       navigation.reset({
         index: 0,
         routes: [{ name: 'MeetingPostList' }],

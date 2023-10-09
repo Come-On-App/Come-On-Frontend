@@ -33,4 +33,4 @@ function EnterMeeting() {
   );
 }
 
-export default EnterMeeting;
+export default React.memo(EnterMeeting);

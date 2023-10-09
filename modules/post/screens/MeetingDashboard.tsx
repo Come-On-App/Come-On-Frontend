@@ -18,7 +18,7 @@ import EmptyCardList from '@post/components/emptyCardList/EmptyCardList';
 import useRefreshOnFocus from '@shared/hooks/useRefreshOnFocus';
 import { fullScreenContainer } from '@shared/constants/style';
 
-export default function MeetingDashboard() {
+function MeetingDashboard() {
   const {
     searchState: {
       dateRange: { startingDay, endingDay },
@@ -66,6 +66,8 @@ export default function MeetingDashboard() {
     </SafeAreaView>
   );
 }
+
+export default React.memo(MeetingDashboard);
 
 function renderCardList(
   data: GetMeetingSliceResponse,
