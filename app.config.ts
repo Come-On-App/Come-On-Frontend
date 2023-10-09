@@ -52,5 +52,16 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     ],
     '@react-native-google-signin/google-signin',
     'expo-apple-authentication',
+    '@react-native-firebase/app',
+    '@react-native-firebase/perf',
+    '@react-native-firebase/crashlytics',
+    [
+      'expo-build-properties',
+      {
+        ios: {
+          useFrameworks: 'static',
+        },
+      },
+    ],
   ],
 });
