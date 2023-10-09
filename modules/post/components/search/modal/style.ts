@@ -11,6 +11,7 @@ export default makeStyles(() => {
     modalContainer: {
       height: 'auto',
       padding: MODAL_PADDING,
+      width: '90%',
     },
     voteGuideRobotContainer: {
       position: 'relative',

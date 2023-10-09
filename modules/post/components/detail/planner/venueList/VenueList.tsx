@@ -17,6 +17,7 @@ export default function VenueList() {
   const { data: meetingPlaces, refetch: venueListRefetch } = useQuery({
     queryKey: QueryKeys.venueList(postId),
     queryFn: ({ signal }) => requestMeetingPlaces(postId, signal),
+    enabled: postId !== 0,
   });
 
   useRefreshOnFocus(venueListRefetch);

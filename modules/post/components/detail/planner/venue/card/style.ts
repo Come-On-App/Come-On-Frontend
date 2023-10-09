@@ -3,13 +3,11 @@ import { applyRelativeSizes } from '@shared/utils';
 
 export default makeStyles((theme, showRightIcon?: boolean) => {
   const [
-    CONTAINER_BORDER_WIDHT,
     CONTAINER_BORDER_RADIUS,
     CONTAINER_PADDING_VERTICAL,
     CONTAINER_PADDING_HORIZONTAL,
     CONTAINER_DESCRIPTION_MARGIN_TOP,
   ] = applyRelativeSizes({
-    borderWidth: 1,
     borderRadius: 4,
     paddingVertical: 8,
     paddingHorizontal: 12,
@@ -19,7 +17,7 @@ export default makeStyles((theme, showRightIcon?: boolean) => {
   return {
     container: {
       borderColor: theme.font.grayscale['200'],
-      borderWidth: CONTAINER_BORDER_WIDHT,
+      borderWidth: 1,
       borderRadius: CONTAINER_BORDER_RADIUS,
       paddingVertical: CONTAINER_PADDING_VERTICAL,
       paddingHorizontal: CONTAINER_PADDING_HORIZONTAL,

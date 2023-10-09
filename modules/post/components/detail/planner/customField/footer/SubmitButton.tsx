@@ -13,8 +13,6 @@ import {
   requestAddMeetingPlace,
   requestUpdateMeetingPlace,
 } from '@post/api/v1';
-import { QueryKeys } from '@app/api/type';
-import { invalidateQueries } from '@app/api/queryClient';
 import { PostDetailNavigation } from '@post/navigation/type';
 import useDetailManagement from '@post/hooks/useDetailManagement';
 import usePlannerManagementByStatus from '@post/hooks/usePlannerManagementByStatus';
@@ -52,7 +50,7 @@ export default function SubmitButton() {
       );
 
       initPlannerState();
-      invalidateQueries(QueryKeys.venueList(postId));
+
       navigation.reset({
         index: 0,
         routes: [{ name: 'PostDetail' }],

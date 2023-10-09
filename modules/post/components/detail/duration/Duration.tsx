@@ -22,10 +22,12 @@ export default function Duration() {
   const {
     detailState: { postId },
   } = useDetailManagement();
-  const { data: detail, refetch: meetingDetailRefetch } =
-    useMeetingDetailQuery(postId);
+  const { data: detail, refetch: meetingDetailRefetch } = useMeetingDetailQuery(
+    postId,
+    postId !== 0,
+  );
   const { data: currentPostUserData } = useMeetingMemberMeQuery(postId);
-  const { data: votingStatus } = useVotingStatusQuery(postId);
+  const { data: votingStatus } = useVotingStatusQuery(postId, postId !== 0);
   const isContentLoaded = detail && currentPostUserData && votingStatus;
   let Content = (
     <View style={cContent}>

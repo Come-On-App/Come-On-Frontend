@@ -9,6 +9,7 @@ export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: shouldDisallowRetryOnExpiration,
+      staleTime: 500,
     },
     mutations: {
       retry: shouldDisallowRetryOnExpiration,
