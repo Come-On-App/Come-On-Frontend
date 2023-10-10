@@ -1,16 +1,9 @@
-/* eslint-disable max-depth */
-/* eslint-disable no-unsafe-finally */
-/* eslint-disable no-param-reassign */
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-
 import axios, {
   AxiosError,
   AxiosInstance,
   InternalAxiosRequestConfig,
 } from 'axios';
 import { asyncWave } from 'async-wave';
-import perf from '@react-native-firebase/perf';
 
 import { UserToken } from '@account/features/auth/type';
 import {
@@ -22,61 +15,47 @@ import { init } from '@account/features/auth/authSlice';
 import { serverAPIConfig } from './config';
 import { requestPostReissueToken } from './v1';
 import { checkIfAccessTokenExpired } from './utils';
+import {
+  requestPerfInterceptor,
+  responseErrorPerfInterceptor,
+  responsePerfInterceptor,
+} from './interceptors/firebasePerf';
 
 export const serverAPI = axios.create(serverAPIConfig);
 
 (function useInterceptor(axiosInstance: AxiosInstance) {
   // 요청 인터셉터
-  axiosInstance.interceptors.request.use(async (config) => {
-    try {
-      const httpMetric = perf().newHttpMetric(config.url, config.method);
+  axiosInstance.interceptors.request.use(requestPerfInterceptor);
+})(serverAPI);
 
-      config.metadata = { httpMetric };
-
-      await httpMetric.start();
-    } finally {
-      return config;
-    }
-  });
+(function useInterceptor(axiosInstance: AxiosInstance) {
   // 응답 인터셉터
   axiosInstance.interceptors.response.use(
-    async (response) => {
-      try {
-        // Request was successful, e.g. HTTP code 200
+    responsePerfInterceptor,
+    responseErrorPerfInterceptor,
+  );
+})(serverAPI);
 
-        const { httpMetric } = response.config.metadata;
-
-        httpMetric.setHttpResponseCode(response.status);
-        httpMetric.setResponseContentType(response.headers['content-type']);
-        await httpMetric.stop();
-      } finally {
-        return response;
-      }
+(function useInterceptor(axiosInstance: AxiosInstance) {
+  // 응답 인터셉터
+  axiosInstance.interceptors.response.use(
+    (response) => {
+      // 2xx 범위에 있는 상태 코드는 이 함수를 트리거 한다.
+      return response;
     },
-    // 응답 에러 인터셉터
     async (error: AxiosError) => {
-      try {
-        if (error.response && checkIfAccessTokenExpired(error)) {
-          const newRequestConfig = await handleTokenReissue(
-            error.response.config,
-          );
-
-          if (newRequestConfig) {
-            // 기존 API 요청
-            return axiosInstance(newRequestConfig);
-          }
-        }
-
-        const { httpMetric } = error.config.metadata;
-
-        httpMetric.setHttpResponseCode(error.response.status);
-        httpMetric.setResponseContentType(
-          error.response.headers['content-type'],
+      if (error.response && checkIfAccessTokenExpired(error)) {
+        const newRequestConfig = await handleTokenReissue(
+          error.response.config,
         );
-        await httpMetric.stop();
-      } finally {
-        return Promise.reject(error);
+
+        if (newRequestConfig) {
+          // 기존 API 요청
+          return axiosInstance(newRequestConfig);
+        }
       }
+
+      return Promise.reject(error);
     },
   );
 })(serverAPI);

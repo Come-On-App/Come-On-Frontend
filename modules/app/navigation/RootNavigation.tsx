@@ -1,6 +1,10 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import React, { useRef } from 'react';
+import {
+  NavigationContainer,
+  useNavigationContainerRef,
+} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import analytics from '@react-native-firebase/analytics';
 
 import SignIn from '@account/screens/SignIn';
 import useAuthManagement from '@account/hooks/useAuthManagement';
@@ -46,8 +50,29 @@ export function RootNavigator() {
  * 로그인 상태에 따라 네비게이터를 분기를 시킨다.
  */
 export default function RootNavigation() {
+  const navigationRef = useNavigationContainerRef();
+  const routeNameRef = useRef<string>();
+
   return (
-    <NavigationContainer>
+    <NavigationContainer
+      ref={navigationRef}
+      onReady={() => {
+        routeNameRef.current = navigationRef.getCurrentRoute()?.name;
+      }}
+      onStateChange={async () => {
+        const previousRouteName = routeNameRef.current;
+        const currentRouteName = navigationRef.getCurrentRoute()?.name;
+
+        if (previousRouteName !== currentRouteName) {
+          await analytics().logScreenView({
+            screen_name: currentRouteName,
+            screen_class: currentRouteName,
+          });
+        }
+
+        routeNameRef.current = currentRouteName;
+      }}
+    >
       <RootNavigator />
     </NavigationContainer>
   );

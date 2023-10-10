@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { asyncWave } from 'async-wave';
+import { useMutation } from '@tanstack/react-query';
 
 import Font from '@shared/components/font/Font';
 import useAuthManagement from '@account/hooks/useAuthManagement';
-import { asyncWave } from 'async-wave';
 import { requestDeleteUser, requestPostUserLogout } from '@account/api/v1';
-import { useMutation } from '@tanstack/react-query';
+import { logUserDelete } from '@shared/logging/user';
 import useStyles from './style';
 import AccountDeletionModal from './accountDeletionModal/AccountDeletionModal';
 
@@ -20,6 +21,7 @@ export default function AccountManagement() {
   const { initAuthState } = useAuthManagement();
   const { mutate, isLoading } = useMutation(requestDeleteUser, {
     onSuccess: () => {
+      logUserDelete();
       signOutIfGoogleLoggedIn();
     },
     onSettled: () => {
