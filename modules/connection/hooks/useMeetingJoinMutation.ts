@@ -8,6 +8,7 @@ import { hapticError, hapticSuccess } from '@shared/utils/haptics';
 import { EMPTY_STRING } from '@shared/utils';
 import { JoinStatusDispatch } from '@connection/components/type';
 import Toast from 'react-native-toast-message';
+import { logPostJoin } from '@shared/logging/post';
 
 type TData = PostJoinResponse;
 type TError = AxiosError<ErrorResponse>;
@@ -30,7 +31,6 @@ const TOAST_CONFIG_FAIL = (errorMessage: string) => {
 export default function useMeetingJoinMutation(dispatch: JoinStatusDispatch) {
   const mutate = useMutation<TData, TError, TVariables, TContext>(
     requestMeetingJoin,
-
     {
       retry: false,
       onMutate: () => {
@@ -40,7 +40,8 @@ export default function useMeetingJoinMutation(dispatch: JoinStatusDispatch) {
           errorMessage: EMPTY_STRING,
         });
       },
-      onSuccess: () => {
+      onSuccess: ({ meetingId }) => {
+        logPostJoin(meetingId);
         Toast.show(TOAST_CONFIG_JOIN);
         hapticSuccess();
       },
