@@ -50,6 +50,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   plugins: [
     [
+      'expo-updates',
+      {
+        username: 'jeongbaebang_dev',
+      },
+    ],
+    [
       'expo-image-picker',
       {
         photosPermission:
