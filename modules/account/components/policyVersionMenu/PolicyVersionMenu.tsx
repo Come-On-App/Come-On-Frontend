@@ -1,11 +1,24 @@
 import React from 'react';
 import { View } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
+import Toast from 'react-native-toast-message';
+import * as Updates from 'expo-updates';
 
 import { useNavigation } from '@react-navigation/native';
 import { PolicyNavigation } from '@account/navigation/type';
 import PolicyInfo from '../policyInfo/PolicyInfo';
 import { IpolicyInfo } from '../policyInfo/type';
+
+const TOAST_CONFIG_UPDATE_SUCCESS = {
+  type: 'success',
+  text1: '수동 버전 업데이트를 성공하였습니다.',
+};
+const TOAST_CONFIG_UPDATE_FAIL = (error: unknown) => {
+  return {
+    type: 'error',
+    text1: `Error fetching latest Expo update: ${error}`,
+  };
+};
 
 export default function PolicyVersionMenu() {
   const navigation = useNavigation<PolicyNavigation>();
@@ -36,6 +49,19 @@ export default function PolicyVersionMenu() {
     {
       title: '현재 버전 2.0.0 (u-1)',
       showIcon: false,
+      onPress: async () => {
+        try {
+          const update = await Updates.checkForUpdateAsync();
+
+          if (update.isAvailable) {
+            await Updates.fetchUpdateAsync();
+            await Updates.reloadAsync();
+            Toast.show(TOAST_CONFIG_UPDATE_SUCCESS);
+          }
+        } catch (error) {
+          Toast.show(TOAST_CONFIG_UPDATE_FAIL(error));
+        }
+      },
     },
   ];
 
