@@ -42,6 +42,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
     googleServicesFile: process.env.GOOGLE_SERVICES_FILE_ANDROID,
   },
+  updates: {
+    url: 'https://u.expo.dev/390f7f40-6936-467d-901c-b3c6724e76f2',
+  },
+  runtimeVersion: {
+    policy: 'sdkVersion',
+  },
   plugins: [
     [
       'expo-image-picker',
