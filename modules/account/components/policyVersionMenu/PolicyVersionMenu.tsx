@@ -47,7 +47,7 @@ export default function PolicyVersionMenu() {
       onPress: () => navigation.navigate('Policy', { screen: 'PolicyPages' }),
     },
     {
-      title: '현재 버전 2.0.0 (u-1)',
+      title: '현재 버전 2.0.1',
       showIcon: false,
       onPress: async () => {
         try {
