@@ -34,6 +34,7 @@ export const options: {
     tabBarLabel: createTabBarLabel('모임 입장'),
     tabBarIcon: createTabBarIcon('meeting-room'),
     tabBarHideOnKeyboard: false,
+    freezeOnBlur: false,
   },
   [Tab.three]: {
     tabBarLabel: createTabBarLabel('마이페이지'),
