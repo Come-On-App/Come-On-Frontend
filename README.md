@@ -6,17 +6,34 @@
 ![Static Badge](https://img.shields.io/badge/Android-%20)
 </div>
 
-## 🍕 소개
+<div>
+  <img align="right" width="40%" src="docs/static/img/example.png">
+</div>
+
+### Features
+
 모임 생성부터 관리까지 간편하게, 입장 코드로 참여자를 제한하세요. 날짜 결정은 투표로 신속히, 장소 결정까지 한 번에 해결하세요.
+
+* 👆 원터치 로그인 - 간편한 한 번의 터치로 로그인하세요!
+* 🚀 모임 즉시 시작 - 언제 어디서나 쉽게 모임을 만들고 시작하세요.
+* 🗳️ 날짜 투표 - 투표로 모임 날짜를 빠르게 정하세요.
+* 🔍 모임 날짜 검색 - 날짜 범위로 필터링하여 원하는 모임을 빠르게 찾아보세요!
+* 🔄 연속 모임 계획 - 모임 카드로 다음 모임도 즉시 계획하세요.
+* 🔒 비공개 모임 - 입장 코드로 비공개 모임에 안전하게 참여하세요.
+
 <br>
 
-<a href="https://apps.apple.com/us/app/컴온/id6447347168">
-    <img src="https://github.com/Come-On-App/Come-On-Frontend/assets/57677452/441754c5-bf0a-477a-84db-057a0f36756a" width="20%" />
-</a>
-<br>
-<a href="https://play.google.com/store/apps/details?id=com.comeon.app&hl=ko&gl=KR">
-    <img src="https://github.com/Come-On-App/Come-On-Frontend/assets/57677452/bb175183-c55a-46ac-8bc4-521355fc8b9f" width="20%" height="90" />
-</a>
+<div>
+  <a href="https://apps.apple.com/app/shadowlens/id6471849004">
+    <img height="40" src="docs/static/img/appstore.svg" />
+  </a>
+  <a href="https://play.google.com/store/apps/details?id=com.mrousavy.shadowlens">
+    <img height="40" src="docs/static/img/googleplay.svg" />
+  </a>
+</div>
 
-## 📱 서비스 기능 & 데모
+<img height="40" src="docs/static/img/empty.png" />
 
+
+
+### Demo
