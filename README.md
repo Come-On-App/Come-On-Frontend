@@ -24,10 +24,10 @@
 <br>
 
 <div>
-  <a href="https://apps.apple.com/app/shadowlens/id6471849004">
+  <a href="https://apps.apple.com/us/app/컴온/id6447347168">
     <img height="40" src="docs/static/img/appstore.svg" />
   </a>
-  <a href="https://play.google.com/store/apps/details?id=com.mrousavy.shadowlens">
+  <a href="https://play.google.com/store/apps/details?id=com.comeon.app&hl=ko&gl=KR">
     <img height="40" src="docs/static/img/googleplay.svg" />
   </a>
 </div>
