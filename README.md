@@ -24,10 +24,10 @@
 <br>
 
 <div>
-  <a href="https://apps.apple.com/app/shadowlens/id6471849004">
+  <a href="https://apps.apple.com/us/app/컴온/id6447347168">
     <img height="40" src="docs/static/img/appstore.svg" />
   </a>
-  <a href="https://play.google.com/store/apps/details?id=com.mrousavy.shadowlens">
+  <a href="https://play.google.com/store/apps/details?id=com.comeon.app&hl=ko&gl=KR">
     <img height="40" src="docs/static/img/googleplay.svg" />
   </a>
 </div>
@@ -232,3 +232,60 @@
 </tr>
 
 </table>
+
+## 🛠️ 기술 스택
+
+<img align="center" src="docs/static/img/teckStack.svg" />
+
+## 🛠️ 프로젝트 구조
+
+<img align="center" src="docs/static/img/comeonarch.png" />
+
+### 모듈 구조
+
+이 프로젝트는 여러 모듈로 구성되어 있으며, 각 모듈은 특정 기능을 담당합니다. 아래는 프로젝트의 주요 모듈과 그 하위 구조에 대한 설명입니다.
+
+## modules
+
+### account
+- **api**: 계정 관련 API 인터페이스
+- **components**: 계정 관련 리액트 컴포넌트
+- **features**: 리덕스 슬라이스 및 상태 관리 로직
+- **hooks**: 커스텀 훅
+- **mocks**: 테스트를 위한 모의 데이터
+- **navigation**: 네비게이션 설정
+- **screens**: 스크린 컴포넌트
+
+### app
+- **api**: 애플리케이션 전반에 걸친 API 인터페이스
+- **components**: 공통 리액트 컴포넌트
+- **hooks**: 애플리케이션 레벨의 커스텀 훅
+- **mocks**: 앱 전반에 사용되는 모의 데이터
+- **navigation**: 앱의 루트 네비게이션 구조
+- **redux**: 앱 상태 관리를 위한 리덕스 스토어 및 프로바이더
+
+### connection
+- **api**: 연결 관련 API 인터페이스
+- **components**: 연결 및 네트워킹 관련 컴포넌트
+- **hooks**: 연결 관련 커스텀 훅
+- **mocks**: 연결 기능 테스트를 위한 모의 데이터
+- **screen**: 연결 관련 화면 컴포넌트
+
+### post
+- **api**: 게시글 관련 API 인터페이스
+- **components**: 게시글과 관련된 컴포넌트
+- **features**: 게시글 관련 상태 관리 로직
+- **hooks**: 게시글 기능을 위한 커스텀 훅
+- **mocks**: 게시글 기능 테스트를 위한 모의 데이터
+- **navigation**: 게시글 관련 네비게이션 설정
+- **screens**: 게시글 관련 스크린 컴포넌트
+
+### shared
+- **assets**: 이미지, 아이콘, 폰트 등의 자산
+- **components**: 전역에서 사용될 수 있는 공통 컴포넌트
+- **constants**: 애플리케이션 전반에 사용되는 상수 정의
+- **hooks**: 여러 모듈에서 재사용할 수 있는 커스텀 훅
+- **provider**: 공통 컨텍스트 프로바이더
+
+각 모듈은 독립적인 기능을 가지며, 함께 작동하여 애플리케이션을 구성합니다.
+
