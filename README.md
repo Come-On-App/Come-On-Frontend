@@ -1,7 +1,7 @@
 <div align="center">
 <img src="https://github.com/Come-On-App/Come-On-Frontend/assets/57677452/8183b984-4559-4cc8-a880-df573d5336ee" alt="ComeOn Logo" width="300" height="300" />
   
-### 모임관리와 일정을 한 번에: 컴온!
+### 모임관리와 일정을 한 번에: 컴온! (2.0)
 ![Static Badge](https://img.shields.io/badge/Apple-black?logo=ios)
 ![Static Badge](https://img.shields.io/badge/Android-%20)
 </div>
@@ -237,7 +237,7 @@
 
 <img align="center" src="docs/static/img/teckStack.svg" />
 
-## 🛠️ 프로젝트 구조
+## 🛠️ 프로젝트
 
 <img align="center" src="docs/static/img/comeonarch.png" />
 
@@ -245,7 +245,7 @@
 
 이 프로젝트는 여러 모듈로 구성되어 있으며, 각 모듈은 특정 기능을 담당합니다. 아래는 프로젝트의 주요 모듈과 그 하위 구조에 대한 설명입니다.
 
-## modules
+[레거시 프로젝트 구조 개선하기: 기능별 모듈화](https://medium.com/@jeongbaebang/%EB%A0%88%EA%B1%B0%EC%8B%9C-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B5%AC%EC%A1%B0-%EA%B0%9C%EC%84%A0%ED%95%98%EA%B8%B0-f53b36c7d698)
 
 ### account
 - **api**: 계정 관련 API 인터페이스
@@ -289,3 +289,34 @@
 
 각 모듈은 독립적인 기능을 가지며, 함께 작동하여 애플리케이션을 구성합니다.
 
+### 디자인 시스템
+
+레거시 프로젝트에서 겪었던 UI 컴포넌트 수정의 어려움과 문서화의 부족을 개선하기 위해, 2.0 프로젝트에서는 Storybook과 [컴포넌트 기반 설계(CDD)](https://www.componentdriven.org/)를 도입했습니다. 이를 통해 컴포넌트를 기반으로 화면을 점진적으로 조립하는 새로운 개발 프로세스를 구축, 디자이너와의 소통을 향상시키고 컴포넌트의 수정 및 관리를 용이하게 만들었습니다.
+
+<img align="left" width="320" src="docs/static/img/demo12.gif">
+
+<br clear="both">
+
+### 팀 라이브러리
+
+### Analytics
+
+### 협업
+
+- 백엔드 문서
+
+- 디자이너 피그마
+
+- 프론트엔드 PR 코드 리뷰
+
+- 슬랙, 게더, 노션
+
+## 📝 아티클
+
+- [기기별 사이즈에 따른 레이아웃 너비 개선](https://medium.com/@jeongbaebang/%EC%9D%BC%EA%B4%80%EB%90%9C-%EB%94%94%EC%9E%90%EC%9D%B8-%EA%B2%BD%ED%97%98%EC%9D%84-%EC%9C%84%ED%95%9C-%EA%B0%9C%EB%B0%9C%EC%A0%81-%EA%B3%A0%EB%AF%BC-%EB%94%94%EC%9E%90%EC%9D%B8-%EC%8B%9C%EC%8A%A4%ED%85%9C%EA%B3%BC-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8%EC%9D%98-%ED%99%9C%EC%9A%A9-d1a8b0bd126b)
+
+- [MSW를 도입하여 백엔드 API 의존성 제거](https://medium.com/@jeongbaebang/msw-%EB%8F%84%EC%9E%85%EC%9C%BC%EB%A1%9C-%EB%B3%80%ED%99%94%ED%95%9C-%EA%B0%9C%EB%B0%9C-%EA%B2%BD%ED%97%98-%EB%B0%B1%EC%97%94%EB%93%9C-%EC%9D%98%EC%A1%B4%EC%84%B1-%ED%95%B4%EA%B2%B0%EA%B3%BC-%EA%B0%9C%EB%B0%9C-%EC%86%8D%EB%8F%84-%ED%96%A5%EC%83%81-1e495df66020)
+
+- [레거시 프로젝트 구조 개선하기: 기능별 모듈화](https://medium.com/@jeongbaebang/%EB%A0%88%EA%B1%B0%EC%8B%9C-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B5%AC%EC%A1%B0-%EA%B0%9C%EC%84%A0%ED%95%98%EA%B8%B0-f53b36c7d698)
+
+- [토큰 기반 로그인 프로세스로 효율적인 로그인 관리 구현](https://jeongbaebang.com/2023/08/19/%ED%9A%A8%EC%9C%A8%EC%A0%81%EC%9D%B8-%EB%A1%9C%EA%B7%B8%EC%9D%B8-%EA%B4%80%EB%A6%AC%EB%A5%BC-%EC%9C%84%ED%95%9C-%EC%95%A1%EC%84%B8%EC%8A%A4-%ED%86%A0%ED%81%B0%EA%B3%BC-%EB%A6%AC%ED%94%84%EB%A0%88/)
