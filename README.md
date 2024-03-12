@@ -24,7 +24,7 @@
 <br>
 
 <div>
-  <a href="https://apps.apple.com/us/app/컴온/id6447347168">
+  <a href="https://apps.apple.com/kr/app/%EC%BB%B4%EC%98%A8/id6447347168">
     <img height="40" src="docs/static/img/appstore.svg" />
   </a>
   <a href="https://play.google.com/store/apps/details?id=com.comeon.app&hl=ko&gl=KR">
@@ -32,21 +32,43 @@
   </a>
 </div>
 
-<img height="40" src="docs/static/img/empty.png" />
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
 
+## 📋 Table of Contents
 
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
+- [🧑🏻‍💻 기능 소개](#-Features)
+- [📱 데모](#-Demo)
+- [🛠️ 기술 스택](#️-기술-스택)
+- [🛠️ 프로젝트](#️-프로젝트)
+  - [모듈 구조](#모듈-구조)
+  - [디자인 시스템](#디자인-시스템)
+  - [Unit Testing](#Unit-Testing)
+  - [컴포넌트 동작 검증을 위한 RNTL 활용](#컴포넌트-동작-검증을-위한-rntl-활용)
+- [🏓 협업](#-협업)
+  - [백엔드팀과의 API 문서 기반 협업](#백엔드팀과의-api-문서-기반-협업)
+  - [PR 코드 리뷰](#pr-코드-리뷰)
+  - [피그마를 통한 디자이너와의 원활한 커뮤니케이션](#피그마를-통한-디자이너와의-원활한-커뮤니케이션)
+  - [협업 도구](#협업-도구)
+- [🚀 Deploy](#-deploy)
+  - [Analytics](#analytics)
+  - [Performance](#performance)
+- [📝 Article](#-article)
+
 <br/>
 
 ## 📱 Demo
