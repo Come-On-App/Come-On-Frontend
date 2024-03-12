@@ -49,7 +49,7 @@
 <br/>
 <br/>
 
-### 📱 Demo
+## 📱 Demo
 <table>
   
 <tr>
@@ -289,29 +289,73 @@
 
 각 모듈은 독립적인 기능을 가지며, 함께 작동하여 애플리케이션을 구성합니다.
 
+
 ### 디자인 시스템
 
 레거시 프로젝트에서 겪었던 UI 컴포넌트 수정의 어려움과 문서화의 부족을 개선하기 위해, 2.0 프로젝트에서는 Storybook과 [컴포넌트 기반 설계(CDD)](https://www.componentdriven.org/)를 도입했습니다. 이를 통해 컴포넌트를 기반으로 화면을 점진적으로 조립하는 새로운 개발 프로세스를 구축, 디자이너와의 소통을 향상시키고 컴포넌트의 수정 및 관리를 용이하게 만들었습니다.
 
 <img align="left" width="320" src="docs/static/img/demo12.gif">
-
 <br clear="both">
 
-### 팀 라이브러리
+### Unit Testing
+자주 사용되는 유틸리티 함수들의 리팩토링과 기능 확장 시 코드의 정상 작동을 보장하기 위해 테스트 코드를 작성하였습니다.
+
+<div align="center"><img width="800" src="docs/static/img/demo18.png"></div>
+<div align="center">[유틸 함수 테스트 코드 일부분]</div>
+<br clear="both">
+
+### 컴포넌트 동작 검증을 위한 RNTL 활용
+RNTL(React Native Testing Library)을 활용하여 컴포넌트 내 동작과 Props 전달 시 정상적인 렌더링이 이루어지는지를 중심으로 테스트 코드를 작성하였습니다.
+
+<div align="center"><img width="800" src="docs/static/img/demo19.png"></div>
+<div align="center">[사용자 동작 테스트 코드]</div>
+<br clear="both">
+
+## 🏓 협업
+
+### 백엔드팀과의 API 문서 기반 협업
+API 문서를 기반으로 백엔드팀과 협업하여 프로젝트를 수행했습니다
+
+<img align="left" src="docs/static/img/demo15.png">
+<div align="center">[백엔드 API 문서 일부분]</div>
+<br clear="both">
+
+### PR 코드 리뷰
+담당한 기능 구현이 완료되거나 수정 사항이 있을 경우, 바로 병합하지 않고 PR(풀 리퀘스트)을 통해 코드 리뷰를 실시한 후 작업 브랜치에 병합하는 방식으로 협업하여 개발했습니다.
+
+<img align="left" src="docs/static/img/demo13.png">
+<div align="center">[PR 피드백 세션 스크린샷]</div>
+<br clear="both">
+
+### 피그마를 통한 디자이너와의 원활한 커뮤니케이션
+디자이너와 디자인 관련 커뮤니케이션은 피그마를 활용하여 진행하며 프로젝트를 수행했습니다.
+
+<img align="left" src="docs/static/img/demo14.png">
+<div align="center">[피그마 UI/UX 작업]</div>
+<br clear="both">
+
+### 협업 도구
+
+<img align="center" src="docs/static/img/collaborationTools.svg" />
+
+## 🚀 Deploy
 
 ### Analytics
+Firebase Analytics를 활용해 MAU(월간 활성 사용자 수) 및 DAU(일간 활성 사용자 수) 데이터를 시각화하고, 이를 통해 중요한 인사이트를 도출했습니다.
 
-### 협업
+<img align="left" src="docs/static/img/demo16.png">
+<div align="center">[월간 및 일간 사용자 추적 지표]</div>
+<br clear="both">
 
-- 백엔드 문서
+### Performance
+Firebase Performance를 활용해 각 플랫폼별 API 응답 시간을 데이터 통계화함으로써 시스템의 성능 분석과 상태를 명확하게 파악했습니다.
 
-- 디자이너 피그마
+<img align="left" src="docs/static/img/demo17.png">
+<div align="center">[iOS 플랫폼 성능 평가 항목]</div>
+<br clear="both">
 
-- 프론트엔드 PR 코드 리뷰
 
-- 슬랙, 게더, 노션
-
-## 📝 아티클
+## 📝 Article
 
 - [기기별 사이즈에 따른 레이아웃 너비 개선](https://medium.com/@jeongbaebang/%EC%9D%BC%EA%B4%80%EB%90%9C-%EB%94%94%EC%9E%90%EC%9D%B8-%EA%B2%BD%ED%97%98%EC%9D%84-%EC%9C%84%ED%95%9C-%EA%B0%9C%EB%B0%9C%EC%A0%81-%EA%B3%A0%EB%AF%BC-%EB%94%94%EC%9E%90%EC%9D%B8-%EC%8B%9C%EC%8A%A4%ED%85%9C%EA%B3%BC-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8%EC%9D%98-%ED%99%9C%EC%9A%A9-d1a8b0bd126b)
 
