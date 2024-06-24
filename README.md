@@ -385,4 +385,4 @@ Firebase Performance를 활용해 각 플랫폼별 API 응답 시간을 데이�
 
 - [레거시 프로젝트 구조 개선하기: 기능별 모듈화](https://medium.com/@jeongbaebang/%EB%A0%88%EA%B1%B0%EC%8B%9C-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B5%AC%EC%A1%B0-%EA%B0%9C%EC%84%A0%ED%95%98%EA%B8%B0-f53b36c7d698)
 
-- [토큰 기반 로그인 프로세스로 효율적인 로그인 관리 구현](https://jeongbaebang.com/2023/08/19/%ED%9A%A8%EC%9C%A8%EC%A0%81%EC%9D%B8-%EB%A1%9C%EA%B7%B8%EC%9D%B8-%EA%B4%80%EB%A6%AC%EB%A5%BC-%EC%9C%84%ED%95%9C-%EC%95%A1%EC%84%B8%EC%8A%A4-%ED%86%A0%ED%81%B0%EA%B3%BC-%EB%A6%AC%ED%94%84%EB%A0%88/)
+- [토큰 기반 로그인 프로세스로 효율적인 로그인 관리 구현](https://jeongbaebangcom.wordpress.com/2023/08/19/%ed%9a%a8%ec%9c%a8%ec%a0%81%ec%9d%b8-%eb%a1%9c%ea%b7%b8%ec%9d%b8-%ea%b4%80%eb%a6%ac%eb%a5%bc-%ec%9c%84%ed%95%9c-%ec%95%a1%ec%84%b8%ec%8a%a4-%ed%86%a0%ed%81%b0%ea%b3%bc-%eb%a6%ac%ed%94%84%eb%a0%88/)
