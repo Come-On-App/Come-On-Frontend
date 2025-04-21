@@ -24,7 +24,7 @@
 <br>
 
 <div>
-  <div>📱 App Store · Google Play 출시 (2023년 배포, 현재는 만료로 링크 제공 불가)</div>
+  <div>📱 앱스토어 · 플레이스토어 출시 (2023, 링크 만료)</div>
     <img height="40" src="docs/static/img/appstore.svg" />
     <img height="40" src="docs/static/img/googleplay.svg" />
 </div>
@@ -386,5 +386,3 @@ Firebase Performance를 활용해 각 플랫폼별 API 응답 시간을 데이�
 - [MSW를 도입하여 백엔드 API 의존성 제거](https://medium.com/@jeongbaebang/msw-%EB%8F%84%EC%9E%85%EC%9C%BC%EB%A1%9C-%EB%B3%80%ED%99%94%ED%95%9C-%EA%B0%9C%EB%B0%9C-%EA%B2%BD%ED%97%98-%EB%B0%B1%EC%97%94%EB%93%9C-%EC%9D%98%EC%A1%B4%EC%84%B1-%ED%95%B4%EA%B2%B0%EA%B3%BC-%EA%B0%9C%EB%B0%9C-%EC%86%8D%EB%8F%84-%ED%96%A5%EC%83%81-1e495df66020)
 
 - [레거시 프로젝트 구조 개선하기: 기능별 모듈화](https://medium.com/@jeongbaebang/%EB%A0%88%EA%B1%B0%EC%8B%9C-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B5%AC%EC%A1%B0-%EA%B0%9C%EC%84%A0%ED%95%98%EA%B8%B0-f53b36c7d698)
-
-- [토큰 기반 로그인 프로세스로 효율적인 로그인 관리 구현](https://jeongbaebangcom.wordpress.com/2023/08/19/%ed%9a%a8%ec%9c%a8%ec%a0%81%ec%9d%b8-%eb%a1%9c%ea%b7%b8%ec%9d%b8-%ea%b4%80%eb%a6%ac%eb%a5%bc-%ec%9c%84%ed%95%9c-%ec%95%a1%ec%84%b8%ec%8a%a4-%ed%86%a0%ed%81%b0%ea%b3%bc-%eb%a6%ac%ed%94%84%eb%a0%88/)
