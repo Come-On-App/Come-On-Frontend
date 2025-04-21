@@ -24,12 +24,9 @@
 <br>
 
 <div>
-  <a href="https://apps.apple.com/kr/app/%EC%BB%B4%EC%98%A8/id6447347168">
+  <div>📱 App Store · Google Play 출시 (2023년 배포, 현재는 만료로 링크 제공 불가)</div>
     <img height="40" src="docs/static/img/appstore.svg" />
-  </a>
-  <a href="https://play.google.com/store/apps/details?id=com.comeon.app&hl=ko&gl=KR">
     <img height="40" src="docs/static/img/googleplay.svg" />
-  </a>
 </div>
 
 <br/>
@@ -372,8 +369,13 @@ Firebase Analytics를 활용해 MAU(월간 활성 사용자 수) 및 DAU(일간 
 ### Performance
 Firebase Performance를 활용해 각 플랫폼별 API 응답 시간을 데이터 통계화함으로써 시스템의 성능 분석과 상태를 명확하게 파악했습니다.
 
+
 <img align="left" src="docs/static/img/demo17.png">
 <div align="center">[iOS 플랫폼 성능 평가 항목]</div>
+<br clear="both">
+
+<img align="left" src="https://github.com/user-attachments/assets/af4a2cc1-5c45-43f1-99ea-c7d5ec264478">
+<div align="center">[iOS App Store]</div>
 <br clear="both">
 
 
